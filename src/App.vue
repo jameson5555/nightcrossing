@@ -1,16 +1,19 @@
 <template>
   <div id="app">
-    <HelloWorld msg="nightcrossing"/>
+    <CrosswordList/>
+    <Crossword/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import CrosswordList from './components/CrosswordList.vue'
+import Crossword from './components/Crossword.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    CrosswordList,
+    Crossword
   }
 }
 </script>
