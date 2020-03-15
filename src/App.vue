@@ -35,5 +35,6 @@ ol {
     max-width: 100%;
 }
 
-@import'~bootstrap/dist/css/bootstrap.css'
+@import'~bootstrap/dist/css/bootstrap.css';
+@import url('https://fonts.googleapis.com/css?family=Exo:400,500,600,700,800&display=swap');
 </style>

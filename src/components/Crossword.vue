@@ -13,9 +13,12 @@
 					<div v-else class="square__inner square__inner--full">
 						<input 
 							type="text" 
+							v-on:focus="selectWord" 
+							v-on:keyup="validateInput" 
 							:data-answer="letter" 
 							:placeholder="letter" 
-							class="square__letter"
+							class="square__letter" 
+							maxlength = "1"
 						/>
 						<span v-if="data.gridnums[index] !== 0" class="square__number">{{data.gridnums[index]}}</span>
 					</div>
@@ -63,7 +66,24 @@ export default {
 				}
 				console.log('data:', result)
 			})
-
+		},
+		selectWord: event => {
+			console.log('selectedLetter', event.target);
+			//let $square = $(event.target).closest('.square');
+			// select previous 
+		},
+		validateInput: event => {
+			let $input = $(event.target);
+			let enteredLetter = event.target.value.toUpperCase();
+			console.log("enteredLetter:", enteredLetter);
+			let correctLetter = $input.data('answer');
+			console.log("correctLetter:", correctLetter);
+			if ($input.closest('.square').next().find('.square__inner--full').length) {
+				$input.closest('.square').next().find('.square__inner--full').find('.square__letter').focus();
+			} else {
+				$(event.target).blur();
+				// check for correct word here
+			}
 		}
 	},
 	mounted() {
@@ -76,9 +96,9 @@ export default {
 	.grid {
 		display: grid;
 		grid-gap: 1px;
+		font-family: 'Exo', sans-serif;
 	}
 	.square {
-		color: orange;
 		font-size: 2vw;
 		height: 0;
 		padding-bottom: 100%;
@@ -93,7 +113,7 @@ export default {
 				background: black;
 			}
 			&--full {
-				background: white;
+				background: #666;
 			}
 		}
 		&__letter {
@@ -104,6 +124,14 @@ export default {
 			box-shadow: none;
 			text-align: center;
 			padding: 0.8vw 0 0;
+			background: transparent;
+			color: yellow;
+			text-transform: uppercase;
+			text-shadow: 0 0 0.7vw black;
+			font-weight: 800;
+			&::placeholder {
+				color: gray;
+			}
 		}
 		&__number {
 			position: absolute;
@@ -112,7 +140,8 @@ export default {
 			left: 0.5vw;
 			font-size: 0.8vw;
 			line-height: 0.8vw;
-			color: black;
+			font-weight: 500;
+			color: white;
 		}
 	}
 </style>
