@@ -15,7 +15,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 html,
 body {
     background: black;
@@ -30,6 +30,9 @@ ol {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   margin-top: 60px;
+}
+.container {
+    max-width: 100%;
 }
 
 @import'~bootstrap/dist/css/bootstrap.css'
