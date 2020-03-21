@@ -1,26 +1,34 @@
 <template>
 	<div class="crossword container">
-		<h1>Today's Crossword:<br/>{{ data.title }}</h1>
-		<p>{{ data.dow }}<br/>By: {{ data.author }}<br/><small>&copy; {{ data.copyright }}</small></p>
+		<!-- <h1>Today's Crossword:<br/>{{ data.title }}</h1>
+		<p>{{ data.dow }}<br/>By: {{ data.author }}<br/><small>&copy; {{ data.copyright }}</small></p> -->
 
 		<div class="crossword__grid mb-3">
-			<div class="grid" :style="'grid-template-columns: ' + columnStyle + ';'">
+			<div 
+				class="grid" 
+				:data-column-count="columnCount" 
+				:style="'grid-template-columns: ' + columnStyle + ';'"
+			>
 				<div 
-					v-for="(letter, index) in data.grid" 
+					v-for="(gridItem, index) in grid" 
 					:key="index" 
 					class="grid__square square">
-					<div v-if="letter === '.'" class="square__inner square__inner--blank"></div>
+					<div v-if="gridItem.letter === '.'" class="square__inner square__inner--blank"></div>
 					<div v-else class="square__inner square__inner--full">
 						<input 
 							type="text" 
-							v-on:focus="selectWord" 
+							v-on:click="selectWord" 
 							v-on:keyup="validateInput" 
-							:data-answer="letter" 
-							:placeholder="letter" 
+							:data-across-clue-index="gridItem.acrossClueIndex" 
+							:data-across-answer-length="gridItem.acrossAnswerLength" 
+							:data-down-clue-index="gridItem.downClueIndex" 
+							:data-down-answer-length="gridItem.downAnswerLength" 
+							:data-answer="gridItem.letter" 
+							:placeholder="gridItem.letter" 
 							class="square__letter" 
 							maxlength = "1"
 						/>
-						<span v-if="data.gridnums[index] !== 0" class="square__number">{{data.gridnums[index]}}</span>
+						<span v-if="gridItem.isFirstLetter" class="square__number">{{gridItem.number}}</span>
 					</div>
 				</div>
 			</div>
@@ -47,37 +55,115 @@ export default {
 	data() {
 		return {
 			data: {},
+			grid: [],
 			cluesAcross: [],
 			cluesDown: [],
+			columnCount: 0,
 			columnStyle: ''
 		}
 	},
 	methods: {
 		getCrosswords() {
-			console.log('start function')
+			// add loading spinner or something here
 			$.getJSON("https://www.xwordinfo.com/JSON/Data.aspx?callback=?", { date: 'current' }, result => {
-				this.data = result
-				this.cluesAcross = result.clues.across
-				this.cluesDown = result.clues.down
+				
+				this.data = result;
+				this.cluesAcross = this.data.clues.across;
+				this.cluesDown = this.data.clues.down;
+				this.columnCount = this.data.size.cols;
 				this.columnStyle;
+				this.grid = [];
 
-				for (var index = 0; index < result.size.cols; index++) {
+				// loop through data to figure out how many columns are needed for columnStyle
+				for (var index = 0; index < this.columnCount; index++) {
 					this.columnStyle = this.columnStyle + 'auto '
 				}
-				console.log('data:', result)
+
+				// build new grid array for displaying puzzle'
+				this.data.grid.forEach((letter, letterIndex) => {
+					let gridItem = {
+						number: this.data.gridnums[letterIndex],
+						letter: letter,
+						isFirstLetter: this.data.gridnums[letterIndex] !== 0
+					};
+
+					if (gridItem.isFirstLetter) {
+						// find across clue and answer length
+						this.data.clues.across.forEach((clue, clueIndex) => {
+							let clueNumber = clue.split('. ')[0];
+							if (gridItem.number === parseInt(clueNumber)) {
+								gridItem.accrossClueIndex = clueIndex;
+								gridItem.acrossAnswerLength = this.data.answers.across[clueIndex].length;
+							}
+						});
+						// find down clue and answer length
+						this.data.clues.down.forEach((clue, clueIndex) => {
+							let clueNumber = clue.split('. ')[0];
+							if (gridItem.number === parseInt(clueNumber)) {
+								gridItem.downClueIndex = clueIndex;
+								gridItem.downAnswerLength = this.data.answers.down[clueIndex].length;
+							}
+						});
+					}
+					
+					this.grid.push(gridItem);
+				});
+
+				console.log('data:', this.data);
+				console.log('grid:', this.grid);
 			})
 		},
-		selectWord: event => {
-			console.log('selectedLetter', event.target);
-			//let $square = $(event.target).closest('.square');
-			// select previous 
+		selectAcross($square, acrossLength) {
+			$square.siblings().removeClass('selected selected--across selected--down');
+			let $selectedSquare = $square;
+
+			for (let index = 0; index < acrossLength; index++) {
+				$selectedSquare.addClass('selected selected--across');
+				$selectedSquare = $selectedSquare.next();
+			}
 		},
-		validateInput: event => {
+		selectDown($square, downLength, columnCount) {
+			$square.siblings().removeClass('selected selected--across selected--down');
+			let $selectedSquare = $square;
+			for (let index = 0; index < downLength; index++) {
+				$selectedSquare.addClass('selected selected--down');
+				for (let columnIndex = 0; columnIndex < columnCount; columnIndex++) {
+					$selectedSquare = $selectedSquare.next();
+				}
+			}
+		},
+		selectWord: function(event) {
+			const $input = $(event.target);
+			const acrossLength = $input.data('across-answer-length');
+			const downLength = $input.data('down-answer-length');
+			const columnCount = $input.closest('.grid').data('column-count');
+			const $square = $input.closest('.square');
+			const isSelected = $square.hasClass('selected');
+			const isSelectedAcross = $square.hasClass('selected--across');
+			const isSelectedDown = $square.hasClass('selected--down');
+			const isFirstLetterOfAcross = !isNaN(acrossLength);
+			const isFirstLetterOfDown = !isNaN(downLength);
+			
+			if (!isSelected) {
+				if (isFirstLetterOfAcross) {
+					this.selectAcross($square, acrossLength);
+				} else if (isFirstLetterOfDown) {
+					this.selectDown($square, downLength, columnCount);
+				}
+			} else {
+				if (isSelectedAcross && isFirstLetterOfDown) {
+					this.selectDown($square, downLength, columnCount);
+				}
+				if (isSelectedDown && isFirstLetterOfAcross) {
+					this.selectAcross($square, acrossLength);
+				}
+			}
+		},
+		validateInput: function(event) {
 			let $input = $(event.target);
-			let enteredLetter = event.target.value.toUpperCase();
-			console.log("enteredLetter:", enteredLetter);
-			let correctLetter = $input.data('answer');
-			console.log("correctLetter:", correctLetter);
+			// let enteredLetter = event.target.value.toUpperCase();
+			// let correctLetter = $input.data('answer');
+
 			if ($input.closest('.square').next().find('.square__inner--full').length) {
 				$input.closest('.square').next().find('.square__inner--full').find('.square__letter').focus();
 			} else {
@@ -103,6 +189,9 @@ export default {
 		height: 0;
 		padding-bottom: 100%;
 		position: relative;
+		&.selected {
+			outline: 1px solid orange;
+		}
 		&__inner {
 			position: absolute;
 			top: 0;
@@ -132,14 +221,18 @@ export default {
 			&::placeholder {
 				color: gray;
 			}
+			&:focus {
+				outline: none;
+				background: #333;
+			}
 		}
 		&__number {
 			position: absolute;
 			z-index: 1;
 			top: 0.5vw;
 			left: 0.5vw;
-			font-size: 0.8vw;
-			line-height: 0.8vw;
+			font-size: 1vw;
+			line-height: 1vw;
 			font-weight: 500;
 			color: white;
 		}
