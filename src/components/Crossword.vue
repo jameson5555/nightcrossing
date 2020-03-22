@@ -3,7 +3,7 @@
 		<!-- <h1>Today's Crossword:<br/>{{ data.title }}</h1>
 		<p>{{ data.dow }}<br/>By: {{ data.author }}<br/><small>&copy; {{ data.copyright }}</small></p> -->
 
-		<div class="crossword__grid mb-3">
+		<div class="crossword__grid mb-3 mt-3">
 			<div 
 				class="grid" 
 				:data-column-count="columnCount" 
@@ -19,6 +19,8 @@
 							type="text" 
 							v-on:click="selectWord" 
 							v-on:keyup="validateInput" 
+							v-on:keydown="handleKeydown" 
+							:data-is-first-letter="gridItem.isFirstLetter" 
 							:data-across-clue-index="gridItem.acrossClueIndex" 
 							:data-across-answer-length="gridItem.acrossAnswerLength" 
 							:data-down-clue-index="gridItem.downClueIndex" 
@@ -92,7 +94,7 @@ export default {
 						this.data.clues.across.forEach((clue, clueIndex) => {
 							let clueNumber = clue.split('. ')[0];
 							if (gridItem.number === parseInt(clueNumber)) {
-								gridItem.accrossClueIndex = clueIndex;
+								gridItem.acrossClueIndex = clueIndex;
 								gridItem.acrossAnswerLength = this.data.answers.across[clueIndex].length;
 							}
 						});
@@ -109,12 +111,12 @@ export default {
 					this.grid.push(gridItem);
 				});
 
-				console.log('data:', this.data);
-				console.log('grid:', this.grid);
+				// console.log('data:', this.data);
+				// console.log('grid:', this.grid);
 			})
 		},
 		selectAcross($square, acrossLength) {
-			$square.siblings().removeClass('selected selected--across selected--down');
+			$square.siblings().add($square).removeClass('selected selected--across selected--down');
 			let $selectedSquare = $square;
 
 			for (let index = 0; index < acrossLength; index++) {
@@ -122,13 +124,39 @@ export default {
 				$selectedSquare = $selectedSquare.next();
 			}
 		},
-		selectDown($square, downLength, columnCount) {
-			$square.siblings().removeClass('selected selected--across selected--down');
+		selectDown($square, downLength) {
+			$square.siblings().add($square).removeClass('selected selected--across selected--down');
 			let $selectedSquare = $square;
 			for (let index = 0; index < downLength; index++) {
 				$selectedSquare.addClass('selected selected--down');
-				for (let columnIndex = 0; columnIndex < columnCount; columnIndex++) {
+				for (let columnIndex = 0; columnIndex < this.columnCount; columnIndex++) {
 					$selectedSquare = $selectedSquare.next();
+				}
+			}
+		},
+		findFirstLetterOfAcrossAndSelect($square) {
+			let $previousSquare = $square.prev();
+			while ($previousSquare.length) {
+				if ($previousSquare.find('[data-across-answer-length]').length) {
+					let acrossLength = $previousSquare.find('[data-across-answer-length]').data('across-answer-length');
+					this.selectAcross($previousSquare, acrossLength);
+					break;
+				}
+				$previousSquare = $previousSquare.prev();
+			}
+		},
+		findFirstLetterOfDownAndSelect($square) {
+			for (let columnIndex = 0; columnIndex < this.columnCount; columnIndex++) {
+				$square = $square.prev();
+			}
+			while ($square.length) {
+				if ($square.find('[data-down-answer-length]').length) {
+					let downLength = $square.find('[data-down-answer-length]').data('down-answer-length');
+					this.selectDown($square, downLength, this.columnCount);
+					break;
+				}
+				for (let columnIndex = 0; columnIndex < this.columnCount; columnIndex++) {
+					$square = $square.prev();
 				}
 			}
 		},
@@ -136,7 +164,6 @@ export default {
 			const $input = $(event.target);
 			const acrossLength = $input.data('across-answer-length');
 			const downLength = $input.data('down-answer-length');
-			const columnCount = $input.closest('.grid').data('column-count');
 			const $square = $input.closest('.square');
 			const isSelected = $square.hasClass('selected');
 			const isSelectedAcross = $square.hasClass('selected--across');
@@ -148,27 +175,106 @@ export default {
 				if (isFirstLetterOfAcross) {
 					this.selectAcross($square, acrossLength);
 				} else if (isFirstLetterOfDown) {
-					this.selectDown($square, downLength, columnCount);
+					this.selectDown($square, downLength, this.columnCount);
+				} else {
+					this.findFirstLetterOfAcrossAndSelect($square);
 				}
 			} else {
-				if (isSelectedAcross && isFirstLetterOfDown) {
-					this.selectDown($square, downLength, columnCount);
+				if (isSelectedAcross) {
+					if (isFirstLetterOfDown) {
+						this.selectDown($square, downLength, this.columnCount);
+					} else {
+						this.findFirstLetterOfDownAndSelect($square, this.columnCount);
+					}
 				}
-				if (isSelectedDown && isFirstLetterOfAcross) {
-					this.selectAcross($square, acrossLength);
+				if (isSelectedDown) {
+					if (isFirstLetterOfAcross) {
+						this.selectAcross($square, acrossLength);
+					} else {
+						this.findFirstLetterOfAcrossAndSelect($square);
+					}
 				}
 			}
 		},
-		validateInput: function(event) {
-			let $input = $(event.target);
-			// let enteredLetter = event.target.value.toUpperCase();
-			// let correctLetter = $input.data('answer');
-
-			if ($input.closest('.square').next().find('.square__inner--full').length) {
-				$input.closest('.square').next().find('.square__inner--full').find('.square__letter').focus();
+		validateWord: function() {
+			if ($('.square.selected').length === $('.square.selected.correct').length) {
+				$('.square.selected').addClass('complete');
+			}
+		},
+		moveSquareLeft: function($square, $input) {
+			if ($square.prev().find('.square__inner--full').length) {
+				$square.prev().find('.square__inner--full').find('.square__letter').focus();
 			} else {
-				$(event.target).blur();
-				// check for correct word here
+				$input.blur();
+			}
+		},
+		moveSquareUp: function($square, $input) {
+			let $previousSquare = $square;
+			for (let columnIndex = 0; columnIndex < this.columnCount; columnIndex++) {
+				$previousSquare = $previousSquare.prev();
+			}
+			if ($previousSquare.find('.square__inner--full').length) {
+				$previousSquare.find('.square__inner--full').find('.square__letter').focus();
+			} else {
+				$input.blur();
+			}
+		},
+		moveSquareRight: function($square, $input) {
+			if ($square.next().find('.square__inner--full').length) {
+				$square.next().find('.square__inner--full').find('.square__letter').focus();
+			} else {
+				$input.blur();
+			}
+		},
+		moveSquareDown: function($square, $input) {
+			let $nextSquare = $square;
+			for (let columnIndex = 0; columnIndex < this.columnCount; columnIndex++) {
+				$nextSquare = $nextSquare.next();
+			}
+			if ($nextSquare.find('.square__inner--full').length) {
+				$nextSquare.find('.square__inner--full').find('.square__letter').focus();
+			} else {
+				$input.blur();
+			}
+		},
+		validateInput: function(event) {
+			const $input = $(event.target);
+			const keycode = event.which;
+			const $square = $input.closest('.square');
+			const letters = /^[A-Za-z]+$/;
+			const enteredLetter = $input.val().toUpperCase();
+			const correctLetter = $input.data('answer');
+
+			if (keycode === 8) { // backspace
+				if (!$square.hasClass('complete')) {
+					$input.val('');
+				}
+				if ($square.hasClass('selected--across')) {
+					this.moveSquareLeft($square, $input);
+				} else if ($square.hasClass('selected--down')) {
+					this.moveSquareUp($square, $input);
+				}
+				
+			} else {
+				if ($input.val().match(letters)) {
+					if ($square.hasClass('selected--across')) {
+						this.moveSquareRight($square, $input);
+					} else if ($square.hasClass('selected--down')) {
+						this.moveSquareDown($square, $input);
+					}
+					if (enteredLetter === correctLetter) {
+						$square.addClass('correct');
+						this.validateWord();
+					}
+				} else {
+					$input.val('');
+				}
+			}
+		},
+		handleKeydown: function(event) {
+			const keycode = event.which;
+			if (keycode === 8) {
+				event.preventDefault();
 			}
 		}
 	},
@@ -190,7 +296,13 @@ export default {
 		padding-bottom: 100%;
 		position: relative;
 		&.selected {
-			outline: 1px solid orange;
+			outline: 1px solid yellow;
+		}
+		&.correct {
+			//outline: 1px solid orange;
+		}
+		&.complete {
+			//outline: 1px solid orangered;
 		}
 		&__inner {
 			position: absolute;
@@ -224,6 +336,9 @@ export default {
 			&:focus {
 				outline: none;
 				background: #333;
+			}
+			.complete & {
+				color: orangered;
 			}
 		}
 		&__number {
