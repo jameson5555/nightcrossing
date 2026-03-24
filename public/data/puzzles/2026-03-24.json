@@ -1,0 +1,96 @@
+{
+  "id": "2026-03-24",
+  "title": "Daily Syndicated Crossword",
+  "author": "Auto-Fetched",
+  "date": "2026-03-24",
+  "size": {
+    "cols": 5,
+    "rows": 5
+  },
+  "grid": [
+    "S",
+    "O",
+    "L",
+    "A",
+    "R",
+    "E",
+    "P",
+    "I",
+    "C",
+    "S",
+    "C",
+    "E",
+    "N",
+    "T",
+    "S",
+    "R",
+    "R",
+    "E",
+    "S",
+    "T",
+    "E",
+    "A",
+    "S",
+    "E",
+    "S"
+  ],
+  "gridnums": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    0,
+    0,
+    0,
+    0,
+    7,
+    0,
+    0,
+    0,
+    0,
+    8,
+    0,
+    0,
+    0,
+    0,
+    9,
+    0,
+    0,
+    0,
+    0
+  ],
+  "clues": {
+    "across": [
+      "1. Sun-related",
+      "6. Grand tales",
+      "7. Pennies",
+      "8. Relax",
+      "9. Comforts"
+    ],
+    "down": [
+      "1. Hidden",
+      "2. House performing arts",
+      "3. Outlines",
+      "4. Serves (legal)",
+      "5. R&B artists (pl.)"
+    ]
+  },
+  "answers": {
+    "across": [
+      "SOLAR",
+      "EPICS",
+      "CENTS",
+      "RREST",
+      "EASES"
+    ],
+    "down": [
+      "SECRE",
+      "OPERA",
+      "LINES",
+      "ACTSE",
+      "RSSTS"
+    ]
+  }
+}

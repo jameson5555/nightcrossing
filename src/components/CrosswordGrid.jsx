@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import './CrosswordGrid.css';
 import { getCorrectCells } from '../utils/crossword';
+import { savePuzzleProgress } from '../utils/storage';
 
 const CrosswordGrid = ({ 
   puzzleData, 
@@ -12,12 +13,19 @@ const CrosswordGrid = ({
   setDirection,
   activeWordIndices 
 }) => {
-  const { size, grid, gridnums } = puzzleData;
+  const { id, size, grid, gridnums } = puzzleData;
   const cols = size.cols;
   const rows = size.rows;
 
   const inputRefs = useRef([]);
   const correctCells = getCorrectCells(puzzleData, answers);
+
+  // Auto-save progress
+  useEffect(() => {
+    if (id && answers.length > 0) {
+      savePuzzleProgress(id, answers);
+    }
+  }, [answers, id]);
 
   const handleCellClick = (index) => {
     if (grid[index] === '.') return;
