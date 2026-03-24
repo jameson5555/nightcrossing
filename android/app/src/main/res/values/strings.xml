@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Nightcrossing</string>
+    <string name="title_activity_main">Nightcrossing</string>
+    <string name="package_name">com.jamesonmacarthur.nightcrossing</string>
+    <string name="custom_url_scheme">com.jamesonmacarthur.nightcrossing</string>
+</resources>

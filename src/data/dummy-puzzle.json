@@ -1,0 +1,42 @@
+{
+  "title": "A Premium Dark Theme Crossword",
+  "author": "Antigravity",
+  "size": {
+    "cols": 5,
+    "rows": 5
+  },
+  "grid": [
+    "N", "I", "G", "H", "T",
+    "I", "D", "E", "A", "S",
+    "G", "U", "E", "S", "S",
+    "H", "E", "A", "T", "S",
+    "T", "S", "A", "R", "S"
+  ],
+  "gridnums": [
+    1, 2, 3, 4, 5,
+    6, 0, 0, 0, 0,
+    7, 0, 0, 0, 0,
+    8, 0, 0, 0, 0,
+    9, 0, 0, 0, 0
+  ],
+  "clues": {
+    "across": [
+      "1. Dark part of the day",
+      "6. Brainstorms",
+      "7. Make an assumption",
+      "8. Warms up",
+      "9. Old Russian rulers"
+    ],
+    "down": [
+      "1. Time of darkness",
+      "2. 'I ___ clue'",
+      "3. Equipment",
+      "4. Quick rush",
+      "5. Several letters (pl.)"
+    ]
+  },
+  "answers": {
+    "across": [ "NIGHT", "IDEAS", "GUESS", "HEATS", "TSARS" ],
+    "down": [ "NIGHT", "IGUHT", "GEEA", "HAST", "TSSS" ] 
+  }
+}

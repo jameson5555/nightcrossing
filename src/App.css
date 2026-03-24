@@ -1,0 +1,56 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--spacing-sm);
+  gap: var(--spacing-md);
+}
+
+.app-header {
+  padding: var(--spacing-sm) var(--spacing-md);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-text {
+  font-family: var(--font-family-game);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.5rem;
+}
+
+.app-main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.app-footer {
+  height: 30vh;
+  min-height: 200px;
+  display: flex;
+  padding: var(--spacing-md);
+}
+
+.placeholder-board, .placeholder-clues {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  font-family: var(--font-family-game);
+}

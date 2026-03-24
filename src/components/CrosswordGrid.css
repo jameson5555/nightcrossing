@@ -1,0 +1,65 @@
+.crossword-grid {
+  display: grid;
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 1; /* Keep it square assuming cols == rows roughly */
+  background-color: var(--board-bg);
+  border: 2px solid var(--accent-primary);
+  border-radius: var(--border-radius-md);
+  padding: 2px;
+  gap: 1px; /* Divider lines between cells */
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+}
+
+.crossword-cell {
+  position: relative;
+  background-color: var(--cell-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.crossword-cell:not(.cell-block):hover {
+  background-color: var(--cell-focus-bg);
+}
+
+.cell-block {
+  background-color: var(--board-bg);
+  cursor: default;
+}
+
+.cell-selected {
+  background-color: var(--cell-selected);
+  outline: 2px solid var(--accent-primary);
+  z-index: 10;
+}
+
+.cell-number {
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  font-size: 0.6rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  font-family: var(--font-family-ui);
+}
+
+.cell-input {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  text-align: center;
+  color: var(--cell-text);
+  font-family: var(--font-family-game);
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  caret-color: transparent; /* Hide normal cursor, we will handle outline manually */
+}
+
+.cell-input:focus {
+  outline: none;
+}

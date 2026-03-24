@@ -1,0 +1,62 @@
+.clue-list-container {
+  display: flex;
+  width: 100%;
+  gap: var(--spacing-md);
+  height: 100%;
+  overflow: hidden;
+}
+
+.clue-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+.clue-column.active-column {
+  opacity: 1;
+}
+
+.clue-column-title {
+  font-family: var(--font-family-game);
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent-primary);
+  margin-bottom: var(--spacing-sm);
+  border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+  padding-bottom: 4px;
+}
+
+.clue-list {
+  list-style: none;
+  overflow-y: auto;
+  flex: 1;
+  padding-right: var(--spacing-xs);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.clue-item {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+  color: var(--text-secondary);
+}
+
+.clue-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+
+.clue-selected {
+  background-color: var(--cell-selected-word);
+  color: var(--accent-secondary);
+  font-weight: 600;
+}

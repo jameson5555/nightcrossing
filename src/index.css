@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  /* Core Colors */
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #14141e;
+  --bg-glass: rgba(20, 20, 30, 0.6);
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0b0;
+  
+  /* Accents */
+  --accent-primary: #00e5ff; /* Cyber cyan */
+  --accent-secondary: #bf00ff; /* Deep purple */
+  --accent-success: #00ff88;
+  --accent-error: #ff3366;
+  
+  /* Board Colors */
+  --board-bg: #000000;
+  --cell-bg: #1e1e2d;
+  --cell-focus-bg: #2d2d44;
+  --cell-selected: rgba(0, 229, 255, 0.2);
+  --cell-selected-word: rgba(191, 0, 255, 0.15);
+  --cell-text: #00e5ff;
+  
+  /* Layout */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 16px;
+  
+  /* Typography */
+  --font-family-game: 'Exo', sans-serif;
+  --font-family-ui: 'Inter', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family-ui);
+  background: radial-gradient(circle at 50% 0%, #1a1a2e 0%, var(--bg-primary) 70%);
+  color: var(--text-primary);
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  overflow: hidden; /* Prevent body scroll, handle scroll internally */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  height: 100%;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
