@@ -63,3 +63,12 @@
 .cell-input:focus {
   outline: none;
 }
+
+.cell-in-word {
+  background-color: var(--cell-selected-word);
+}
+
+.cell-correct .cell-input {
+  color: var(--accent-success);
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
+}

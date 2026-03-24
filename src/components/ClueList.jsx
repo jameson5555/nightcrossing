@@ -1,7 +1,7 @@
 import React from 'react';
 import './ClueList.css';
 
-const ClueList = ({ clues, direction, selectedClueId }) => {
+const ClueList = ({ clues, direction, selectedClueId, onClueClick }) => {
   return (
     <div className="clue-list-container">
       <div className={`clue-column ${direction === 'across' ? 'active-column' : ''}`}>
@@ -11,10 +11,10 @@ const ClueList = ({ clues, direction, selectedClueId }) => {
             const num = clue.split('.')[0];
             const isSelected = selectedClueId === `across-${num}`;
             return (
-              <li 
+               <li 
                 key={idx} 
                 className={`clue-item ${isSelected ? 'clue-selected' : ''}`}
-                onClick={() => {/* will map to grid cell later */}}
+                onClick={() => onClueClick && onClueClick('across', num)}
               >
                 {clue}
               </li>
@@ -33,7 +33,7 @@ const ClueList = ({ clues, direction, selectedClueId }) => {
               <li 
                 key={idx} 
                 className={`clue-item ${isSelected ? 'clue-selected' : ''}`}
-                onClick={() => {/* will map to grid cell later */}}
+                onClick={() => onClueClick && onClueClick('down', num)}
               >
                 {clue}
               </li>

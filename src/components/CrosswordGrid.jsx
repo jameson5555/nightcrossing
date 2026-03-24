@@ -1,16 +1,23 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import './CrosswordGrid.css';
+import { getCorrectCells } from '../utils/crossword';
 
-const CrosswordGrid = ({ puzzleData }) => {
-  const [selectedCell, setSelectedCell] = useState(null);
-  const [direction, setDirection] = useState('across'); // 'across' or 'down'
-
+const CrosswordGrid = ({ 
+  puzzleData, 
+  answers, 
+  setAnswers, 
+  selectedCell, 
+  setSelectedCell, 
+  direction, 
+  setDirection,
+  activeWordIndices 
+}) => {
   const { size, grid, gridnums } = puzzleData;
   const cols = size.cols;
   const rows = size.rows;
 
-  const [answers, setAnswers] = useState(Array(grid.length).fill(''));
   const inputRefs = useRef([]);
+  const correctCells = getCorrectCells(puzzleData, answers);
 
   const handleCellClick = (index) => {
     if (grid[index] === '.') return;
@@ -106,10 +113,14 @@ const CrosswordGrid = ({ puzzleData }) => {
         const isBlock = cellChar === '.';
         const cellNumber = gridnums[index];
         const isSelected = selectedCell === index;
+        const isActiveWord = activeWordIndices.includes(index);
+        const isCorrectWord = correctCells.has(index);
         
         let cellClass = 'crossword-cell';
         if (isBlock) cellClass += ' cell-block';
         if (isSelected) cellClass += ' cell-selected';
+        else if (isActiveWord) cellClass += ' cell-in-word';
+        if (isCorrectWord) cellClass += ' cell-correct';
 
         return (
           <div 
