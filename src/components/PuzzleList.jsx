@@ -10,19 +10,14 @@ const PuzzleList = ({ onSelectPuzzle }) => {
   useEffect(() => {
     const fetchIndex = async () => {
       try {
-        // Due to the base path being /nightcrossing/ in vite.config.js,
-        // absolute fetches in production need to reflect that.
-        // For local dev, import.meta.env.BASE_URL handles it.
         const baseUrl = import.meta.env.BASE_URL;
         const res = await fetch(`${baseUrl}data/puzzles.json`);
         const data = await res.json();
         setPuzzles(data);
         
-        // Fetch statuses for all puzzles
         const statusMap = {};
         for (const p of data) {
-          // Calculate max possible answers for "Completed" check
-          const totalCells = p.cols * p.rows; // Very rough via total footprint
+          const totalCells = p.cols * p.rows;
           statusMap[p.id] = await checkPuzzleStatus(p.id, totalCells);
         }
         setStatuses(statusMap);
@@ -44,6 +39,8 @@ const PuzzleList = ({ onSelectPuzzle }) => {
       <ul className="puzzle-list">
         {puzzles.map(puzzle => {
           const status = statuses[puzzle.id] || 'New';
+          const gridSize = `${puzzle.cols}x${puzzle.rows}`;
+          
           return (
             <li 
               key={puzzle.id} 
@@ -51,7 +48,10 @@ const PuzzleList = ({ onSelectPuzzle }) => {
               onClick={() => onSelectPuzzle(puzzle.id)}
             >
               <div className="puzzle-info">
-                <span className="puzzle-date">{puzzle.date}</span>
+                <div className="puzzle-meta">
+                  <span className="puzzle-date">{puzzle.date}</span>
+                  <span className="puzzle-size-badge">{gridSize}</span>
+                </div>
                 <span className="puzzle-title">{puzzle.title}</span>
               </div>
               <div className={`puzzle-status status-${status.replace(' ', '')}`}>

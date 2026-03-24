@@ -6,5 +6,29 @@
     "date": "2026-03-24",
     "cols": 5,
     "rows": 5
+  },
+  {
+    "id": "starter-5x5",
+    "title": "The Warmup",
+    "author": "Nightcrossing Editor",
+    "date": "Starter Pack",
+    "cols": 5,
+    "rows": 5
+  },
+  {
+    "id": "starter-10x10",
+    "title": "Standard Fare",
+    "author": "Nightcrossing Editor",
+    "date": "Starter Pack",
+    "cols": 10,
+    "rows": 10
+  },
+  {
+    "id": "starter-15x15",
+    "title": "The Challenger",
+    "author": "Nightcrossing Editor",
+    "date": "Starter Pack",
+    "cols": 15,
+    "rows": 15
   }
 ]

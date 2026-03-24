@@ -48,13 +48,30 @@
 .puzzle-info {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+}
+
+.puzzle-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
 }
 
 .puzzle-date {
   font-size: 0.85rem;
   color: var(--text-secondary);
   font-family: var(--font-family-game);
+}
+
+.puzzle-size-badge {
+  font-size: 0.70rem;
+  font-family: var(--font-family-ui);
+  text-transform: uppercase;
+  color: var(--accent-secondary);
+  border: 1px solid rgba(191, 0, 255, 0.4);
+  background: rgba(191, 0, 255, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
 }
 
 .puzzle-title {
