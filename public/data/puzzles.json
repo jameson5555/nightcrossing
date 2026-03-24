@@ -8,26 +8,26 @@
     "rows": 5
   },
   {
-    "id": "starter-5x5",
-    "title": "The Warmup",
-    "author": "Nightcrossing Editor",
-    "date": "Starter Pack",
-    "cols": 5,
-    "rows": 5
+    "id": "starter-easy",
+    "title": "NY TIMES, MON, JAN 03, 2011",
+    "author": "Ian Livengood",
+    "date": "Easy (Monday) Starter",
+    "cols": 15,
+    "rows": 15
   },
   {
-    "id": "starter-10x10",
-    "title": "Standard Fare",
-    "author": "Nightcrossing Editor",
-    "date": "Starter Pack",
-    "cols": 10,
-    "rows": 10
+    "id": "starter-medium",
+    "title": "NY TIMES, WED, JAN 05, 2011",
+    "author": "Mr. Ed Sessa",
+    "date": "Medium (Wednesday) Starter",
+    "cols": 15,
+    "rows": 15
   },
   {
-    "id": "starter-15x15",
-    "title": "The Challenger",
-    "author": "Nightcrossing Editor",
-    "date": "Starter Pack",
+    "id": "starter-hard",
+    "title": "NY TIMES, FRI, JAN 07, 2011",
+    "author": "Joe DiPietro",
+    "date": "Hard (Friday) Starter",
     "cols": 15,
     "rows": 15
   }

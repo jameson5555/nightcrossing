@@ -10,42 +10,40 @@ const PUZZLES_DIR = path.join(DATA_DIR, 'puzzles');
 const INDEX_FILE = path.join(DATA_DIR, 'puzzles.json');
 
 async function fetchLatestPuzzle() {
-  console.log('Fetching latest crossword puzzle...');
+  console.log('Fetching latest crossword puzzle from historical archive...');
   
   try {
     const today = new Date().toISOString().split('T')[0];
     const OUT_FILE = path.join(PUZZLES_DIR, `${today}.json`);
 
-    // Mock payload (in reality, this would fetch from an API like doshea/nyt_crosswords)
-    const puzzleData = {
-      id: today,
-      title: "Daily Syndicated Crossword",
-      author: "Auto-Fetched",
-      date: today,
-      size: { cols: 5, rows: 5 },
-      grid: [
-        "S", "O", "L", "A", "R",
-        "E", "P", "I", "C", "S",
-        "C", "E", "N", "T", "S",
-        "R", "R", "E", "S", "T",
-        "E", "A", "S", "E", "S"
-      ],
-      gridnums: [
-        1, 2, 3, 4, 5,
-        6, 0, 0, 0, 0,
-        7, 0, 0, 0, 0,
-        8, 0, 0, 0, 0,
-        9, 0, 0, 0, 0
-      ],
-      clues: {
-        across: ["1. Sun-related", "6. Grand tales", "7. Pennies", "8. Relax", "9. Comforts"],
-        down: ["1. Hidden", "2. House performing arts", "3. Outlines", "4. Serves (legal)", "5. R&B artists (pl.)"]
-      },
-      answers: {
-        across: ["SOLAR", "EPICS", "CENTS", "RREST", "EASES"],
-        down: ["SECRE", "OPERA", "LINES", "ACTSE", "RSSTS"]
+    // Fetch a random puzzle from the historical doshea NYT archive
+    let puzzleData = null;
+    let attempts = 0;
+    while (!puzzleData && attempts < 10) {
+      // Random year between 1990 and 2020
+      const year = Math.floor(Math.random() * (2020 - 1990 + 1)) + 1990;
+      // Random month 1-12
+      const month = String(Math.floor(Math.random() * 12) + 1).padStart(2, '0');
+      // Random day 1-28
+      const day = String(Math.floor(Math.random() * 28) + 1).padStart(2, '0');
+      
+      const url = `https://raw.githubusercontent.com/doshea/nyt_crosswords/master/${year}/${month}/${day}.json`;
+      console.log(`Attempting to fetch ${url}...`);
+      
+      const res = await fetch(url);
+      if (res.ok) {
+        puzzleData = await res.json();
       }
-    };
+      attempts++;
+    }
+
+    if (!puzzleData) {
+      throw new Error("Failed to find a valid historical puzzle after 10 attempts.");
+    }
+
+    // Overwrite the ID and date so it acts as "Today's" puzzle for Nightcrossing
+    puzzleData.id = today;
+    puzzleData.title = puzzleData.title || `Daily Crossword (${today})`;
 
     if (!fs.existsSync(DATA_DIR)) {
       fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -64,24 +62,21 @@ async function fetchLatestPuzzle() {
       try {
         indexData = JSON.parse(fs.readFileSync(INDEX_FILE, 'utf-8'));
       } catch (e) {
-        // if empty or corrupted, ignore
+        // ignore
       }
     }
 
-    // Only add if not already in index
     if (!indexData.find(p => p.id === today)) {
       indexData.unshift({
         id: puzzleData.id,
         title: puzzleData.title,
-        author: puzzleData.author,
-        date: puzzleData.date,
+        author: puzzleData.author || "Unknown",
+        date: today,
         cols: puzzleData.size.cols,
         rows: puzzleData.size.rows
       });
       fs.writeFileSync(INDEX_FILE, JSON.stringify(indexData, null, 2));
       console.log(`Successfully updated index file ${INDEX_FILE}`);
-    } else {
-      console.log('Puzzle for today already exists in index.');
     }
 
   } catch (error) {
