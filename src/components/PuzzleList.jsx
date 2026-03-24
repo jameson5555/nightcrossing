@@ -51,6 +51,7 @@ const PuzzleList = ({ onSelectPuzzle }) => {
                 <div className="puzzle-meta">
                   <span className="puzzle-date">{puzzle.date}</span>
                   <span className="puzzle-size-badge">{gridSize}</span>
+                  {puzzle.theme && <span className="puzzle-theme-badge">{puzzle.theme}</span>}
                 </div>
                 <span className="puzzle-title">{puzzle.title}</span>
               </div>

@@ -8,27 +8,39 @@
     "rows": 5
   },
   {
-    "id": "starter-quick",
-    "title": "Quick Play (8 Words)",
-    "author": "Procedural Engine",
+    "id": "starter-space---astronomy",
+    "title": "Space & Astronomy Crossword",
+    "author": "Nightcrossing Engine",
+    "date": "Starter Pack",
+    "cols": 21,
+    "rows": 17,
+    "theme": "Space & Astronomy"
+  },
+  {
+    "id": "starter-food---cooking",
+    "title": "Food & Cooking Crossword",
+    "author": "Nightcrossing Engine",
+    "date": "Starter Pack",
+    "cols": 18,
+    "rows": 18,
+    "theme": "Food & Cooking"
+  },
+  {
+    "id": "starter-ocean---marine-life",
+    "title": "Ocean & Marine Life Crossword",
+    "author": "Nightcrossing Engine",
+    "date": "Starter Pack",
+    "cols": 22,
+    "rows": 15,
+    "theme": "Ocean & Marine Life"
+  },
+  {
+    "id": "starter-music---sound",
+    "title": "Music & Sound Crossword",
+    "author": "Nightcrossing Engine",
     "date": "Starter Pack",
     "cols": 17,
-    "rows": 13
-  },
-  {
-    "id": "starter-standard",
-    "title": "Standard Challenge (15 Words)",
-    "author": "Procedural Engine",
-    "date": "Starter Pack",
-    "cols": 23,
-    "rows": 23
-  },
-  {
-    "id": "starter-marathon",
-    "title": "Marathon Grid (25 Words)",
-    "author": "Procedural Engine",
-    "date": "Starter Pack",
-    "cols": 27,
-    "rows": 23
+    "rows": 16,
+    "theme": "Music & Sound"
   }
 ]

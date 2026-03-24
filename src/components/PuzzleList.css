@@ -74,6 +74,17 @@
   border-radius: 4px;
 }
 
+.puzzle-theme-badge {
+  font-size: 0.70rem;
+  font-family: var(--font-family-ui);
+  text-transform: uppercase;
+  color: var(--accent-primary);
+  border: 1px solid rgba(0, 229, 255, 0.4);
+  background: rgba(0, 229, 255, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
 .puzzle-title {
   font-size: 1.1rem;
   font-weight: 600;
