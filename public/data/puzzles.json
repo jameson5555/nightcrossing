@@ -8,27 +8,27 @@
     "rows": 5
   },
   {
-    "id": "starter-easy",
-    "title": "NY TIMES, MON, JAN 03, 2011",
-    "author": "Ian Livengood",
-    "date": "Easy (Monday) Starter",
-    "cols": 15,
-    "rows": 15
+    "id": "starter-quick",
+    "title": "Quick Play (8 Words)",
+    "author": "Procedural Engine",
+    "date": "Starter Pack",
+    "cols": 17,
+    "rows": 13
   },
   {
-    "id": "starter-medium",
-    "title": "NY TIMES, WED, JAN 05, 2011",
-    "author": "Mr. Ed Sessa",
-    "date": "Medium (Wednesday) Starter",
-    "cols": 15,
-    "rows": 15
+    "id": "starter-standard",
+    "title": "Standard Challenge (15 Words)",
+    "author": "Procedural Engine",
+    "date": "Starter Pack",
+    "cols": 23,
+    "rows": 23
   },
   {
-    "id": "starter-hard",
-    "title": "NY TIMES, FRI, JAN 07, 2011",
-    "author": "Joe DiPietro",
-    "date": "Hard (Friday) Starter",
-    "cols": 15,
-    "rows": 15
+    "id": "starter-marathon",
+    "title": "Marathon Grid (25 Words)",
+    "author": "Procedural Engine",
+    "date": "Starter Pack",
+    "cols": 27,
+    "rows": 23
   }
 ]
