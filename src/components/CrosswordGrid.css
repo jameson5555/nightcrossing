@@ -4,11 +4,10 @@
   max-width: 500px;
   aspect-ratio: 1; /* Keep it square assuming cols == rows roughly */
   background-color: var(--board-bg);
-  border: 2px solid var(--accent-primary);
   border-radius: var(--border-radius-md);
-  padding: 2px;
+  padding: 10px;
   gap: 1px; /* Divider lines between cells */
-  box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
 }
 
 .crossword-cell {
