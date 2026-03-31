@@ -69,6 +69,23 @@ const CrosswordGrid = ({
     }
   };
 
+  const handleChange = (index, e) => {
+    const val = e.target.value;
+    const char = val.slice(-1);
+    if (/^[a-zA-Z]$/.test(char)) {
+      const newAnswers = [...answers];
+      newAnswers[index] = char.toUpperCase();
+      setAnswers(newAnswers);
+      moveToNextCell(index, direction, 1);
+    } else if (val === '') {
+      const newAnswers = [...answers];
+      if (newAnswers[index] !== '') {
+        newAnswers[index] = '';
+        setAnswers(newAnswers);
+      }
+    }
+  };
+
   const handleKeyDown = (index, e) => {
     if (e.key === 'ArrowUp') {
       e.preventDefault();
@@ -142,9 +159,8 @@ const CrosswordGrid = ({
                 ref={el => inputRefs.current[index] = el}
                 type="text" 
                 className="cell-input" 
-                maxLength={1} 
                 value={answers[index] || ''} 
-                onChange={() => {}}
+                onChange={(e) => handleChange(index, e)}
                 onKeyDown={(e) => handleKeyDown(index, e)}
                 autoComplete="off"
                 spellCheck="false"
