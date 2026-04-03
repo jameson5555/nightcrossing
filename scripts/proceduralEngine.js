@@ -334,7 +334,7 @@ const THEMES = [
 ];
 
 // ─── Puzzle Generation Engine ──────────────────────────────────────────────
-function generateBestLayout(words, attempts = 200, maxWords = 14) {
+function generateBestLayout(words, attempts = 4000, maxWords = 18) {
   let best = null;
   let bestScore = -1000;
 
@@ -359,16 +359,14 @@ function generateBestLayout(words, attempts = 200, maxWords = 14) {
     const density = filled / total;
     const placedRatio = layout.result.length / maxWords;
     
-    // Penalize large dimensions heavily
-    let sizePenalty = 0;
-    if (layout.rows > 10) sizePenalty += (layout.rows - 10) * 0.15;
-    if (layout.cols > 10) sizePenalty += (layout.cols - 10) * 0.15;
+    // Severely penalize large footprint areas to force density
+    const areaPenalty = total > 100 ? (total - 100) * 0.1 : 0;
     
     // Penalize highly rectangular/not-square grids
     const ratio = Math.max(layout.rows / layout.cols, layout.cols / layout.rows);
-    const ratioPenalty = ratio > 1.3 ? (ratio - 1.3) * 0.2 : 0;
+    const ratioPenalty = ratio > 1.3 ? (ratio - 1.3) * 0.5 : 0;
 
-    const score = (density * 0.5) + (placedRatio * 0.5) - sizePenalty - ratioPenalty;
+    const score = (density * 10.0) + (placedRatio * 2.0) - areaPenalty - ratioPenalty;
 
     if (score > bestScore) {
       bestScore = score;
@@ -439,15 +437,25 @@ function layoutToNightcrossing(layout, id, title, themeName) {
   const clues = { across: [], down: [] };
   const answers = { across: [], down: [] };
 
-  // Sort by position number
+  // Generate standard crossword numbering
+  let currentNum = 1;
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const startingWords = result.filter(w => w.startx - 1 === c && w.starty - 1 === r);
+      if (startingWords.length > 0) {
+        gridnums[r * cols + c] = currentNum;
+        for (let w of startingWords) {
+          w.position = currentNum;
+        }
+        currentNum++;
+      }
+    }
+  }
+
+  // Sort by position number before pushing to clues
   result.sort((a, b) => a.position - b.position);
 
   result.forEach(item => {
-    const x = item.startx - 1;
-    const y = item.starty - 1;
-    const idx = y * cols + x;
-    gridnums[idx] = item.position;
-
     const prefix = `${item.position}. `;
     if (item.orientation === 'across') {
       clues.across.push(prefix + item.clue);
@@ -476,8 +484,8 @@ export function generateThemedPuzzle(id, overrideTheme) {
   const theme = overrideTheme || THEMES[Math.floor(Math.random() * THEMES.length)];
   console.log(`Theme: ${theme.name}`);
 
-  // Increase attempts slightly since we are demanding higher constraints
-  const layout = generateBestLayout(theme.words, 300, 14);
+  // Push for extreme density with high attempts
+  const layout = generateBestLayout(theme.words, 4000, 18);
   const title = `${theme.name} Crossword`;
 
   return layoutToNightcrossing(layout, id, title, theme.name);
