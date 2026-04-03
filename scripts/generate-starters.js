@@ -9,52 +9,49 @@ const DATA_DIR = path.join(__dirname, '../public/data');
 const PUZZLES_DIR = path.join(DATA_DIR, 'puzzles');
 const INDEX_FILE = path.join(DATA_DIR, 'puzzles.json');
 
-function generateStarters() {
-    if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-    if (!fs.existsSync(PUZZLES_DIR)) fs.mkdirSync(PUZZLES_DIR, { recursive: true });
+// Ensure directories exist
+if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+if (!fs.existsSync(PUZZLES_DIR)) fs.mkdirSync(PUZZLES_DIR, { recursive: true });
 
-    // Remove old starter files
-    const oldIds = ['starter-5x5', 'starter-10x10', 'starter-15x15', 'starter-easy', 'starter-medium', 'starter-hard', 'starter-quick', 'starter-standard', 'starter-marathon'];
-    for (const id of oldIds) {
-        const f = path.join(PUZZLES_DIR, `${id}.json`);
-        if (fs.existsSync(f)) fs.unlinkSync(f);
-    }
+async function generateStarters() {
+  console.log('Generating compact starter puzzles...');
+  
+  const index = [];
+  const PUZZLES_PER_THEME = 3;
 
-    let indexData = [];
-    if (fs.existsSync(INDEX_FILE)) {
-        indexData = JSON.parse(fs.readFileSync(INDEX_FILE, 'utf-8'));
-    }
-    // Remove old starters from index
-    indexData = indexData.filter(idx => !idx.id.startsWith('starter-'));
-
-    // Generate one puzzle per theme
-    const starters = THEMES.slice(0, 4).map((theme, i) => ({
-        id: `starter-${theme.name.toLowerCase().replace(/[^a-z]/g, '-')}`,
-        theme
-    }));
-
-    for (const s of starters) {
-        console.log(`\n--- Generating ${s.theme.name} Starter ---`);
-        const puzzleData = generateThemedPuzzle(s.id, s.theme);
-        puzzleData.date = "Starter Pack";
-
-        const outFile = path.join(PUZZLES_DIR, `${s.id}.json`);
-        fs.writeFileSync(outFile, JSON.stringify(puzzleData, null, 2));
-
-        indexData.push({
-            id: puzzleData.id,
-            title: puzzleData.title,
-            author: puzzleData.author,
-            date: puzzleData.date,
-            cols: puzzleData.size.cols,
-            rows: puzzleData.size.rows,
-            theme: puzzleData.theme
+  for (const theme of THEMES) {
+    for (let i = 1; i <= PUZZLES_PER_THEME; i++) {
+        const id = `starter-${theme.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}-vol${i}`;
+        console.log(`Working on ${id}...`);
+        
+        let puzzle = generateThemedPuzzle(id, theme);
+        puzzle.title = `${theme.name} Crossword Vol. ${i}`;
+        puzzle.date = `Starter Pack Vol. ${i}`;
+        
+        // Save individual file
+        fs.writeFileSync(
+          path.join(PUZZLES_DIR, `${id}.json`), 
+          JSON.stringify(puzzle, null, 2)
+        );
+        
+        // Add to index
+        index.push({
+          id: puzzle.id,
+          title: puzzle.title,
+          author: puzzle.author,
+          date: puzzle.date,
+          cols: puzzle.size.cols,
+          rows: puzzle.size.rows,
+          theme: puzzle.theme
         });
-        console.log(`Created: ${puzzleData.title} (${puzzleData.size.cols}x${puzzleData.size.rows})`);
+        
+        console.log(`Generated: ${puzzle.size.cols}x${puzzle.size.rows}`);
     }
+  }
 
-    fs.writeFileSync(INDEX_FILE, JSON.stringify(indexData, null, 2));
-    console.log("\nAll themed starter puzzles generated!");
+  // Write index
+  fs.writeFileSync(INDEX_FILE, JSON.stringify(index, null, 2));
+  console.log(`\nSuccessfully generated ${index.length} puzzles and saved index.`);
 }
 
 generateStarters();

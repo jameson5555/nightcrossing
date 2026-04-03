@@ -334,16 +334,21 @@ const THEMES = [
 ];
 
 // ─── Puzzle Generation Engine ──────────────────────────────────────────────
-function generateBestLayout(words, attempts = 100) {
+function generateBestLayout(words, attempts = 200, maxWords = 14) {
   let best = null;
-  let bestScore = -1;
+  let bestScore = -1000;
 
   for (let i = 0; i < attempts; i++) {
     const shuffled = [...words].sort(() => Math.random() - 0.5);
-    const input = shuffled.map(w => ({ answer: w.answer.toLowerCase(), clue: w.clue }));
-    const layout = generateLayout(input);
+    // Use a subset of words to explicitly keep puzzles small
+    const subset = shuffled.slice(0, maxWords);
+    const input = subset.map(w => ({ answer: w.answer.toLowerCase(), clue: w.clue }));
+    let layout = generateLayout(input);
+    
+    // Trim early to check true dimensions
+    layout = trimGrid(layout);
+    if (!layout.table || layout.rows === 0 || layout.cols === 0) continue;
 
-    // Score: prioritize density * wordsPlaced
     let filled = 0;
     for (let r = 0; r < layout.rows; r++) {
       for (let c = 0; c < layout.cols; c++) {
@@ -352,8 +357,18 @@ function generateBestLayout(words, attempts = 100) {
     }
     const total = layout.rows * layout.cols;
     const density = filled / total;
-    const placedRatio = layout.result.length / words.length;
-    const score = density * 0.6 + placedRatio * 0.4;
+    const placedRatio = layout.result.length / maxWords;
+    
+    // Penalize large dimensions heavily
+    let sizePenalty = 0;
+    if (layout.rows > 10) sizePenalty += (layout.rows - 10) * 0.15;
+    if (layout.cols > 10) sizePenalty += (layout.cols - 10) * 0.15;
+    
+    // Penalize highly rectangular/not-square grids
+    const ratio = Math.max(layout.rows / layout.cols, layout.cols / layout.rows);
+    const ratioPenalty = ratio > 1.3 ? (ratio - 1.3) * 0.2 : 0;
+
+    const score = (density * 0.5) + (placedRatio * 0.5) - sizePenalty - ratioPenalty;
 
     if (score > bestScore) {
       bestScore = score;
@@ -405,6 +420,7 @@ function trimGrid(layout) {
 }
 
 function layoutToNightcrossing(layout, id, title, themeName) {
+  // If already trimmed by generateBestLayout, we can still run it safely
   const trimmed = trimGrid(layout);
   const { table, result, rows, cols } = trimmed;
 
@@ -460,7 +476,8 @@ export function generateThemedPuzzle(id, overrideTheme) {
   const theme = overrideTheme || THEMES[Math.floor(Math.random() * THEMES.length)];
   console.log(`Theme: ${theme.name}`);
 
-  const layout = generateBestLayout(theme.words, 150);
+  // Increase attempts slightly since we are demanding higher constraints
+  const layout = generateBestLayout(theme.words, 300, 14);
   const title = `${theme.name} Crossword`;
 
   return layoutToNightcrossing(layout, id, title, theme.name);

@@ -37,6 +37,8 @@
   border-radius: var(--border-radius-md);
   cursor: pointer;
   transition: all 0.2s ease;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
 }
 
 .puzzle-list-item:hover {
@@ -55,6 +57,7 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
+  flex-wrap: wrap;
 }
 
 .puzzle-date {
@@ -98,6 +101,7 @@
   padding: 4px 8px;
   border-radius: 20px;
   font-family: var(--font-family-ui);
+  white-space: nowrap;
 }
 
 .status-New {
