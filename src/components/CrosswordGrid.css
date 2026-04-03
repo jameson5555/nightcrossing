@@ -43,6 +43,7 @@
   font-weight: 500;
   color: var(--text-secondary);
   font-family: var(--font-family-ui);
+  pointer-events: none;
 }
 
 .cell-input {

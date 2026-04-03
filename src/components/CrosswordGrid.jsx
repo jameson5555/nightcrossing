@@ -46,7 +46,7 @@ const CrosswordGrid = ({
     }
   }, [selectedCell]);
 
-  const getNextIndex = (currentIndex, dir, step) => {
+  const getNextIndex = (currentIndex, dir, step, skipCorrect = false) => {
     let nextIndex = currentIndex;
     while (true) {
       if (dir === 'across') {
@@ -60,13 +60,16 @@ const CrosswordGrid = ({
       }
 
       if (grid[nextIndex] !== '.') {
+        if (skipCorrect && correctCells.has(nextIndex)) {
+            continue; // Skip this correctly solved cell
+        }
         return nextIndex;
       }
     }
   };
 
-  const moveToNextCell = (currentIndex, dir, step) => {
-    const nextIndex = getNextIndex(currentIndex, dir, step);
+  const moveToNextCell = (currentIndex, dir, step, skipCorrect = false) => {
+    const nextIndex = getNextIndex(currentIndex, dir, step, skipCorrect);
     if (nextIndex !== -1) {
       setSelectedCell(nextIndex);
     }
@@ -76,15 +79,19 @@ const CrosswordGrid = ({
     const val = e.target.value;
     const char = val.slice(-1);
     if (/^[a-zA-Z]$/.test(char)) {
-      const newAnswers = [...answers];
-      newAnswers[index] = char.toUpperCase();
-      setAnswers(newAnswers);
-      moveToNextCell(index, direction, 1);
-    } else if (val === '') {
-      const newAnswers = [...answers];
-      if (newAnswers[index] !== '') {
-        newAnswers[index] = '';
+      if (!correctCells.has(index)) {
+        const newAnswers = [...answers];
+        newAnswers[index] = char.toUpperCase();
         setAnswers(newAnswers);
+      }
+      moveToNextCell(index, direction, 1, true);
+    } else if (val === '') {
+      if (!correctCells.has(index)) {
+        const newAnswers = [...answers];
+        if (newAnswers[index] !== '') {
+          newAnswers[index] = '';
+          setAnswers(newAnswers);
+        }
       }
     }
   };
@@ -109,23 +116,28 @@ const CrosswordGrid = ({
     } else if (e.key === 'Backspace') {
       e.preventDefault();
       const newAnswers = [...answers];
-      if (newAnswers[index] !== '') {
+      if (newAnswers[index] !== '' && !correctCells.has(index)) {
         newAnswers[index] = '';
         setAnswers(newAnswers);
       } else {
-        const prevIndex = getNextIndex(index, direction, -1);
+        // Find previous cell, skipping correctly solved ones
+        const prevIndex = getNextIndex(index, direction, -1, true);
         if (prevIndex !== -1) {
-          newAnswers[prevIndex] = '';
-          setAnswers(newAnswers);
+          if (!correctCells.has(prevIndex)) {
+            newAnswers[prevIndex] = '';
+            setAnswers(newAnswers);
+          }
           setSelectedCell(prevIndex);
         }
       }
     } else if (/^[a-zA-Z]$/.test(e.key)) {
       e.preventDefault();
-      const newAnswers = [...answers];
-      newAnswers[index] = e.key.toUpperCase();
-      setAnswers(newAnswers);
-      moveToNextCell(index, direction, 1);
+      if (!correctCells.has(index)) {
+        const newAnswers = [...answers];
+        newAnswers[index] = e.key.toUpperCase();
+        setAnswers(newAnswers);
+      }
+      moveToNextCell(index, direction, 1, true);
     }
   };
 
