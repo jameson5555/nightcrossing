@@ -77,6 +77,12 @@ const CrosswordGrid = ({
     const nextIndex = getNextIndex(currentIndex, dir, step, skipCorrect);
     if (nextIndex !== -1) {
       setSelectedCell(nextIndex);
+      // Auto-select the correct direction if the current one has no clue for this cell
+      // We must check if `direction` is currently valid. If not, switch it.
+      const currentWord = getWordAt(nextIndex, direction, puzzleData, answers);
+      if (currentWord && currentWord.clueIndex === -1) {
+        setDirection(direction === 'across' ? 'down' : 'across');
+      }
     }
   };
 
