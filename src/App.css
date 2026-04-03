@@ -16,6 +16,7 @@
   align-items: center;
   position: relative;
   min-height: 52px;
+  flex-shrink: 0;
   overflow: hidden;
 }
 
@@ -39,7 +40,7 @@
   align-items: center;
   position: relative;
   overflow-y: auto;
-  padding-bottom: 60px; /* Space for fixed active clue */
+  min-height: 0;
 }
 
 .app-footer {
@@ -65,7 +66,7 @@
   left: var(--spacing-md);
   background: transparent;
   border: none;
-  color: var(--text-primary);
+  color: var(--text-secondary);
   padding: 6px;
   border-radius: var(--border-radius-sm);
   cursor: pointer;
@@ -92,7 +93,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--bg-default);
+  background: var(--bg-primary);
   padding: var(--spacing-sm) var(--spacing-md);
   padding-left: calc(var(--spacing-md) + 40px);
   display: flex;
