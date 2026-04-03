@@ -46,19 +46,28 @@ body {
   font-family: var(--font-family-ui);
   background: radial-gradient(circle at 50% 0%, #1a1a2e 0%, var(--bg-primary) 70%);
   color: var(--text-primary);
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   overflow: hidden; /* Prevent body scroll, handle scroll internally */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 html {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
 #root {
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
