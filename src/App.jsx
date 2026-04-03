@@ -17,7 +17,7 @@ function App() {
     try {
       // Show loading or transition
       const baseUrl = import.meta.env.BASE_URL;
-      const res = await fetch(`${baseUrl}data/puzzles/${id}.json`);
+      const res = await fetch(`${baseUrl}data/puzzles/${id}.json?t=${Date.now()}`);
       const data = await res.json();
       setPuzzleData(data);
 

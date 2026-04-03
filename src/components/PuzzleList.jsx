@@ -11,7 +11,7 @@ const PuzzleList = ({ onSelectPuzzle }) => {
     const fetchIndex = async () => {
       try {
         const baseUrl = import.meta.env.BASE_URL;
-        const res = await fetch(`${baseUrl}data/puzzles.json`);
+        const res = await fetch(`${baseUrl}data/puzzles.json?t=${Date.now()}`);
         const data = await res.json();
         setPuzzles(data);
         
