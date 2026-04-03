@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import './CrosswordGrid.css';
-import { getCorrectCells } from '../utils/crossword';
+import { getCorrectCells, getWordAt } from '../utils/crossword';
 import { savePuzzleProgress } from '../utils/storage';
 
 const CrosswordGrid = ({ 
@@ -34,6 +34,11 @@ const CrosswordGrid = ({
       setDirection(direction === 'across' ? 'down' : 'across');
     } else {
       setSelectedCell(index);
+      // Auto-select the correct direction if the current one has no clue for this cell
+      const currentWord = getWordAt(index, direction, puzzleData, answers);
+      if (currentWord && currentWord.clueIndex === -1) {
+        setDirection(direction === 'across' ? 'down' : 'across');
+      }
     }
   };
 

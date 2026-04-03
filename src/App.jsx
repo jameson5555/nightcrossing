@@ -66,11 +66,21 @@ function App() {
     <div className="app-container animate-fade-in">
       <header className="app-header glass-panel">
         {currentView === 'play' && (
-          <button className="back-btn" onClick={handleBackToMenu}>
-            ← Menu
+          <button className="back-btn" onClick={handleBackToMenu} aria-label="Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
           </button>
         )}
         <h1 className="logo-text">Nightcrossing</h1>
+        {currentView === 'play' && puzzleData && (
+          <div className={`floating-active-clue ${activeClueText ? 'visible' : ''}`}>
+            <span className="floating-clue-num">{activeWord?.clueNum}{direction === 'across' ? 'a' : 'd'}</span>
+            <p className="floating-clue-text">{activeClueText ? activeClueText.split('. ')[1] || activeClueText : ''}</p>
+          </div>
+        )}
       </header>
 
       <main className="app-main">
@@ -112,13 +122,6 @@ function App() {
           </div>
         )}
       </footer>
-
-      {currentView === 'play' && puzzleData && (
-        <div className={`floating-active-clue ${activeClueText ? 'visible' : ''}`}>
-          <span className="floating-clue-num">{activeWord?.clueNum}{direction === 'across' ? 'a' : 'd'}</span>
-          <p className="floating-clue-text">{activeClueText ? activeClueText.split('. ')[1] || activeClueText : ''}</p>
-        </div>
-      )}
     </div>
   );
 }

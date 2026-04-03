@@ -14,6 +14,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  min-height: 52px;
+  overflow: hidden;
 }
 
 .logo-text {
@@ -60,40 +63,44 @@
 .back-btn {
   position: absolute;
   left: var(--spacing-md);
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  border: none;
   color: var(--text-primary);
-  padding: 6px 12px;
+  padding: 6px;
   border-radius: var(--border-radius-sm);
   cursor: pointer;
-  font-family: var(--font-family-ui);
-  font-weight: 500;
-  transition: background 0.2s;
+  z-index: 200;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.2s, background 0.2s;
+}
+
+.back-btn svg {
+  width: 24px;
+  height: 24px;
 }
 
 .back-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.back-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0.8;
 }
 
 .floating-active-clue {
-  position: fixed;
-  bottom: 0;
+  position: absolute;
+  top: 0;
   left: 0;
   width: 100%;
+  height: 100%;
   background: var(--bg-default);
   padding: var(--spacing-sm) var(--spacing-md);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
+  padding-left: calc(var(--spacing-md) + 40px);
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
   z-index: 100;
   font-family: var(--font-family-ui);
-  transform: translateY(100%);
+  transform: translateY(-100%);
   transition: transform 0.3s ease;
   pointer-events: none;
   opacity: 0;
