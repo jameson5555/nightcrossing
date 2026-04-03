@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import './ClueList.css';
 
 const ClueList = ({ clues, direction, selectedClueId, onClueClick }) => {
+  const selectedClueRef = useRef(null);
+
+  useEffect(() => {
+    if (selectedClueRef.current) {
+      selectedClueRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [selectedClueId]);
+
   return (
     <div className="clue-list-container">
       <div className={`clue-column ${direction === 'across' ? 'active-column' : ''}`}>
@@ -13,6 +21,7 @@ const ClueList = ({ clues, direction, selectedClueId, onClueClick }) => {
             return (
                <li 
                 key={idx} 
+                ref={isSelected ? selectedClueRef : null}
                 className={`clue-item ${isSelected ? 'clue-selected' : ''}`}
                 onClick={() => onClueClick && onClueClick('across', num)}
               >
@@ -32,6 +41,7 @@ const ClueList = ({ clues, direction, selectedClueId, onClueClick }) => {
             return (
               <li 
                 key={idx} 
+                ref={isSelected ? selectedClueRef : null}
                 className={`clue-item ${isSelected ? 'clue-selected' : ''}`}
                 onClick={() => onClueClick && onClueClick('down', num)}
               >

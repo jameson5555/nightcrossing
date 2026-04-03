@@ -47,6 +47,11 @@ function App() {
     : null;
   
   const selectedClueId = activeWord ? `${direction}-${activeWord.clueNum}` : null;
+  
+  let activeClueText = null;
+  if (puzzleData && activeWord && activeWord.clueIndex !== -1) {
+    activeClueText = puzzleData.clues[direction][activeWord.clueIndex];
+  }
 
   const handleClueClick = (dir, numStr) => {
     setDirection(dir);
@@ -107,6 +112,13 @@ function App() {
           </div>
         )}
       </footer>
+
+      {currentView === 'play' && puzzleData && (
+        <div className={`floating-active-clue ${activeClueText ? 'visible' : ''}`}>
+          <span className="floating-clue-num">{activeWord?.clueNum}{direction === 'across' ? 'a' : 'd'}</span>
+          <p className="floating-clue-text">{activeClueText ? activeClueText.split('. ')[1] || activeClueText : ''}</p>
+        </div>
+      )}
     </div>
   );
 }

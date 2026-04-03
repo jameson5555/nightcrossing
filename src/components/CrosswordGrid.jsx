@@ -39,7 +39,10 @@ const CrosswordGrid = ({
 
   useEffect(() => {
     if (selectedCell !== null && inputRefs.current[selectedCell]) {
-      inputRefs.current[selectedCell].focus();
+      const inputEl = inputRefs.current[selectedCell];
+      inputEl.focus({ preventScroll: true }); // Prevent browser default jumping
+      // Smoothly scroll the container to center this cell
+      inputEl.parentNode.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }, [selectedCell]);
 
