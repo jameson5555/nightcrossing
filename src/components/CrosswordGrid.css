@@ -72,3 +72,129 @@
   color: var(--accent-success);
   text-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
 }
+
+/* ─── Word Complete Fly-Out Animation ────────────────────────────────── */
+@keyframes wordFlyOut {
+  0% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2.2);
+  }
+}
+
+.word-complete-float {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-family-game);
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--accent-success);
+  text-shadow: 0 0 30px rgba(0, 255, 136, 0.6), 0 0 60px rgba(0, 255, 136, 0.3);
+  z-index: 500;
+  pointer-events: none;
+  animation: wordFlyOut 1s ease-out forwards;
+}
+
+/* ─── Puzzle Complete Overlay ─────────────────────────────────────────── */
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes puzzleWordCascade {
+  0% {
+    opacity: 0.7;
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.6) translateY(-10px);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.2) translateY(-30px);
+  }
+}
+
+@keyframes titleReveal {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.puzzle-complete-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: overlayFadeIn 0.5s ease-out forwards;
+  cursor: pointer;
+}
+
+.puzzle-complete-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  max-width: 90vw;
+}
+
+.puzzle-complete-words {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  max-width: 500px;
+}
+
+.puzzle-complete-word {
+  font-family: var(--font-family-game);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent-success);
+  text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+  opacity: 0;
+  animation: puzzleWordCascade 1.5s ease-out forwards;
+}
+
+.puzzle-complete-title {
+  font-family: var(--font-family-game);
+  font-size: 2rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 6px;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-success));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0;
+  animation: titleReveal 0.6s ease-out 0.8s forwards;
+}
+
+.puzzle-complete-subtitle {
+  font-family: var(--font-family-ui);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  opacity: 0;
+  animation: titleReveal 0.4s ease-out 1.2s forwards;
+}

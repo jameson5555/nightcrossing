@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import './CrosswordGrid.css';
 import { getCorrectCells, getWordAt } from '../utils/crossword';
 import { savePuzzleProgress } from '../utils/storage';
@@ -19,6 +19,70 @@ const CrosswordGrid = ({
 
   const inputRefs = useRef([]);
   const correctCells = getCorrectCells(puzzleData, answers);
+  const prevCorrectWordsRef = useRef(new Set());
+  const [floatingWords, setFloatingWords] = useState([]);
+  const [puzzleComplete, setPuzzleComplete] = useState(false);
+
+  // Gather all words and their correctness
+  const getAllWords = useCallback(() => {
+    const words = [];
+    for (let i = 0; i < grid.length; i++) {
+      if (gridnums[i] > 0 && grid[i] !== '.') {
+        // Check across
+        const prevAcross = i - 1;
+        const isStartAcross = prevAcross < 0 || grid[prevAcross] === '.' || Math.floor(prevAcross/cols) !== Math.floor(i/cols);
+        if (isStartAcross) {
+          const wd = getWordAt(i, 'across', puzzleData, answers);
+          if (wd && wd.clueIndex !== -1) {
+            const answer = puzzleData.answers.across[wd.clueIndex];
+            words.push({ key: `across-${wd.clueNum}`, word: answer, isCorrect: wd.isCorrect, indices: wd.indices });
+          }
+        }
+        // Check down
+        const prevDown = i - cols;
+        const isStartDown = prevDown < 0 || grid[prevDown] === '.';
+        if (isStartDown) {
+          const wd = getWordAt(i, 'down', puzzleData, answers);
+          if (wd && wd.clueIndex !== -1) {
+            const answer = puzzleData.answers.down[wd.clueIndex];
+            words.push({ key: `down-${wd.clueNum}`, word: answer, isCorrect: wd.isCorrect, indices: wd.indices });
+          }
+        }
+      }
+    }
+    return words;
+  }, [grid, gridnums, cols, puzzleData, answers]);
+
+  // Detect newly completed words and trigger animations
+  useEffect(() => {
+    const allWords = getAllWords();
+    const currentCorrectKeys = new Set(allWords.filter(w => w.isCorrect).map(w => w.key));
+    const prevKeys = prevCorrectWordsRef.current;
+
+    // Find newly correct words
+    const newlyCorrect = allWords.filter(w => w.isCorrect && !prevKeys.has(w.key));
+
+    if (newlyCorrect.length > 0) {
+      const newFloaters = newlyCorrect.map(w => ({
+        id: `${w.key}-${Date.now()}`,
+        word: w.word
+      }));
+      setFloatingWords(prev => [...prev, ...newFloaters]);
+
+      // Auto-remove after animation completes (1s)
+      setTimeout(() => {
+        setFloatingWords(prev => prev.filter(f => !newFloaters.some(nf => nf.id === f.id)));
+      }, 1000);
+    }
+
+    // Check if entire puzzle is complete
+    const totalLetterCells = grid.filter(c => c !== '.').length;
+    if (correctCells.size === totalLetterCells && totalLetterCells > 0) {
+      if (!puzzleComplete) setPuzzleComplete(true);
+    }
+
+    prevCorrectWordsRef.current = currentCorrectKeys;
+  }, [answers, getAllWords, correctCells, grid, puzzleComplete]);
 
   // Auto-save progress
   useEffect(() => {
@@ -152,50 +216,87 @@ const CrosswordGrid = ({
     }
   };
 
-  return (
-    <div 
-      className="crossword-grid glass-panel animate-fade-in"
-      style={{
-        gridTemplateColumns: `repeat(${cols}, 1fr)`,
-        gridTemplateRows: `repeat(${rows}, 1fr)`
-      }}
-    >
-      {grid.map((cellChar, index) => {
-        const isBlock = cellChar === '.';
-        const cellNumber = gridnums[index];
-        const isSelected = selectedCell === index;
-        const isActiveWord = activeWordIndices.includes(index);
-        const isCorrectWord = correctCells.has(index);
-        
-        let cellClass = 'crossword-cell';
-        if (isBlock) cellClass += ' cell-block';
-        if (isSelected) cellClass += ' cell-selected';
-        else if (isActiveWord) cellClass += ' cell-in-word';
-        if (isCorrectWord) cellClass += ' cell-correct';
+  const handleDismissComplete = () => {
+    setPuzzleComplete(false);
+  };
 
-        return (
-          <div 
-            key={index} 
-            className={cellClass}
-            onClick={() => handleCellClick(index)}
-          >
-            {!isBlock && <span className="cell-number">{cellNumber > 0 ? cellNumber : ''}</span>}
-            {!isBlock && (
-              <input 
-                ref={el => inputRefs.current[index] = el}
-                type="text" 
-                className="cell-input" 
-                value={answers[index] || ''} 
-                onChange={(e) => handleChange(index, e)}
-                onKeyDown={(e) => handleKeyDown(index, e)}
-                autoComplete="off"
-                spellCheck="false"
-              />
-            )}
+  // Get all words for puzzle-complete animation
+  const allCorrectWords = puzzleComplete ? getAllWords().filter(w => w.isCorrect) : [];
+
+  return (
+    <>
+      <div 
+        className="crossword-grid glass-panel animate-fade-in"
+        style={{
+          gridTemplateColumns: `repeat(${cols}, 1fr)`,
+          gridTemplateRows: `repeat(${rows}, 1fr)`
+        }}
+      >
+        {grid.map((cellChar, index) => {
+          const isBlock = cellChar === '.';
+          const cellNumber = gridnums[index];
+          const isSelected = selectedCell === index;
+          const isActiveWord = activeWordIndices.includes(index);
+          const isCorrectWord = correctCells.has(index);
+          
+          let cellClass = 'crossword-cell';
+          if (isBlock) cellClass += ' cell-block';
+          if (isSelected) cellClass += ' cell-selected';
+          else if (isActiveWord) cellClass += ' cell-in-word';
+          if (isCorrectWord) cellClass += ' cell-correct';
+
+          return (
+            <div 
+              key={index} 
+              className={cellClass}
+              onClick={() => handleCellClick(index)}
+            >
+              {!isBlock && <span className="cell-number">{cellNumber > 0 ? cellNumber : ''}</span>}
+              {!isBlock && (
+                <input 
+                  ref={el => inputRefs.current[index] = el}
+                  type="text" 
+                  className="cell-input" 
+                  value={answers[index] || ''} 
+                  onChange={(e) => handleChange(index, e)}
+                  onKeyDown={(e) => handleKeyDown(index, e)}
+                  autoComplete="off"
+                  spellCheck="false"
+                />
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Floating word-complete animations */}
+      {floatingWords.map(fw => (
+        <div key={fw.id} className="word-complete-float">
+          {fw.word}
+        </div>
+      ))}
+
+      {/* Puzzle complete overlay */}
+      {puzzleComplete && (
+        <div className="puzzle-complete-overlay" onClick={handleDismissComplete}>
+          <div className="puzzle-complete-content">
+            <div className="puzzle-complete-words">
+              {allCorrectWords.map((w, i) => (
+                <span
+                  key={w.key}
+                  className="puzzle-complete-word"
+                  style={{ animationDelay: `${i * 0.08}s` }}
+                >
+                  {w.word}
+                </span>
+              ))}
+            </div>
+            <h2 className="puzzle-complete-title">Puzzle Complete!</h2>
+            <p className="puzzle-complete-subtitle">Tap anywhere to dismiss</p>
           </div>
-        );
-      })}
-    </div>
+        </div>
+      )}
+    </>
   );
 };
 

@@ -87,6 +87,20 @@
   opacity: 0.8;
 }
 
+@keyframes clueArriveFromBottom {
+  0% {
+    transform: translateY(calc(100vh - 100%));
+    opacity: 0.3;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 .floating-active-clue {
   position: absolute;
   top: 0;
@@ -96,20 +110,20 @@
   background: var(--bg-primary);
   padding: var(--spacing-sm) var(--spacing-md);
   padding-left: calc(var(--spacing-md) + 40px);
+  padding-right: calc(var(--spacing-md) + 10px);
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: var(--spacing-sm);
   z-index: 100;
   font-family: var(--font-family-ui);
-  transform: translateY(-100%);
-  transition: transform 0.3s ease;
+  transform: translateY(calc(100vh - 100%));
   pointer-events: none;
   opacity: 0;
 }
 
 .floating-active-clue.visible {
-  transform: translateY(0);
-  opacity: 1;
+  animation: clueArriveFromBottom 0.45s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
   pointer-events: auto;
 }
 
