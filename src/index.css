@@ -15,7 +15,7 @@
   --accent-error: #ff3366;
   
   /* Board Colors */
-  --board-bg: #000000;
+  --board-bg: transparent;
   --cell-bg: #2f2f46;
   --cell-focus-bg: rgba(191, 0, 255, 0.3);
   --cell-selected: rgba(191, 0, 255, 0.3);
