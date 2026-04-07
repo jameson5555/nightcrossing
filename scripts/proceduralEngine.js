@@ -161,10 +161,10 @@ function layoutToNightcrossing(layout, id, title, themeName) {
 }
 
 export function generateThemedPuzzle(id, themeName, availableWords) {
-  console.log(`Theme: ${themeName}`);
+  console.log(`Theme: ${themeName} | Available Words Pool: ${availableWords.length}`);
 
-  // Push for extreme density with high attempts
-  const layout = generateBestLayout(availableWords, 4000, Math.min(25, availableWords.length));
+  // Push for density but prevent memory hanging by limiting layout attempts
+  const layout = generateBestLayout(availableWords, 1500, Math.min(18, availableWords.length));
   const title = `${themeName} Crossword`;
 
   const puzzle = layoutToNightcrossing(layout, id, title, themeName);

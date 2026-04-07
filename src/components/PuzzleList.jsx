@@ -88,6 +88,11 @@ const PuzzleList = ({ onSelectPuzzle }) => {
           {Object.entries(themesMap).map(([theme, themePuzzles]) => {
             const isExpanded = expandedTheme === theme;
             const completedCount = themePuzzles.filter(p => statuses[p.id] === 'Completed').length;
+            
+            // Progressive unlock logic: 3 base + 1 for each completed
+            const unlockedCount = 3 + completedCount;
+            const visiblePuzzles = themePuzzles.slice(0, unlockedCount);
+            
             const totalCount = themePuzzles.length;
 
             return (
@@ -95,7 +100,7 @@ const PuzzleList = ({ onSelectPuzzle }) => {
                 <div className="theme-header" onClick={() => toggleTheme(theme)}>
                   <div className="theme-header-info">
                     <span className="theme-name">{theme}</span>
-                    <span className="theme-progress">{completedCount} / {totalCount} Completed</span>
+                    <span className="theme-progress">{completedCount} / {totalCount} Available Completed</span>
                   </div>
                   <div className="theme-expand-icon">
                     <svg 
@@ -111,7 +116,7 @@ const PuzzleList = ({ onSelectPuzzle }) => {
                 </div>
                 {isExpanded && (
                   <ul className="puzzle-list theme-puzzles">
-                    {themePuzzles.map(renderPuzzleItem)}
+                    {visiblePuzzles.map(renderPuzzleItem)}
                   </ul>
                 )}
               </div>
