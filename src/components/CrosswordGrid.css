@@ -82,36 +82,40 @@
 /* ─── Word Complete Fly-Out Animation ────────────────────────────────── */
 @keyframes wordFlyOut {
   0% {
-    opacity: 0.8;
-    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    transform: scale(1);
   }
   100% {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(2.2);
+    transform: scale(2.5);
   }
 }
 
 .word-complete-float {
   position: absolute;
-  /* top and left set via inline style from JS */
-  transform: translate(-50%, -50%);
+  /* top, left, width, height, fontSize set via inline style from JS */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   font-family: var(--font-family-game);
-  font-size: 1.6rem;
-  font-weight: 800;
-  letter-spacing: 6px;
+  font-weight: 700;
   text-transform: uppercase;
   color: var(--accent-success);
   text-shadow: 0 0 30px rgba(0, 255, 136, 0.6), 0 0 60px rgba(0, 255, 136, 0.3);
   z-index: 500;
   pointer-events: none;
-  white-space: nowrap;
   animation: wordFlyOut 1s ease-out forwards;
 }
 
 .word-float-vertical {
-  writing-mode: vertical-lr;
-  text-orientation: upright;
-  letter-spacing: 2px;
+  flex-direction: column;
+}
+
+.word-float-letter {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* ─── Puzzle Complete Overlay ─────────────────────────────────────────── */

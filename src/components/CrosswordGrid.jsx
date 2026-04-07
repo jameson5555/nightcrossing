@@ -55,28 +55,33 @@ const CrosswordGrid = ({
 
   const gridWrapperRef = useRef(null);
 
-  // Calculate center position of a word's cells relative to the grid wrapper
+  // Calculate the exact bounding box of a word's cells relative to the grid wrapper
   const getWordPosition = (indices) => {
     const rects = indices
       .map(i => cellRefs.current[i]?.getBoundingClientRect())
       .filter(Boolean);
-    if (rects.length === 0) return { top: '40%', left: '50%' };
+    if (rects.length === 0) return null;
 
     const wrapperRect = gridWrapperRef.current?.getBoundingClientRect();
-    if (!wrapperRect) return { top: '40%', left: '50%' };
+    if (!wrapperRect) return null;
 
     const minX = Math.min(...rects.map(r => r.left));
     const maxX = Math.max(...rects.map(r => r.right));
     const minY = Math.min(...rects.map(r => r.top));
     const maxY = Math.max(...rects.map(r => r.bottom));
 
-    // Calculate center relative to the wrapper element
-    const centerX = (minX + maxX) / 2 - wrapperRect.left;
-    const centerY = (minY + maxY) / 2 - wrapperRect.top;
+    // Get computed font size from the actual cell input
+    const firstInput = inputRefs.current[indices[0]];
+    const fontSize = firstInput
+      ? window.getComputedStyle(firstInput).fontSize
+      : '1.8rem';
 
     return {
-      top: `${centerY}px`,
-      left: `${centerX}px`
+      top: `${minY - wrapperRect.top}px`,
+      left: `${minX - wrapperRect.left}px`,
+      width: `${maxX - minX}px`,
+      height: `${maxY - minY}px`,
+      fontSize
     };
   };
 
@@ -91,14 +96,14 @@ const CrosswordGrid = ({
     if (newlyCorrect.length > 0) {
       const newFloaters = newlyCorrect.map(w => {
         const pos = getWordPosition(w.indices);
+        if (!pos) return null;
         return {
           id: `${w.key}-${Date.now()}`,
           word: w.word,
-          top: pos.top,
-          left: pos.left,
-          isVertical: w.dir === 'down'
+          isVertical: w.dir === 'down',
+          ...pos
         };
-      });
+      }).filter(Boolean);
       setFloatingWords(prev => [...prev, ...newFloaters]);
 
       setTimeout(() => {
@@ -309,9 +314,17 @@ const CrosswordGrid = ({
           <div
             key={fw.id}
             className={`word-complete-float${fw.isVertical ? ' word-float-vertical' : ''}`}
-            style={{ top: fw.top, left: fw.left }}
+            style={{
+              top: fw.top,
+              left: fw.left,
+              width: fw.width,
+              height: fw.height,
+              fontSize: fw.fontSize
+            }}
           >
-            {fw.word}
+            {fw.word.split('').map((letter, i) => (
+              <span key={i} className="word-float-letter">{letter}</span>
+            ))}
           </div>
         ))}
       </div>
