@@ -18,7 +18,7 @@
   --board-bg: #000000;
   --cell-bg: #2f2f46;
   --cell-focus-bg: #2d2d44;
-  --cell-selected: rgba(0, 229, 255, 0.2);
+  --cell-selected: rgba(191, 0, 255, 0.2);
   --cell-selected-word: rgba(191, 0, 255, 0.4);
   --cell-text: #00e5ff;
   
