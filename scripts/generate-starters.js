@@ -20,11 +20,18 @@ async function generateStarters() {
   const PUZZLES_PER_THEME = 3;
 
   for (const theme of THEMES) {
+    const consumedWords = new Set();
     for (let i = 1; i <= PUZZLES_PER_THEME; i++) {
         const id = `starter-${theme.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}-vol${i}`;
         console.log(`Working on ${id}...`);
         
-        let puzzle = generateThemedPuzzle(id, theme);
+        const availableWords = theme.words.filter(w => !consumedWords.has(w.answer.toUpperCase()));
+        
+        const { puzzle, usedWords: placedWords } = generateThemedPuzzle(id, theme.name, availableWords);
+        
+        // Track the newly placed words so they aren't used in subsequent volumes
+        placedWords.forEach(w => consumedWords.add(w));
+
         puzzle.title = `${theme.name} Crossword Vol. ${i}`;
         puzzle.date = `Starter Pack Vol. ${i}`;
         
@@ -45,7 +52,7 @@ async function generateStarters() {
           theme: puzzle.theme
         });
         
-        console.log(`Generated: ${puzzle.size.cols}x${puzzle.size.rows}`);
+        console.log(`Generated: ${puzzle.size.cols}x${puzzle.size.rows} (used ${placedWords.length} words, pool remaining: ${availableWords.length - placedWords.length})`);
     }
   }
 
