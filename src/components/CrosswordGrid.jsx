@@ -53,19 +53,30 @@ const CrosswordGrid = ({
     return words;
   }, [grid, gridnums, cols, puzzleData, answers]);
 
-  // Calculate center position of a word's cells on screen
+  const gridWrapperRef = useRef(null);
+
+  // Calculate center position of a word's cells relative to the grid wrapper
   const getWordPosition = (indices) => {
     const rects = indices
       .map(i => cellRefs.current[i]?.getBoundingClientRect())
       .filter(Boolean);
     if (rects.length === 0) return { top: '40%', left: '50%' };
+
+    const wrapperRect = gridWrapperRef.current?.getBoundingClientRect();
+    if (!wrapperRect) return { top: '40%', left: '50%' };
+
     const minX = Math.min(...rects.map(r => r.left));
     const maxX = Math.max(...rects.map(r => r.right));
     const minY = Math.min(...rects.map(r => r.top));
     const maxY = Math.max(...rects.map(r => r.bottom));
+
+    // Calculate center relative to the wrapper element
+    const centerX = (minX + maxX) / 2 - wrapperRect.left;
+    const centerY = (minY + maxY) / 2 - wrapperRect.top;
+
     return {
-      top: `${(minY + maxY) / 2}px`,
-      left: `${(minX + maxX) / 2}px`
+      top: `${centerY}px`,
+      left: `${centerX}px`
     };
   };
 
@@ -247,61 +258,63 @@ const CrosswordGrid = ({
 
   return (
     <>
-      <div 
-        className="crossword-grid glass-panel animate-fade-in"
-        style={{
-          gridTemplateColumns: `repeat(${cols}, 1fr)`,
-          gridTemplateRows: `repeat(${rows}, 1fr)`
-        }}
-      >
-        {grid.map((cellChar, index) => {
-          const isBlock = cellChar === '.';
-          const cellNumber = gridnums[index];
-          const isSelected = selectedCell === index;
-          const isActiveWord = activeWordIndices.includes(index);
-          const isCorrectWord = correctCells.has(index);
-          
-          let cellClass = 'crossword-cell';
-          if (isBlock) cellClass += ' cell-block';
-          if (isSelected) cellClass += ' cell-selected';
-          else if (isActiveWord) cellClass += ' cell-in-word';
-          if (isCorrectWord) cellClass += ' cell-correct';
-
-          return (
-            <div 
-              key={index}
-              ref={el => cellRefs.current[index] = el}
-              className={cellClass}
-              onClick={() => handleCellClick(index)}
-            >
-              {!isBlock && <span className="cell-number">{cellNumber > 0 ? cellNumber : ''}</span>}
-              {!isBlock && (
-                <input 
-                  ref={el => inputRefs.current[index] = el}
-                  type="text" 
-                  className="cell-input" 
-                  value={answers[index] || ''} 
-                  onChange={(e) => handleChange(index, e)}
-                  onKeyDown={(e) => handleKeyDown(index, e)}
-                  autoComplete="off"
-                  spellCheck="false"
-                />
-              )}
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Floating word-complete animations */}
-      {floatingWords.map(fw => (
-        <div
-          key={fw.id}
-          className={`word-complete-float${fw.isVertical ? ' word-float-vertical' : ''}`}
-          style={{ top: fw.top, left: fw.left }}
+      <div className="crossword-grid-wrapper" ref={gridWrapperRef}>
+        <div 
+          className="crossword-grid glass-panel animate-fade-in"
+          style={{
+            gridTemplateColumns: `repeat(${cols}, 1fr)`,
+            gridTemplateRows: `repeat(${rows}, 1fr)`
+          }}
         >
-          {fw.word}
+          {grid.map((cellChar, index) => {
+            const isBlock = cellChar === '.';
+            const cellNumber = gridnums[index];
+            const isSelected = selectedCell === index;
+            const isActiveWord = activeWordIndices.includes(index);
+            const isCorrectWord = correctCells.has(index);
+            
+            let cellClass = 'crossword-cell';
+            if (isBlock) cellClass += ' cell-block';
+            if (isSelected) cellClass += ' cell-selected';
+            else if (isActiveWord) cellClass += ' cell-in-word';
+            if (isCorrectWord) cellClass += ' cell-correct';
+
+            return (
+              <div 
+                key={index}
+                ref={el => cellRefs.current[index] = el}
+                className={cellClass}
+                onClick={() => handleCellClick(index)}
+              >
+                {!isBlock && <span className="cell-number">{cellNumber > 0 ? cellNumber : ''}</span>}
+                {!isBlock && (
+                  <input 
+                    ref={el => inputRefs.current[index] = el}
+                    type="text" 
+                    className="cell-input" 
+                    value={answers[index] || ''} 
+                    onChange={(e) => handleChange(index, e)}
+                    onKeyDown={(e) => handleKeyDown(index, e)}
+                    autoComplete="off"
+                    spellCheck="false"
+                  />
+                )}
+              </div>
+            );
+          })}
         </div>
-      ))}
+
+        {/* Floating word-complete animations */}
+        {floatingWords.map(fw => (
+          <div
+            key={fw.id}
+            className={`word-complete-float${fw.isVertical ? ' word-float-vertical' : ''}`}
+            style={{ top: fw.top, left: fw.left }}
+          >
+            {fw.word}
+          </div>
+        ))}
+      </div>
 
       {/* Puzzle complete overlay */}
       {puzzleComplete && (
