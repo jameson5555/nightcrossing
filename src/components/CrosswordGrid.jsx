@@ -302,6 +302,7 @@ const CrosswordGrid = ({
                     onKeyDown={(e) => handleKeyDown(index, e)}
                     autoComplete="off"
                     spellCheck="false"
+                    autoCapitalize="characters"
                   />
                 )}
               </div>
