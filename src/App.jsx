@@ -12,6 +12,7 @@ function App() {
   const [direction, setDirection] = useState('across');
   const [selectedCell, setSelectedCell] = useState(null);
   const [answers, setAnswers] = useState([]);
+  const [clueAnimPlayed, setClueAnimPlayed] = useState(false);
 
   const handleSelectPuzzle = async (id) => {
     try {

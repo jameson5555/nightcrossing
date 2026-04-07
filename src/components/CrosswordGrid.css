@@ -87,11 +87,10 @@
 
 .word-complete-float {
   position: fixed;
-  top: 40%;
-  left: 50%;
+  /* top and left set via inline style from JS */
   transform: translate(-50%, -50%);
   font-family: var(--font-family-game);
-  font-size: 2.2rem;
+  font-size: 1.6rem;
   font-weight: 800;
   letter-spacing: 6px;
   text-transform: uppercase;
@@ -99,7 +98,14 @@
   text-shadow: 0 0 30px rgba(0, 255, 136, 0.6), 0 0 60px rgba(0, 255, 136, 0.3);
   z-index: 500;
   pointer-events: none;
+  white-space: nowrap;
   animation: wordFlyOut 1s ease-out forwards;
+}
+
+.word-float-vertical {
+  writing-mode: vertical-lr;
+  text-orientation: upright;
+  letter-spacing: 2px;
 }
 
 /* ─── Puzzle Complete Overlay ─────────────────────────────────────────── */

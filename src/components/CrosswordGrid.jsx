@@ -18,8 +18,10 @@ const CrosswordGrid = ({
   const rows = size.rows;
 
   const inputRefs = useRef([]);
+  const cellRefs = useRef([]);
   const correctCells = getCorrectCells(puzzleData, answers);
   const prevCorrectWordsRef = useRef(new Set());
+  const puzzleCompleteShownRef = useRef(false);
   const [floatingWords, setFloatingWords] = useState([]);
   const [puzzleComplete, setPuzzleComplete] = useState(false);
 
@@ -28,24 +30,22 @@ const CrosswordGrid = ({
     const words = [];
     for (let i = 0; i < grid.length; i++) {
       if (gridnums[i] > 0 && grid[i] !== '.') {
-        // Check across
         const prevAcross = i - 1;
         const isStartAcross = prevAcross < 0 || grid[prevAcross] === '.' || Math.floor(prevAcross/cols) !== Math.floor(i/cols);
         if (isStartAcross) {
           const wd = getWordAt(i, 'across', puzzleData, answers);
           if (wd && wd.clueIndex !== -1) {
             const answer = puzzleData.answers.across[wd.clueIndex];
-            words.push({ key: `across-${wd.clueNum}`, word: answer, isCorrect: wd.isCorrect, indices: wd.indices });
+            words.push({ key: `across-${wd.clueNum}`, word: answer, isCorrect: wd.isCorrect, indices: wd.indices, dir: 'across' });
           }
         }
-        // Check down
         const prevDown = i - cols;
         const isStartDown = prevDown < 0 || grid[prevDown] === '.';
         if (isStartDown) {
           const wd = getWordAt(i, 'down', puzzleData, answers);
           if (wd && wd.clueIndex !== -1) {
             const answer = puzzleData.answers.down[wd.clueIndex];
-            words.push({ key: `down-${wd.clueNum}`, word: answer, isCorrect: wd.isCorrect, indices: wd.indices });
+            words.push({ key: `down-${wd.clueNum}`, word: answer, isCorrect: wd.isCorrect, indices: wd.indices, dir: 'down' });
           }
         }
       }
@@ -53,36 +53,58 @@ const CrosswordGrid = ({
     return words;
   }, [grid, gridnums, cols, puzzleData, answers]);
 
+  // Calculate center position of a word's cells on screen
+  const getWordPosition = (indices) => {
+    const rects = indices
+      .map(i => cellRefs.current[i]?.getBoundingClientRect())
+      .filter(Boolean);
+    if (rects.length === 0) return { top: '40%', left: '50%' };
+    const minX = Math.min(...rects.map(r => r.left));
+    const maxX = Math.max(...rects.map(r => r.right));
+    const minY = Math.min(...rects.map(r => r.top));
+    const maxY = Math.max(...rects.map(r => r.bottom));
+    return {
+      top: `${(minY + maxY) / 2}px`,
+      left: `${(minX + maxX) / 2}px`
+    };
+  };
+
   // Detect newly completed words and trigger animations
   useEffect(() => {
     const allWords = getAllWords();
     const currentCorrectKeys = new Set(allWords.filter(w => w.isCorrect).map(w => w.key));
     const prevKeys = prevCorrectWordsRef.current;
 
-    // Find newly correct words
     const newlyCorrect = allWords.filter(w => w.isCorrect && !prevKeys.has(w.key));
 
     if (newlyCorrect.length > 0) {
-      const newFloaters = newlyCorrect.map(w => ({
-        id: `${w.key}-${Date.now()}`,
-        word: w.word
-      }));
+      const newFloaters = newlyCorrect.map(w => {
+        const pos = getWordPosition(w.indices);
+        return {
+          id: `${w.key}-${Date.now()}`,
+          word: w.word,
+          top: pos.top,
+          left: pos.left,
+          isVertical: w.dir === 'down'
+        };
+      });
       setFloatingWords(prev => [...prev, ...newFloaters]);
 
-      // Auto-remove after animation completes (1s)
       setTimeout(() => {
         setFloatingWords(prev => prev.filter(f => !newFloaters.some(nf => nf.id === f.id)));
       }, 1000);
     }
 
-    // Check if entire puzzle is complete
+    // Only fire puzzle complete ONCE, on the exact transition
     const totalLetterCells = grid.filter(c => c !== '.').length;
-    if (correctCells.size === totalLetterCells && totalLetterCells > 0) {
-      if (!puzzleComplete) setPuzzleComplete(true);
+    if (correctCells.size === totalLetterCells && totalLetterCells > 0 && !puzzleCompleteShownRef.current) {
+      puzzleCompleteShownRef.current = true;
+      // Delay so the final word animation plays first
+      setTimeout(() => setPuzzleComplete(true), 600);
     }
 
     prevCorrectWordsRef.current = currentCorrectKeys;
-  }, [answers, getAllWords, correctCells, grid, puzzleComplete]);
+  }, [answers, getAllWords, correctCells, grid]);
 
   // Auto-save progress
   useEffect(() => {
@@ -247,7 +269,8 @@ const CrosswordGrid = ({
 
           return (
             <div 
-              key={index} 
+              key={index}
+              ref={el => cellRefs.current[index] = el}
               className={cellClass}
               onClick={() => handleCellClick(index)}
             >
@@ -271,7 +294,11 @@ const CrosswordGrid = ({
 
       {/* Floating word-complete animations */}
       {floatingWords.map(fw => (
-        <div key={fw.id} className="word-complete-float">
+        <div
+          key={fw.id}
+          className={`word-complete-float${fw.isVertical ? ' word-float-vertical' : ''}`}
+          style={{ top: fw.top, left: fw.left }}
+        >
           {fw.word}
         </div>
       ))}
