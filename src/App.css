@@ -15,9 +15,9 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  min-height: 52px;
+  min-height: 80px;
   flex-shrink: 0;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .logo-text {
@@ -48,6 +48,8 @@
   flex-direction: column;
   height: 100%;
   width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .menu-header {
@@ -104,41 +106,45 @@
 
 @keyframes clueArriveFromBottom {
   0% {
-    transform: translate(-50%, 150px);
+    transform: translateY(100vh);
     opacity: 0;
   }
+  60% {
+    opacity: 1;
+  }
   100% {
-    transform: translate(-50%, 0);
+    transform: translateY(0);
     opacity: 1;
   }
 }
 
 .floating-active-clue {
-  position: fixed;
-  bottom: 40px;
-  left: 50%;
-  transform: translate(-50%, 150px);
-  width: 90%;
-  max-width: 600px;
-  background: rgba(15, 15, 25, 0.95);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 229, 255, 0.3);
-  padding: 16px 24px;
-  border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-  z-index: 9999;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  padding-left: calc(var(--spacing-md) + 40px);
+  padding-right: calc(var(--spacing-md) + 10px);
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 8px;
-  opacity: 0;
-  pointer-events: none;
+  gap: var(--spacing-sm);
+  z-index: 100;
   font-family: var(--font-family-ui);
+  transform: translateY(100vh);
+  pointer-events: none;
+  opacity: 0;
 }
 
 .floating-active-clue.visible {
-  animation: clueArriveFromBottom 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation: clueArriveFromBottom 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
   pointer-events: auto;
 }
 
@@ -151,7 +157,7 @@
 .floating-clue-text {
   flex: 1;
   color: var(--text-primary);
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 500;
   text-align: center;
   margin: 0;
