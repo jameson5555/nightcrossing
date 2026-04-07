@@ -85,12 +85,27 @@ const CrosswordGrid = ({
     };
   };
 
+  const isInitialMount = useRef(true);
+
   // Detect newly completed words and trigger animations
   useEffect(() => {
     const allWords = getAllWords();
     const currentCorrectKeys = new Set(allWords.filter(w => w.isCorrect).map(w => w.key));
-    const prevKeys = prevCorrectWordsRef.current;
+    
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      prevCorrectWordsRef.current = currentCorrectKeys;
+      
+      // Still need to trigger puzzle complete if we loaded a 100% finished puzzle
+      const totalLetterCells = grid.filter(c => c !== '.').length;
+      if (correctCells.size === totalLetterCells && totalLetterCells > 0) {
+        puzzleCompleteShownRef.current = true;
+        setPuzzleComplete(true);
+      }
+      return;
+    }
 
+    const prevKeys = prevCorrectWordsRef.current;
     const newlyCorrect = allWords.filter(w => w.isCorrect && !prevKeys.has(w.key));
 
     if (newlyCorrect.length > 0) {

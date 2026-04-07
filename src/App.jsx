@@ -65,64 +65,68 @@ function App() {
 
   return (
     <div className="app-container animate-fade-in">
-      <header className="app-header glass-panel">
-        {currentView === 'play' && (
-          <button className="back-btn" onClick={handleBackToMenu} aria-label="Menu">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-          </button>
-        )}
-        <h1 className="logo-text">Nightcrossing</h1>
-        {currentView === 'play' && puzzleData && (
-          <div key={selectedClueId} className={`floating-active-clue ${activeClueText ? 'visible' : ''}`}>
-            <span className="floating-clue-num">{activeWord?.clueNum}{direction === 'across' ? 'a' : 'd'}</span>
-            <p className="floating-clue-text">{activeClueText ? activeClueText.split('. ')[1] || activeClueText : ''}</p>
-          </div>
-        )}
-      </header>
-
-      <main className="app-main">
-        {currentView === 'menu' ? (
+      {currentView === 'menu' ? (
+        <div className="menu-container">
+          <header className="menu-header">
+            <h1 className="logo-text">Nightcrossing</h1>
+          </header>
           <PuzzleList onSelectPuzzle={handleSelectPuzzle} />
-        ) : puzzleData ? (
-          <CrosswordGrid 
-            puzzleData={puzzleData} 
-            answers={answers}
-            setAnswers={setAnswers}
-            selectedCell={selectedCell}
-            setSelectedCell={setSelectedCell}
-            direction={direction}
-            setDirection={setDirection}
-            activeWordIndices={activeWord ? activeWord.indices : []}
-          />
-        ) : (
-          <div className="placeholder-board">
-            Loading Today's Puzzle...
-          </div>
-        )}
-      </main>
+        </div>
+      ) : (
+        <>
+          <header className="app-header glass-panel">
+            <button className="back-btn" onClick={handleBackToMenu} aria-label="Menu">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+              </svg>
+            </button>
+            <h1 className="logo-text">Nightcrossing</h1>
+          </header>
 
-      <footer className="app-footer glass-panel">
-        {currentView === 'play' && puzzleData ? (
-          <ClueList 
-            clues={puzzleData.clues} 
-            direction={direction} 
-            selectedClueId={selectedClueId}
-            onClueClick={handleClueClick}
-          />
-        ) : currentView === 'play' ? (
-           <div className="placeholder-clues">
-             Clues Loading...
-           </div>
-        ) : (
-          <div className="placeholder-clues" style={{textAlign: 'center', opacity: 0.5}}>
-             Select a puzzle to view clues.
-          </div>
-        )}
-      </footer>
+          <main className="app-main">
+            {puzzleData ? (
+              <CrosswordGrid 
+                puzzleData={puzzleData} 
+                answers={answers}
+                setAnswers={setAnswers}
+                selectedCell={selectedCell}
+                setSelectedCell={setSelectedCell}
+                direction={direction}
+                setDirection={setDirection}
+                activeWordIndices={activeWord ? activeWord.indices : []}
+              />
+            ) : (
+              <div className="placeholder-board">
+                Loading...
+              </div>
+            )}
+          </main>
+
+          <footer className="app-footer glass-panel">
+            {puzzleData ? (
+              <ClueList 
+                clues={puzzleData.clues} 
+                direction={direction} 
+                selectedClueId={selectedClueId}
+                onClueClick={handleClueClick}
+              />
+            ) : (
+              <div className="placeholder-clues">
+                Clues Loading...
+              </div>
+            )}
+          </footer>
+
+          {puzzleData && (
+            <div key={selectedClueId} className={`floating-active-clue ${activeClueText ? 'visible' : ''}`}>
+              <span className="floating-clue-num">{activeWord?.clueNum}{direction === 'across' ? 'a' : 'd'}</span>
+              <p className="floating-clue-text">{activeClueText ? activeClueText.split('. ')[1] || activeClueText : ''}</p>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 }

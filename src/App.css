@@ -43,6 +43,21 @@
   min-height: 0;
 }
 
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.menu-header {
+  padding: var(--spacing-lg) var(--spacing-md);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
 .app-footer {
   height: 30vh;
   min-height: 200px;
@@ -89,56 +104,58 @@
 
 @keyframes clueArriveFromBottom {
   0% {
-    transform: translateY(calc(100vh - 100%));
-    opacity: 0.3;
-  }
-  60% {
-    opacity: 1;
+    transform: translate(-50%, 150px);
+    opacity: 0;
   }
   100% {
-    transform: translateY(0);
+    transform: translate(-50%, 0);
     opacity: 1;
   }
 }
 
 .floating-active-clue {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--bg-primary);
-  padding: var(--spacing-sm) var(--spacing-md);
-  padding-left: calc(var(--spacing-md) + 40px);
-  padding-right: calc(var(--spacing-md) + 10px);
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translate(-50%, 150px);
+  width: 90%;
+  max-width: 600px;
+  background: rgba(15, 15, 25, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  padding: 16px 24px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  z-index: 9999;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: var(--spacing-sm);
-  z-index: 100;
-  font-family: var(--font-family-ui);
-  transform: translateY(calc(100vh - 100%));
-  pointer-events: none;
+  gap: 8px;
   opacity: 0;
+  pointer-events: none;
+  font-family: var(--font-family-ui);
 }
 
 .floating-active-clue.visible {
-  animation: clueArriveFromBottom 0.45s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  animation: clueArriveFromBottom 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
   pointer-events: auto;
 }
 
 .floating-clue-num {
-  font-weight: 700;
+  font-weight: 800;
   color: var(--accent-primary);
-  min-width: 30px;
+  font-size: 1.1rem;
 }
 
 .floating-clue-text {
   flex: 1;
   color: var(--text-primary);
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 500;
+  text-align: center;
   margin: 0;
+  line-height: 1.4;
 }
 
 @media (max-height: 600px) {
