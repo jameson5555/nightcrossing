@@ -265,7 +265,7 @@ const CrosswordGrid = ({
     <>
       <div className="crossword-grid-wrapper" ref={gridWrapperRef}>
         <div 
-          className="crossword-grid glass-panel animate-fade-in"
+          className="crossword-grid animate-fade-in"
           style={{
             gridTemplateColumns: `repeat(${cols}, 1fr)`,
             gridTemplateRows: `repeat(${rows}, 1fr)`
