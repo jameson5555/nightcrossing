@@ -25,7 +25,7 @@ async function generateStarters() {
     }
   }
 
-  const NEW_PUZZLES_PER_THEME = 3;
+  const NEW_PUZZLES_PER_THEME = 1;
 
   for (const theme of THEMES) {
     const consumedWords = new Set();
