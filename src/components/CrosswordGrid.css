@@ -9,10 +9,8 @@
   width: 100%;
   max-width: 600px;
   background-color: var(--board-bg);
-  border-radius: var(--border-radius-md);
   padding: 10px;
   gap: 1px; /* Divider lines between cells */
-  box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
 }
 
 .crossword-cell {
