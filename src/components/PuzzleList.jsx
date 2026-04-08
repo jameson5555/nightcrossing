@@ -34,7 +34,15 @@ const PuzzleList = ({ onSelectPuzzle }) => {
 
   const [expandedTheme, setExpandedTheme] = useState(null);
 
-  if (loading) return <div className="puzzle-list-loading">Loading Puzzles...</div>;
+  if (loading) {
+    return (
+      <div className="puzzle-list-loading-wrapper">
+        <div className="puzzle-loader" role="status" aria-live="polite" aria-busy="true">
+          <div className="puzzle-loader-ring"></div>
+        </div>
+      </div>
+    );
+  }
 
   const inProgressPuzzles = puzzles.filter(p => statuses[p.id] === 'In Progress');
   
