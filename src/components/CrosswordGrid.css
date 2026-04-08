@@ -83,9 +83,11 @@
     opacity: 1;
     transform: scale(1);
   }
-  100% {
+  80% {
     opacity: 0;
-    transform: scale(10);
+  }
+  100% {
+    transform: scale(8);
   }
 }
 
@@ -102,7 +104,7 @@
   text-shadow: 0 0 30px rgba(191, 0, 255, 0.6), 0 0 60px rgba(191, 0, 255, 0.3);
   z-index: 500;
   pointer-events: none;
-  animation: wordFlyOut 3s ease-out forwards;
+  animation: wordFlyOut 5s ease-out forwards;
 }
 
 .word-float-vertical {

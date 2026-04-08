@@ -6,6 +6,9 @@ export function humanizeClue(clue) {
     clean = clean.replace(/^(A|An|The|To|Any of|Some|Used as|Of or|Relating to) /i, '');
     clean = clean.replace(/^(is|are|was|were) /i, '');
     
+    // Remove parentheticals often found in dictionary entries
+    clean = clean.replace(/\s*[\[\(][^\]\)]*[\]\)]\s*/g, ' ');
+    
     // Clean up potentially missed tag prefixes
     clean = clean.replace(/^(n\t|v\t|adj\t|adv\t)/, '');
     
@@ -15,18 +18,35 @@ export function humanizeClue(clue) {
     // Ensure capitalization
     clean = clean.charAt(0).toUpperCase() + clean.slice(1);
     
-    // Some clues are very long Dictionary entries.
-    // Datamuse often separates separate meanings/clauses with semicolons or colons.
-    // Instead of cutting off by word count and adding '...', we find the first natural phrase boundary.
+    // Handle very long entries by finding natural phrase boundaries
     const words = clean.split(/\s+/);
     if (words.length > 8) {
-        const match = clean.match(/^([^;:\–\—]+)/);
-        if (match && match[1]) {
-            clean = match[1].trim();
-            // Remove trailing commas if any
-            clean = clean.replace(/[,]+$/, '');
+        // First try strong separators: semicolon, colon, dash
+        const strongMatch = clean.match(/^([^;:\–\—]+)/);
+        if (strongMatch && strongMatch[1].split(/\s+/).length < words.length) {
+            clean = strongMatch[1].trim();
+        } 
+        
+        // If still long, try cutting at the first comma if the first part is at least 3 words
+        const currentWords = clean.split(/\s+/);
+        if (currentWords.length > 10) {
+            const commaMatch = clean.match(/^([^,]{10,100}),/);
+            if (commaMatch && commaMatch[1]) {
+                clean = commaMatch[1].trim();
+            }
+        }
+
+        // Final safety cutoff: if still > 12 words, just take the first 12 to ensure UI fit
+        // without adding ellipses as requested, but ensuring a clean-ish break.
+        const finalWords = clean.split(/\s+/);
+        if (finalWords.length > 12) {
+            clean = finalWords.slice(0, 12).join(' ').trim();
         }
     }
     
+    // Remove trailing punctuation that might look weird after truncation
+    clean = clean.replace(/[,;:\–\—]+$/, '');
+    
     return clean;
 }
+
