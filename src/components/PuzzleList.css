@@ -11,8 +11,6 @@
 .puzzle-section {
   display: flex;
   flex-direction: column;
-  padding: var(--spacing-md);
-  border-radius: var(--border-radius-md);
 }
 
 .section-title {

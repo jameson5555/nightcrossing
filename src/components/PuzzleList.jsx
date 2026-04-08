@@ -74,7 +74,7 @@ const PuzzleList = ({ onSelectPuzzle }) => {
   return (
     <div className="puzzle-list-wrapper animate-fade-in">
       {inProgressPuzzles.length > 0 && (
-        <section className="puzzle-section glass-panel">
+        <section className="puzzle-section">
           <h2 className="section-title">In Progress</h2>
           <ul className="puzzle-list">
             {inProgressPuzzles.map(renderPuzzleItem)}
@@ -82,7 +82,7 @@ const PuzzleList = ({ onSelectPuzzle }) => {
         </section>
       )}
 
-      <section className="puzzle-section glass-panel theme-section">
+      <section className="puzzle-section theme-section">
         <h2 className="section-title">Themes</h2>
         <div className="theme-list">
           {Object.entries(themesMap).map(([theme, themePuzzles]) => {
