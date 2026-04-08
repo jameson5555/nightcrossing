@@ -24,6 +24,7 @@ function generateBestLayout(words, attempts = 4000, maxWords = 18) {
     const subset = shuffled.slice(0, maxWords);
     const input = subset.map(w => ({ answer: w.answer.toLowerCase(), clue: w.clue }));
     let layout = generateLayout(input);
+    layout.result = layout.result.filter(w => w.orientation === 'across' || w.orientation === 'down');
     
     // Trim early to check true dimensions
     layout = trimGrid(layout);
@@ -195,9 +196,26 @@ function layoutToNightcrossing(layout, id, title, themeName) {
 export function generateThemedPuzzle(id, themeName, availableWords) {
   console.log(`Theme: ${themeName} | Available Words Pool: ${availableWords.length}`);
 
-  // Extremely lowered attempt constraints to prevent the library from hitting infinite/OOM generation paths
-  // Using 16 max words instead of 12 to encourage higher density while remaining performant
-  const layout = generateBestLayout(availableWords, 150, Math.min(16, availableWords.length));
+  let layout = null;
+  let maxWordsTry = Math.min(16, availableWords.length);
+  
+  while (!layout && maxWordsTry >= 6) {
+      layout = generateBestLayout(availableWords, 300, maxWordsTry);
+      if (!layout) {
+          maxWordsTry--;
+      }
+  }
+
+  if (!layout) {
+      // Fallback: if we STILL couldn't get a 12x12 grid with intersections after decaying to 6 words, we run one final time with no bounds but keeping the 12x12 limit by passing an aggressive attempt count for a very small word set
+      layout = generateBestLayout(availableWords, 1000, 6);
+  }
+  
+  if (!layout) {
+      console.error(`ERROR: Could not generate a constrained puzzle for ${themeName}.`);
+      process.exit(1);
+  }
+
   const title = `${themeName} Crossword`;
 
   const puzzle = layoutToNightcrossing(layout, id, title, themeName);
