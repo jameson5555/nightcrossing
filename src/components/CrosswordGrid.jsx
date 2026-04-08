@@ -123,7 +123,7 @@ const CrosswordGrid = ({
 
       setTimeout(() => {
         setFloatingWords(prev => prev.filter(f => !newFloaters.some(nf => nf.id === f.id)));
-      }, 5000);
+      }, 3000);
     }
 
     // Only fire puzzle complete ONCE, on the exact transition
