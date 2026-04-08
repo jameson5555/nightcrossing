@@ -13,13 +13,42 @@ const PuzzleList = ({ onSelectPuzzle }) => {
         const baseUrl = import.meta.env.BASE_URL;
         const res = await fetch(`${baseUrl}data/puzzles.json?t=${Date.now()}`);
         const data = await res.json();
-        setPuzzles(data);
-        
+
         const statusMap = {};
+        const enriched = [];
+
+        // Enrich index entries with actual puzzle `size` when available
         for (const p of data) {
-          const totalCells = p.cols * p.rows;
-          statusMap[p.id] = await checkPuzzleStatus(p.id, totalCells);
+          let cols = p.cols;
+          let rows = p.rows;
+          let totalLetterCells = cols * rows;
+
+          try {
+            const puzzleRes = await fetch(`${baseUrl}data/puzzles/${p.id}.json?t=${Date.now()}`);
+            if (puzzleRes.ok) {
+              const puzzleFile = await puzzleRes.json();
+              if (puzzleFile.size && typeof puzzleFile.size.cols === 'number') cols = puzzleFile.size.cols;
+              if (puzzleFile.size && typeof puzzleFile.size.rows === 'number') rows = puzzleFile.size.rows;
+              if (Array.isArray(puzzleFile.grid)) {
+                totalLetterCells = puzzleFile.grid.filter(c => c !== '.').length;
+              } else {
+                totalLetterCells = cols * rows;
+              }
+              enriched.push({ ...p, cols, rows, size: puzzleFile.size });
+            } else {
+              // fallback to index values
+              enriched.push(p);
+            }
+          } catch (err) {
+            // If individual puzzle load fails, fall back to index values
+            enriched.push(p);
+            totalLetterCells = p.cols * p.rows;
+          }
+
+          statusMap[p.id] = await checkPuzzleStatus(p.id, totalLetterCells);
         }
+
+        setPuzzles(enriched);
         setStatuses(statusMap);
         
       } catch (err) {
