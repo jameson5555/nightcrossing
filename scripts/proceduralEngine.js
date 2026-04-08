@@ -19,8 +19,10 @@ function generateBestLayout(words, attempts = 4000, maxWords = 18) {
   let bestScore = -1000;
 
   for (let i = 0; i < attempts; i++) {
-    const shuffled = [...words].sort(() => Math.random() - 0.5);
     // Use a subset of words to explicitly keep puzzles small
+    // Also reject words with clues that are too long to ensure clean UI
+    const filteredWords = words.filter(w => w.clue.length <= 65);
+    const shuffled = [...filteredWords].sort(() => Math.random() - 0.5);
     const subset = shuffled.slice(0, maxWords);
     const input = subset.map(w => ({ answer: w.answer.toLowerCase(), clue: w.clue }));
     let layout = generateLayout(input);

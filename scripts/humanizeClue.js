@@ -15,6 +15,9 @@ export function humanizeClue(clue) {
     clean = clean.trim();
     if (clean.length === 0) return '';
     
+    // Fix space before final period
+    clean = clean.replace(/\s+\.$/, '.');
+    
     // Ensure capitalization
     clean = clean.charAt(0).toUpperCase() + clean.slice(1);
     
@@ -36,17 +39,23 @@ export function humanizeClue(clue) {
             }
         }
 
-        // Final safety cutoff: if still > 12 words, just take the first 12 to ensure UI fit
-        // without adding ellipses as requested, but ensuring a clean-ish break.
+        // Final safety cutoff: if still > 12 words, just take the first 12
         const finalWords = clean.split(/\s+/);
         if (finalWords.length > 12) {
             clean = finalWords.slice(0, 12).join(' ').trim();
         }
     }
     
-    // Remove trailing punctuation that might look weird after truncation
-    clean = clean.replace(/[,;:\–\—]+$/, '');
+    // CRITICAL: Remove trailing logic words that make a clue feel truncated
+    clean = clean.replace(/\s+(and|or|is|for|with|of|e\.g\.|etc\.)$/i, '');
     
+    // Remove trailing punctuation that might look weird after truncation
+    clean = clean.replace(/[,;:\–\—\s]+$/, '');
+    
+    // Additional check: if a clue is still incredibly long (> 120 chars), it's probably noise
+    if (clean.length > 100) return ''; 
+
     return clean;
 }
+
 

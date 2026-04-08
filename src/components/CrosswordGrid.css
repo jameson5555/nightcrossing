@@ -25,9 +25,9 @@
   aspect-ratio: 1; /* Ensure cells are perfectly square */
 }
 
-.crossword-cell:not(.cell-block):hover {
+/* .crossword-cell:not(.cell-block):hover {
   background-color: var(--cell-focus-bg);
-}
+} */
 
 .cell-block {
   background-color: var(--board-bg);
