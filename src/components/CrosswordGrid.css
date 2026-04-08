@@ -2,7 +2,7 @@
   position: relative;
   width: 100%;
   max-width: 600px;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .crossword-grid {
@@ -75,7 +75,6 @@
 
 .cell-correct .cell-input {
   color: var(--accent-secondary);
-  text-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
 }
 
 /* ─── Word Complete Fly-Out Animation ────────────────────────────────── */
