@@ -109,9 +109,6 @@
     transform: translateY(100vh);
     opacity: 0;
   }
-  60% {
-    opacity: 0.6;
-  }
   100% {
     transform: translateY(0);
     opacity: 1;
