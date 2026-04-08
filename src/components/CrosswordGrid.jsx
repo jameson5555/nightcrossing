@@ -323,26 +323,25 @@ const CrosswordGrid = ({
               </div>
             );
           })}
+          {/* Floating word-complete animations */}
+          {floatingWords.map(fw => (
+            <div
+              key={fw.id}
+              className={`word-complete-float${fw.isVertical ? ' word-float-vertical' : ''}`}
+              style={{
+                top: fw.top,
+                left: fw.left,
+                width: fw.width,
+                height: fw.height,
+                fontSize: fw.fontSize
+              }}
+            >
+              {fw.word.split('').map((letter, i) => (
+                <span key={i} className="word-float-letter">{letter}</span>
+              ))}
+            </div>
+          ))}
         </div>
-
-        {/* Floating word-complete animations */}
-        {floatingWords.map(fw => (
-          <div
-            key={fw.id}
-            className={`word-complete-float${fw.isVertical ? ' word-float-vertical' : ''}`}
-            style={{
-              top: fw.top,
-              left: fw.left,
-              width: fw.width,
-              height: fw.height,
-              fontSize: fw.fontSize
-            }}
-          >
-            {fw.word.split('').map((letter, i) => (
-              <span key={i} className="word-float-letter">{letter}</span>
-            ))}
-          </div>
-        ))}
       </div>
 
       {/* Puzzle complete overlay */}
