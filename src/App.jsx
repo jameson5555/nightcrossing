@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import CrosswordGrid from './components/CrosswordGrid';
 import ClueList from './components/ClueList';
@@ -54,6 +54,44 @@ function App() {
     activeClueText = puzzleData.clues[direction][activeWord.clueIndex];
   }
 
+  // Displayed clue state used to control cross-fade when switching clues
+  const [displayedClue, setDisplayedClue] = useState({ num: null, text: null, dir: null });
+  const [isContentFading, setIsContentFading] = useState(false);
+  const prevSelectedClueIdRef = useRef(null);
+
+  useEffect(() => {
+    const newNum = activeWord?.clueNum ?? null;
+    const newDir = direction;
+    const newText = activeClueText ? (activeClueText.split('. ')[1] || activeClueText) : null;
+
+    // If nothing is displayed yet and we have new text, show immediately (initial appear)
+    if (!displayedClue.text && newText) {
+      setDisplayedClue({ num: newNum, text: newText, dir: newDir });
+      return;
+    }
+
+    // If already visible and the clue changed, cross-fade the content
+    if (displayedClue.text && newText) {
+      const same = displayedClue.num === newNum && displayedClue.text === newText;
+      if (!same) {
+        setIsContentFading(true);
+        const t = setTimeout(() => {
+          setDisplayedClue({ num: newNum, text: newText, dir: newDir });
+          setIsContentFading(false);
+        }, 200);
+        return () => clearTimeout(t);
+      }
+      return;
+    }
+
+    // If newText is empty/cleared, hide displayed
+    if (!newText) {
+      setDisplayedClue({ num: null, text: null, dir: null });
+    }
+
+    prevSelectedClueIdRef.current = selectedClueId;
+  }, [selectedClueId, activeClueText, direction, displayedClue, activeWord]);
+
   const handleClueClick = (dir, numStr) => {
     setDirection(dir);
     const num = parseInt(numStr, 10);
@@ -85,9 +123,9 @@ function App() {
             <h1 className="logo-text">Nightcrossing</h1>
             
             {puzzleData && (
-              <div key={selectedClueId} className={`floating-active-clue ${activeClueText ? 'visible' : ''}`}>
-                <span className="floating-clue-num">{activeWord?.clueNum}{direction === 'across' ? 'a' : 'd'}</span>
-                <p className="floating-clue-text">{activeClueText ? activeClueText.split('. ')[1] || activeClueText : ''}</p>
+              <div className={`floating-active-clue ${activeClueText ? 'visible' : ''} ${isContentFading ? 'content-fade' : ''}`}>
+                <span className="floating-clue-num">{displayedClue.num ? `${displayedClue.num}${displayedClue.dir === 'across' ? 'a' : 'd'}` : ''}</span>
+                <p className="floating-clue-text">{displayedClue.text || ''}</p>
               </div>
             )}
           </header>
