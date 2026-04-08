@@ -85,7 +85,7 @@
   }
   100% {
     opacity: 0;
-    transform: scale(5);
+    transform: scale(10);
   }
 }
 
