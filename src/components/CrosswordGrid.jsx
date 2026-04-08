@@ -54,6 +54,7 @@ const CrosswordGrid = ({
   }, [grid, gridnums, cols, puzzleData, answers]);
 
   const gridWrapperRef = useRef(null);
+  const lastPointerDownRef = useRef({ scrollX: 0, scrollY: 0, wasVisible: false });
 
   // Calculate the exact bounding box of a word's cells relative to the grid wrapper
   const getWordPosition = (indices) => {
@@ -159,12 +160,54 @@ const CrosswordGrid = ({
     }
   };
 
+  const handlePointerDown = (index) => {
+    const el = inputRefs.current[index];
+    if (!el) {
+      lastPointerDownRef.current = { scrollX: window.scrollX, scrollY: window.scrollY, wasVisible: false };
+      return;
+    }
+    const rect = el.getBoundingClientRect();
+    const wasVisible = rect.top >= 0 && rect.bottom <= window.innerHeight && rect.left >= 0 && rect.right <= window.innerWidth;
+    lastPointerDownRef.current = { scrollX: window.scrollX, scrollY: window.scrollY, wasVisible };
+  };
+
   useEffect(() => {
     if (selectedCell !== null && inputRefs.current[selectedCell]) {
       const inputEl = inputRefs.current[selectedCell];
-      inputEl.focus({ preventScroll: true }); // Prevent browser default jumping
-      // Smoothly scroll the container to center this cell
-      inputEl.parentNode.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Focus without causing the browser to jump/scroll
+      try {
+        inputEl.focus({ preventScroll: true });
+      } catch (err) {
+        // Fallback for browsers that don't support the options parameter
+        inputEl.focus();
+      }
+
+      // Only scroll the page/container if the cell is actually outside the viewport.
+      // We check visibility against the viewport and scroll only when necessary.
+      const rect = inputEl.getBoundingClientRect();
+      const margin = 10; // small breathing room
+      const isVisibleVertically = rect.top >= margin && rect.bottom <= (window.innerHeight - margin);
+      const isVisibleHorizontally = rect.left >= 0 && rect.right <= window.innerWidth;
+
+      if (!isVisibleVertically || !isVisibleHorizontally) {
+        if (typeof inputEl.parentNode?.scrollIntoView === 'function') {
+          inputEl.parentNode.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+        } else {
+          // Fallback: compute a reasonable scroll position to center the cell vertically
+          const targetY = window.scrollY + rect.top - (window.innerHeight / 2) + (rect.height / 2);
+          window.scrollTo({ top: targetY, left: window.scrollX, behavior: 'smooth' });
+        }
+      }
+      // If the user tapped a cell that was already visible, browsers (mobile) may
+      // still auto-scroll when focusing. If we recorded that it was visible on
+      // the pointerdown, restore the previous scroll position to avoid jumping.
+      const last = lastPointerDownRef.current;
+      if (last && last.wasVisible) {
+        // Use a timeout so this runs after any native scrolling triggered by focus
+        setTimeout(() => {
+          window.scrollTo({ top: last.scrollY, left: last.scrollX, behavior: 'auto' });
+        }, 0);
+      }
     }
   }, [selectedCell]);
 
@@ -304,6 +347,7 @@ const CrosswordGrid = ({
                 key={index}
                 ref={el => cellRefs.current[index] = el}
                 className={cellClass}
+                onPointerDown={() => handlePointerDown(index)}
                 onClick={() => handleCellClick(index)}
               >
                 {!isBlock && <span className="cell-number">{cellNumber > 0 ? cellNumber : ''}</span>}
