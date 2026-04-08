@@ -62,7 +62,7 @@
   font-size: min(5vw, 1.8rem);
   font-weight: 700;
   text-transform: uppercase;
-  transition: color 1s ease-in-out 1s;
+  transition: color 2s ease-in-out 0.5s;
   caret-color: transparent; /* Hide normal cursor, we will handle outline manually */
 }
 
@@ -89,6 +89,7 @@
   }
   100% {
     transform: scale(8);
+    opacity: 0;
   }
 }
 
