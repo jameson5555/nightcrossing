@@ -73,7 +73,7 @@
 }
 
 .cell-correct .cell-input {
-  color: var(--accent-success);
+  color: var(--accent-secondary);
   text-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
 }
 
@@ -85,7 +85,7 @@
   }
   100% {
     opacity: 0;
-    transform: scale(2.5);
+    transform: scale(5);
   }
 }
 
@@ -98,11 +98,11 @@
   font-family: var(--font-family-game);
   font-weight: 700;
   text-transform: uppercase;
-  color: var(--accent-success);
-  text-shadow: 0 0 30px rgba(0, 255, 136, 0.6), 0 0 60px rgba(0, 255, 136, 0.3);
+  color: var(--accent-secondary);
+  text-shadow: 0 0 30px rgba(191, 0, 255, 0.6), 0 0 60px rgba(191, 0, 255, 0.3);
   z-index: 500;
   pointer-events: none;
-  animation: wordFlyOut 1s ease-out forwards;
+  animation: wordFlyOut 2s ease-out forwards;
 }
 
 .word-float-vertical {
