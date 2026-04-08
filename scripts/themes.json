@@ -36,11 +36,11 @@
       },
       {
         "answer": "LUNAR",
-        "clue": "Moon"
+        "clue": "The moon"
       },
       {
         "answer": "SOLAR",
-        "clue": "Sun"
+        "clue": "The sun"
       },
       {
         "answer": "METEOR",
@@ -144,7 +144,7 @@
       },
       {
         "answer": "BLANK",
-        "clue": "White spot in the centre of a target"
+        "clue": "White spot in the centre of a target; hence the object to which anything is directed or aimed, the range of such aim."
       },
       {
         "answer": "PLACE",
@@ -152,7 +152,7 @@
       },
       {
         "answer": "DISTANCE",
-        "clue": "Amount of space between points"
+        "clue": "Amount of space between points , usually measured along a straight line."
       },
       {
         "answer": "QUAD",
@@ -164,15 +164,15 @@
       },
       {
         "answer": "TERM",
-        "clue": "That which limits the extent of anything"
+        "clue": "That which limits the extent of anything; limit, extremity, bound, boundary, terminus."
       },
       {
         "answer": "CLEARANCE",
-        "clue": "Sale of merchandise"
+        "clue": "Sale of merchandise, especially at significantly reduced prices, usually in order to make room for new merchandise or updated versions of the same merchandise; sometimes as a closeout."
       },
       {
         "answer": "EMPTY",
-        "clue": "Container, especially a bottle, whose contents have been used up, leaving it"
+        "clue": "Container, especially a bottle, whose contents have been used up, leaving it empty."
       },
       {
         "answer": "UPRIGHT",
@@ -188,7 +188,7 @@
       },
       {
         "answer": "PLACEHOLDER",
-        "clue": "Something used or included temporarily or as a substitute for something that"
+        "clue": "Something used or included temporarily or as a substitute for something that is not known or must remain generic; that which holds, denotes or reserves a place for something to come later."
       },
       {
         "answer": "ESPACE",
@@ -212,7 +212,7 @@
       },
       {
         "answer": "SCOPE",
-        "clue": "Breadth, depth or reach of a subject"
+        "clue": "Breadth, depth or reach of a subject; the extent of applicability or relevance; a domain, purview or remit."
       },
       {
         "answer": "ACTUATION",
@@ -244,7 +244,7 @@
       },
       {
         "answer": "INPUT",
-        "clue": "Data fed into a process with the intention of it shaping"
+        "clue": "Data fed into a process with the intention of it shaping or affecting the output of that process."
       },
       {
         "answer": "GAP",
@@ -256,7 +256,7 @@
       },
       {
         "answer": "SURFACE",
-        "clue": "Overside or up-side of a flat object such as a table"
+        "clue": "Overside or up-side of a flat object such as a table, or of a liquid."
       },
       {
         "answer": "LOCAL",
@@ -264,11 +264,11 @@
       },
       {
         "answer": "SEGMENT",
-        "clue": "One of the parts into which any body naturally separates or"
+        "clue": "One of the parts into which any body naturally separates or is divided; a part divided or cut off; a section; a portion."
       },
       {
         "answer": "SIZE",
-        "clue": "Dimensions or magnitude of a thing"
+        "clue": "Dimensions or magnitude of a thing; how big something is."
       },
       {
         "answer": "DAYS",
@@ -276,7 +276,7 @@
       },
       {
         "answer": "STORAGE",
-        "clue": "Act of storing goods"
+        "clue": "Act of storing goods; the state of being stored."
       },
       {
         "answer": "MILIEU",
@@ -288,7 +288,7 @@
       },
       {
         "answer": "FORUM",
-        "clue": "Internet message board where users can post messages regarding one or more"
+        "clue": "Internet message board where users can post messages regarding one or more topics of discussion."
       },
       {
         "answer": "LABOURER",
@@ -304,7 +304,7 @@
       },
       {
         "answer": "PREMISES",
-        "clue": "Land, and all the built structures on it, especially when considered as"
+        "clue": "Land, and all the built structures on it, especially when considered as a single place."
       },
       {
         "answer": "DOMAIN",
@@ -312,15 +312,15 @@
       },
       {
         "answer": "TERRITORY",
-        "clue": "Large extent or tract of land"
+        "clue": "Large extent or tract of land; for example a region, country or district."
       },
       {
         "answer": "MANEUVER",
-        "clue": "Movement of the body"
+        "clue": "Movement of the body, or with an implement, instrument etc., especially one performed with skill or dexterity."
       },
       {
         "answer": "BATTLESPACE",
-        "clue": "Conditions and dimensions of battle"
+        "clue": "Conditions and dimensions of battle, including terrain, weather, infrastructure, airspace, seaspace, cyberspace, near space, and outer space, considered in a unified military strategy to integrate and combine armed forces for the military theatre of operations."
       },
       {
         "answer": "ROOM",
@@ -332,11 +332,11 @@
       },
       {
         "answer": "REGION",
-        "clue": "Any considerable and connected part of a space or surface"
+        "clue": "Any considerable and connected part of a space or surface; specifically, a tract of land or sea of considerable but indefinite extent; a country; a district; in a broad sense, a place without special reference to location or extent but viewed as an entity for geographical, social or cultural reasons."
       },
       {
         "answer": "WORKSPACE",
-        "clue": "Area allocated for someone to work in"
+        "clue": "Area allocated for someone to work in, especially in an office."
       },
       {
         "answer": "SPATIAL",
@@ -344,11 +344,11 @@
       },
       {
         "answer": "ACCOMMODATION",
-        "clue": "Lodging in a dwelling or similar living quarters afforded to travellers in"
+        "clue": "Lodging in a dwelling or similar living quarters afforded to travellers in hotels or on cruise ships, or prisoners, etc."
       },
       {
         "answer": "FACILITIES",
-        "clue": "Facilities for urination and defecation"
+        "clue": "Facilities for urination and defecation: a toilet; a lavatory."
       },
       {
         "answer": "LENGTH",
@@ -356,7 +356,7 @@
       },
       {
         "answer": "SPOT",
-        "clue": "Round or irregular patch on the surface of a thing having a"
+        "clue": "Round or irregular patch on the surface of a thing having a different color, texture etc. and generally round in shape."
       },
       {
         "answer": "PLAZA",
@@ -364,7 +364,7 @@
       },
       {
         "answer": "ARENA",
-        "clue": "Building housing such an area"
+        "clue": "Building housing such an area; specifically, a very large, often round building, often topped with a dome, designated for indoor sporting or other major events, such as concerts."
       },
       {
         "answer": "CABIN",
@@ -372,11 +372,11 @@
       },
       {
         "answer": "FOOTPRINT",
-        "clue": "Impression of the foot in a soft substance such as sand"
+        "clue": "Impression of the foot in a soft substance such as sand or snow."
       },
       {
         "answer": "EMPLACEMENT",
-        "clue": "Place where a thing is located"
+        "clue": "Place where a thing is located; the act of placing something somewhere."
       },
       {
         "answer": "VENUE",
@@ -384,7 +384,7 @@
       },
       {
         "answer": "PLATFORM",
-        "clue": "Raised stage from which speeches are made and on which musical"
+        "clue": "Raised stage from which speeches are made and on which musical and other performances are made."
       },
       {
         "answer": "BOX",
@@ -396,19 +396,19 @@
       },
       {
         "answer": "MARGIN",
-        "clue": "Yield or profit"
+        "clue": "Yield or profit; the selling price minus the cost of production."
       },
       {
         "answer": "OFFICE",
-        "clue": "Ceremonial duty or service, particularly"
+        "clue": "Ceremonial duty or service, particularly:"
       },
       {
         "answer": "HOLE",
-        "clue": "Hollow place or cavity"
+        "clue": "Hollow place or cavity; an excavation; a pit; a dent; a depression; a fissure."
       },
       {
         "answer": "FLOOR",
-        "clue": "Interior bottom or surface of a house or building"
+        "clue": "Interior bottom or surface of a house or building; the supporting surface of a room."
       },
       {
         "answer": "ARCH",
@@ -416,11 +416,11 @@
       },
       {
         "answer": "SPACEBAR",
-        "clue": "Alternative spelling of space bar. A key"
+        "clue": "Alternative spelling of space bar. A key, in the shape of a bar, near the bottom of a keyboard, that generates a space character when pressed.]"
       },
       {
         "answer": "SLOT",
-        "clue": "Narrow depression, perforation, or aperture"
+        "clue": "Narrow depression, perforation, or aperture; especially, one for the reception of a piece fitting or sliding into it."
       },
       {
         "answer": "SHUNTING",
@@ -428,11 +428,11 @@
       },
       {
         "answer": "HEADROOM",
-        "clue": "Vertical clearance above someone's head"
+        "clue": "Vertical clearance above someone's head, as in a tunnel, doorway etc; room for one's head."
       },
       {
         "answer": "NICHE",
-        "clue": "Any position of opportunity for which one is well-suited"
+        "clue": "Any position of opportunity for which one is well-suited, such as a particular market in business."
       },
       {
         "answer": "TANK",
@@ -440,15 +440,15 @@
       },
       {
         "answer": "GROUND",
-        "clue": "Surface of the Earth"
+        "clue": "Surface of the Earth, as opposed to the sky or water or underground."
       },
       {
         "answer": "LAND",
-        "clue": "Part of Earth which is not covered by oceans or other bodies"
+        "clue": "Part of Earth which is not covered by oceans or other bodies of water."
       },
       {
         "answer": "SPACEFLIGHT",
-        "clue": "Alternative spelling of space flight. Flight into"
+        "clue": "Alternative spelling of space flight. Flight into, from or through space.]"
       },
       {
         "answer": "SHUTTLE",
@@ -456,15 +456,15 @@
       },
       {
         "answer": "SPHERE",
-        "clue": "Surface in three dimensions consisting of all points equidistant from a center."
+        "clue": "Surface in three dimensions consisting of all points equidistant from a center.."
       },
       {
         "answer": "TIME",
-        "clue": "Inevitable progression into the future with the passing of present and past"
+        "clue": "Inevitable progression into the future with the passing of present and past events."
       },
       {
         "answer": "MICROGRAVITY",
-        "clue": "State of very low acceleration between two free floating objects"
+        "clue": "State of very low acceleration between two free floating objects, as found in sustained freefall, in orbit, or in interstellar space."
       },
       {
         "answer": "ACREAGE",
@@ -488,19 +488,19 @@
       },
       {
         "answer": "NAMESPACE",
-        "clue": "Conceptual space that groups classes"
+        "clue": "Conceptual space that groups classes, identifiers, etc. in order to avoid conflicts with items in unrelated code that carry the same names."
       },
       {
         "answer": "HEADSPACE",
-        "clue": "One's capacity for mental activity modeled as a physical space with limits"
+        "clue": "One's capacity for mental activity modeled as a physical space with limits; one's mental state or state of mind."
       },
       {
         "answer": "FIELD",
-        "clue": "Land area free of woodland, cities, and towns"
+        "clue": "Land area free of woodland, cities, and towns; an area of open country."
       },
       {
         "answer": "SKY",
-        "clue": "Atmosphere above a given point"
+        "clue": "Atmosphere above a given point, especially as visible from the surface of the Earth as the place where the sun, moon, stars, and clouds are seen."
       },
       {
         "answer": "LEEWAY",
@@ -512,11 +512,11 @@
       },
       {
         "answer": "AIRSPACE",
-        "clue": "Specified portion of the atmosphere"
+        "clue": "Specified portion of the atmosphere, especially that under the technical aviation control and/or jurisdiction of a particular state over which territory it lies."
       },
       {
         "answer": "TABLESPACE",
-        "clue": "Storage location where the actual data underlying the objects in a database"
+        "clue": "Storage location where the actual data underlying the objects in a database can be kept."
       },
       {
         "answer": "SPACESHIP",
@@ -669,11 +669,11 @@
       },
       {
         "answer": "NUTRIENT",
-        "clue": "Source of nourishment"
+        "clue": "Source of nourishment, such as food, that can be metabolized by an organism to give energy and build tissue."
       },
       {
         "answer": "FOODSTUFF",
-        "clue": "Material that may be used as food or as an ingredient"
+        "clue": "Material that may be used as food or as an ingredient of food."
       },
       {
         "answer": "FEED",
@@ -733,23 +733,23 @@
       },
       {
         "answer": "DINER",
-        "clue": "Typically small restaurant"
+        "clue": "Typically small restaurant, historically modeled after a railroad dining car, that serves lower-class fare, normally having a counter with stools along one side and booths on the other."
       },
       {
         "answer": "CULINARY",
-        "clue": "Practice of cookery or the activity of cooking."
+        "clue": "The practice of cookery or the activity of cooking."
       },
       {
         "answer": "MEAL",
-        "clue": "Food that is prepared and eaten"
+        "clue": "Food that is prepared and eaten, usually at a specific time, and usually in a comparatively large quantity."
       },
       {
         "answer": "SUPPER",
-        "clue": "Any meal eaten in the evening"
+        "clue": "Any meal eaten in the evening; dinner eaten in the evening, rather than at noon."
       },
       {
         "answer": "DRINKING",
-        "clue": "Act or session by which drink is consumed"
+        "clue": "Act or session by which drink is consumed, especially alcoholic beverages."
       },
       {
         "answer": "NUTRITIONAL",
@@ -785,11 +785,11 @@
       },
       {
         "answer": "CUISINE",
-        "clue": "Characteristic manner or style of preparing food"
+        "clue": "Characteristic manner or style of preparing food, often associated with a place of origin."
       },
       {
         "answer": "FODDER",
-        "clue": "Food for animals"
+        "clue": "Food for animals; that which is fed to cattle, horses, and sheep, such as hay, cornstalks, vegetables, etc."
       },
       {
         "answer": "ALIMENTARY",
@@ -809,35 +809,35 @@
       },
       {
         "answer": "LUNCH",
-        "clue": "Light meal usually eaten around midday"
+        "clue": "Light meal usually eaten around midday, notably when not as main meal of the day."
       },
       {
         "answer": "DISH",
-        "clue": "Vessel such as a plate for holding or serving food"
+        "clue": "Vessel such as a plate for holding or serving food, often flat with a depressed region in the middle."
       },
       {
         "answer": "RESTAURANT",
-        "clue": "Eating establishment in which diners are served food"
+        "clue": "Eating establishment in which diners are served food, usually by waiters at their tables but sometimes at a counter."
       },
       {
         "answer": "EAT",
-        "clue": "Something to be eaten"
+        "clue": "Something to be eaten; a meal; a food item."
       },
       {
         "answer": "BUFFET",
-        "clue": "Food laid out in this way"
+        "clue": "Food laid out in this way, to which diners serve themselves."
       },
       {
         "answer": "MEAT",
-        "clue": "Flesh of an animal used as food"
+        "clue": "Flesh of an animal used as food, or a food designed to replicate its taste and texture."
       },
       {
         "answer": "CROP",
-        "clue": "Plant, grown for it, or its fruits or seeds, to be harvested"
+        "clue": "Plant, grown for it, or its fruits or seeds, to be harvested as food, livestock fodder, or fuel or for any other economic purpose."
       },
       {
         "answer": "AGRICULTURE",
-        "clue": "Art or science of cultivating the ground"
+        "clue": "Art or science of cultivating the ground, including the growing and harvesting of crops, and the rearing and management of livestock."
       },
       {
         "answer": "AGRICULTURAL",
@@ -861,7 +861,7 @@
       },
       {
         "answer": "GRAIN",
-        "clue": "Harvested seeds of various grass food crops eg"
+        "clue": "Harvested seeds of various grass food crops eg: wheat, corn, barley."
       },
       {
         "answer": "BREAD",
@@ -873,7 +873,7 @@
       },
       {
         "answer": "MAT",
-        "clue": "Flat piece of coarse material used for wiping one’s feet"
+        "clue": "Flat piece of coarse material used for wiping one’s feet, or as a decorative or protective floor covering."
       },
       {
         "answer": "FORAGING",
@@ -893,7 +893,7 @@
       },
       {
         "answer": "FUEL",
-        "clue": "Substance consumed to provide energy through combustion"
+        "clue": "Substance consumed to provide energy through combustion, or through chemical or nuclear reaction."
       },
       {
         "answer": "ROOFTOP",
@@ -901,7 +901,7 @@
       },
       {
         "answer": "COOMBE",
-        "clue": "Number of places in England"
+        "clue": "Number of places in England:"
       },
       {
         "answer": "ROOF",
@@ -913,7 +913,7 @@
       },
       {
         "answer": "HUNGRY",
-        "clue": "Affected by hunger"
+        "clue": "Affected by hunger; having the physical need for food."
       },
       {
         "answer": "HUNGER",
@@ -953,31 +953,31 @@
       },
       {
         "answer": "GAN",
-        "clue": "One of the major varieties of Chinese"
+        "clue": "One of the major varieties of Chinese, spoken in Jiangxi province."
       },
       {
         "answer": "GOURMET",
-        "clue": "Connoisseur in eating and drinking"
+        "clue": "Connoisseur in eating and drinking; someone who takes their food seriously."
       },
       {
         "answer": "GROCERIES",
-        "clue": "Retail foodstuffs and other household supplies"
+        "clue": "Retail foodstuffs and other household supplies; the commodities sold by a grocer or in a grocery store."
       },
       {
         "answer": "PREY",
-        "clue": "Living thing"
+        "clue": "Living thing, usually an animal, that is eaten by another living thing."
       },
       {
         "answer": "MAST",
-        "clue": "Tall, slim post or tower, usually tapering upward, used to support"
+        "clue": "Tall, slim post or tower, usually tapering upward, used to support, for example, sails or observation platforms on a ship, the main rotor of a helicopter, flags, floodlights, meteorological instruments, or communications equipment, such as an aerial, usually supported by guy-wires."
       },
       {
         "answer": "MATE",
-        "clue": "Fellow, comrade, colleague, partner or someone with whom something is shared"
+        "clue": "Fellow, comrade, colleague, partner or someone with whom something is shared, e.g. shipmate, classmate."
       },
       {
         "answer": "GROCERY",
-        "clue": "Shop or store that sells groceries"
+        "clue": "Shop or store that sells groceries; a grocery store."
       },
       {
         "answer": "COMER",
@@ -985,7 +985,7 @@
       },
       {
         "answer": "MESS",
-        "clue": "Thing or group of things in a disagreeable"
+        "clue": "Thing or group of things in a disagreeable, disorganised, or dirty state; hence a bad situation"
       },
       {
         "answer": "POWER",
@@ -1025,7 +1025,7 @@
       },
       {
         "answer": "PROVISION",
-        "clue": "Item of goods or supplies"
+        "clue": "Item of goods or supplies, especially food, obtained for future use."
       },
       {
         "answer": "ALIMENTATION",
@@ -1033,7 +1033,7 @@
       },
       {
         "answer": "ALIMONY",
-        "clue": "Court-mandated allowance made to a former spouse by a divorced or legally"
+        "clue": "Court-mandated allowance made to a former spouse by a divorced or legally separated person."
       },
       {
         "answer": "SUPPLY",
@@ -1049,7 +1049,7 @@
       },
       {
         "answer": "RATION",
-        "clue": "Portion of some limited resource"
+        "clue": "Portion of some limited resource, especially food, allocated to a person or group."
       },
       {
         "answer": "REFRESHMENT",
@@ -1057,15 +1057,15 @@
       },
       {
         "answer": "ALIM",
-        "clue": "Educated scholar of Islamic law"
+        "clue": "Educated scholar of Islamic law; a member of the ulema class"
       },
       {
         "answer": "RESTAURATION",
-        "clue": "Obsolete form of restoration. [The process of bringing an object back to"
+        "clue": "Obsolete form of restoration."
       },
       {
         "answer": "CODEX",
-        "clue": "Book bound in the modern manner"
+        "clue": "Book bound in the modern manner, by joining pages, as opposed to a rolled scroll."
       }
     ]
   },
@@ -1214,7 +1214,7 @@
       },
       {
         "answer": "SEA",
-        "clue": "Ocean"
+        "clue": "Ocean; the continuous body of salt water covering a majority of the Earth's surface."
       },
       {
         "answer": "EXPANSE",
@@ -1222,7 +1222,7 @@
       },
       {
         "answer": "OCEANIC",
-        "clue": "Ocean."
+        "clue": "Relating to the ocean."
       },
       {
         "answer": "SEABED",
@@ -1238,7 +1238,7 @@
       },
       {
         "answer": "PELAGIC",
-        "clue": "Any organism that lives in the open sea rather than in coastal"
+        "clue": "Any organism that lives in the open sea rather than in coastal or inland waters."
       },
       {
         "answer": "OCEANOGRAPHY",
@@ -1246,7 +1246,7 @@
       },
       {
         "answer": "MARINE",
-        "clue": "Soldier, normally a member of a marine corps, trained to serve on"
+        "clue": "Soldier, normally a member of a marine corps, trained to serve on board or from a ship."
       },
       {
         "answer": "MIDSTREAM",
@@ -1254,11 +1254,11 @@
       },
       {
         "answer": "COAST",
-        "clue": "Edge of the land where it meets an ocean"
+        "clue": "Edge of the land where it meets an ocean, sea, gulf, bay, or large lake."
       },
       {
         "answer": "POND",
-        "clue": "Inland body of standing water"
+        "clue": "Inland body of standing water, either natural or man-made, that is smaller than a lake."
       },
       {
         "answer": "WATER",
@@ -1274,11 +1274,11 @@
       },
       {
         "answer": "SEAWAY",
-        "clue": "Lane or route at sea that is regularly used by ships"
+        "clue": "Lane or route at sea that is regularly used by ships; a sea lane or trade route."
       },
       {
         "answer": "BUCKET",
-        "clue": "Container made of rigid material"
+        "clue": "Container made of rigid material, often with a handle, used to carry liquids or small items."
       },
       {
         "answer": "MARINA",
@@ -1290,7 +1290,7 @@
       },
       {
         "answer": "SEAFARING",
-        "clue": "Act, process, or practice of travelling the seas, such as by sailing"
+        "clue": "Act, process, or practice of travelling the seas, such as by sailing or steaming."
       },
       {
         "answer": "MARITIME",
@@ -1306,7 +1306,7 @@
       },
       {
         "answer": "SAILOR",
-        "clue": "Person who sails"
+        "clue": "Person who sails; one whose occupation is sailing or navigating ships or other waterborne craft."
       },
       {
         "answer": "SEAMAN",
@@ -1326,7 +1326,7 @@
       },
       {
         "answer": "LINER",
-        "clue": "Large passenger-carrying ship, especially one on a regular route"
+        "clue": "Large passenger-carrying ship, especially one on a regular route; an ocean liner."
       },
       {
         "answer": "MARINES",
@@ -1334,7 +1334,7 @@
       },
       {
         "answer": "SURROUNDINGS",
-        "clue": "Area surrounding someone or something"
+        "clue": "Area surrounding someone or something, together with the objects and circumstances in the vicinity; the environment or ambiance."
       },
       {
         "answer": "MARE",
@@ -1342,7 +1342,7 @@
       },
       {
         "answer": "PERIMETER",
-        "clue": "Sum of the distance of all the lengths of the sides"
+        "clue": "Sum of the distance of all the lengths of the sides of an object."
       },
       {
         "answer": "PERIPHERY",
@@ -1358,7 +1358,7 @@
       },
       {
         "answer": "TRADEMARK",
-        "clue": "Word, symbol, or phrase used to identify a particular company's product"
+        "clue": "Word, symbol, or phrase used to identify a particular company's product and differentiate it from other companies' products."
       },
       {
         "answer": "NATIONAL",
@@ -1370,7 +1370,7 @@
       },
       {
         "answer": "MAIN",
-        "clue": "That which is chief or principal"
+        "clue": "That which is chief or principal; the chief or main portion; the bulk, the greater part, gross."
       },
       {
         "answer": "ENROUTE",
@@ -1378,15 +1378,15 @@
       },
       {
         "answer": "WELTER",
-        "clue": "General confusion or muddle"
+        "clue": "General confusion or muddle, especially of a large number of items."
       },
       {
         "answer": "YANG",
-        "clue": "Principle in Chinese and related East Asian philosophies associated with bright"
+        "clue": "Principle in Chinese and related East Asian philosophies associated with bright, hot, masculine, etc. elements of the natural world."
       },
       {
         "answer": "YAT",
-        "clue": "Late Proto-Slavic vowel that was represented by this letter"
+        "clue": "Late Proto-Slavic vowel that was represented by this letter, usually transcribed as /ě/. This vowel underwent various alterations in the later Slavic dialects and is no longer distinguished."
       },
       {
         "answer": "INDIAN",
@@ -1402,7 +1402,7 @@
       },
       {
         "answer": "MARITIMES",
-        "clue": "Synonym of Maritime provinces"
+        "clue": "Synonym of Maritime provinces: A geographic region of Canada comprising the provinces of New Brunswick, Nova Scotia and Prince Edward Island."
       },
       {
         "answer": "MARINERS",
@@ -1410,11 +1410,11 @@
       },
       {
         "answer": "BEDFORD",
-        "clue": "Place names"
+        "clue": "Place names:"
       },
       {
         "answer": "MARIN",
-        "clue": "Place name of a county of 252"
+        "clue": "Place name of a county of 252,409 in northern California."
       },
       {
         "answer": "OCEANA",
@@ -1446,7 +1446,7 @@
       },
       {
         "answer": "SAILORS",
-        "clue": "Person who sails"
+        "clue": "Person who sails; one whose occupation is sailing or navigating ships or other waterborne craft."
       },
       {
         "answer": "SEAFARERS",
@@ -1458,7 +1458,7 @@
       },
       {
         "answer": "SEAS",
-        "clue": "Seas include marginal seas"
+        "clue": "Seas include marginal seas, areas of water, various gulfs, bights, bays, and straits."
       },
       {
         "answer": "DEEP",
@@ -1466,7 +1466,7 @@
       },
       {
         "answer": "SALTWATER",
-        "clue": "New Keynesian or Keynesian"
+        "clue": "New Keynesian or Keynesian, in reference to macroeconomics and economics departments on the East Coast and West Coast of the United States of America."
       },
       {
         "answer": "BLUE",
@@ -1474,7 +1474,7 @@
       },
       {
         "answer": "HYDROSPHERE",
-        "clue": "All the liquid waters of the Earth or another astronomical body"
+        "clue": "All the liquid waters of the Earth or another astronomical body, as distinguished from the land and the gases of the atmosphere."
       },
       {
         "answer": "BRINY",
@@ -1482,11 +1482,11 @@
       },
       {
         "answer": "BEACH",
-        "clue": "Shore of a body of water"
+        "clue": "Shore of a body of water, especially when sandy or pebbly."
       },
       {
         "answer": "SHORE",
-        "clue": "Land adjoining a non-flowing body of water"
+        "clue": "Land adjoining a non-flowing body of water, such as an ocean, lake or pond."
       },
       {
         "answer": "LAGOON",
@@ -1518,7 +1518,7 @@
       },
       {
         "answer": "GULF",
-        "clue": "Portion of an ocean or sea extending into the land"
+        "clue": "Portion of an ocean or sea extending into the land; a partially landlocked sea"
       },
       {
         "answer": "COASTLINE",
@@ -1530,7 +1530,7 @@
       },
       {
         "answer": "SHORELESS",
-        "clue": "Without a shore, or with no shore in sight"
+        "clue": "Without a shore, or with no shore in sight; boundless."
       },
       {
         "answer": "TIDELESS",
@@ -1542,7 +1542,7 @@
       },
       {
         "answer": "UNDERWATER",
-        "clue": "Beneath the surface of the water"
+        "clue": "Beneath the surface of the water; of or pertaining to the region beneath the water surface."
       },
       {
         "answer": "OCEANFRONT",
@@ -1550,7 +1550,7 @@
       },
       {
         "answer": "RIVER",
-        "clue": "Large and often winding stream which drains a land mass"
+        "clue": "Large and often winding stream which drains a land mass, carrying water down from higher areas to a lower point, oftentimes ending in another body of water, such as an ocean or in an inland sea."
       },
       {
         "answer": "SEASCAPE",
@@ -1562,11 +1562,11 @@
       },
       {
         "answer": "ESTUARY",
-        "clue": "Coastal water body where ocean tides and river water merge"
+        "clue": "Coastal water body where ocean tides and river water merge, resulting in a brackish water zone."
       },
       {
         "answer": "SEASIDE",
-        "clue": "Area by and around the sea"
+        "clue": "Area by and around the sea; including the beach, promenade or cliffs"
       }
     ]
   },
@@ -1719,7 +1719,7 @@
       },
       {
         "answer": "MEDICINE",
-        "clue": "Substance which specifically promotes healing when ingested or consumed in some way"
+        "clue": "Substance which specifically promotes healing when ingested or consumed in some way; a pharmaceutical drug."
       },
       {
         "answer": "SYMPHONY",
@@ -1727,19 +1727,19 @@
       },
       {
         "answer": "ORCHESTRA",
-        "clue": "Large group of musicians who play together on various instruments"
+        "clue": "Large group of musicians who play together on various instruments, usually including some from strings, woodwind, brass and/or percussion; the instruments played by such a group."
       },
       {
         "answer": "MUSICIAN",
-        "clue": "Composer, conductor, or performer of music"
+        "clue": "Composer, conductor, or performer of music; specifically, a person who sings and/or plays a musical instrument as a hobby, occupation, or profession."
       },
       {
         "answer": "SONG",
-        "clue": "Musical composition with lyrics for voice or voices"
+        "clue": "Musical composition with lyrics for voice or voices, performed by singing."
       },
       {
         "answer": "SINGING",
-        "clue": "Act of using the voice to produce musical sounds"
+        "clue": "Act of using the voice to produce musical sounds; vocalizing."
       },
       {
         "answer": "MUSICAL",
@@ -1755,7 +1755,7 @@
       },
       {
         "answer": "JAZZ",
-        "clue": "Musical art form rooted in West African cultural and musical expression"
+        "clue": "Musical art form rooted in West African cultural and musical expression and in the African American blues tradition, with diverse influences over time, commonly characterized by blue notes, syncopation, swing, call and response, polyrhythms and improvisation."
       },
       {
         "answer": "COMPOSER",
@@ -1763,19 +1763,19 @@
       },
       {
         "answer": "PLAYING",
-        "clue": "Occasion on which something"
+        "clue": "Occasion on which something, such as a song or show, is played."
       },
       {
         "answer": "DANCE",
-        "clue": "Sequence of rhythmic steps or movements usually performed to music"
+        "clue": "Sequence of rhythmic steps or movements usually performed to music, for pleasure or as a form of social interaction."
       },
       {
         "answer": "REPERTOIRE",
-        "clue": "List of dramas"
+        "clue": "List of dramas, operas, pieces, parts, etc., which a company or a person has rehearsed and is prepared to perform or display."
       },
       {
         "answer": "ENTERTAINMENT",
-        "clue": "Activity designed to give pleasure"
+        "clue": "Activity designed to give pleasure, enjoyment, diversion, amusement, or relaxation to an audience, no matter whether the audience participates passively as in watching opera or a movie, or actively as in games."
       },
       {
         "answer": "LYRIC",
@@ -1783,11 +1783,11 @@
       },
       {
         "answer": "SOUNDTRACK",
-        "clue": "Sound component of a movie, video game"
+        "clue": "Sound component of a movie, video game, etc."
       },
       {
         "answer": "PHONOGRAPHIC",
-        "clue": "Phonography or to a phonograph"
+        "clue": "Relating to phonography or to a phonograph"
       },
       {
         "answer": "AUDIO",
@@ -1807,11 +1807,11 @@
       },
       {
         "answer": "STEREO",
-        "clue": "System of recording or reproducing sound that uses two or more channels"
+        "clue": "System of recording or reproducing sound that uses two or more channels, each playing a portion of the original sound at different locations in order to simulate the separation of sources along at least one spatial dimension."
       },
       {
         "answer": "RECORDER",
-        "clue": "Musical instrument of the woodwind family"
+        "clue": "Musical instrument of the woodwind family; a type of fipple flute, a simple internal duct flute."
       },
       {
         "answer": "ARTS",
@@ -1819,7 +1819,7 @@
       },
       {
         "answer": "CONCERT",
-        "clue": "Musical performance"
+        "clue": "Musical performance, usually public, in which several performers or instruments take part."
       },
       {
         "answer": "ANTHEM",
@@ -1835,7 +1835,7 @@
       },
       {
         "answer": "PIECE",
-        "clue": "Part of a larger whole"
+        "clue": "Part of a larger whole, usually in such a form that it is able to be separated from other parts."
       },
       {
         "answer": "STUFF",
@@ -1847,7 +1847,7 @@
       },
       {
         "answer": "JOY",
-        "clue": "Feeling of extreme happiness or cheerfulness"
+        "clue": "Feeling of extreme happiness or cheerfulness, especially related to the acquisition or expectation of something good."
       },
       {
         "answer": "FUN",
@@ -1863,23 +1863,23 @@
       },
       {
         "answer": "COPYRIGHT",
-        "clue": "Right by law to be the entity which determines who may publish"
+        "clue": "Right by law to be the entity which determines who may publish, copy and distribute a piece of writing, music, picture or other work of authorship."
       },
       {
         "answer": "SOUND",
-        "clue": "Sensation perceived by the ear caused by the vibration of air"
+        "clue": "Sensation perceived by the ear caused by the vibration of air or some other medium."
       },
       {
         "answer": "POP",
-        "clue": "Loud, sharp sound, as of a cork coming out of a bottle"
+        "clue": "Loud, sharp sound, as of a cork coming out of a bottle, especially when the contents are pressurized by fizziness."
       },
       {
         "answer": "PARTITION",
-        "clue": "Action which divides a thing into parts"
+        "clue": "Action which divides a thing into parts, or separates one thing from another."
       },
       {
         "answer": "CLIP",
-        "clue": "Something which clips or grasps"
+        "clue": "Something which clips or grasps; a device for attaching one object to another."
       },
       {
         "answer": "INDUSTRY",
@@ -1887,11 +1887,11 @@
       },
       {
         "answer": "LOCK",
-        "clue": "Something used for fastening"
+        "clue": "Something used for fastening, which can only be opened with a key or combination."
       },
       {
         "answer": "ORCHESTRE",
-        "clue": "Obsolete form of orchestra. A large group of musicians who play together"
+        "clue": "Obsolete form of orchestra. A large group of musicians who play together on various instruments, usually including some from strings, woodwind, brass and/or percussion; the instruments played by such a group.]"
       },
       {
         "answer": "ALBUM",
@@ -1911,15 +1911,15 @@
       },
       {
         "answer": "KINDA",
-        "clue": "Subspecies of baboon"
+        "clue": "Subspecies of baboon, Papio cynocephalus kindae, primarily found in Angola, the Democratic Republic of the Congo, Zambia, and possibly western Tanzania."
       },
       {
         "answer": "DRILL",
-        "clue": "Tool or machine used to remove material so as to create a"
+        "clue": "Tool or machine used to remove material so as to create a hole, typically by plunging a rotating cutting bit into a stationary workpiece."
       },
       {
         "answer": "MOH",
-        "clue": "Attachment to the transient material world"
+        "clue": "Attachment to the transient material world, which hinders the soul's search for its ultimate goal and is therefore one of the Five Evils."
       },
       {
         "answer": "DONKEY",
@@ -1927,31 +1927,31 @@
       },
       {
         "answer": "SCORE",
-        "clue": "Total number of goals"
+        "clue": "Total number of goals, points, runs, etc. earned by a participant in a game."
       },
       {
         "answer": "FUNK",
-        "clue": "Style of music derived from 1960s soul music"
+        "clue": "Style of music derived from 1960s soul music, with elements of rock and other styles, characterized by a prominent bass guitar, dance-friendly sound, a strong emphasis on the downbeat, and much syncopation."
       },
       {
         "answer": "ROCK",
-        "clue": "Formation of minerals, specifically"
+        "clue": "Formation of minerals, specifically:"
       },
       {
         "answer": "CANADA",
-        "clue": "Country in North America. Capital"
+        "clue": "Country in North America. Capital: Ottawa. Largest city: Toronto."
       },
       {
         "answer": "YUE",
-        "clue": "Ancient Chinese wind instrument thought to have been a long piece"
+        "clue": "Ancient Chinese wind instrument thought to have been a long piece of bamboo with holes drilled in"
       },
       {
         "answer": "JAM",
-        "clue": "Sweet mixture of fruit boiled with sugar and allowed to congeal. Often"
+        "clue": "Sweet mixture of fruit boiled with sugar and allowed to congeal. Often spread on bread or toast or used in jam tarts"
       },
       {
         "answer": "CORAL",
-        "clue": "Many species of marine invertebrates in the class Anthozoa"
+        "clue": "Many species of marine invertebrates in the class Anthozoa, most of which build hard calcium carbonate skeletons and form colonies, or a colony belonging to one of those species."
       },
       {
         "answer": "DEUTSCHER",
@@ -1971,7 +1971,7 @@
       },
       {
         "answer": "CONCERTS",
-        "clue": "Live double album by English avant-rock group Henry Cow"
+        "clue": "Live double album by English avant-rock group Henry Cow, recorded at concerts in London, Italy, the Netherlands and Norway between September 1974 and October 1975."
       },
       {
         "answer": "DECREASING",
@@ -1979,7 +1979,7 @@
       },
       {
         "answer": "GENERA",
-        "clue": "Commercial operating system and integrated development environment for Lisp machines created by"
+        "clue": "Commercial operating system and integrated development environment for Lisp machines created by Symbolics."
       },
       {
         "answer": "KUM",
@@ -1991,7 +1991,7 @@
       },
       {
         "answer": "MUSICA",
-        "clue": "Bronze statue that sits upon a grassy knoll in Nashville"
+        "clue": "Bronze statue that sits upon a grassy knoll in Nashville, Tennessee, at the center of a traffic rotary where the confluence of Division Street and 16th Avenue North happens, known as the Music Row Roundabout or Buddy Killen Circle."
       },
       {
         "answer": "MUSICALES",
@@ -1999,7 +1999,7 @@
       },
       {
         "answer": "MUSICIANS",
-        "clue": "Composer, conductor, or performer of music"
+        "clue": "Composer, conductor, or performer of music; specifically, a person who sings and/or plays a musical instrument as a hobby, occupation, or profession."
       },
       {
         "answer": "PIECES",
@@ -2019,7 +2019,7 @@
       },
       {
         "answer": "BALLAD",
-        "clue": "Kind of narrative poem, adapted for recitation or singing"
+        "clue": "Kind of narrative poem, adapted for recitation or singing; especially, a sentimental or romantic poem in short stanzas."
       },
       {
         "answer": "DITTY",
@@ -2031,7 +2031,7 @@
       },
       {
         "answer": "SONATA",
-        "clue": "Musical composition for one or a few instruments"
+        "clue": "Musical composition for one or a few instruments, one of which is frequently a piano, in three or four movements that vary in key and tempo."
       },
       {
         "answer": "OPUS",
@@ -2039,7 +2039,7 @@
       },
       {
         "answer": "STRAIN",
-        "clue": "Particular variety of a microbe"
+        "clue": "Particular variety of a microbe, virus, or other organism, usually a taxonomically infraspecific one."
       },
       {
         "answer": "ORCHESTRATION",
@@ -2047,15 +2047,15 @@
       },
       {
         "answer": "MUSICS",
-        "clue": "Series of sounds organized in time"
+        "clue": "Series of sounds organized in time, usually employing some combination of harmony, melody, rhythm, tempo, etc., often to convey a mood."
       },
       {
         "answer": "TUNES",
-        "clue": "Brand of lozenge"
+        "clue": "Brand of lozenge, manufactured by Mars Wrigley Confectionery in the United Kingdom."
       },
       {
         "answer": "SOUNDTRACKS",
-        "clue": "Sound component of a movie, video game"
+        "clue": "Sound component of a movie, video game, etc."
       },
       {
         "answer": "MUSICMAKING",
@@ -2063,7 +2063,7 @@
       },
       {
         "answer": "POETRY",
-        "clue": "Literature composed in verse or language exhibiting conscious attention to patterns"
+        "clue": "Literature composed in verse or language exhibiting conscious attention to patterns and rhythm."
       },
       {
         "answer": "MELODIES",
@@ -2075,11 +2075,11 @@
       },
       {
         "answer": "MUSICKING",
-        "clue": "Any activity involving or related to music performance"
+        "clue": "Any activity involving or related to music performance, such as performing, listening, rehearsing, or composing."
       },
       {
         "answer": "REGGAE",
-        "clue": "Music genre that originated in Jamaica in the late 1960s and"
+        "clue": "Music genre that originated in Jamaica in the late 1960s and is heavily associated with Rastafarianism, featuring a heavy bass line and percussive rhythm guitar on the offbeat, often with close vocal harmonies."
       },
       {
         "answer": "MOVIES",
@@ -2232,7 +2232,7 @@
       },
       {
         "answer": "WORLD",
-        "clue": "Subjective human experience, regarded collectively"
+        "clue": "Subjective human experience, regarded collectively; human collective existence; existence in general; the reality we live in."
       },
       {
         "answer": "EXISTENCE",
@@ -2260,7 +2260,7 @@
       },
       {
         "answer": "PERSONALITY",
-        "clue": "Of people, a set of non-physical psychological and social qualities that make"
+        "clue": "Of people, a set of non-physical psychological and social qualities that make one person distinct from another."
       },
       {
         "answer": "ESSENCE",
@@ -2268,7 +2268,7 @@
       },
       {
         "answer": "ETHOS",
-        "clue": "Character or fundamental values of a person"
+        "clue": "Character or fundamental values of a person, people, culture, or movement."
       },
       {
         "answer": "NATURAL",
@@ -2300,7 +2300,7 @@
       },
       {
         "answer": "CHARACTERISTIC",
-        "clue": "Distinguishing feature of a person or thing"
+        "clue": "Distinguishing feature of a person or thing, a part of mental or physical behavior."
       },
       {
         "answer": "CHARACTERIZATION",
@@ -2308,7 +2308,7 @@
       },
       {
         "answer": "NORMALCY",
-        "clue": "State of being normal"
+        "clue": "State of being normal; the fact of being normal; normality."
       },
       {
         "answer": "SPIRIT",
@@ -2316,11 +2316,11 @@
       },
       {
         "answer": "IDENTITY",
-        "clue": "Difference or character that marks off an individual or collective from the"
+        "clue": "Difference or character that marks off an individual or collective from the rest of the same kind; selfhood; the sense of who something or someone or oneself is, or the recurring characteristics that enable the recognition of such an individual or group by others or themselves."
       },
       {
         "answer": "MANNER",
-        "clue": "Mode of action"
+        "clue": "Mode of action; way of performing or doing anything."
       },
       {
         "answer": "FACT",
@@ -2328,7 +2328,7 @@
       },
       {
         "answer": "NORMALIZATION",
-        "clue": "Any process that makes something more normal or regular"
+        "clue": "Any process that makes something more normal or regular, which typically means conforming to some regularity or rule, or returning from some state of abnormality."
       },
       {
         "answer": "SPECIFICITY",
@@ -2336,11 +2336,11 @@
       },
       {
         "answer": "GIST",
-        "clue": "Main idea or substance"
+        "clue": "Main idea or substance, or the most essential part, of a longer or more complicated matter; the crux, the heart, the pith."
       },
       {
         "answer": "GENDER",
-        "clue": "Identification as a man"
+        "clue": "Identification as a man, a woman, or something else, and association with a role or set of behavioral and cultural traits, clothing, etc; a category to which a person belongs on this basis."
       },
       {
         "answer": "STATUS",
@@ -2348,7 +2348,7 @@
       },
       {
         "answer": "MEANING",
-        "clue": "Denotation"
+        "clue": "Denotation, referent, or idea connected with a word, expression, or symbol."
       },
       {
         "answer": "SIGNIFICANCE",
@@ -2360,7 +2360,7 @@
       },
       {
         "answer": "SHAPE",
-        "clue": "Graphical representation of an object's form or its external boundary"
+        "clue": "Graphical representation of an object's form or its external boundary, outline, or external surface."
       },
       {
         "answer": "TYPOLOGY",
@@ -2376,15 +2376,15 @@
       },
       {
         "answer": "CONNOTATION",
-        "clue": "Meaning of a word or phrase that is suggested or implied"
+        "clue": "Meaning of a word or phrase that is suggested or implied, as opposed to a denotation, or literal meaning. A characteristic of words or phrases, or of the contexts that words and phrases are used in."
       },
       {
         "answer": "TEMPER",
-        "clue": "General tendency or orientation towards a certain type of mood"
+        "clue": "General tendency or orientation towards a certain type of mood, a volatile state; a habitual way of thinking, behaving or reacting."
       },
       {
         "answer": "KIND",
-        "clue": "Type, race or category"
+        "clue": "Type, race or category; a group of entities that have common characteristics such that they may be grouped together."
       },
       {
         "answer": "QUALITATIVE",
@@ -2392,7 +2392,7 @@
       },
       {
         "answer": "DEFINITION",
-        "clue": "Statement of the meaning of a word"
+        "clue": "Statement of the meaning of a word, word group, sign, or symbol; especially, a dictionary definition."
       },
       {
         "answer": "DESIGNED",
@@ -2400,15 +2400,15 @@
       },
       {
         "answer": "SENSE",
-        "clue": "Manners by which living beings perceive the physical world"
+        "clue": "The manners by which living beings perceive the physical world: for humans sight, smell, hearing, touch, taste."
       },
       {
         "answer": "CAPABLE",
-        "clue": "Able and efficient"
+        "clue": "Able and efficient; having the ability needed for a specific task; having the disposition to do something; permitting or being susceptible to something."
       },
       {
         "answer": "CATEGORY",
-        "clue": "Group, often named or numbered, to which items are assigned based on"
+        "clue": "Group, often named or numbered, to which items are assigned based on similarity or defined criteria."
       },
       {
         "answer": "TYPE",
@@ -2440,15 +2440,15 @@
       },
       {
         "answer": "GENRE",
-        "clue": "Kind"
+        "clue": "Kind; a stylistic category or sort, especially of literature or other artworks."
       },
       {
         "answer": "WHAT",
-        "clue": "Identity of a thing"
+        "clue": "Identity of a thing, as an answer to a question of what."
       },
       {
         "answer": "CHARACTER",
-        "clue": "Being involved in the action of a story"
+        "clue": "Being involved in the action of a story; a persona."
       },
       {
         "answer": "TEMPERAMENT",
@@ -2468,7 +2468,7 @@
       },
       {
         "answer": "SEQUENCE",
-        "clue": "Set of things next to each other in a set order"
+        "clue": "Set of things next to each other in a set order; a series."
       },
       {
         "answer": "CONDUCIVE",
@@ -2488,7 +2488,7 @@
       },
       {
         "answer": "SCOPE",
-        "clue": "Breadth, depth or reach of a subject"
+        "clue": "Breadth, depth or reach of a subject; the extent of applicability or relevance; a domain, purview or remit."
       },
       {
         "answer": "EXTENT",
@@ -2508,7 +2508,7 @@
       },
       {
         "answer": "LIABLE",
-        "clue": "Bound or obliged in law or equity"
+        "clue": "Bound or obliged in law or equity; responsible; answerable."
       },
       {
         "answer": "ORDRE",
@@ -2520,7 +2520,7 @@
       },
       {
         "answer": "DESCRIPTION",
-        "clue": "Sketch or account of anything in words"
+        "clue": "Sketch or account of anything in words; a portraiture or representation in language; an enumeration of the essential qualities of a thing or species."
       },
       {
         "answer": "STRUCTURE",
@@ -2532,11 +2532,11 @@
       },
       {
         "answer": "SIZE",
-        "clue": "Dimensions or magnitude of a thing"
+        "clue": "Dimensions or magnitude of a thing; how big something is."
       },
       {
         "answer": "CONSERVATION",
-        "clue": "Act of preserving, guarding, or protecting"
+        "clue": "Act of preserving, guarding, or protecting; the keeping in a safe or entire state; preservation."
       },
       {
         "answer": "CONTENT",
@@ -2548,11 +2548,11 @@
       },
       {
         "answer": "ART",
-        "clue": "Conscious production or arrangement of sounds"
+        "clue": "Conscious production or arrangement of sounds, colours, forms, movements, or other elements in a manner that affects the senses and emotions, usually specifically the production of the beautiful in a graphic or plastic medium."
       },
       {
         "answer": "DEGREE",
-        "clue": "Stage of proficiency or qualification in a course of study"
+        "clue": "Stage of proficiency or qualification in a course of study, now especially an award bestowed by a university/college, as a certification of academic achievement."
       },
       {
         "answer": "MOTIVATED",
@@ -2564,7 +2564,7 @@
       },
       {
         "answer": "DIMENSION",
-        "clue": "Measure of spatial extent in a particular direction"
+        "clue": "Measure of spatial extent in a particular direction, such as height, width or breadth, or depth."
       },
       {
         "answer": "TYPEFACE",
@@ -2572,7 +2572,7 @@
       },
       {
         "answer": "LEVEL",
-        "clue": "Tool for finding whether a surface is level"
+        "clue": "Tool for finding whether a surface is level, or for creating a horizontal or vertical line of reference."
       },
       {
         "answer": "ONE",
@@ -2588,27 +2588,27 @@
       },
       {
         "answer": "SEXUAL",
-        "clue": "Species which reproduces by sexual rather than asexual reproduction"
+        "clue": "Species which reproduces by sexual rather than asexual reproduction, or a member of such a species."
       },
       {
         "answer": "PLAIN",
-        "clue": "Expanse of land with relatively low relief and few trees"
+        "clue": "Expanse of land with relatively low relief and few trees, especially a grassy expanse."
       },
       {
         "answer": "SEXUALITY",
-        "clue": "Sexual activity"
+        "clue": "Sexual activity; concern with, or interest in, sexual activity."
       },
       {
         "answer": "AWOL",
-        "clue": "Absence without proper authority from the properly appointed place of duty"
+        "clue": "Absence without proper authority from the properly appointed place of duty, or from unit, organization, or other place of duty at which one is required to be at the time prescribed."
       },
       {
         "answer": "LANDSCAPE",
-        "clue": "Portion of land or territory as defined by its landform"
+        "clue": "Portion of land or territory as defined by its landform, its geographical features."
       },
       {
         "answer": "DIGIT",
-        "clue": "Position in a sequence of numerals representing a place value in a"
+        "clue": "Position in a sequence of numerals representing a place value in a positional number system."
       }
     ]
   },
@@ -2757,11 +2757,11 @@
       },
       {
         "answer": "ENGINEERING",
-        "clue": "Application of mathematics and the physical sciences to the needs of humanity"
+        "clue": "Application of mathematics and the physical sciences to the needs of humanity and the development of technology."
       },
       {
         "answer": "TECHNICALITY",
-        "clue": "Minor detail"
+        "clue": "Minor detail, rule, law, etc., seemingly insignificant to a non-specialist but which has significant consequences in larger matters."
       },
       {
         "answer": "TECHNICAL",
@@ -2777,15 +2777,15 @@
       },
       {
         "answer": "SCIENCE",
-        "clue": "Particular discipline or branch of knowledge that is natural"
+        "clue": "Particular discipline or branch of knowledge that is natural, measurable or consisting of systematic principles rather than intuition or technical skill."
       },
       {
         "answer": "SCIENTIFIC",
-        "clue": "Related or connected to science"
+        "clue": "Related or connected to science:"
       },
       {
         "answer": "TECHNIQUE",
-        "clue": "Method of achieving something or carrying something out"
+        "clue": "Method of achieving something or carrying something out, especially one requiring some skill or knowledge."
       },
       {
         "answer": "COMPUTERIZATION",
@@ -2801,39 +2801,39 @@
       },
       {
         "answer": "POLYTECHNIC",
-        "clue": "Three-year post-secondary vocational training institute"
+        "clue": "Three-year post-secondary vocational training institute, equivalent of community college in the U.S. or TAFE in Australia."
       },
       {
         "answer": "INFORMATICS",
-        "clue": "Branch of information science and of computer science that focuses on the"
+        "clue": "Branch of information science and of computer science that focuses on the study of information processing, particularly with respect to systems integration and human interactions with machine and data."
       },
       {
         "answer": "COMPUTER",
-        "clue": "Programmable electronic device that performs mathematical calculations and logical operations"
+        "clue": "Programmable electronic device that performs mathematical calculations and logical operations, especially one that can process, store and retrieve large amounts of data very quickly; now especially, a small one for personal or home use employed for manipulating text or graphics, accessing the Internet, or playing games or media."
       },
       {
         "answer": "INFORMATION",
-        "clue": "Things that are or can be known about a given topic"
+        "clue": "Things that are or can be known about a given topic; communicable knowledge of something."
       },
       {
         "answer": "TELEMATICS",
-        "clue": "Use of Global Positioning System technology integrated with computers and mobile communications"
+        "clue": "Use of Global Positioning System technology integrated with computers and mobile communications technology."
       },
       {
         "answer": "SKILL",
-        "clue": "Capacity to do something well"
+        "clue": "Capacity to do something well; a technique, an ability, usually acquired or learned, as opposed to abilities that are regarded as innate."
       },
       {
         "answer": "ART",
-        "clue": "Conscious production or arrangement of sounds"
+        "clue": "Conscious production or arrangement of sounds, colours, forms, movements, or other elements in a manner that affects the senses and emotions, usually specifically the production of the beautiful in a graphic or plastic medium."
       },
       {
         "answer": "DIALUP",
-        "clue": "Alternative spelling of dial-up. A network connection that requires a telephone number"
+        "clue": "Alternative spelling of dial-up. A network connection that requires a telephone number to be dialed.]"
       },
       {
         "answer": "RESEARCH",
-        "clue": "Diligent inquiry or examination to seek or revise facts"
+        "clue": "Diligent inquiry or examination to seek or revise facts, principles, theories, applications, etc.."
       },
       {
         "answer": "EXPERTISE",
@@ -2845,7 +2845,7 @@
       },
       {
         "answer": "INNOVATION",
-        "clue": "Act of innovating"
+        "clue": "Act of innovating; the introduction of something new, in customs, rites, etc."
       },
       {
         "answer": "FUNCTIONAL",
@@ -2885,7 +2885,7 @@
       },
       {
         "answer": "EQUIPMENT",
-        "clue": "Any items used in equipping something or someone"
+        "clue": "Any items used in equipping something or someone, for example things needed for an expedition or voyage."
       },
       {
         "answer": "INDUSTRY",
@@ -2893,7 +2893,7 @@
       },
       {
         "answer": "TECHNO",
-        "clue": "Repetitive style of music originally produced for use in a continuous DJ"
+        "clue": "Repetitive style of music originally produced for use in a continuous DJ set. The central rhythmic component is most often in common time , where time is marked with a bass drum on each quarter note pulse, a backbeat played by snare or clap on the second and fourth pulses of the bar, and an open hi-hat sounding every second eighth note."
       },
       {
         "answer": "DTI",
@@ -2901,11 +2901,11 @@
       },
       {
         "answer": "BIOTECHNOLOGY",
-        "clue": "Use of living organisms in industrial"
+        "clue": "Use of living organisms in industrial, agricultural, medical and other technological applications."
       },
       {
         "answer": "ADVANCEMENTS",
-        "clue": "Act of advancing"
+        "clue": "Act of advancing; promotion to a higher place or dignity"
       },
       {
         "answer": "INFORMATICA",
@@ -2913,19 +2913,19 @@
       },
       {
         "answer": "SKILLS",
-        "clue": "Capacity to do something well"
+        "clue": "Capacity to do something well; a technique, an ability, usually acquired or learned, as opposed to abilities that are regarded as innate."
       },
       {
         "answer": "TECHNICIANS",
-        "clue": "Person who studies or practises technology"
+        "clue": "Person who studies or practises technology; an expert in a particular technology."
       },
       {
         "answer": "TECHNIQUES",
-        "clue": "Method of achieving something or carrying something out"
+        "clue": "Method of achieving something or carrying something out, especially one requiring some skill or knowledge."
       },
       {
         "answer": "TECHNOLOGIE",
-        "clue": "Scientist, engineer, or technician who specializes in a particular technology, or who"
+        "clue": "Scientist, engineer, or technician who specializes in a particular technology, or who uses technology in a particular field."
       },
       {
         "answer": "TECHS",
@@ -2937,11 +2937,11 @@
       },
       {
         "answer": "DEVICES",
-        "clue": "Inclination or desire"
+        "clue": "Inclination or desire; used in the plural in the phrase `left to your own devices'"
       },
       {
         "answer": "HARDWARE",
-        "clue": "Fixtures, equipment, fasteners, tools, and devices used for general-purpose construction and repair"
+        "clue": "Fixtures, equipment, fasteners, tools, and devices used for general-purpose construction and repair of a structure or object. Also such equipment as sold as stock by a store of the same name, e.g. hardware store."
       },
       {
         "answer": "TECHNICS",
@@ -2949,11 +2949,11 @@
       },
       {
         "answer": "ELECTRONICS",
-        "clue": "Devices which require the flow of electrons through conductors and semiconductors in"
+        "clue": "Devices which require the flow of electrons through conductors and semiconductors in order to perform their function; devices that operate on electrical power"
       },
       {
         "answer": "AUTOMATION",
-        "clue": "Act or process of converting the controlling of a machine or device"
+        "clue": "Act or process of converting the controlling of a machine or device to a more automatic system, such as computer or electronic controls."
       },
       {
         "answer": "GADGETRY",
@@ -2961,11 +2961,11 @@
       },
       {
         "answer": "INSTRUMENTATION",
-        "clue": "Act of using or adapting as an instrument"
+        "clue": "Act of using or adapting as an instrument; a series or combination of instruments."
       },
       {
         "answer": "MECHANICS",
-        "clue": "Branch of physics that deals with the action of forces on material"
+        "clue": "Branch of physics that deals with the action of forces on material objects with mass"
       },
       {
         "answer": "ROBOTICS",
@@ -2973,7 +2973,7 @@
       },
       {
         "answer": "SYSTEMS",
-        "clue": "Group or set of related things that operate together as a complex"
+        "clue": "Group or set of related things that operate together as a complex whole."
       },
       {
         "answer": "TOOLS",
@@ -2989,7 +2989,7 @@
       },
       {
         "answer": "MICROTECHNOLOGY",
-        "clue": "Several technologies concerned with material or devices whose size is measured in"
+        "clue": "Several technologies concerned with material or devices whose size is measured in micrometres"
       },
       {
         "answer": "TECHNOLOGIC",
@@ -3001,7 +3001,7 @@
       },
       {
         "answer": "NANOTECHNOLOGY",
-        "clue": "Science and technology of creating nanoparticles and of manufacturing machines which have"
+        "clue": "Science and technology of creating nanoparticles and of manufacturing machines which have sizes within the range of nanometres."
       },
       {
         "answer": "ADVANCES",
@@ -3017,15 +3017,15 @@
       },
       {
         "answer": "ADVANCEMENT",
-        "clue": "Act of advancing"
+        "clue": "Act of advancing; promotion to a higher place or dignity"
       },
       {
         "answer": "INFRASTRUCTURE",
-        "clue": "Facilities"
+        "clue": "Facilities, services and installations needed for the functioning of a community or society."
       },
       {
         "answer": "DESIGN",
-        "clue": "Plan for the structure and functions of an artifact"
+        "clue": "Plan for the structure and functions of an artifact, building or system."
       },
       {
         "answer": "CAPABILITIES",
@@ -3057,7 +3057,7 @@
       },
       {
         "answer": "NANOTECH",
-        "clue": "Abbreviation of nanotechnology. [The science and technology of creating nanoparticles and"
+        "clue": "Abbreviation of nanotechnology. .]"
       },
       {
         "answer": "SCIENCES",
@@ -3069,23 +3069,23 @@
       },
       {
         "answer": "GADGET",
-        "clue": "Any device or machine"
+        "clue": "Any device or machine, especially one whose name cannot be recalled, often either clever or complicated."
       },
       {
         "answer": "MANUFACTURING",
-        "clue": "Transformation of raw materials into finished products"
+        "clue": "Transformation of raw materials into finished products, usually on a large scale."
       },
       {
         "answer": "TELECOMMUNICATIONS",
-        "clue": "Alternative form of telecommunication. The science and technology of the communication"
+        "clue": "Alternative form of telecommunication. The science and technology of the communication of messages over a distance using electric, electronic or electromagnetic impulses.]"
       },
       {
         "answer": "GADGETS",
-        "clue": "Any device or machine"
+        "clue": "Any device or machine, especially one whose name cannot be recalled, often either clever or complicated."
       },
       {
         "answer": "COMMUNICATIONS",
-        "clue": "Telecommunications"
+        "clue": "Telecommunications, the science and technology of communicating, especially by electronic means."
       },
       {
         "answer": "MICROENGINEERING",
@@ -3246,7 +3246,7 @@
       },
       {
         "answer": "CHRONICLE",
-        "clue": "Written account of events and when they happened"
+        "clue": "Written account of events and when they happened, ordered by time."
       },
       {
         "answer": "STORY",
@@ -3254,7 +3254,7 @@
       },
       {
         "answer": "ACCOUNT",
-        "clue": "Registry of pecuniary transactions"
+        "clue": "Registry of pecuniary transactions; a written or printed statement of business dealings or debts and credits, and also of other things subjected to a reckoning or review."
       },
       {
         "answer": "HISTORIOGRAPHY",
@@ -3282,7 +3282,7 @@
       },
       {
         "answer": "CONTEXT",
-        "clue": "Surroundings"
+        "clue": "Surroundings, circumstances, environment, background or settings that determine, specify, or clarify the meaning of an event or other occurrence."
       },
       {
         "answer": "STORYLINE",
@@ -3298,7 +3298,7 @@
       },
       {
         "answer": "PLOT",
-        "clue": "Course of a story"
+        "clue": "Course of a story, comprising a series of incidents which are gradually unfolded, sometimes by unexpected means."
       },
       {
         "answer": "STORYTELLING",
@@ -3306,7 +3306,7 @@
       },
       {
         "answer": "TRADITION",
-        "clue": "Part of culture that is passed from person to person or generation"
+        "clue": "Part of culture that is passed from person to person or generation to generation, possibly differing in detail from family to family, such as the way to celebrate holidays."
       },
       {
         "answer": "RELATIONSHIP",
@@ -3314,7 +3314,7 @@
       },
       {
         "answer": "EXPERIENCE",
-        "clue": "Collection of events and/or activities from which an individual or group may"
+        "clue": "Collection of events and/or activities from which an individual or group may gather knowledge, opinions, and skills."
       },
       {
         "answer": "HISTORIC",
@@ -3326,11 +3326,11 @@
       },
       {
         "answer": "THING",
-        "clue": "That which is considered to exist as a separate entity"
+        "clue": "That which is considered to exist as a separate entity, object, quality or concept."
       },
       {
         "answer": "MEMORY",
-        "clue": "Ability of the brain to record information or impressions with the facility"
+        "clue": "Ability of the brain to record information or impressions with the facility of recalling them later, usually at will."
       },
       {
         "answer": "EXISTENCE",
@@ -3342,27 +3342,27 @@
       },
       {
         "answer": "ANECDOTE",
-        "clue": "Short account of a real incident or person"
+        "clue": "Short account of a real incident or person, often humorous or interesting."
       },
       {
         "answer": "LIFE",
-        "clue": "State of organisms preceding their death"
+        "clue": "State of organisms preceding their death, characterized by biological processes such as metabolism and reproduction and distinguishing them from inanimate objects; the state of being alive and living."
       },
       {
         "answer": "EXPERIMENT",
-        "clue": "Test under controlled conditions made to either demonstrate a known truth"
+        "clue": "Test under controlled conditions made to either demonstrate a known truth, examine the validity of a hypothesis, or determine the efficacy or likelihood of something previously untried."
       },
       {
         "answer": "TALE",
-        "clue": "Rehearsal of what has occurred"
+        "clue": "Rehearsal of what has occurred; narrative; discourse; statement; history; story."
       },
       {
         "answer": "EPISODE",
-        "clue": "Installment of a drama told in parts"
+        "clue": "Installment of a drama told in parts, as in a TV series."
       },
       {
         "answer": "DEAL",
-        "clue": "Indefinite quantity or amount"
+        "clue": "Indefinite quantity or amount; a lot."
       },
       {
         "answer": "BUSINESS",
@@ -3390,7 +3390,7 @@
       },
       {
         "answer": "PAST",
-        "clue": "Period of time that has already happened"
+        "clue": "Period of time that has already happened, in contrast to the present and the future."
       },
       {
         "answer": "REPUTATION",
@@ -3398,15 +3398,15 @@
       },
       {
         "answer": "ABOUT",
-        "clue": "Nearly"
+        "clue": "Nearly; approximately; with close correspondence in quality, manner, degree, quantity, or time; almost."
       },
       {
         "answer": "HISTOGRAM",
-        "clue": "Graphical display of numerical data in the form of upright bars"
+        "clue": "Graphical display of numerical data in the form of upright bars, with the area of each bar representing frequency."
       },
       {
         "answer": "ANTECEDENT",
-        "clue": "Any thing that precedes another thing"
+        "clue": "Any thing that precedes another thing, especially the cause of the second thing."
       },
       {
         "answer": "AGO",
@@ -3422,7 +3422,7 @@
       },
       {
         "answer": "HERITAGE",
-        "clue": "Tradition"
+        "clue": "Tradition; a practice or set of values that is passed down from preceding generations through families or through institutional memory."
       },
       {
         "answer": "LEGACY",
@@ -3438,7 +3438,7 @@
       },
       {
         "answer": "TIME",
-        "clue": "Inevitable progression into the future with the passing of present and past"
+        "clue": "Inevitable progression into the future with the passing of present and past events."
       },
       {
         "answer": "OVER",
@@ -3446,7 +3446,7 @@
       },
       {
         "answer": "POSTERITY",
-        "clue": "All the future generations"
+        "clue": "All the future generations, especially the descendants of a specific person."
       },
       {
         "answer": "EVOLUTION",
@@ -3454,7 +3454,7 @@
       },
       {
         "answer": "CHRONIC",
-        "clue": "Condition of extended duration"
+        "clue": "Condition of extended duration, either continuous or marked by frequent recurrence. Sometimes implies a condition which worsens with each recurrence, though that is not inherent in the term."
       },
       {
         "answer": "ROMANCE",
@@ -3462,7 +3462,7 @@
       },
       {
         "answer": "JOURNEY",
-        "clue": "Set amount of travelling, seen as a single unit"
+        "clue": "Set amount of travelling, seen as a single unit; a discrete trip, a voyage."
       },
       {
         "answer": "LANDMARK",
@@ -3486,7 +3486,7 @@
       },
       {
         "answer": "BACKGROUND",
-        "clue": "Part of the picture that depicts scenery to the rear or behind"
+        "clue": "Part of the picture that depicts scenery to the rear or behind the main subject; context."
       },
       {
         "answer": "JAMBOREE",
@@ -3502,11 +3502,11 @@
       },
       {
         "answer": "LOCKER",
-        "clue": "Type of storage compartment with a lock"
+        "clue": "Type of storage compartment with a lock, usually used to store personal possessions for public use, such as in schools, railway stations, place of work, gyms, sports centers."
       },
       {
         "answer": "MESS",
-        "clue": "Thing or group of things in a disagreeable"
+        "clue": "Thing or group of things in a disagreeable, disorganised, or dirty state; hence a bad situation"
       },
       {
         "answer": "FUSS",
@@ -3522,7 +3522,7 @@
       },
       {
         "answer": "SYMPTOMATOLOGY",
-        "clue": "Aggregate of symptoms of a particular disease"
+        "clue": "Aggregate of symptoms of a particular disease; the pattern of symptoms, and their timing, that is characteristic of it."
       },
       {
         "answer": "ORGANIC",
@@ -3534,11 +3534,11 @@
       },
       {
         "answer": "SAGA",
-        "clue": "Something with the qualities of such a saga"
+        "clue": "Something with the qualities of such a saga; an epic, a long story."
       },
       {
         "answer": "CYCLE",
-        "clue": "Process that returns to its beginning and then repeats itself in the"
+        "clue": "Process that returns to its beginning and then repeats itself in the same sequence."
       },
       {
         "answer": "ANAL",
@@ -3550,11 +3550,11 @@
       },
       {
         "answer": "CHESTNUT",
-        "clue": "Edible nut of the Spanish chestnut or sweet chestnut tree"
+        "clue": "Edible nut of the Spanish chestnut or sweet chestnut tree ; also , a nut from a related shrub or tree; or a similar nut from an unrelated plant."
       },
       {
         "answer": "DATE",
-        "clue": "Specific day in time at which a transaction or event takes place"
+        "clue": "Specific day in time at which a transaction or event takes place, or is appointed to take place; a given point of time."
       },
       {
         "answer": "SHIH",
@@ -3562,15 +3562,15 @@
       },
       {
         "answer": "SHI",
-        "clue": "Surname from Mandarin of Chinese origin"
+        "clue": "Surname from Mandarin of Chinese origin, the 63rd most common in China."
       },
       {
         "answer": "BACKGROUNDS",
-        "clue": "Part of the picture that depicts scenery to the rear or behind"
+        "clue": "Part of the picture that depicts scenery to the rear or behind the main subject; context."
       },
       {
         "answer": "DATES",
-        "clue": "\"Dates\" is the seventh Christmas special episode of the BBC sitcom Only"
+        "clue": "\"Dates\" is the seventh Christmas special episode of the BBC sitcom Only Fools and Horses, first broadcast on 25 December 1988."
       },
       {
         "answer": "HISTORIA",
@@ -3582,7 +3582,7 @@
       },
       {
         "answer": "STORIES",
-        "clue": "American early 1970s rock and pop music band based in New York"
+        "clue": "American early 1970s rock and pop music band based in New York City."
       },
       {
         "answer": "RETROSPECT",
@@ -3594,7 +3594,7 @@
       },
       {
         "answer": "ARCHIVES",
-        "clue": "Compilation album by Darkest Hour"
+        "clue": "Compilation album by Darkest Hour, released on October 3, 2006 through A-F Records."
       },
       {
         "answer": "CHRONOGRAPHY",
@@ -3614,15 +3614,15 @@
       },
       {
         "answer": "GEOGRAPHY",
-        "clue": "Study of the physical properties of the earth"
+        "clue": "Study of the physical properties of the earth, including how humans affect and are affected by them."
       },
       {
         "answer": "ORIGINS",
-        "clue": "Origins Natural Resources"
+        "clue": "Origins Natural Resources, Inc., trading as Origins, is an American cosmetics brand founded in 1990 by Leonard Lauder, son of Estée Lauder."
       },
       {
         "answer": "PREHISTORY",
-        "clue": "Time before written records in any area of the world"
+        "clue": "Time before written records in any area of the world; the events and conditions of those times."
       }
     ]
   },
@@ -3775,7 +3775,7 @@
       },
       {
         "answer": "ATHLETICS",
-        "clue": "Group of sporting activities including track and field"
+        "clue": "Group of sporting activities including track and field, road running, cross country and racewalking."
       },
       {
         "answer": "PLAY",
@@ -3795,11 +3795,11 @@
       },
       {
         "answer": "ROMP",
-        "clue": "Period of boisterous play, a frolic"
+        "clue": "Period of boisterous play, a frolic; now especially, a bout of sexual activity, especially when illicit."
       },
       {
         "answer": "ROLLICK",
-        "clue": "Alternative form of rowlock. A usually U-shaped pivot attached to the gunwale"
+        "clue": "Alternative form of rowlock. A usually U-shaped pivot attached to the gunwale of a boat that supports and guides an oar, and provides a fulcrum for rowing; an oarlock.]"
       },
       {
         "answer": "FROLIC",
@@ -3807,7 +3807,7 @@
       },
       {
         "answer": "FRISK",
-        "clue": "Act of frisking"
+        "clue": "Act of frisking, of searching for something by feeling someone's body."
       },
       {
         "answer": "FUN",
@@ -3827,7 +3827,7 @@
       },
       {
         "answer": "NONRESIDENT",
-        "clue": "One who is not a resident"
+        "clue": "One who is not a resident; an alien; a foreigner."
       },
       {
         "answer": "MUTATION",
@@ -3835,7 +3835,7 @@
       },
       {
         "answer": "MUTANT",
-        "clue": "That which has mutated"
+        "clue": "That which has mutated, with one or more new characteristics from a mutation."
       },
       {
         "answer": "LARK",
@@ -3843,11 +3843,11 @@
       },
       {
         "answer": "SKYLARK",
-        "clue": "Small brown passerine bird"
+        "clue": "Small brown passerine bird, Alauda arvensis, that sings as it flies high into the air."
       },
       {
         "answer": "ATHLETIC",
-        "clue": "Muscular, large"
+        "clue": "Muscular, large–boned person, in the typology of Ernst Kretschmer."
       },
       {
         "answer": "STADIUM",
@@ -3867,15 +3867,15 @@
       },
       {
         "answer": "ATHLETE",
-        "clue": "Person who actively participates in physical sports"
+        "clue": "Person who actively participates in physical sports, especially with great skill; a sportsperson."
       },
       {
         "answer": "EXERCISE",
-        "clue": "Activity intended to improve physical"
+        "clue": "Activity intended to improve physical, or sometimes mental, strength and fitness."
       },
       {
         "answer": "GYM",
-        "clue": "Sports facility specialized for lifting weights"
+        "clue": "Sports facility specialized for lifting weights, cardio machines, and other exercise."
       },
       {
         "answer": "MOVEMENT",
@@ -3887,7 +3887,7 @@
       },
       {
         "answer": "SPORTSWEAR",
-        "clue": "Casual clothing that is comfortable to wear when exercising or partaking in"
+        "clue": "Casual clothing that is comfortable to wear when exercising or partaking in sport; activewear."
       },
       {
         "answer": "CAMPAIGN",
@@ -3915,7 +3915,7 @@
       },
       {
         "answer": "SUV",
-        "clue": "Initialism of sport utility vehicle"
+        "clue": "Initialism of sport utility vehicle; also S.U.V."
       },
       {
         "answer": "SPORTIVE",
@@ -3955,7 +3955,7 @@
       },
       {
         "answer": "ATHLETES",
-        "clue": "Genus of moths in the family Saturniidae first described by Ferdinand Karsch"
+        "clue": "Genus of moths in the family Saturniidae first described by Ferdinand Karsch in 1896."
       },
       {
         "answer": "CAMPAIGNS",
@@ -3991,7 +3991,7 @@
       },
       {
         "answer": "PLAYERS",
-        "clue": "American crime drama television series that aired on NBC from October 17"
+        "clue": "American crime drama television series that aired on NBC from October 17, 1997, to April 17, 1998."
       },
       {
         "answer": "SPORTIF",
@@ -4023,15 +4023,15 @@
       },
       {
         "answer": "TOURNAMENTS",
-        "clue": "Series of games"
+        "clue": "Series of games; either the same game played many times, or a succession of games related by a single theme; played competitively to determine a single winning team or individual."
       },
       {
         "answer": "FOOTBALL",
-        "clue": "Sport played on foot in which teams attempt to get a ball"
+        "clue": "Sport played on foot in which teams attempt to get a ball into a goal or zone defended by the other team."
       },
       {
         "answer": "BASKETBALL",
-        "clue": "Sport in which two opposing teams of five players strive to put"
+        "clue": "Sport in which two opposing teams of five players strive to put a ball through a hoop."
       },
       {
         "answer": "SOCCER",
@@ -4039,11 +4039,11 @@
       },
       {
         "answer": "BASEBALL",
-        "clue": "Sport common in North America"
+        "clue": "Sport common in North America, the Caribbean, and East Asia, in which the objective is to strike a ball so that one of a nine-person team can run counter-clockwise among four bases, resulting in the scoring of a run. The team with the most runs after termination of play, usually nine innings, wins."
       },
       {
         "answer": "HOCKEY",
-        "clue": "Family of sports in which hockey sticks are used to move a"
+        "clue": "A family of sports in which hockey sticks are used to move a ball or puck into a goal."
       },
       {
         "answer": "MOTORSPORTS",
@@ -4051,23 +4051,23 @@
       },
       {
         "answer": "ENTERTAINMENT",
-        "clue": "Activity designed to give pleasure"
+        "clue": "Activity designed to give pleasure, enjoyment, diversion, amusement, or relaxation to an audience, no matter whether the audience participates passively as in watching opera or a movie, or actively as in games."
       },
       {
         "answer": "TENNIS",
-        "clue": "Sport played by two players"
+        "clue": "Sport played by two players , who alternately strike the ball over a net using racquets."
       },
       {
         "answer": "GYMNASTICS",
-        "clue": "Sport involving the performance of sequences of movements requiring physical strength"
+        "clue": "Sport involving the performance of sequences of movements requiring physical strength, flexibility, and kinesthetic awareness."
       },
       {
         "answer": "RUGBY",
-        "clue": "Form of football in which players can hold or kick an ovoid"
+        "clue": "Form of football in which players can hold or kick an ovoid ball; rugby football. The ball cannot be handled forwards and points are scored by touching the ball to the ground in the area past the opponent's territory or by kicking the ball between goalposts and over a crossbar."
       },
       {
         "answer": "GOLF",
-        "clue": "Ball game played by individuals competing against one another in which the"
+        "clue": "Ball game played by individuals competing against one another in which the object is to hit a ball into each of a series of holes in the minimum number of strokes."
       },
       {
         "answer": "MULTISPORT",
@@ -4075,7 +4075,7 @@
       },
       {
         "answer": "VOLLEYBALL",
-        "clue": "Game played on a rectangular court between two teams of two to"
+        "clue": "Game played on a rectangular court between two teams of two to six players which involves striking a ball back and forth over a net."
       },
       {
         "answer": "MOTORSPORT",
@@ -4083,7 +4083,7 @@
       },
       {
         "answer": "BOXING",
-        "clue": "Sport where two opponents punch each other with gloved fists to head"
+        "clue": "Sport where two opponents punch each other with gloved fists to head and torso; the object being to score more points by the end of the match or by knockout, or technical knockout."
       },
       {
         "answer": "INTERMURAL",
@@ -4099,7 +4099,7 @@
       },
       {
         "answer": "POLITICS",
-        "clue": "Methodology and activities associated with running a government"
+        "clue": "Methodology and activities associated with running a government, an organization, or a movement."
       },
       {
         "answer": "ARTS",
@@ -4111,7 +4111,7 @@
       },
       {
         "answer": "CRICKET",
-        "clue": "Game played outdoors with bats and a ball between two teams"
+        "clue": "Game played outdoors with bats and a ball between two teams of eleven, popular in England and many Commonwealth countries."
       },
       {
         "answer": "INTRAMURALS",
@@ -4123,11 +4123,11 @@
       },
       {
         "answer": "SOFTBALL",
-        "clue": "Game similar to baseball but played with a larger and softer ball"
+        "clue": "Game similar to baseball but played with a larger and softer ball which can be thrown overhand or underhand."
       },
       {
         "answer": "YACHTING",
-        "clue": "Physical activity involving yachts"
+        "clue": "Physical activity involving yachts, such as racing sailing boats, cruising to distant shores, or day-sailing along a coast."
       },
       {
         "answer": "CYCLING",

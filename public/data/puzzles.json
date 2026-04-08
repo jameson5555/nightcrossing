@@ -4,8 +4,8 @@
     "title": "Space & Astronomy Crossword Vol. 1",
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 1",
-    "cols": 9,
-    "rows": 12,
+    "cols": 12,
+    "rows": 11,
     "theme": "Space & Astronomy"
   },
   {
@@ -14,7 +14,7 @@
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 2",
     "cols": 12,
-    "rows": 12,
+    "rows": 9,
     "theme": "Space & Astronomy"
   },
   {
@@ -22,7 +22,7 @@
     "title": "Space & Astronomy Crossword Vol. 3",
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 3",
-    "cols": 12,
+    "cols": 11,
     "rows": 12,
     "theme": "Space & Astronomy"
   },
@@ -31,8 +31,8 @@
     "title": "Food & Cooking Crossword Vol. 1",
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 1",
-    "cols": 12,
-    "rows": 12,
+    "cols": 11,
+    "rows": 11,
     "theme": "Food & Cooking"
   },
   {
@@ -40,8 +40,8 @@
     "title": "Food & Cooking Crossword Vol. 2",
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 2",
-    "cols": 10,
-    "rows": 12,
+    "cols": 11,
+    "rows": 11,
     "theme": "Food & Cooking"
   },
   {
@@ -50,7 +50,7 @@
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 3",
     "cols": 11,
-    "rows": 8,
+    "rows": 12,
     "theme": "Food & Cooking"
   },
   {
@@ -59,7 +59,7 @@
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 1",
     "cols": 12,
-    "rows": 12,
+    "rows": 11,
     "theme": "Ocean & Marine Life"
   },
   {
@@ -67,8 +67,8 @@
     "title": "Ocean & Marine Life Crossword Vol. 2",
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 2",
-    "cols": 11,
-    "rows": 12,
+    "cols": 10,
+    "rows": 11,
     "theme": "Ocean & Marine Life"
   },
   {
@@ -85,8 +85,8 @@
     "title": "Music & Sound Crossword Vol. 1",
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 1",
-    "cols": 10,
-    "rows": 9,
+    "cols": 11,
+    "rows": 12,
     "theme": "Music & Sound"
   },
   {
@@ -94,8 +94,8 @@
     "title": "Music & Sound Crossword Vol. 2",
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 2",
-    "cols": 9,
-    "rows": 10,
+    "cols": 12,
+    "rows": 12,
     "theme": "Music & Sound"
   },
   {
@@ -104,7 +104,7 @@
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 3",
     "cols": 10,
-    "rows": 7,
+    "rows": 12,
     "theme": "Music & Sound"
   },
   {
@@ -112,8 +112,8 @@
     "title": "Nature & Wilderness Crossword Vol. 1",
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 1",
-    "cols": 11,
-    "rows": 12,
+    "cols": 9,
+    "rows": 11,
     "theme": "Nature & Wilderness"
   },
   {
@@ -121,7 +121,7 @@
     "title": "Nature & Wilderness Crossword Vol. 2",
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 2",
-    "cols": 11,
+    "cols": 8,
     "rows": 12,
     "theme": "Nature & Wilderness"
   },
@@ -140,7 +140,7 @@
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 1",
     "cols": 11,
-    "rows": 10,
+    "rows": 12,
     "theme": "Technology & Computing"
   },
   {
@@ -148,7 +148,7 @@
     "title": "Technology & Computing Crossword Vol. 2",
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 2",
-    "cols": 9,
+    "cols": 8,
     "rows": 10,
     "theme": "Technology & Computing"
   },
@@ -158,7 +158,7 @@
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 3",
     "cols": 12,
-    "rows": 11,
+    "rows": 8,
     "theme": "Technology & Computing"
   },
   {
@@ -166,7 +166,7 @@
     "title": "History & Civilization Crossword Vol. 1",
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 1",
-    "cols": 9,
+    "cols": 11,
     "rows": 12,
     "theme": "History & Civilization"
   },
@@ -176,7 +176,7 @@
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 2",
     "cols": 10,
-    "rows": 7,
+    "rows": 12,
     "theme": "History & Civilization"
   },
   {
@@ -184,8 +184,8 @@
     "title": "History & Civilization Crossword Vol. 3",
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 3",
-    "cols": 12,
-    "rows": 12,
+    "cols": 11,
+    "rows": 10,
     "theme": "History & Civilization"
   },
   {
@@ -193,8 +193,8 @@
     "title": "Sports & Athletics Crossword Vol. 1",
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 1",
-    "cols": 11,
-    "rows": 12,
+    "cols": 10,
+    "rows": 11,
     "theme": "Sports & Athletics"
   },
   {
@@ -211,8 +211,8 @@
     "title": "Sports & Athletics Crossword Vol. 3",
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 3",
-    "cols": 12,
-    "rows": 12,
+    "cols": 11,
+    "rows": 11,
     "theme": "Sports & Athletics"
   }
 ]
