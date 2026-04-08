@@ -28,6 +28,9 @@ function generateBestLayout(words, attempts = 4000, maxWords = 18) {
     // Trim early to check true dimensions
     layout = trimGrid(layout);
     if (!layout.table || layout.rows === 0 || layout.cols === 0) continue;
+    
+    // Enforce 12x12 size limits to keep readable on mobile
+    if (layout.rows > 12 || layout.cols > 12) continue;
 
     let filled = 0;
     for (let r = 0; r < layout.rows; r++) {
@@ -35,6 +38,32 @@ function generateBestLayout(words, attempts = 4000, maxWords = 18) {
         if (layout.table[r][c] !== '-') filled++;
       }
     }
+    
+    // Calculate word intersections
+    let wordIntersections = new Array(layout.result.length).fill(0);
+    for (let w1 = 0; w1 < layout.result.length; w1++) {
+      for (let w2 = w1 + 1; w2 < layout.result.length; w2++) {
+        const wordA = layout.result[w1];
+        const wordB = layout.result[w2];
+        if (wordA.orientation !== wordB.orientation) {
+          const hWord = wordA.orientation === 'across' ? wordA : wordB;
+          const vWord = wordA.orientation === 'down' ? wordA : wordB;
+          
+          if (vWord.startx >= hWord.startx && vWord.startx < hWord.startx + hWord.answer.length &&
+              hWord.starty >= vWord.starty && hWord.starty < vWord.starty + vWord.answer.length) {
+              wordIntersections[w1]++;
+              wordIntersections[w2]++;
+          }
+        }
+      }
+    }
+    
+    const minIntersections = layout.result.length > 0 ? Math.min(...wordIntersections) : 0;
+    const avgIntersections = layout.result.length > 0 ? wordIntersections.reduce((a,b)=>a+b,0) / layout.result.length : 0;
+    
+    // Reject layouts with any completely isolated words
+    if (minIntersections < 1 && layout.result.length > 1) continue;
+
     const total = layout.rows * layout.cols;
     const density = filled / total;
     const placedRatio = layout.result.length / maxWords;
@@ -46,7 +75,10 @@ function generateBestLayout(words, attempts = 4000, maxWords = 18) {
     const ratio = Math.max(layout.rows / layout.cols, layout.cols / layout.rows);
     const ratioPenalty = ratio > 1.3 ? (ratio - 1.3) * 0.5 : 0;
 
-    const score = (density * 10.0) + (placedRatio * 2.0) - areaPenalty - ratioPenalty;
+    // Favor layouts where minimum overlap is >=2
+    const overlapBonus = (minIntersections >= 2 ? 50 : 0) + (avgIntersections * 5);
+
+    const score = (density * 10.0) + (placedRatio * 2.0) + overlapBonus - areaPenalty - ratioPenalty;
 
     if (score > bestScore) {
       bestScore = score;
@@ -164,7 +196,8 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
   console.log(`Theme: ${themeName} | Available Words Pool: ${availableWords.length}`);
 
   // Extremely lowered attempt constraints to prevent the library from hitting infinite/OOM generation paths
-  const layout = generateBestLayout(availableWords, 150, Math.min(12, availableWords.length));
+  // Using 16 max words instead of 12 to encourage higher density while remaining performant
+  const layout = generateBestLayout(availableWords, 150, Math.min(16, availableWords.length));
   const title = `${themeName} Crossword`;
 
   const puzzle = layoutToNightcrossing(layout, id, title, themeName);
