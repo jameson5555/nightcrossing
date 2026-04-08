@@ -40,8 +40,10 @@ function generateBestLayout(words, attempts = 4000, maxWords = 18) {
       }
     }
     
-    // Calculate word intersections
+    // Calculate word intersections and build adjacency graph
     let wordIntersections = new Array(layout.result.length).fill(0);
+    let adj = new Array(layout.result.length).fill(0).map(() => []);
+    
     for (let w1 = 0; w1 < layout.result.length; w1++) {
       for (let w2 = w1 + 1; w2 < layout.result.length; w2++) {
         const wordA = layout.result[w1];
@@ -54,16 +56,25 @@ function generateBestLayout(words, attempts = 4000, maxWords = 18) {
               hWord.starty >= vWord.starty && hWord.starty < vWord.starty + vWord.answer.length) {
               wordIntersections[w1]++;
               wordIntersections[w2]++;
+              adj[w1].push(w2);
+              adj[w2].push(w1);
           }
         }
       }
     }
     
+    // Validate that the entire puzzle forms exactly ONE connected component
+    let visited = new Set();
+    const dfs = (node) => {
+        if (visited.has(node)) return;
+        visited.add(node);
+        adj[node].forEach(dfs);
+    };
+    if (layout.result.length > 0) dfs(0);
+    if (visited.size < layout.result.length && layout.result.length > 1) continue;
+    
     const minIntersections = layout.result.length > 0 ? Math.min(...wordIntersections) : 0;
     const avgIntersections = layout.result.length > 0 ? wordIntersections.reduce((a,b)=>a+b,0) / layout.result.length : 0;
-    
-    // Reject layouts with any completely isolated words
-    if (minIntersections < 1 && layout.result.length > 1) continue;
 
     const total = layout.rows * layout.cols;
     const density = filled / total;

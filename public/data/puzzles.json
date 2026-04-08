@@ -4,8 +4,26 @@
     "title": "Space & Astronomy Crossword Vol. 1",
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 1",
-    "cols": 10,
-    "rows": 10,
+    "cols": 12,
+    "rows": 12,
+    "theme": "Space & Astronomy"
+  },
+  {
+    "id": "starter-space---astronomy-vol2",
+    "title": "Space & Astronomy Crossword Vol. 2",
+    "author": "Nightcrossing Engine",
+    "date": "Starter Pack Vol. 2",
+    "cols": 11,
+    "rows": 12,
+    "theme": "Space & Astronomy"
+  },
+  {
+    "id": "starter-space---astronomy-vol3",
+    "title": "Space & Astronomy Crossword Vol. 3",
+    "author": "Nightcrossing Engine",
+    "date": "Starter Pack Vol. 3",
+    "cols": 11,
+    "rows": 11,
     "theme": "Space & Astronomy"
   },
   {
@@ -13,8 +31,26 @@
     "title": "Food & Cooking Crossword Vol. 1",
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 1",
-    "cols": 11,
+    "cols": 12,
     "rows": 11,
+    "theme": "Food & Cooking"
+  },
+  {
+    "id": "starter-food---cooking-vol2",
+    "title": "Food & Cooking Crossword Vol. 2",
+    "author": "Nightcrossing Engine",
+    "date": "Starter Pack Vol. 2",
+    "cols": 12,
+    "rows": 10,
+    "theme": "Food & Cooking"
+  },
+  {
+    "id": "starter-food---cooking-vol3",
+    "title": "Food & Cooking Crossword Vol. 3",
+    "author": "Nightcrossing Engine",
+    "date": "Starter Pack Vol. 3",
+    "cols": 10,
+    "rows": 12,
     "theme": "Food & Cooking"
   },
   {
@@ -22,8 +58,26 @@
     "title": "Ocean & Marine Life Crossword Vol. 1",
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 1",
+    "cols": 11,
+    "rows": 11,
+    "theme": "Ocean & Marine Life"
+  },
+  {
+    "id": "starter-ocean---marine-life-vol2",
+    "title": "Ocean & Marine Life Crossword Vol. 2",
+    "author": "Nightcrossing Engine",
+    "date": "Starter Pack Vol. 2",
     "cols": 12,
-    "rows": 10,
+    "rows": 12,
+    "theme": "Ocean & Marine Life"
+  },
+  {
+    "id": "starter-ocean---marine-life-vol3",
+    "title": "Ocean & Marine Life Crossword Vol. 3",
+    "author": "Nightcrossing Engine",
+    "date": "Starter Pack Vol. 3",
+    "cols": 12,
+    "rows": 12,
     "theme": "Ocean & Marine Life"
   },
   {
@@ -32,7 +86,25 @@
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 1",
     "cols": 12,
-    "rows": 10,
+    "rows": 12,
+    "theme": "Music & Sound"
+  },
+  {
+    "id": "starter-music---sound-vol2",
+    "title": "Music & Sound Crossword Vol. 2",
+    "author": "Nightcrossing Engine",
+    "date": "Starter Pack Vol. 2",
+    "cols": 12,
+    "rows": 12,
+    "theme": "Music & Sound"
+  },
+  {
+    "id": "starter-music---sound-vol3",
+    "title": "Music & Sound Crossword Vol. 3",
+    "author": "Nightcrossing Engine",
+    "date": "Starter Pack Vol. 3",
+    "cols": 10,
+    "rows": 12,
     "theme": "Music & Sound"
   },
   {
@@ -40,8 +112,26 @@
     "title": "Nature & Wilderness Crossword Vol. 1",
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 1",
-    "cols": 11,
+    "cols": 12,
     "rows": 11,
+    "theme": "Nature & Wilderness"
+  },
+  {
+    "id": "starter-nature---wilderness-vol2",
+    "title": "Nature & Wilderness Crossword Vol. 2",
+    "author": "Nightcrossing Engine",
+    "date": "Starter Pack Vol. 2",
+    "cols": 10,
+    "rows": 12,
+    "theme": "Nature & Wilderness"
+  },
+  {
+    "id": "starter-nature---wilderness-vol3",
+    "title": "Nature & Wilderness Crossword Vol. 3",
+    "author": "Nightcrossing Engine",
+    "date": "Starter Pack Vol. 3",
+    "cols": 12,
+    "rows": 12,
     "theme": "Nature & Wilderness"
   },
   {
@@ -49,8 +139,26 @@
     "title": "Technology & Computing Crossword Vol. 1",
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 1",
-    "cols": 11,
+    "cols": 9,
     "rows": 9,
+    "theme": "Technology & Computing"
+  },
+  {
+    "id": "starter-technology---computing-vol2",
+    "title": "Technology & Computing Crossword Vol. 2",
+    "author": "Nightcrossing Engine",
+    "date": "Starter Pack Vol. 2",
+    "cols": 11,
+    "rows": 8,
+    "theme": "Technology & Computing"
+  },
+  {
+    "id": "starter-technology---computing-vol3",
+    "title": "Technology & Computing Crossword Vol. 3",
+    "author": "Nightcrossing Engine",
+    "date": "Starter Pack Vol. 3",
+    "cols": 10,
+    "rows": 12,
     "theme": "Technology & Computing"
   },
   {
@@ -58,8 +166,26 @@
     "title": "History & Civilization Crossword Vol. 1",
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 1",
-    "cols": 12,
+    "cols": 11,
+    "rows": 10,
+    "theme": "History & Civilization"
+  },
+  {
+    "id": "starter-history---civilization-vol2",
+    "title": "History & Civilization Crossword Vol. 2",
+    "author": "Nightcrossing Engine",
+    "date": "Starter Pack Vol. 2",
+    "cols": 11,
     "rows": 12,
+    "theme": "History & Civilization"
+  },
+  {
+    "id": "starter-history---civilization-vol3",
+    "title": "History & Civilization Crossword Vol. 3",
+    "author": "Nightcrossing Engine",
+    "date": "Starter Pack Vol. 3",
+    "cols": 10,
+    "rows": 9,
     "theme": "History & Civilization"
   },
   {
@@ -67,8 +193,26 @@
     "title": "Sports & Athletics Crossword Vol. 1",
     "author": "Nightcrossing Engine",
     "date": "Starter Pack Vol. 1",
+    "cols": 12,
+    "rows": 10,
+    "theme": "Sports & Athletics"
+  },
+  {
+    "id": "starter-sports---athletics-vol2",
+    "title": "Sports & Athletics Crossword Vol. 2",
+    "author": "Nightcrossing Engine",
+    "date": "Starter Pack Vol. 2",
     "cols": 11,
     "rows": 11,
+    "theme": "Sports & Athletics"
+  },
+  {
+    "id": "starter-sports---athletics-vol3",
+    "title": "Sports & Athletics Crossword Vol. 3",
+    "author": "Nightcrossing Engine",
+    "date": "Starter Pack Vol. 3",
+    "cols": 12,
+    "rows": 12,
     "theme": "Sports & Athletics"
   }
 ]
