@@ -219,7 +219,7 @@
   background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
   box-shadow: 0 6px 18px rgba(0,0,0,0.45);
   animation: pulse 1.2s ease-in-out infinite;
-  opacity: 0.8;
+  opacity: 0.4;
 }
 
 @keyframes spin {
