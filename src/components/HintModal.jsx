@@ -31,7 +31,7 @@ const HintModal = ({
         <div className="modal-body">
           {isUnlocked ? (
             <div className="hint-reveal">
-              <p className="hint-label">Extended Clue:</p>
+              <p className="hint-label">Clue:</p>
               <p className="hint-text">{hintText || "No additional info available for this word."}</p>
             </div>
           ) : (
