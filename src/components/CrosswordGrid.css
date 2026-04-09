@@ -64,7 +64,7 @@
   font-size: min(5vw, 1.8rem);
   font-weight: 700;
   text-transform: uppercase;
-  transition: color 2s ease-in-out;
+  transition: color 2.5s ease-in-out;
   caret-color: transparent; /* Hide normal cursor, we will handle outline manually */
 }
 
@@ -87,7 +87,7 @@
     transform: scale(1);
   }
   100% {
-    transform: scale(3);
+    transform: scale(4);
     opacity: 0;
   }
 }
@@ -105,7 +105,7 @@
   text-shadow: 0 0 30px rgba(0, 229, 255, 0.6), 0 0 60px rgba(0, 229, 255, 0.3);
   z-index: 500;
   pointer-events: none;
-  animation: wordFlyOut 1.5s ease-out forwards;
+  animation: wordFlyOut 2s ease-out forwards;
 }
 
 .word-float-vertical {
