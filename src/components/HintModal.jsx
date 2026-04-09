@@ -17,7 +17,7 @@ const HintModal = ({
         <button className="modal-close" onClick={onClose}>&times;</button>
         
         <div className="modal-header">
-          <div>
+          <div className="title-container">
             <h2 className="modal-title">Word Hint</h2>
             <div className="hint-counter">
               <span className="hint-icon">💡</span>
