@@ -155,7 +155,7 @@
 .reveal-btn {
   width: 100%;
   padding: var(--spacing-md);
-  background: linear-gradient(135, #ff4081 0%, #c60055 100%);
+  background: linear-gradient(135deg, #ff4081 0%, #c60055 100%);
   border: none;
   border-radius: var(--radius-md);
   color: white;

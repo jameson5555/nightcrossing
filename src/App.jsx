@@ -123,7 +123,7 @@ function App() {
 
     // If already visible and the clue changed, cross-fade the content
     if (displayedClue.text && newText) {
-      const same = displayedClue.num === newNum && displayedClue.text === newText;
+      const same = displayedClue.num === newNum && displayedClue.text === newText && displayedClue.dir === newDir;
       if (!same) {
         const fadeStart = setTimeout(() => {
           setIsContentFading(true);
@@ -173,8 +173,11 @@ function App() {
 
   const handleRevealLetter = async () => {
     if (hintsRemaining > 0 && activeWord && puzzleData) {
-      const { direction, clueIndex, indices } = activeWord;
+      const { clueIndex, indices } = activeWord;
+      if (clueIndex === -1) return;
+      
       const solution = puzzleData.answers[direction][clueIndex];
+      if (!solution) return;
       
       // Find cells in this word that are incorrect or empty
       const candidates = indices.filter((idx, i) => {
