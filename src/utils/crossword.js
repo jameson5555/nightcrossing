@@ -94,3 +94,36 @@ export function getCorrectCells(puzzleData, currentAnswers) {
 
   return correctIndices;
 }
+
+export function getSolvedClueIds(puzzleData, currentAnswers) {
+  const solvedIds = new Set();
+  if (!currentAnswers || !puzzleData) return solvedIds;
+  
+  const cols = puzzleData.size.cols;
+  
+  puzzleData.gridnums.forEach((num, index) => {
+    if (num > 0 && puzzleData.grid[index] !== '.') {
+      // Check across
+      const prevAcross = index - 1;
+      const isStartAcross = prevAcross < 0 || puzzleData.grid[prevAcross] === '.' || Math.floor(prevAcross/cols) !== Math.floor(index/cols);
+      if (isStartAcross) {
+         const wd = getWordAt(index, 'across', puzzleData, currentAnswers);
+         if (wd && wd.isCorrect) {
+             solvedIds.add(`across-${wd.clueNum}`);
+         }
+      }
+
+      // Check down
+      const prevDown = index - cols;
+      const isStartDown = prevDown < 0 || puzzleData.grid[prevDown] === '.';
+      if (isStartDown) {
+         const wd = getWordAt(index, 'down', puzzleData, currentAnswers);
+         if (wd && wd.isCorrect) {
+             solvedIds.add(`down-${wd.clueNum}`);
+         }
+      }
+    }
+  });
+
+  return solvedIds;
+}

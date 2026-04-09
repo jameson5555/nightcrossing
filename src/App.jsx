@@ -3,7 +3,7 @@ import './App.css';
 import CrosswordGrid from './components/CrosswordGrid';
 import ClueList from './components/ClueList';
 import PuzzleList from './components/PuzzleList';
-import { getWordAt } from './utils/crossword';
+import { getWordAt, getSolvedClueIds } from './utils/crossword';
 import { loadPuzzleProgress } from './utils/storage';
 
 function App() {
@@ -48,10 +48,11 @@ function App() {
   
   const selectedClueId = activeWord ? `${direction}-${activeWord.clueNum}` : null;
   
-  let activeClueText = null;
-  if (puzzleData && activeWord && activeWord.clueIndex !== -1) {
-    activeClueText = puzzleData.clues[direction][activeWord.clueIndex];
-  }
+  const activeClueText = puzzleData && activeWord && activeWord.clueIndex !== -1
+    ? puzzleData.clues[direction][activeWord.clueIndex]
+    : null;
+    
+  const solvedClueIds = puzzleData ? getSolvedClueIds(puzzleData, answers) : new Set();
 
   // Displayed clue state used to control cross-fade when switching clues
   const [displayedClue, setDisplayedClue] = useState({ num: null, text: null, dir: null });
@@ -161,6 +162,7 @@ function App() {
                 clues={puzzleData.clues} 
                 direction={direction} 
                 selectedClueId={selectedClueId}
+                solvedClueIds={solvedClueIds}
                 onClueClick={handleClueClick}
               />
             ) : (

@@ -60,3 +60,10 @@
   color: var(--accent-secondary);
   font-weight: 600;
 }
+
+.clue-solved {
+  text-decoration: line-through;
+  opacity: 0.4;
+  transition: opacity 0.5s ease, text-decoration 0.5s ease;
+}
+
