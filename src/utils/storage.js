@@ -12,13 +12,32 @@ export const loadPuzzleProgress = async (puzzleId) => {
   return value ? JSON.parse(value) : null;
 };
 
-// Helpful for checking list status
-export const checkPuzzleStatus = async (puzzleId, totalCells) => {
+// Helpful for checking list status using the puzzle's expected grid.
+export const checkPuzzleStatus = async (puzzleId, expectedGrid) => {
   const progress = await loadPuzzleProgress(puzzleId);
   if (!progress) return 'New';
-  
-  const filledCount = progress.filter(c => c && c !== '').length;
-  if (filledCount === 0) return 'New';
-  if (filledCount === totalCells) return 'Completed'; // Note: In reality we should check correctness, but simpler to check filled.
-  return 'In Progress';
+  if (!Array.isArray(expectedGrid)) return 'New';
+
+  const answers = Array.isArray(progress) ? progress : [];
+
+  const playableIndices = expectedGrid
+    .map((cell, idx) => (cell !== '.' ? idx : -1))
+    .filter(idx => idx !== -1);
+
+  if (playableIndices.length === 0) return 'New';
+
+  const filledPlayableCount = playableIndices.filter(idx => {
+    const val = answers[idx];
+    return typeof val === 'string' && val.trim() !== '';
+  }).length;
+
+  if (filledPlayableCount === 0) return 'New';
+
+  const isCompleted = playableIndices.every(idx => {
+    const expected = String(expectedGrid[idx] || '').toUpperCase();
+    const actual = String(answers[idx] || '').toUpperCase();
+    return expected !== '' && expected !== '.' && actual === expected;
+  });
+
+  return isCompleted ? 'Completed' : 'In Progress';
 };
