@@ -11,7 +11,8 @@ const CrosswordGrid = ({
   setSelectedCell, 
   direction, 
   setDirection,
-  activeWordIndices 
+  activeWordIndices,
+  revealedIndices = new Set()
 }) => {
   const { id, size, grid, gridnums } = puzzleData;
   const cols = size.cols;
@@ -20,6 +21,7 @@ const CrosswordGrid = ({
   const inputRefs = useRef([]);
   const cellRefs = useRef([]);
   const correctCells = getCorrectCells(puzzleData, answers);
+  const lockedCells = new Set([...correctCells, ...revealedIndices]);
   const prevCorrectWordsRef = useRef(new Set());
   const puzzleCompleteShownRef = useRef(false);
   const puzzleSequenceTimeoutsRef = useRef([]);
@@ -225,8 +227,8 @@ const CrosswordGrid = ({
       }
 
       if (grid[nextIndex] !== '.') {
-        if (skipCorrect && correctCells.has(nextIndex)) {
-            continue; // Skip this correctly solved cell
+        if (skipCorrect && lockedCells.has(nextIndex)) {
+            continue; // Skip this locked cell
         }
         return nextIndex;
       }
@@ -250,14 +252,14 @@ const CrosswordGrid = ({
     const val = e.target.value;
     const char = val.slice(-1);
     if (/^[a-zA-Z]$/.test(char)) {
-      if (!correctCells.has(index)) {
+      if (!lockedCells.has(index)) {
         const newAnswers = [...answers];
         newAnswers[index] = char.toUpperCase();
         setAnswers(newAnswers);
       }
       moveToNextCell(index, direction, 1, true);
     } else if (val === '') {
-      if (!correctCells.has(index)) {
+      if (!lockedCells.has(index)) {
         const newAnswers = [...answers];
         if (newAnswers[index] !== '') {
           newAnswers[index] = '';
@@ -287,14 +289,14 @@ const CrosswordGrid = ({
     } else if (e.key === 'Backspace') {
       e.preventDefault();
       const newAnswers = [...answers];
-      if (newAnswers[index] !== '' && !correctCells.has(index)) {
+      if (newAnswers[index] !== '' && !lockedCells.has(index)) {
         newAnswers[index] = '';
         setAnswers(newAnswers);
       } else {
-        // Find previous cell, skipping correctly solved ones
+        // Find previous cell, skipping locked ones
         const prevIndex = getNextIndex(index, direction, -1, true);
         if (prevIndex !== -1) {
-          if (!correctCells.has(prevIndex)) {
+          if (!lockedCells.has(prevIndex)) {
             newAnswers[prevIndex] = '';
             setAnswers(newAnswers);
           }
@@ -303,7 +305,7 @@ const CrosswordGrid = ({
       }
     } else if (/^[a-zA-Z]$/.test(e.key)) {
       e.preventDefault();
-      if (!correctCells.has(index)) {
+      if (!lockedCells.has(index)) {
         const newAnswers = [...answers];
         newAnswers[index] = e.key.toUpperCase();
         setAnswers(newAnswers);
@@ -331,13 +333,13 @@ const CrosswordGrid = ({
             const cellNumber = gridnums[index];
             const isSelected = selectedCell === index;
             const isActiveWord = activeWordIndices.includes(index);
-            const isCorrectWord = correctCells.has(index);
+            const isLocked = lockedCells.has(index);
             
             let cellClass = 'crossword-cell';
             if (isBlock) cellClass += ' cell-block';
             if (isSelected) cellClass += ' cell-selected';
             else if (isActiveWord) cellClass += ' cell-in-word';
-            if (isCorrectWord) cellClass += ' cell-correct';
+            if (isLocked) cellClass += ' cell-correct';
 
             return (
               <div 

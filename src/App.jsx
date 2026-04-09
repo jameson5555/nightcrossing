@@ -11,6 +11,8 @@ import {
   saveHintsRemaining, 
   loadUnlockedHints, 
   saveUnlockedHints,
+  loadRevealedIndices,
+  saveRevealedIndices,
   loadRewardClaimed,
   saveRewardClaimed
 } from './utils/storage';
@@ -24,6 +26,7 @@ function App() {
   const [answers, setAnswers] = useState([]);
   const [hintsRemaining, setHintsRemaining] = useState(3);
   const [unlockedHints, setUnlockedHints] = useState(new Set());
+  const [revealedIndices, setRevealedIndices] = useState(new Set());
   const [isHintModalOpen, setIsHintModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
 
@@ -56,6 +59,9 @@ function App() {
       
       const unlocked = await loadUnlockedHints(id);
       setUnlockedHints(unlocked);
+      
+      const revealed = await loadRevealedIndices(id);
+      setRevealedIndices(revealed);
       
       setCurrentView('play');
     } catch (e) {
@@ -200,6 +206,11 @@ function App() {
       const newAnswers = [...answers];
       newAnswers[randomIdx] = charInSolution.toUpperCase();
       setAnswers(newAnswers);
+      
+      const newRevealed = new Set(revealedIndices);
+      newRevealed.add(randomIdx);
+      setRevealedIndices(newRevealed);
+      await saveRevealedIndices(puzzleData.id, newRevealed);
       // savePuzzleProgress is handled by useEffect in CrosswordGrid
     }
   };
@@ -263,6 +274,7 @@ function App() {
                 direction={direction}
                 setDirection={setDirection}
                 activeWordIndices={activeWord ? activeWord.indices : []}
+                revealedIndices={revealedIndices}
               />
             ) : (
               <div className="placeholder-board">

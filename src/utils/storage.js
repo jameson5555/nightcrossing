@@ -81,3 +81,15 @@ export const loadRewardClaimed = async (puzzleId) => {
   return value === 'true';
 };
 
+export const saveRevealedIndices = async (puzzleId, indicesSet) => {
+  await Preferences.set({
+    key: `revealed_indices_${puzzleId}`,
+    value: JSON.stringify(Array.from(indicesSet))
+  });
+};
+
+export const loadRevealedIndices = async (puzzleId) => {
+  const { value } = await Preferences.get({ key: `revealed_indices_${puzzleId}` });
+  return value ? new Set(JSON.parse(value)) : new Set();
+};
+
