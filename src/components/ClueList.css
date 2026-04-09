@@ -57,6 +57,7 @@
 
 .clue-selected {
   background-color: var(--cell-selected-word);
+  color: var(--text-primary);
   font-weight: 600;
 }
 
