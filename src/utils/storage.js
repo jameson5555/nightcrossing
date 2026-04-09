@@ -41,3 +41,43 @@ export const checkPuzzleStatus = async (puzzleId, expectedGrid) => {
 
   return isCompleted ? 'Completed' : 'In Progress';
 };
+
+// --- HINT SYSTEM ---
+
+export const saveHintsRemaining = async (count) => {
+  await Preferences.set({
+    key: 'global_hints_remaining',
+    value: String(count)
+  });
+};
+
+export const loadHintsRemaining = async () => {
+  const { value } = await Preferences.get({ key: 'global_hints_remaining' });
+  // Default to 3 hints if never set
+  return value !== null ? parseInt(value, 10) : 3;
+};
+
+export const saveUnlockedHints = async (puzzleId, hintIdsSet) => {
+  await Preferences.set({
+    key: `unlocked_hints_${puzzleId}`,
+    value: JSON.stringify(Array.from(hintIdsSet))
+  });
+};
+
+export const loadUnlockedHints = async (puzzleId) => {
+  const { value } = await Preferences.get({ key: `unlocked_hints_${puzzleId}` });
+  return value ? new Set(JSON.parse(value)) : new Set();
+};
+
+export const saveRewardClaimed = async (puzzleId) => {
+  await Preferences.set({
+    key: `reward_claimed_${puzzleId}`,
+    value: 'true'
+  });
+};
+
+export const loadRewardClaimed = async (puzzleId) => {
+  const { value } = await Preferences.get({ key: `reward_claimed_${puzzleId}` });
+  return value === 'true';
+};
+

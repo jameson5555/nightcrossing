@@ -24,7 +24,11 @@ function generateBestLayout(words, attempts = 4000, maxWords = 18) {
     const filteredWords = words.filter(w => w.clue.length <= 80);
     const shuffled = [...filteredWords].sort(() => Math.random() - 0.5);
     const subset = shuffled.slice(0, maxWords);
-    const input = subset.map(w => ({ answer: w.answer.toLowerCase(), clue: w.clue }));
+    const input = subset.map(w => ({ 
+      answer: w.answer.toLowerCase(), 
+      clue: w.clue,
+      hint: w.hint || null 
+    }));
     let layout = generateLayout(input);
     layout.result = layout.result.filter(w => w.orientation === 'across' || w.orientation === 'down');
     
@@ -162,6 +166,7 @@ function layoutToNightcrossing(layout, id, title, themeName) {
 
   const clues = { across: [], down: [] };
   const answers = { across: [], down: [] };
+  const hints = {};
 
   // Generate standard crossword numbering
   let currentNum = 1;
@@ -183,12 +188,18 @@ function layoutToNightcrossing(layout, id, title, themeName) {
 
   result.forEach(item => {
     const prefix = `${item.position}. `;
+    const id = `${item.orientation}-${item.position}`;
+    
     if (item.orientation === 'across') {
       clues.across.push(prefix + item.clue);
       answers.across.push(item.answer.toUpperCase());
     } else {
       clues.down.push(prefix + item.clue);
       answers.down.push(item.answer.toUpperCase());
+    }
+    
+    if (item.hint) {
+      hints[id] = item.hint;
     }
   });
 
@@ -202,7 +213,8 @@ function layoutToNightcrossing(layout, id, title, themeName) {
     grid,
     gridnums,
     clues,
-    answers
+    answers,
+    hints
   };
 }
 
@@ -213,7 +225,7 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
   let maxWordsTry = Math.min(16, availableWords.length);
   
   while (!layout && maxWordsTry >= 6) {
-      layout = generateBestLayout(availableWords, 300, maxWordsTry);
+      layout = generateBestLayout(availableWords, 50, maxWordsTry);
       if (!layout) {
           maxWordsTry--;
       }

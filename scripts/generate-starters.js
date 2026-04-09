@@ -43,11 +43,9 @@ async function generateStarters() {
       // Load the actual JSON to see what words were used, to add to consumedWords
       try {
         const fileData = JSON.parse(fs.readFileSync(path.join(PUZZLES_DIR, `${p.id}.json`), 'utf8'));
-        if (fileData.across) {
-            Object.values(fileData.across).forEach(wordObj => consumedWords.add(wordObj.answer.toUpperCase()));
-        }
-        if (fileData.down) {
-            Object.values(fileData.down).forEach(wordObj => consumedWords.add(wordObj.answer.toUpperCase()));
+        if (fileData.answers) {
+            fileData.answers.across.forEach(ans => consumedWords.add(ans.toUpperCase()));
+            fileData.answers.down.forEach(ans => consumedWords.add(ans.toUpperCase()));
         }
       } catch (err) {
         // file missing or corrupt, ignore

@@ -58,9 +58,22 @@ async function fetchThemeWords() {
           // Basic capitalized first letter
           cleanDef = cleanDef.charAt(0).toUpperCase() + cleanDef.slice(1);
           
+          // Try to get a hint (second definition or synonyms)
+          let hint = null;
+          if (d.defs.length > 1) {
+              const hintDef = d.defs[1];
+              const hintParts = hintDef.split('\t');
+              const cleanHint = hintParts.length > 1 ? hintParts[1].trim() : hintParts[0].trim();
+              hint = humanizeClue(cleanHint);
+          } else {
+              // Quick fetch for synonyms if possible, or just leave null for now
+              // For simplicity in the batch script, we'll just use the def if available.
+          }
+
           theme.words.push({
             answer: word,
-            clue: humanizeClue(cleanDef)
+            clue: humanizeClue(cleanDef),
+            hint: hint
           });
           existingAnswers.add(word);
           added++;

@@ -4,7 +4,16 @@ import CrosswordGrid from './components/CrosswordGrid';
 import ClueList from './components/ClueList';
 import PuzzleList from './components/PuzzleList';
 import { getWordAt, getSolvedClueIds } from './utils/crossword';
-import { loadPuzzleProgress } from './utils/storage';
+import { 
+  loadPuzzleProgress, 
+  loadHintsRemaining, 
+  saveHintsRemaining, 
+  loadUnlockedHints, 
+  saveUnlockedHints,
+  loadRewardClaimed,
+  saveRewardClaimed
+} from './utils/storage';
+import HintModal from './components/HintModal';
 
 function App() {
   const [currentView, setCurrentView] = useState('menu'); // 'menu' | 'play'
@@ -12,6 +21,19 @@ function App() {
   const [direction, setDirection] = useState('across');
   const [selectedCell, setSelectedCell] = useState(null);
   const [answers, setAnswers] = useState([]);
+  const [hintsRemaining, setHintsRemaining] = useState(3);
+  const [unlockedHints, setUnlockedHints] = useState(new Set());
+  const [isHintModalOpen, setIsHintModalOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState(null);
+
+  // Load global hints on mount
+  useEffect(() => {
+    const initHints = async () => {
+      const count = await loadHintsRemaining();
+      setHintsRemaining(count);
+    };
+    initHints();
+  }, []);
 
   const handleSelectPuzzle = async (id) => {
     try {
@@ -30,6 +52,10 @@ function App() {
       
       setSelectedCell(null);
       setDirection('across');
+      
+      const unlocked = await loadUnlockedHints(id);
+      setUnlockedHints(unlocked);
+      
       setCurrentView('play');
     } catch (e) {
       console.error('Failed to load puzzle', e);
@@ -53,6 +79,26 @@ function App() {
     : null;
     
   const solvedClueIds = puzzleData ? getSolvedClueIds(puzzleData, answers) : new Set();
+  const isPuzzleComplete = puzzleData && solvedClueIds.size === (puzzleData.answers.across.length + puzzleData.answers.down.length);
+
+  // Handle reward on completion
+  useEffect(() => {
+    if (isPuzzleComplete && puzzleData) {
+      const checkAndReward = async () => {
+        const alreadyClaimed = await loadRewardClaimed(puzzleData.id);
+        if (alreadyClaimed) return;
+
+        const newCount = hintsRemaining + 3;
+        setHintsRemaining(newCount);
+        await saveHintsRemaining(newCount);
+        await saveRewardClaimed(puzzleData.id);
+        
+        setToastMessage("Puzzle Complete! Earned 3 hints 💡");
+        setTimeout(() => setToastMessage(null), 4000);
+      };
+      checkAndReward();
+    }
+  }, [isPuzzleComplete, puzzleData, hintsRemaining]);
 
   // Displayed clue state used to control cross-fade when switching clues
   const [displayedClue, setDisplayedClue] = useState({ num: null, text: null, dir: null });
@@ -108,6 +154,19 @@ function App() {
     }
   };
 
+  const handleUnlockHint = async () => {
+    if (hintsRemaining > 0 && selectedClueId && !unlockedHints.has(selectedClueId)) {
+      const newCount = hintsRemaining - 1;
+      setHintsRemaining(newCount);
+      await saveHintsRemaining(newCount);
+      
+      const newUnlocked = new Set(unlockedHints);
+      newUnlocked.add(selectedClueId);
+      setUnlockedHints(newUnlocked);
+      await saveUnlockedHints(puzzleData.id, newUnlocked);
+    }
+  };
+
   return (
     <div className="app-container animate-fade-in">
       {currentView === 'menu' ? (
@@ -133,9 +192,28 @@ function App() {
               <div className={`floating-active-clue ${activeClueText ? 'visible' : ''} ${isContentFading ? 'content-fade' : ''}`}>
                 <span className="floating-clue-num">{displayedClue.num ? `${displayedClue.num}${displayedClue.dir === 'across' ? 'a' : 'd'}` : ''}</span>
                 <p className="floating-clue-text">{displayedClue.text || ''}</p>
+                {activeClueText && (
+                  <button 
+                    className={`hint-btn ${unlockedHints.has(selectedClueId) ? 'unlocked' : ''}`} 
+                    onClick={() => setIsHintModalOpen(true)}
+                    aria-label="Hint"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                      <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                  </button>
+                )}
               </div>
             )}
           </header>
+
+          {toastMessage && (
+            <div className="toast-notification animate-slide-up">
+              {toastMessage}
+            </div>
+          )}
 
           <main className="app-main">
             {puzzleData ? (
@@ -171,6 +249,15 @@ function App() {
               </div>
             )}
           </footer>
+
+          <HintModal 
+            isOpen={isHintModalOpen}
+            onClose={() => setIsHintModalOpen(false)}
+            hintText={puzzleData?.hints?.[selectedClueId]}
+            isUnlocked={unlockedHints.has(selectedClueId)}
+            onUnlock={handleUnlockHint}
+            hintsRemaining={hintsRemaining}
+          />
         </>
       )}
     </div>
