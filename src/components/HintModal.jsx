@@ -17,10 +17,12 @@ const HintModal = ({
         <button className="modal-close" onClick={onClose}>&times;</button>
         
         <div className="modal-header">
-          <h2 className="modal-title">Word Hint</h2>
-          <div className="hint-counter">
-            <span className="hint-icon">💡</span>
-            <span className="hint-count">{hintsRemaining}</span>
+          <div>
+            <h2 className="modal-title">Word Hint</h2>
+            <div className="hint-counter">
+              <span className="hint-icon">💡</span>
+              <span className="hint-count">{hintsRemaining}</span>
+            </div>
           </div>
         </div>
 
@@ -33,7 +35,7 @@ const HintModal = ({
           ) : (
             <div className="hint-locked">
               <p className="hint-description">
-                Stuck? Unlock an extended definition or synonym to help you solve this word.
+                Stuck? Unlock a hint to help you solve this word. You can earn more hints by solving puzzles!
               </p>
               <button 
                 className="unlock-btn" 
