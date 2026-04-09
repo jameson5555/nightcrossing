@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import CrosswordGrid from './components/CrosswordGrid';
 import ClueList from './components/ClueList';
@@ -12,7 +12,6 @@ function App() {
   const [direction, setDirection] = useState('across');
   const [selectedCell, setSelectedCell] = useState(null);
   const [answers, setAnswers] = useState([]);
-  const [clueAnimPlayed, setClueAnimPlayed] = useState(false);
 
   const handleSelectPuzzle = async (id) => {
     try {
@@ -57,7 +56,6 @@ function App() {
   // Displayed clue state used to control cross-fade when switching clues
   const [displayedClue, setDisplayedClue] = useState({ num: null, text: null, dir: null });
   const [isContentFading, setIsContentFading] = useState(false);
-  const prevSelectedClueIdRef = useRef(null);
 
   useEffect(() => {
     const newNum = activeWord?.clueNum ?? null;
@@ -66,30 +64,38 @@ function App() {
 
     // If nothing is displayed yet and we have new text, show immediately (initial appear)
     if (!displayedClue.text && newText) {
-      setDisplayedClue({ num: newNum, text: newText, dir: newDir });
-      return;
+      const t = setTimeout(() => {
+        setDisplayedClue({ num: newNum, text: newText, dir: newDir });
+      }, 0);
+      return () => clearTimeout(t);
     }
 
     // If already visible and the clue changed, cross-fade the content
     if (displayedClue.text && newText) {
       const same = displayedClue.num === newNum && displayedClue.text === newText;
       if (!same) {
-        setIsContentFading(true);
+        const fadeStart = setTimeout(() => {
+          setIsContentFading(true);
+        }, 0);
         const t = setTimeout(() => {
           setDisplayedClue({ num: newNum, text: newText, dir: newDir });
           setIsContentFading(false);
         }, 200);
-        return () => clearTimeout(t);
+        return () => {
+          clearTimeout(fadeStart);
+          clearTimeout(t);
+        };
       }
       return;
     }
 
     // If newText is empty/cleared, hide displayed
     if (!newText) {
-      setDisplayedClue({ num: null, text: null, dir: null });
+      const t = setTimeout(() => {
+        setDisplayedClue({ num: null, text: null, dir: null });
+      }, 0);
+      return () => clearTimeout(t);
     }
-
-    prevSelectedClueIdRef.current = selectedClueId;
   }, [selectedClueId, activeClueText, direction, displayedClue, activeWord]);
 
   const handleClueClick = (dir, numStr) => {
