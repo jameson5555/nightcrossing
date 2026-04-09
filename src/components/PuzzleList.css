@@ -80,18 +80,10 @@
   color: var(--text-secondary);
 }
 
-.theme-puzzles {
-  padding: var(--spacing-md);
-  padding-top: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  margin-top: var(--spacing-sm);
-}
-
 .puzzle-list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
 }
 
 .puzzle-list-item {
@@ -111,7 +103,6 @@
 .puzzle-list-item:hover {
   background: rgba(255, 255, 255, 0.08);
   border-color: var(--accent-primary);
-  transform: translateY(-2px);
 }
 
 .puzzle-info {

@@ -133,7 +133,7 @@ const PuzzleList = ({ onSelectPuzzle }) => {
                   </div>
                 </div>
                 {isExpanded && (
-                  <ul className="puzzle-list theme-puzzles">
+                  <ul className="puzzle-list">
                     {visiblePuzzles.map(p => renderPuzzleItem(p))}
                   </ul>
                 )}
