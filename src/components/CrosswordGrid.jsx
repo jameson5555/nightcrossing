@@ -22,6 +22,7 @@ const CrosswordGrid = ({
   const correctCells = getCorrectCells(puzzleData, answers);
   const prevCorrectWordsRef = useRef(new Set());
   const puzzleCompleteShownRef = useRef(false);
+  const puzzleSequenceTimeoutsRef = useRef([]);
   const [floatingWords, setFloatingWords] = useState([]);
   const [puzzleComplete, setPuzzleComplete] = useState(false);
 
@@ -85,6 +86,54 @@ const CrosswordGrid = ({
     };
   };
 
+  const addFloatingWord = useCallback((wordData) => {
+    const pos = getWordPosition(wordData.indices);
+    if (!pos) return;
+
+    const floater = {
+      id: `${wordData.key}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      word: wordData.word,
+      isVertical: wordData.dir === 'down',
+      ...pos
+    };
+
+    setFloatingWords(prev => [...prev, floater]);
+
+    const cleanupId = setTimeout(() => {
+      setFloatingWords(prev => prev.filter(f => f.id !== floater.id));
+    }, 3000);
+    puzzleSequenceTimeoutsRef.current.push(cleanupId);
+  }, []);
+
+  const runPuzzleCompletionSequence = useCallback((allWords) => {
+    const completedWords = allWords.filter(w => w.isCorrect);
+    if (completedWords.length === 0) {
+      setPuzzleComplete(true);
+      return;
+    }
+
+    // Stable order for a readable celebration sweep across the grid.
+    const orderedWords = [...completedWords].sort((a, b) => {
+      const aMin = Math.min(...a.indices);
+      const bMin = Math.min(...b.indices);
+      return aMin - bMin;
+    });
+
+    const stepDelayMs = 220;
+    orderedWords.forEach((wordData, idx) => {
+      const timeoutId = setTimeout(() => {
+        addFloatingWord(wordData);
+      }, idx * stepDelayMs);
+      puzzleSequenceTimeoutsRef.current.push(timeoutId);
+    });
+
+    const overlayDelay = orderedWords.length * stepDelayMs + 500;
+    const finishId = setTimeout(() => {
+      setPuzzleComplete(true);
+    }, overlayDelay);
+    puzzleSequenceTimeoutsRef.current.push(finishId);
+  }, [addFloatingWord]);
+
   const isInitialMount = useRef(true);
 
   // Detect newly completed words and trigger animations
@@ -100,8 +149,17 @@ const CrosswordGrid = ({
       const totalLetterCells = grid.filter(c => c !== '.').length;
       if (correctCells.size === totalLetterCells && totalLetterCells > 0) {
         puzzleCompleteShownRef.current = true;
-        setPuzzleComplete(true);
+        setTimeout(() => setPuzzleComplete(true), 0);
       }
+      return;
+    }
+
+    // Only fire puzzle complete ONCE, on the exact transition
+    const totalLetterCells = grid.filter(c => c !== '.').length;
+    if (correctCells.size === totalLetterCells && totalLetterCells > 0 && !puzzleCompleteShownRef.current) {
+      puzzleCompleteShownRef.current = true;
+      setTimeout(() => runPuzzleCompletionSequence(allWords), 0);
+      prevCorrectWordsRef.current = currentCorrectKeys;
       return;
     }
 
@@ -109,33 +167,18 @@ const CrosswordGrid = ({
     const newlyCorrect = allWords.filter(w => w.isCorrect && !prevKeys.has(w.key));
 
     if (newlyCorrect.length > 0) {
-      const newFloaters = newlyCorrect.map(w => {
-        const pos = getWordPosition(w.indices);
-        if (!pos) return null;
-        return {
-          id: `${w.key}-${Date.now()}`,
-          word: w.word,
-          isVertical: w.dir === 'down',
-          ...pos
-        };
-      }).filter(Boolean);
-      setFloatingWords(prev => [...prev, ...newFloaters]);
-
-      setTimeout(() => {
-        setFloatingWords(prev => prev.filter(f => !newFloaters.some(nf => nf.id === f.id)));
-      }, 3000);
-    }
-
-    // Only fire puzzle complete ONCE, on the exact transition
-    const totalLetterCells = grid.filter(c => c !== '.').length;
-    if (correctCells.size === totalLetterCells && totalLetterCells > 0 && !puzzleCompleteShownRef.current) {
-      puzzleCompleteShownRef.current = true;
-      // Delay so the final word animation plays first
-      setTimeout(() => setPuzzleComplete(true), 600);
+      newlyCorrect.forEach(addFloatingWord);
     }
 
     prevCorrectWordsRef.current = currentCorrectKeys;
-  }, [answers, getAllWords, correctCells, grid]);
+  }, [answers, getAllWords, correctCells, grid, addFloatingWord, runPuzzleCompletionSequence]);
+
+  useEffect(() => {
+    return () => {
+      puzzleSequenceTimeoutsRef.current.forEach(timeoutId => clearTimeout(timeoutId));
+      puzzleSequenceTimeoutsRef.current = [];
+    };
+  }, []);
 
   // Auto-save progress
   useEffect(() => {
@@ -273,9 +316,6 @@ const CrosswordGrid = ({
     setPuzzleComplete(false);
   };
 
-  // Get all words for puzzle-complete animation
-  const allCorrectWords = puzzleComplete ? getAllWords().filter(w => w.isCorrect) : [];
-
   return (
     <>
       <div className="crossword-grid-wrapper" ref={gridWrapperRef}>
@@ -348,17 +388,6 @@ const CrosswordGrid = ({
       {puzzleComplete && (
         <div className="puzzle-complete-overlay" onClick={handleDismissComplete}>
           <div className="puzzle-complete-content">
-            <div className="puzzle-complete-words">
-              {allCorrectWords.map((w, i) => (
-                <span
-                  key={w.key}
-                  className="puzzle-complete-word"
-                  style={{ animationDelay: `${i * 0.08}s` }}
-                >
-                  {w.word}
-                </span>
-              ))}
-            </div>
             <h2 className="puzzle-complete-title">Puzzle Complete!</h2>
             <p className="puzzle-complete-subtitle">Tap anywhere to dismiss</p>
           </div>
