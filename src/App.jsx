@@ -193,6 +193,9 @@ function App() {
       });
 
       if (candidates.length === 0) return;
+      
+      // Close modal immediately so user can see the revealed letter
+      setIsHintModalOpen(false);
 
       // Deduct hint
       const newCount = hintsRemaining - 1;
@@ -211,9 +214,6 @@ function App() {
       newRevealed.add(randomIdx);
       setRevealedIndices(newRevealed);
       await saveRevealedIndices(puzzleData.id, newRevealed);
-      
-      // Close modal so user can see the revealed letter
-      setIsHintModalOpen(false);
       // savePuzzleProgress is handled by useEffect in CrosswordGrid
     }
   };
