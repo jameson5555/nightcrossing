@@ -211,6 +211,9 @@ function App() {
       newRevealed.add(randomIdx);
       setRevealedIndices(newRevealed);
       await saveRevealedIndices(puzzleData.id, newRevealed);
+      
+      // Close modal so user can see the revealed letter
+      setIsHintModalOpen(false);
       // savePuzzleProgress is handled by useEffect in CrosswordGrid
     }
   };
