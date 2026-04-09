@@ -57,7 +57,8 @@ const PuzzleList = ({ onSelectPuzzle }) => {
     setExpandedTheme(expandedTheme === theme ? null : theme);
   };
 
-  const renderPuzzleItem = (puzzle) => {
+  const renderPuzzleItem = (puzzle, options = {}) => {
+    const hideStatus = !!options.hideStatus;
     const status = statuses[puzzle.id] || 'New';
     const gridSize = `${puzzle.cols}x${puzzle.rows}`;
     return (
@@ -73,9 +74,11 @@ const PuzzleList = ({ onSelectPuzzle }) => {
           </div>
           <span className="puzzle-title">{puzzle.title}</span>
         </div>
-        <div className={`puzzle-status status-${status.replace(' ', '')}`}>
-          {status}
-        </div>
+        {!hideStatus && (
+          <div className={`puzzle-status status-${status.replace(' ', '')}`}>
+            {status}
+          </div>
+        )}
       </li>
     );
   };
@@ -86,7 +89,7 @@ const PuzzleList = ({ onSelectPuzzle }) => {
         <section className="puzzle-section">
           <h2 className="section-title">In Progress</h2>
           <ul className="puzzle-list">
-            {inProgressPuzzles.map(renderPuzzleItem)}
+            {inProgressPuzzles.map(p => renderPuzzleItem(p, { hideStatus: true }))}
           </ul>
         </section>
       )}
@@ -125,7 +128,7 @@ const PuzzleList = ({ onSelectPuzzle }) => {
                 </div>
                 {isExpanded && (
                   <ul className="puzzle-list theme-puzzles">
-                    {visiblePuzzles.map(renderPuzzleItem)}
+                    {visiblePuzzles.map(p => renderPuzzleItem(p))}
                   </ul>
                 )}
               </div>
