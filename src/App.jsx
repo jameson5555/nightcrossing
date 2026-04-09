@@ -6,6 +6,7 @@ import PuzzleList from './components/PuzzleList';
 import { getWordAt, getSolvedClueIds } from './utils/crossword';
 import { 
   loadPuzzleProgress, 
+  savePuzzleProgress,
   loadHintsRemaining, 
   saveHintsRemaining, 
   loadUnlockedHints, 
@@ -88,9 +89,12 @@ function App() {
         const alreadyClaimed = await loadRewardClaimed(puzzleData.id);
         if (alreadyClaimed) return;
 
-        const newCount = hintsRemaining + 3;
-        setHintsRemaining(newCount);
-        await saveHintsRemaining(newCount);
+        setHintsRemaining(prev => {
+          const newCount = prev + 3;
+          saveHintsRemaining(newCount); // Side effect inside state update is usually avoided, but here we need the exact new value
+          return newCount;
+        });
+        
         await saveRewardClaimed(puzzleData.id);
         
         setToastMessage("Puzzle Complete! Earned 3 hints 💡");
@@ -98,7 +102,7 @@ function App() {
       };
       checkAndReward();
     }
-  }, [isPuzzleComplete, puzzleData, hintsRemaining]);
+  }, [isPuzzleComplete, puzzleData]); // Removed hintsRemaining
 
   // Displayed clue state used to control cross-fade when switching clues
   const [displayedClue, setDisplayedClue] = useState({ num: null, text: null, dir: null });
@@ -164,6 +168,36 @@ function App() {
       newUnlocked.add(selectedClueId);
       setUnlockedHints(newUnlocked);
       await saveUnlockedHints(puzzleData.id, newUnlocked);
+    }
+  };
+
+  const handleRevealLetter = async () => {
+    if (hintsRemaining > 0 && activeWord && puzzleData) {
+      const { direction, clueIndex, indices } = activeWord;
+      const solution = puzzleData.answers[direction][clueIndex];
+      
+      // Find cells in this word that are incorrect or empty
+      const candidates = indices.filter((idx, i) => {
+        const currentVal = (answers[idx] || '').toUpperCase();
+        const correctVal = solution[i].toUpperCase();
+        return currentVal !== correctVal;
+      });
+
+      if (candidates.length === 0) return;
+
+      // Deduct hint
+      const newCount = hintsRemaining - 1;
+      setHintsRemaining(newCount);
+      await saveHintsRemaining(newCount);
+
+      // Pick a random candidate cell and reveal it
+      const randomIdx = candidates[Math.floor(Math.random() * candidates.length)];
+      const charInSolution = solution[indices.indexOf(randomIdx)];
+
+      const newAnswers = [...answers];
+      newAnswers[randomIdx] = charInSolution.toUpperCase();
+      setAnswers(newAnswers);
+      // savePuzzleProgress is handled by useEffect in CrosswordGrid
     }
   };
 
@@ -256,6 +290,8 @@ function App() {
             hintText={puzzleData?.hints?.[selectedClueId]}
             isUnlocked={unlockedHints.has(selectedClueId)}
             onUnlock={handleUnlockHint}
+            onRevealLetter={handleRevealLetter}
+            isWordSolved={activeWord?.isCorrect}
             hintsRemaining={hintsRemaining}
           />
         </>

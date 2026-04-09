@@ -7,6 +7,8 @@ const HintModal = ({
   hintText, 
   isUnlocked, 
   onUnlock, 
+  onRevealLetter,
+  isWordSolved,
   hintsRemaining 
 }) => {
   if (!isOpen) return null;
@@ -44,10 +46,27 @@ const HintModal = ({
               >
                 Unlock Hint (-1 💡)
               </button>
-              {hintsRemaining <= 0 && (
-                <p className="hint-error">You're out of hints! Complete a puzzle to earn more.</p>
-              )}
             </div>
+          )}
+
+          {!isWordSolved && (
+            <div className="reveal-letter-section">
+              <div className="divider"></div>
+              <p className="hint-description">
+                Can't quite get it? Populate a random correct letter in this word.
+              </p>
+              <button 
+                className="reveal-btn" 
+                onClick={onRevealLetter}
+                disabled={hintsRemaining <= 0}
+              >
+                Reveal a Letter (-1 💡)
+              </button>
+            </div>
+          )}
+
+          {hintsRemaining <= 0 && (
+            <p className="hint-error">You're out of hints! Complete a puzzle to earn more.</p>
           )}
         </div>
 

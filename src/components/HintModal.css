@@ -93,11 +93,10 @@
   font-weight: 700;
   font-size: 1rem;
   cursor: pointer;
-  transition: transform 0.2s, filter 0.2s;
+  transition: filter 0.2s;
 }
 
 .unlock-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
   filter: brightness(1.1);
 }
 
@@ -138,6 +137,36 @@
 .modal-footer {
   display: flex;
   justify-content: flex-end;
+}
+
+.unlock-btn:disabled, .reveal-btn:disabled {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.3);
+  cursor: not-allowed;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: var(--spacing-lg) 0;
+}
+
+.reveal-btn {
+  width: 100%;
+  padding: var(--spacing-md);
+  background: linear-gradient(135, #ff4081 0%, #c60055 100%);
+  border: none;
+  border-radius: var(--radius-md);
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: filter 0.2s;
+}
+
+.reveal-btn:hover:not(:disabled) {
+  filter: brightness(1.1);
 }
 
 .modal-btn-primary {
