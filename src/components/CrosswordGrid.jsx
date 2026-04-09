@@ -192,14 +192,28 @@ const CrosswordGrid = ({
   const handleCellClick = (index) => {
     if (grid[index] === '.') return;
     
+    const acrossWord = getWordAt(index, 'across', puzzleData, answers);
+    const downWord = getWordAt(index, 'down', puzzleData, answers);
+    const hasAcross = acrossWord && acrossWord.clueIndex !== -1;
+    const hasDown = downWord && downWord.clueIndex !== -1;
+
     if (selectedCell === index) {
-      setDirection(direction === 'across' ? 'down' : 'across');
+      // Only toggle if both directions are valid
+      if (hasAcross && hasDown) {
+        setDirection(direction === 'across' ? 'down' : 'across');
+      }
     } else {
       setSelectedCell(index);
-      // Auto-select the correct direction if the current one has no clue for this cell
-      const currentWord = getWordAt(index, direction, puzzleData, answers);
-      if (currentWord && currentWord.clueIndex === -1) {
-        setDirection(direction === 'across' ? 'down' : 'across');
+      if (hasAcross && !hasDown) {
+        setDirection('across');
+      } else if (hasDown && !hasAcross) {
+        setDirection('down');
+      } else if (hasAcross && hasDown) {
+        // Keep current direction if valid, otherwise switch
+        const currentWord = getWordAt(index, direction, puzzleData, answers);
+        if (!currentWord || currentWord.clueIndex === -1) {
+          setDirection(direction === 'across' ? 'down' : 'across');
+        }
       }
     }
   };
@@ -239,11 +253,22 @@ const CrosswordGrid = ({
     const nextIndex = getNextIndex(currentIndex, dir, step, skipCorrect);
     if (nextIndex !== -1) {
       setSelectedCell(nextIndex);
-      // Auto-select the correct direction if the current one has no clue for this cell
-      // We must check if `direction` is currently valid. If not, switch it.
-      const currentWord = getWordAt(nextIndex, direction, puzzleData, answers);
-      if (currentWord && currentWord.clueIndex === -1) {
-        setDirection(direction === 'across' ? 'down' : 'across');
+      
+      const acrossWord = getWordAt(nextIndex, 'across', puzzleData, answers);
+      const downWord = getWordAt(nextIndex, 'down', puzzleData, answers);
+      const hasAcross = acrossWord && acrossWord.clueIndex !== -1;
+      const hasDown = downWord && downWord.clueIndex !== -1;
+
+      if (hasAcross && !hasDown) {
+        setDirection('across');
+      } else if (hasDown && !hasAcross) {
+        setDirection('down');
+      } else if (hasAcross && hasDown) {
+        // Keep current direction if valid, otherwise switch
+        const currentWord = getWordAt(nextIndex, direction, puzzleData, answers);
+        if (!currentWord || currentWord.clueIndex === -1) {
+          setDirection(direction === 'across' ? 'down' : 'across');
+        }
       }
     }
   };
