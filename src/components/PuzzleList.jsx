@@ -18,7 +18,26 @@ const PuzzleList = ({ onSelectPuzzle }) => {
 
         const statusMap = {};
         for (const p of data) {
-          const totalCells = typeof p.letterCells === 'number' ? p.letterCells : (p.cols * p.rows);
+          let totalCells;
+          if (typeof p.letterCells === 'number') {
+            totalCells = p.letterCells;
+          } else {
+            try {
+              // Load the full puzzle to compute actual letter cells (accounts for black squares)
+              const puzzleRes = await fetch(`${baseUrl}data/puzzles/${p.id}.json?t=${Date.now()}`);
+              const puzzleData = await puzzleRes.json();
+              if (Array.isArray(puzzleData.grid)) {
+                totalCells = puzzleData.grid.filter(c => c !== '.' && c !== null && c !== '').length;
+              } else if (puzzleData.size && typeof puzzleData.size.cols === 'number' && typeof puzzleData.size.rows === 'number') {
+                totalCells = puzzleData.size.cols * puzzleData.size.rows;
+              } else {
+                totalCells = (p.cols || (p.size && p.size.cols) || 0) * (p.rows || (p.size && p.size.rows) || 0);
+              }
+            } catch (err) {
+              // Fallback to index metadata if puzzle file can't be loaded
+              totalCells = (p.cols || 0) * (p.rows || 0);
+            }
+          }
           statusMap[p.id] = await checkPuzzleStatus(p.id, totalCells);
         }
         setStatuses(statusMap);
