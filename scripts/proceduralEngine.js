@@ -229,7 +229,7 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
       process.exit(1);
   }
 
-  const title = `${themeName} Crossword`;
+  const title = themeName;
 
   const puzzle = layoutToNightcrossing(layout, id, title, themeName);
   

@@ -71,7 +71,7 @@ async function generateStarters() {
         // Track the newly placed words so they aren't used in subsequent volumes
         placedWords.forEach(w => consumedWords.add(w));
 
-        puzzle.title = `${theme.name} Crossword Vol. ${i}`;
+        puzzle.title = `${theme.name} ${i}`;
         puzzle.date = `Starter Pack Vol. ${i}`;
         
         // Save individual file
