@@ -19,7 +19,6 @@ const CrosswordGrid = ({
   const rows = size.rows;
 
   const inputRefs = useRef([]);
-  const enabledInputsRef = useRef(new Set());
   const cellRefs = useRef([]);
   const correctCells = getCorrectCells(puzzleData, answers);
   const lockedCells = new Set([...correctCells, ...revealedIndices]);
@@ -139,23 +138,6 @@ const CrosswordGrid = ({
 
   const isInitialMount = useRef(true);
 
-  const enableInput = useCallback((index) => {
-    const el = inputRefs.current[index];
-    if (!el) return;
-    if (el.readOnly) {
-      try {
-        el.readOnly = false;
-      } catch (err) {}
-      enabledInputsRef.current.add(index);
-      setTimeout(() => {
-        try {
-          el.focus({ preventScroll: true });
-        } catch (err) {
-          el.focus();
-        }
-      }, 0);
-    }
-  }, []);
 
   // Detect newly completed words and trigger animations
   useEffect(() => {
@@ -293,7 +275,8 @@ const CrosswordGrid = ({
   };
 
   const handleChange = (index, e) => {
-    const val = e.target.value;
+    const raw = e && e.target ? (e.target.value ?? e.target.innerText ?? '') : '';
+    const val = String(raw).trim();
     const char = val.slice(-1);
     if (/^[a-zA-Z]$/.test(char)) {
       if (!lockedCells.has(index)) {
@@ -358,6 +341,20 @@ const CrosswordGrid = ({
     }
   };
 
+  const handlePaste = (index, e) => {
+    e.preventDefault();
+    const text = (e.clipboardData || window.clipboardData).getData('text') || '';
+    const char = String(text).trim().slice(-1);
+    if (/^[a-zA-Z]$/.test(char)) {
+      if (!lockedCells.has(index)) {
+        const newAnswers = [...answers];
+        newAnswers[index] = char.toUpperCase();
+        setAnswers(newAnswers);
+      }
+      moveToNextCell(index, direction, 1, true);
+    }
+  };
+
   const handleDismissComplete = () => {
     setPuzzleComplete(false);
   };
@@ -394,20 +391,22 @@ const CrosswordGrid = ({
               >
                 {!isBlock && <span className="cell-number">{cellNumber > 0 ? cellNumber : ''}</span>}
                 {!isBlock && (
-                  <input 
+                  <div
                     ref={el => inputRefs.current[index] = el}
-                    type="text" 
-                    className="cell-input" 
-                    value={answers[index] || ''} 
-                    onChange={(e) => handleChange(index, e)}
+                    contentEditable
+                    suppressContentEditableWarning
+                    className="cell-input cell-input-div"
+                    onInput={(e) => handleChange(index, e)}
                     onKeyDown={(e) => handleKeyDown(index, e)}
-                    autoComplete="off"
-                    spellCheck="false"
+                    onPaste={(e) => handlePaste(index, e)}
+                    spellCheck={false}
                     autoCapitalize="characters"
-                    readOnly={!enabledInputsRef.current.has(index)}
-                    onTouchStart={() => enableInput(index)}
-                    onFocus={() => enableInput(index)}
-                  />
+                    role="textbox"
+                    aria-label={`Cell ${index}`}
+                    onFocus={() => setSelectedCell(index)}
+                  >
+                    {answers[index] || ''}
+                  </div>
                 )}
               </div>
             );
