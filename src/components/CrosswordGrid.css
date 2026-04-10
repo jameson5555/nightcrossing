@@ -85,6 +85,7 @@
   overflow: hidden;
   text-overflow: clip;
   caret-color: var(--cell-text);
+  caret-color: transparent; /* Hide default caret, we'll use a custom one */
   line-height: 1;
   user-select: text;
   -webkit-user-select: text;
