@@ -19,6 +19,8 @@ const CrosswordGrid = ({
   const rows = size.rows;
 
   const inputRefs = useRef([]);
+  const isComposingRef = useRef(false);
+  const inputSuppressRef = useRef(false);
   const cellRefs = useRef([]);
   const correctCells = getCorrectCells(puzzleData, answers);
   const lockedCells = new Set([...correctCells, ...revealedIndices]);
@@ -222,9 +224,30 @@ const CrosswordGrid = ({
   useEffect(() => {
     if (selectedCell !== null && inputRefs.current[selectedCell]) {
       const inputEl = inputRefs.current[selectedCell];
-      inputEl.focus({ preventScroll: true }); // Prevent browser default jumping
+      try {
+        inputEl.focus({ preventScroll: true }); // Prevent browser default jumping
+      } catch (err) {
+        inputEl.focus();
+      }
+
+      // place caret at end for contentEditable elements
+      setTimeout(() => {
+        try {
+          const sel = window.getSelection();
+          if (sel) {
+            const range = document.createRange();
+            range.selectNodeContents(inputEl);
+            range.collapse(false);
+            sel.removeAllRanges();
+            sel.addRange(range);
+          }
+        } catch (err) {}
+      }, 0);
+
       // Smoothly scroll the container to center this cell
-      inputEl.parentNode.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      try {
+        inputEl.parentNode.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch (err) {}
     }
   }, [selectedCell]);
 
@@ -275,6 +298,11 @@ const CrosswordGrid = ({
   };
 
   const handleChange = (index, e) => {
+    if (inputSuppressRef.current) {
+      inputSuppressRef.current = false;
+      return;
+    }
+    if (isComposingRef.current) return;
     const raw = e && e.target ? (e.target.value ?? e.target.innerText ?? '') : '';
     const val = String(raw).trim();
     const char = val.slice(-1);
@@ -330,13 +358,16 @@ const CrosswordGrid = ({
           setSelectedCell(prevIndex);
         }
       }
-    } else if (/^[a-zA-Z]$/.test(e.key)) {
+    } else if (/^[a-zA-Z]$/.test(e.key) && !isComposingRef.current) {
       e.preventDefault();
       if (!lockedCells.has(index)) {
         const newAnswers = [...answers];
         newAnswers[index] = e.key.toUpperCase();
         setAnswers(newAnswers);
       }
+      // prevent the following input event from double-applying
+      inputSuppressRef.current = true;
+      setTimeout(() => { inputSuppressRef.current = false; }, 0);
       moveToNextCell(index, direction, 1, true);
     }
   };
@@ -351,6 +382,9 @@ const CrosswordGrid = ({
         newAnswers[index] = char.toUpperCase();
         setAnswers(newAnswers);
       }
+      // prevent the following input event from double-applying
+      inputSuppressRef.current = true;
+      setTimeout(() => { inputSuppressRef.current = false; }, 0);
       moveToNextCell(index, direction, 1, true);
     }
   };
@@ -399,10 +433,35 @@ const CrosswordGrid = ({
                     onInput={(e) => handleChange(index, e)}
                     onKeyDown={(e) => handleKeyDown(index, e)}
                     onPaste={(e) => handlePaste(index, e)}
+                    onPointerDown={(e) => { e.preventDefault(); handleCellClick(index); const el = inputRefs.current[index]; setTimeout(() => el && el.focus(), 0); }}
+                    onCompositionStart={() => { isComposingRef.current = true; }}
+                    onCompositionEnd={(e) => {
+                      isComposingRef.current = false;
+                      const text = e.target.innerText || '';
+                      const char = String(text).trim().slice(-1);
+                      if (/^[a-zA-Z]$/.test(char)) {
+                        if (!lockedCells.has(index)) {
+                          const newAnswers = [...answers];
+                          newAnswers[index] = char.toUpperCase();
+                          setAnswers(newAnswers);
+                        }
+                        moveToNextCell(index, direction, 1, true);
+                      } else if (text.trim() === '') {
+                        if (!lockedCells.has(index)) {
+                          const newAnswers = [...answers];
+                          if (newAnswers[index] !== '') {
+                            newAnswers[index] = '';
+                            setAnswers(newAnswers);
+                          }
+                        }
+                      }
+                    }}
+                    onBlur={(e) => { const el = inputRefs.current[index]; if (el && el.innerText !== (answers[index] || '')) { handleChange(index, { target: el }); } }}
                     spellCheck={false}
                     autoCapitalize="characters"
                     role="textbox"
                     aria-label={`Cell ${index}`}
+                    tabIndex={0}
                     onFocus={() => setSelectedCell(index)}
                   >
                     {answers[index] || ''}
