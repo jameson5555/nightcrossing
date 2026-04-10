@@ -345,19 +345,24 @@ const CrosswordGrid = ({
     if (e.key === 'ArrowUp') {
       e.preventDefault();
       moveToNextCell(index, 'down', -1);
-      if (direction === 'across') setDirection('down');
     } else if (e.key === 'ArrowDown') {
       e.preventDefault();
       moveToNextCell(index, 'down', 1);
-      if (direction === 'across') setDirection('down');
     } else if (e.key === 'ArrowLeft') {
       e.preventDefault();
       moveToNextCell(index, 'across', -1);
-      if (direction === 'down') setDirection('across');
     } else if (e.key === 'ArrowRight') {
       e.preventDefault();
       moveToNextCell(index, 'across', 1);
-      if (direction === 'down') setDirection('across');
+    } else if (e.key === ' ') {
+      e.preventDefault();
+      const acrossWord = getWordAt(index, 'across', puzzleData, answers);
+      const downWord = getWordAt(index, 'down', puzzleData, answers);
+      const hasAcross = acrossWord && acrossWord.clueIndex !== -1;
+      const hasDown = downWord && downWord.clueIndex !== -1;
+      if (hasAcross && hasDown) {
+        setDirection(direction === 'across' ? 'down' : 'across');
+      }
     } else if (e.key === 'Backspace') {
       e.preventDefault();
       if (lockedCells.has(index)) {
