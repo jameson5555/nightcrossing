@@ -361,24 +361,36 @@ const CrosswordGrid = ({
 
     if (key === 'ArrowUp') {
       e.preventDefault();
-      moveToNextCell(index, 'down', -1);
-      const word = getWordAt(index, 'down', puzzleData, answers);
-      if (word && word.clueIndex !== -1) setDirection('down');
+      const nextIdx = getNextIndex(index, 'down', -1);
+      if (nextIdx !== -1) {
+        setSelectedCell(nextIdx);
+        const word = getWordAt(nextIdx, 'down', puzzleData, answers);
+        if (word && word.clueIndex !== -1) setDirection('down');
+      }
     } else if (key === 'ArrowDown') {
       e.preventDefault();
-      moveToNextCell(index, 'down', 1);
-      const word = getWordAt(index, 'down', puzzleData, answers);
-      if (word && word.clueIndex !== -1) setDirection('down');
+      const nextIdx = getNextIndex(index, 'down', 1);
+      if (nextIdx !== -1) {
+        setSelectedCell(nextIdx);
+        const word = getWordAt(nextIdx, 'down', puzzleData, answers);
+        if (word && word.clueIndex !== -1) setDirection('down');
+      }
     } else if (key === 'ArrowLeft') {
       e.preventDefault();
-      moveToNextCell(index, 'across', -1);
-      const word = getWordAt(index, 'across', puzzleData, answers);
-      if (word && word.clueIndex !== -1) setDirection('across');
+      const nextIdx = getNextIndex(index, 'across', -1);
+      if (nextIdx !== -1) {
+        setSelectedCell(nextIdx);
+        const word = getWordAt(nextIdx, 'across', puzzleData, answers);
+        if (word && word.clueIndex !== -1) setDirection('across');
+      }
     } else if (key === 'ArrowRight') {
       e.preventDefault();
-      moveToNextCell(index, 'across', 1);
-      const word = getWordAt(index, 'across', puzzleData, answers);
-      if (word && word.clueIndex !== -1) setDirection('across');
+      const nextIdx = getNextIndex(index, 'across', 1);
+      if (nextIdx !== -1) {
+        setSelectedCell(nextIdx);
+        const word = getWordAt(nextIdx, 'across', puzzleData, answers);
+        if (word && word.clueIndex !== -1) setDirection('across');
+      }
     } else if (key === 'Backspace') {
       e.preventDefault();
       if (lockedCells.has(index)) {
@@ -483,7 +495,7 @@ const CrosswordGrid = ({
                     onInput={(e) => handleChange(index, e)}
                     onKeyDown={(e) => handleKeyDown(index, e)}
                     onPaste={(e) => handlePaste(index, e)}
-                    onPointerDown={(e) => { e.preventDefault(); e.stopPropagation(); handleCellClick(index); if (!isLocked) { const el = inputRefs.current[index]; setTimeout(() => el && el.focus(), 0); } }}
+                    onPointerDown={(e) => { e.stopPropagation(); handleCellClick(index); if (!isLocked) { const el = inputRefs.current[index]; setTimeout(() => el && el.focus(), 0); } }}
                     onCompositionStart={() => { isComposingRef.current = true; }}
                     onCompositionEnd={(e) => {
                       isComposingRef.current = false;
