@@ -421,7 +421,7 @@ const CrosswordGrid = ({
                 key={index}
                 ref={el => cellRefs.current[index] = el}
                 className={cellClass}
-                onClick={() => handleCellClick(index)}
+                onClick={(e) => { if (e.target === e.currentTarget) handleCellClick(index); }}
               >
                 {!isBlock && <span className="cell-number">{cellNumber > 0 ? cellNumber : ''}</span>}
                 {!isBlock && (
@@ -433,7 +433,7 @@ const CrosswordGrid = ({
                     onInput={(e) => handleChange(index, e)}
                     onKeyDown={(e) => handleKeyDown(index, e)}
                     onPaste={(e) => handlePaste(index, e)}
-                    onPointerDown={(e) => { e.preventDefault(); handleCellClick(index); const el = inputRefs.current[index]; setTimeout(() => el && el.focus(), 0); }}
+                    onPointerDown={(e) => { e.preventDefault(); e.stopPropagation(); handleCellClick(index); const el = inputRefs.current[index]; setTimeout(() => el && el.focus(), 0); }}
                     onCompositionStart={() => { isComposingRef.current = true; }}
                     onCompositionEnd={(e) => {
                       isComposingRef.current = false;
