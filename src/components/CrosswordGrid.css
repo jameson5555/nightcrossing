@@ -65,7 +65,7 @@
   font-weight: 700;
   text-transform: uppercase;
   transition: color 3s ease-in-out;
-  caret-color: var(--cell-text);
+  caret-color: transparent;
 }
 
 .cell-input:focus {
@@ -84,11 +84,16 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: clip;
-  caret-color: var(--cell-text);
-  caret-color: transparent; /* Hide default caret, we'll use a custom one */
+  caret-color: transparent;
   line-height: 1;
   user-select: text;
   -webkit-user-select: text;
+}
+
+.cell-input.cell-locked {
+  caret-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .cell-in-word {
