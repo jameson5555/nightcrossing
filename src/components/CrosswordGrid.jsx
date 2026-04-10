@@ -19,6 +19,7 @@ const CrosswordGrid = ({
   const rows = size.rows;
 
   const inputRefs = useRef([]);
+  const enabledInputsRef = useRef(new Set());
   const cellRefs = useRef([]);
   const correctCells = getCorrectCells(puzzleData, answers);
   const lockedCells = new Set([...correctCells, ...revealedIndices]);
@@ -137,6 +138,24 @@ const CrosswordGrid = ({
   }, [addFloatingWord]);
 
   const isInitialMount = useRef(true);
+
+  const enableInput = useCallback((index) => {
+    const el = inputRefs.current[index];
+    if (!el) return;
+    if (el.readOnly) {
+      try {
+        el.readOnly = false;
+      } catch (err) {}
+      enabledInputsRef.current.add(index);
+      setTimeout(() => {
+        try {
+          el.focus({ preventScroll: true });
+        } catch (err) {
+          el.focus();
+        }
+      }, 0);
+    }
+  }, []);
 
   // Detect newly completed words and trigger animations
   useEffect(() => {
@@ -385,6 +404,9 @@ const CrosswordGrid = ({
                     autoComplete="off"
                     spellCheck="false"
                     autoCapitalize="characters"
+                    readOnly={!enabledInputsRef.current.has(index)}
+                    onTouchStart={() => enableInput(index)}
+                    onFocus={() => enableInput(index)}
                   />
                 )}
               </div>
