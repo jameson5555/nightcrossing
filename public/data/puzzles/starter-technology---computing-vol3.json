@@ -182,5 +182,13 @@
       "CODE"
     ]
   },
-  "hints": {}
+  "hints": {
+    "across-1": "Rectangular array of squares or rectangles of equal size, such as in a crossword puzzle.",
+    "across-3": "Specifically related to a particular discipline.",
+    "across-6": "Of, relating to, or describing the mood of a clause.",
+    "down-2": "Initialism of diffusion tensor imaging.",
+    "down-3": "Any piece of equipment used in a profession, such as a craftsman's.",
+    "down-4": "An indicator, often a blinking line or bar, indicating where the next insertion or other edit will take place.",
+    "down-5": "Set of rules for converting information into another form or representation."
+  }
 }

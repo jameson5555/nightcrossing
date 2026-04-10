@@ -32,6 +32,12 @@ function generateBestLayout(words, attempts = 4000, maxWords = 18) {
     let layout = generateLayout(input);
     layout.result = layout.result.filter(w => w.orientation === 'across' || w.orientation === 'down');
     
+    // Re-attach hints as the generator might strip them
+    layout.result.forEach(r => {
+      const source = input.find(i => i.answer === r.answer);
+      if (source) r.hint = source.hint;
+    });
+    
     // Trim early to check true dimensions
     layout = trimGrid(layout);
     if (!layout.table || layout.rows === 0 || layout.cols === 0) continue;

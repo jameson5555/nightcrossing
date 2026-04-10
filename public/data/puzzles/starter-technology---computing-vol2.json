@@ -262,5 +262,17 @@
       "BOOT"
     ]
   },
-  "hints": {}
+  "hints": {
+    "across-1": "Latency.",
+    "across-6": "Advice, or opinion, of an expert.",
+    "across-8": "Everything having to do with the Internet considered collectively.",
+    "across-10": "Store, protected and often hidden in some way, of things that may be required in the future, such that they can be retrieved rapidly.",
+    "across-11": "Burdock plant, or the leaves of that plant.",
+    "down-2": "The point where the orbit of a planet, as viewed from the Sun, intersects the ecliptic. The ascending and descending nodes refer respectively to the points where the planet moves from South to North and N to S; their respective symbols are ☊ and ☋.",
+    "down-3": "A set of instructions passed to a database.",
+    "down-4": "Initialism of Indochina Time.",
+    "down-5": "A device that connects local area networks to form a larger internet by, at minimum, selectively passing those datagrams having a destination IP address to the network which is able to deliver them to their destination; a network gateway.",
+    "down-7": "Exchange of two comparable things.",
+    "down-9": "A kind of sports shoe worn by players of certain games such as cricket and football."
+  }
 }

@@ -166,6 +166,17 @@ function App() {
 
   const handleUnlockHint = async () => {
     if (hintsRemaining > 0 && selectedClueId && !unlockedHints.has(selectedClueId)) {
+      const hintText = puzzleData?.hints?.[selectedClueId];
+      
+      // If no hint available, don't charge the user
+      if (!hintText) {
+        const newUnlocked = new Set(unlockedHints);
+        newUnlocked.add(selectedClueId);
+        setUnlockedHints(newUnlocked);
+        await saveUnlockedHints(puzzleData.id, newUnlocked);
+        return;
+      }
+
       const newCount = hintsRemaining - 1;
       setHintsRemaining(newCount);
       await saveHintsRemaining(newCount);
