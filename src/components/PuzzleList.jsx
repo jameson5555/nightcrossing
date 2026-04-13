@@ -8,34 +8,42 @@ const PuzzleList = ({ onSelectPuzzle }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let mounted = true;
     const fetchIndex = async () => {
       try {
         const baseUrl = import.meta.env.BASE_URL;
         const res = await fetch(`${baseUrl}data/puzzles.json?t=${Date.now()}`);
         const data = await res.json();
-        // Populate puzzles and compute statuses using index metadata.
+        // Show the list immediately and compute per-puzzle statuses in background.
+        if (!mounted) return;
         setPuzzles(data);
+        setLoading(false);
 
-        const statusMap = {};
-        for (const p of data) {
+        // Fetch individual puzzle files in parallel and update statuses as they arrive.
+        const tasks = data.map(async (p) => {
           try {
-            const puzzleRes = await fetch(`${baseUrl}data/puzzles/${p.id}.json?t=${Date.now()}`);
+            const puzzleRes = await fetch(`${baseUrl}data/puzzles/${p.id}.json`);
+            if (!puzzleRes.ok) throw new Error(`HTTP ${puzzleRes.status}`);
             const puzzleData = await puzzleRes.json();
-            statusMap[p.id] = await checkPuzzleStatus(p.id, puzzleData.grid);
+            const status = await checkPuzzleStatus(p.id, puzzleData.grid);
+            if (!mounted) return;
+            setStatuses(prev => ({ ...prev, [p.id]: status }));
           } catch (err) {
             console.error(`Failed to resolve status for puzzle ${p.id}`, err);
-            statusMap[p.id] = 'New';
+            if (!mounted) return;
+            setStatuses(prev => ({ ...prev, [p.id]: 'New' }));
           }
-        }
-        setStatuses(statusMap);
-        
+        });
+
+        // Wait for all background status checks to settle but don't block the UI.
+        await Promise.allSettled(tasks);
       } catch (err) {
         console.error('Failed to load puzzle list', err);
-      } finally {
-        setLoading(false);
+        if (mounted) setLoading(false);
       }
     };
     fetchIndex();
+    return () => { mounted = false; };
   }, []);
 
   const [expandedTheme, setExpandedTheme] = useState(null);
