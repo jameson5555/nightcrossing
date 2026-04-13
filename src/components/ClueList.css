@@ -28,6 +28,7 @@
   margin-bottom: var(--spacing-sm);
   border-bottom: 1px solid rgba(0, 229, 255, 0.2);
   padding-bottom: 4px;
+  padding-left: 0.5rem;
 }
 
 .clue-list {

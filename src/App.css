@@ -64,7 +64,7 @@
   height: 30vh;
   min-height: 200px;
   display: flex;
-  padding: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-sm);
 }
 
 .placeholder-board, .placeholder-clues {
