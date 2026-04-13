@@ -86,3 +86,14 @@
   border-top: 1px solid rgba(255,255,255,0.03);
 }
 
+.puzzle-footer-title {
+  font-family: var(--font-family-game);
+  font-weight: 800;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 0.95rem;
+}
+

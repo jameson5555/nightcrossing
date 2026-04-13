@@ -59,11 +59,11 @@ const ClueList = ({ clues, direction, selectedClueId, solvedClueIds, onClueClick
         </ul>
       </div>
     </div>
-    {puzzleTitle && (
-      <div className="clue-list-footer" aria-hidden={puzzleTitle ? 'false' : 'true'}>
-        {puzzleTitle}
-      </div>
-    )}
+      {puzzleTitle && (
+        <div className="clue-list-footer" aria-hidden={puzzleTitle ? 'false' : 'true'}>
+          <span className="puzzle-footer-title">{puzzleTitle}</span>
+        </div>
+      )}
   </div>
   );
 };
