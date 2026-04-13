@@ -305,6 +305,7 @@ function App() {
                 selectedClueId={selectedClueId}
                 solvedClueIds={solvedClueIds}
                 onClueClick={handleClueClick}
+                puzzleTitle={puzzleData.title}
               />
             ) : (
               <div className="placeholder-clues">

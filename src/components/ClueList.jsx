@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import './ClueList.css';
 
-const ClueList = ({ clues, direction, selectedClueId, solvedClueIds, onClueClick }) => {
+const ClueList = ({ clues, direction, selectedClueId, solvedClueIds, onClueClick, puzzleTitle }) => {
   const selectedClueRef = useRef(null);
 
   useEffect(() => {
@@ -11,8 +11,9 @@ const ClueList = ({ clues, direction, selectedClueId, solvedClueIds, onClueClick
   }, [selectedClueId]);
 
   return (
-    <div className="clue-list-container">
-      <div className={`clue-column ${direction === 'across' ? 'active-column' : ''}`}>
+    <div className="clue-list-root">
+      <div className="clue-list-container">
+        <div className={`clue-column ${direction === 'across' ? 'active-column' : ''}`}>
         <h3 className="clue-column-title">Across</h3>
         <ul className="clue-list">
           {clues.across.map((clue, idx) => {
@@ -57,7 +58,14 @@ const ClueList = ({ clues, direction, selectedClueId, solvedClueIds, onClueClick
           })}
         </ul>
       </div>
+
+      {puzzleTitle && (
+        <div className="clue-list-footer" aria-hidden={puzzleTitle ? 'false' : 'true'}>
+          {puzzleTitle}
+        </div>
+      )}
     </div>
+  </div>
   );
 };
 
