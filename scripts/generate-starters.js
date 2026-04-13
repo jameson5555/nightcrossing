@@ -13,15 +13,27 @@ const INDEX_FILE = path.join(DATA_DIR, 'puzzles.json');
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 if (!fs.existsSync(PUZZLES_DIR)) fs.mkdirSync(PUZZLES_DIR, { recursive: true });
 
+const REGENERATE = process.argv.includes('--regenerate');
+
 async function generateStarters() {
-  console.log('Generating incremental new puzzles...');
-  
   let index = [];
-  if (fs.existsSync(INDEX_FILE)) {
-    try {
-      index = JSON.parse(fs.readFileSync(INDEX_FILE, 'utf8'));
-    } catch(e) {
-      console.warn("Could not parse existing puzzles.json, starting fresh.");
+  
+  if (REGENERATE) {
+    console.log('🔄 REGENERATE MODE: Wiping existing puzzles and starting fresh...');
+    // Delete all existing puzzle JSON files
+    const existingFiles = fs.readdirSync(PUZZLES_DIR).filter(f => f.endsWith('.json'));
+    for (const f of existingFiles) {
+      fs.unlinkSync(path.join(PUZZLES_DIR, f));
+    }
+    console.log(`  Deleted ${existingFiles.length} existing puzzle files.`);
+  } else {
+    console.log('Generating incremental new puzzles...');
+    if (fs.existsSync(INDEX_FILE)) {
+      try {
+        index = JSON.parse(fs.readFileSync(INDEX_FILE, 'utf8'));
+      } catch(e) {
+        console.warn("Could not parse existing puzzles.json, starting fresh.");
+      }
     }
   }
 

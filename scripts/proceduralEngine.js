@@ -14,15 +14,25 @@ const THEMES_FILE = path.join(__dirname, 'themes.json');
 const THEMES = JSON.parse(fs.readFileSync(THEMES_FILE, 'utf8'));
 
 // ─── Puzzle Generation Engine ──────────────────────────────────────────────
-function generateBestLayout(words, attempts = 4000, maxWords = 18) {
+function generateBestLayout(words, attempts = 4000, maxWords = 22) {
   let best = null;
   let bestScore = -1000;
 
+  // Pre-filter once: reject clues over 80 chars AND clues that contain the answer word
+  const preFiltered = words.filter(w => {
+    if (w.clue.length > 80) return false;
+    const answerLower = w.answer.toLowerCase();
+    const clueLower = w.clue.toLowerCase();
+    const regex = new RegExp(`\\b${answerLower.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&')}\\b`, 'i');
+    return !regex.test(clueLower);
+  });
+
+  if (preFiltered.length < 6) {
+    console.warn(`  Warning: Only ${preFiltered.length} words survive clue-safety filter`);
+  }
+
   for (let i = 0; i < attempts; i++) {
-    // Use a subset of words to explicitly keep puzzles small
-    // Also reject words with clues that are too long (over 80 characters)
-    const filteredWords = words.filter(w => w.clue.length <= 80);
-    const shuffled = [...filteredWords].sort(() => Math.random() - 0.5);
+    const shuffled = [...preFiltered].sort(() => Math.random() - 0.5);
     const subset = shuffled.slice(0, maxWords);
     const input = subset.map(w => ({ 
       answer: w.answer.toLowerCase(), 
@@ -44,6 +54,9 @@ function generateBestLayout(words, attempts = 4000, maxWords = 18) {
     
     // Enforce 12x12 size limits to keep readable on mobile
     if (layout.rows > 12 || layout.cols > 12) continue;
+
+    // Reject layouts with too few words placed
+    if (layout.result.length < 8) continue;
 
     let filled = 0;
     for (let r = 0; r < layout.rows; r++) {
@@ -102,7 +115,10 @@ function generateBestLayout(words, attempts = 4000, maxWords = 18) {
     // Favor layouts where minimum overlap is >=2
     const overlapBonus = (minIntersections >= 2 ? 50 : 0) + (avgIntersections * 5);
 
-    const score = (density * 10.0) + (placedRatio * 2.0) + overlapBonus - areaPenalty - ratioPenalty;
+    // Direct bonus for absolute word count — strongly incentivize packing more words
+    const wordCountBonus = layout.result.length * 3;
+
+    const score = (density * 10.0) + (placedRatio * 5.0) + wordCountBonus + overlapBonus - areaPenalty - ratioPenalty;
 
     if (score > bestScore) {
       bestScore = score;
@@ -228,10 +244,10 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
   console.log(`Theme: ${themeName} | Available Words Pool: ${availableWords.length}`);
 
   let layout = null;
-  let maxWordsTry = Math.min(16, availableWords.length);
+  let maxWordsTry = Math.min(20, availableWords.length);
   
   while (!layout && maxWordsTry >= 6) {
-      layout = generateBestLayout(availableWords, 50, maxWordsTry);
+      layout = generateBestLayout(availableWords, 200, maxWordsTry);
       if (!layout) {
           maxWordsTry--;
       }
