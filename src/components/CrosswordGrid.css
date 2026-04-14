@@ -53,18 +53,21 @@
   pointer-events: none;
 }
 
-/* Hidden input that captures all keyboard events — positioned offscreen */
+/* Hidden input that captures all keyboard events — on-screen but invisible.
+   MUST remain within the viewport (not left:-9999px) or Android won't open the keyboard. */
 .crossword-hidden-input {
   position: fixed;
-  left: -9999px;
   top: 0;
+  left: 0;
   width: 1px;
   height: 1px;
   opacity: 0;
   border: none;
   padding: 0;
+  margin: 0;
   font-size: 16px; /* Prevents iOS auto-zoom */
   caret-color: transparent;
+  z-index: -1;
 }
 
 .cell-input {

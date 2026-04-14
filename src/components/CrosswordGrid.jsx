@@ -20,7 +20,7 @@ const CrosswordGrid = ({
 
   const hiddenInputRef = useRef(null);
   const cellRefs = useRef([]);
-  const isComposingRef = useRef(false);
+  const INITIAL_INPUT_VALUE = " ";
   const correctCells = getCorrectCells(puzzleData, answers);
   const lockedCells = new Set([...correctCells, ...revealedIndices]);
   const prevCorrectWordsRef = useRef(new Set());
@@ -220,30 +220,38 @@ const CrosswordGrid = ({
       }
     }
 
-    // Focus the hidden input to capture keystrokes / open mobile keyboard
+    // Focus the hidden input synchronously to capture keystrokes / open mobile keyboard.
+    // MUST be synchronous (no setTimeout) to preserve the user gesture chain on Android.
     if (!lockedCells.has(index)) {
-      setTimeout(() => {
-        const inp = hiddenInputRef.current;
-        if (inp) {
-          inp.focus({ preventScroll: true });
-        }
-      }, 0);
-    }
-  };
-
-  // Keep hidden input focused when selectedCell changes
-  useEffect(() => {
-    if (selectedCell !== null && !lockedCells.has(selectedCell)) {
       const inp = hiddenInputRef.current;
       if (inp) {
         try {
+          inp.value = INITIAL_INPUT_VALUE;
           inp.focus({ preventScroll: true });
         } catch (err) {
           inp.focus();
         }
       }
+    }
+  };
 
-      // Smoothly scroll the container to center this cell
+  // Scroll and focus when selectedCell changes
+  useEffect(() => {
+    if (selectedCell !== null) {
+      // Focus hidden input
+      if (!lockedCells.has(selectedCell)) {
+        const inp = hiddenInputRef.current;
+        if (inp) {
+          try {
+            inp.value = INITIAL_INPUT_VALUE;
+            inp.focus({ preventScroll: true });
+          } catch (err) {
+            inp.focus();
+          }
+        }
+      }
+
+      // Scroll into view
       const cell = cellRefs.current[selectedCell];
       if (cell) {
         try {
@@ -305,19 +313,37 @@ const CrosswordGrid = ({
   // character to the currently selected cell and advance.
 
   const handleHiddenInput = (e) => {
-    if (isComposingRef.current) return;
     const index = selectedCell;
     if (index === null || lockedCells.has(index)) {
-      // Reset the hidden input
-      e.target.value = '';
+      e.target.value = " ";
       return;
     }
 
-    const raw = e.target.value || '';
-    const char = raw.slice(-1);
-    // Immediately clear so the next keystroke is clean
-    e.target.value = '';
+    const val = e.target.value;
+    
+    // Deletion detection: if value is empty, it means our placeholder space was deleted
+    if (val === "") {
+      const newAnswers = [...answers];
+      if (newAnswers[index] !== '') {
+        newAnswers[index] = '';
+        setAnswers(newAnswers);
+      } else {
+        const prevIndex = getNextIndex(index, direction, -1, true);
+        if (prevIndex !== -1) {
+          if (!lockedCells.has(prevIndex)) {
+            newAnswers[prevIndex] = '';
+            setAnswers(newAnswers);
+          }
+          setSelectedCell(prevIndex);
+        }
+      }
+      e.target.value = INITIAL_INPUT_VALUE;
+      return;
+    }
 
+    // Input detection: something was added to our placeholder
+    const char = val.charAt(val.length - 1);
+    
     if (/^[a-zA-Z]$/.test(char)) {
       const nextChar = char.toUpperCase();
       const newAnswers = [...answers];
@@ -325,6 +351,9 @@ const CrosswordGrid = ({
       setAnswers(newAnswers);
       moveToNextCell(index, direction, 1, true);
     }
+    
+    // Always reset to placeholder
+    e.target.value = INITIAL_INPUT_VALUE;
   };
 
   const handleHiddenKeyDown = (e) => {
@@ -380,59 +409,21 @@ const CrosswordGrid = ({
         if (word && word.clueIndex !== -1) setDirection('across');
       }
     } else if (key === 'Backspace') {
-      e.preventDefault();
-      if (lockedCells.has(index)) return;
-      const newAnswers = [...answers];
-      if (newAnswers[index] !== '') {
-        newAnswers[index] = '';
-        setAnswers(newAnswers);
-      } else {
-        // Find previous cell, skipping locked ones
-        const prevIndex = getNextIndex(index, direction, -1, true);
-        if (prevIndex !== -1) {
-          if (!lockedCells.has(prevIndex)) {
-            newAnswers[prevIndex] = '';
-            setAnswers(newAnswers);
-          }
-          setSelectedCell(prevIndex);
-        }
+      // We don't preventDefault here so that onInput can catch the deletion of our placeholder space
+      if (lockedCells.has(index)) {
+        e.preventDefault();
+        return;
       }
     } else if (key === 'Tab') {
       e.preventDefault();
       // Tab advances to next word
       moveToNextCell(index, direction, 1, true);
-    } else if (/^[a-zA-Z]$/.test(key) && !isComposingRef.current) {
-      // On desktop, keyDown fires with the actual letter. Handle it here
-      // and clear the input so onInput doesn't double-fire.
-      e.preventDefault();
-      if (lockedCells.has(index)) return;
-      const nextChar = key.toUpperCase();
-      const newAnswers = [...answers];
-      newAnswers[index] = nextChar;
-      setAnswers(newAnswers);
-      // Clear the input value so onInput sees nothing new
-      e.target.value = '';
-      moveToNextCell(index, direction, 1, true);
-    }
-  };
-
-  const handleHiddenCompositionEnd = (e) => {
-    isComposingRef.current = false;
-    const index = selectedCell;
-    if (index === null || lockedCells.has(index)) {
-      e.target.value = '';
-      return;
-    }
-    const text = e.target.value || '';
-    const char = text.slice(-1);
-    e.target.value = '';
-
-    if (/^[a-zA-Z]$/.test(char)) {
-      const nextChar = char.toUpperCase();
-      const newAnswers = [...answers];
-      newAnswers[index] = nextChar;
-      setAnswers(newAnswers);
-      moveToNextCell(index, direction, 1, true);
+    } else if (/^[a-zA-Z]$/.test(key)) {
+      // We also don't preventDefault here to allow the character to be typed into the input,
+      // handled by onInput. This is more robust for mobile keyboards.
+      if (lockedCells.has(index)) {
+        e.preventDefault();
+      }
     }
   };
 
@@ -470,8 +461,6 @@ const CrosswordGrid = ({
         aria-label="Crossword input"
         onInput={handleHiddenInput}
         onKeyDown={handleHiddenKeyDown}
-        onCompositionStart={() => { isComposingRef.current = true; }}
-        onCompositionEnd={handleHiddenCompositionEnd}
         onPaste={handleHiddenPaste}
         onBlur={() => {
           // If the user taps within the grid, we'll re-focus via handleCellClick.
@@ -505,10 +494,7 @@ const CrosswordGrid = ({
                 key={index}
                 ref={el => cellRefs.current[index] = el}
                 className={cellClass}
-                onPointerDown={(e) => {
-                  e.preventDefault();
-                  handleCellClick(index);
-                }}
+                onClick={() => handleCellClick(index)}
               >
                 {!isBlock && <span className="cell-number">{cellNumber > 0 ? cellNumber : ''}</span>}
                 {!isBlock && (
