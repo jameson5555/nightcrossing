@@ -44,6 +44,7 @@ html, body {
   align-items: center;
   position: relative;
   overflow-y: auto;
+  overflow-x: hidden;
   scrollbar-gutter: stable;
   min-height: 0;
 }
