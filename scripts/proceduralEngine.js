@@ -18,13 +18,49 @@ function generateBestLayout(words, attempts = 4000, maxWords = 22) {
   let best = null;
   let bestScore = -1000;
 
-  // Pre-filter once: reject clues over 80 chars AND clues that contain the answer word
+  // Pre-filter: reject clues over 80 chars, identical hint/clue pairs, and answer leakage
   const preFiltered = words.filter(w => {
     if (w.clue.length > 80) return false;
+    
+    // 1. Clue and hint cannot be effectively identical
+    if (w.hint && typeof w.hint === 'string') {
+      const normalize = str => str.toLowerCase().replace(/[^a-z0-9]/g, '');
+      if (normalize(w.clue) === normalize(w.hint)) {
+        return false;
+      }
+    }
+
     const answerLower = w.answer.toLowerCase();
     const clueLower = w.clue.toLowerCase();
-    const regex = new RegExp(`\\b${answerLower.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&')}\\b`, 'i');
-    return !regex.test(clueLower);
+    
+    // 2. Exact match check
+    const escapedAnswer = answerLower.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const exactRegex = new RegExp(`\\b${escapedAnswer}\\b`, 'i');
+    if (exactRegex.test(clueLower)) return false;
+
+    // 3. Common suffix check (s, es, ed, ing, er, est)
+    const clueWords = clueLower.match(/\b\w+\b/g) || [];
+    for (let word of clueWords) {
+      if (word.startsWith(answerLower) && word.length > answerLower.length) {
+        const suffix = word.substring(answerLower.length);
+        if (/^(s|es|ed|ing|er|est)$/.test(suffix)) {
+          return false;
+        }
+      }
+      
+      // Check for words ending in 'e' dropping their 'e' for suffixes (e.g. guide -> guiding)
+      if (answerLower.endsWith('e') && answerLower.length > 3) {
+        const base = answerLower.slice(0, -1);
+        if (word.startsWith(base) && word.length > base.length) {
+          const suffix = word.substring(base.length);
+          if (/^(ing|ed|er|est)$/.test(suffix)) {
+            return false;
+          }
+        }
+      }
+    }
+
+    return true;
   });
 
   if (preFiltered.length < 6) {
