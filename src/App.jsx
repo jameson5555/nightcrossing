@@ -14,8 +14,12 @@ import {
   loadRevealedIndices,
   saveRevealedIndices,
   loadRewardClaimed,
-  saveRewardClaimed
+  saveRewardClaimed,
+  loadHintsEmptyTimestamp,
+  saveHintsEmptyTimestamp,
+  clearHintsEmptyTimestamp
 } from './utils/storage';
+import { LocalNotifications } from '@capacitor/local-notifications';
 import HintModal from './components/HintModal';
 
 function App() {
@@ -30,13 +34,38 @@ function App() {
   const [isHintModalOpen, setIsHintModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
 
+  // Helper to handle bonus hint timeout
+  const checkAndAwardBonusHint = async () => {
+    const emptyTs = await loadHintsEmptyTimestamp();
+    if (!emptyTs) return;
+    
+    const now = Date.now();
+    const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
+    
+    if (now - emptyTs >= TWENTY_FOUR_HOURS) {
+      setHintsRemaining(prev => {
+        const newCount = prev + 1;
+        saveHintsRemaining(newCount);
+        return newCount;
+      });
+      await clearHintsEmptyTimestamp();
+      
+      setToastMessage("Your bonus hint has arrived! 💡");
+      setTimeout(() => setToastMessage(null), 4000);
+    }
+  };
+
   // Load global hints on mount
   useEffect(() => {
     const initHints = async () => {
       const count = await loadHintsRemaining();
       setHintsRemaining(count);
+      checkAndAwardBonusHint();
     };
     initHints();
+    
+    const interval = setInterval(checkAndAwardBonusHint, 60000);
+    return () => clearInterval(interval);
   }, []);
 
   const handleSelectPuzzle = async (id) => {
@@ -100,6 +129,13 @@ function App() {
           saveHintsRemaining(newCount); // Side effect inside state update is usually avoided, but here we need the exact new value
           return newCount;
         });
+        
+        await clearHintsEmptyTimestamp();
+        try {
+          await LocalNotifications.cancel({ notifications: [{ id: 1 }] });
+        } catch (e) {
+          // Ignore if Native API is unavailable
+        }
         
         await saveRewardClaimed(puzzleData.id);
         
@@ -181,10 +217,43 @@ function App() {
       setHintsRemaining(newCount);
       await saveHintsRemaining(newCount);
       
+      if (newCount === 0) {
+        await handleHintsDepleted();
+      }
+      
       const newUnlocked = new Set(unlockedHints);
       newUnlocked.add(selectedClueId);
       setUnlockedHints(newUnlocked);
       await saveUnlockedHints(puzzleData.id, newUnlocked);
+    }
+  };
+
+  const handleHintsDepleted = async () => {
+    const now = Date.now();
+    await saveHintsEmptyTimestamp(now);
+
+    try {
+      const permStatus = await LocalNotifications.checkPermissions();
+      if (permStatus.display !== 'granted') {
+        await LocalNotifications.requestPermissions();
+      }
+
+      await LocalNotifications.schedule({
+        notifications: [
+          {
+            title: "Bonus Hint Available!",
+            body: "Looks like you were stuck. A bonus hint is waiting for you in Nightcrossing! 💡",
+            id: 1,
+            schedule: { at: new Date(now + 24 * 60 * 60 * 1000) },
+            sound: null,
+            attachments: null,
+            actionTypeId: "",
+            extra: null
+          }
+        ]
+      });
+    } catch (err) {
+      console.warn('LocalNotifications API not available', err);
     }
   };
 
@@ -212,6 +281,10 @@ function App() {
       const newCount = hintsRemaining - 1;
       setHintsRemaining(newCount);
       await saveHintsRemaining(newCount);
+
+      if (newCount === 0) {
+        await handleHintsDepleted();
+      }
 
       // Pick a random candidate cell and reveal it
       const randomIdx = candidates[Math.floor(Math.random() * candidates.length)];

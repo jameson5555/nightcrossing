@@ -93,3 +93,20 @@ export const loadRevealedIndices = async (puzzleId) => {
   return value ? new Set(JSON.parse(value)) : new Set();
 };
 
+export const saveHintsEmptyTimestamp = async (timestamp) => {
+  await Preferences.set({
+    key: 'hints_empty_timestamp',
+    value: timestamp.toString()
+  });
+};
+
+export const loadHintsEmptyTimestamp = async () => {
+  const { value } = await Preferences.get({ key: 'hints_empty_timestamp' });
+  return value ? parseInt(value, 10) : null;
+};
+
+export const clearHintsEmptyTimestamp = async () => {
+  await Preferences.remove({ key: 'hints_empty_timestamp' });
+};
+
+
