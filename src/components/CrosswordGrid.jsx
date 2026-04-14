@@ -123,7 +123,7 @@ const CrosswordGrid = ({
       return aMin - bMin;
     });
 
-    const stepDelayMs = 220;
+    const stepDelayMs = 80; // Shorter delay creates a smooth, overlapping cascade
     orderedWords.forEach((wordData, idx) => {
       const timeoutId = setTimeout(() => {
         addFloatingWord(wordData);
@@ -131,7 +131,7 @@ const CrosswordGrid = ({
       puzzleSequenceTimeoutsRef.current.push(timeoutId);
     });
 
-    const overlayDelay = orderedWords.length * stepDelayMs + 500;
+    const overlayDelay = orderedWords.length * stepDelayMs + 1200;
     const finishId = setTimeout(() => {
       setPuzzleComplete(true);
     }, overlayDelay);

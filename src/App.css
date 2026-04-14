@@ -1,3 +1,7 @@
+html, body {
+  scrollbar-gutter: stable;
+}
+
 .app-container {
   display: flex;
   flex-direction: column;
@@ -40,6 +44,7 @@
   align-items: center;
   position: relative;
   overflow-y: auto;
+  scrollbar-gutter: stable;
   min-height: 0;
 }
 
