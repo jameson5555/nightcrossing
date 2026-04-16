@@ -1,13 +1,13 @@
 // Badge utilities: level calculation, names, assets, and thresholds
 import level1_dark_horizon from '../assets/badges/level1_dark_horizon.svg';
 import level2_dusk from '../assets/badges/level2_dusk.svg';
-import level3_starlight from '../assets/badges/level3_starlight.svg';
-import level4_midnight from '../assets/badges/level4_midnight.svg';
-import level5_deepnight from '../assets/badges/level5_deepnight.svg';
-import level6_dreamer from '../assets/badges/level6_dreamer.svg';
-import level7_moonwalker from '../assets/badges/level7_moonwalker.svg';
-import level8_nightsage from '../assets/badges/level8_nightsage.svg';
-import level9_twilight from '../assets/badges/level9_twilight.svg';
+import level3_twilight from '../assets/badges/level3_twilight.svg';
+import level4_starlight from '../assets/badges/level4_starlight.svg';
+import level5_midnight from '../assets/badges/level5_midnight.svg';
+import level6_deepnight from '../assets/badges/level6_deepnight.svg';
+import level7_dreamer from '../assets/badges/level7_dreamer.svg';
+import level8_moonwalker from '../assets/badges/level8_moonwalker.svg';
+import level9_nightsage from '../assets/badges/level9_nightsage.svg';
 
 const NAME_MAP = {
   1: 'Dark Horizon',
@@ -25,13 +25,13 @@ const NAME_MAP = {
 const ASSET_MAP = {
   1: level1_dark_horizon,
   2: level2_dusk,
-  3: level9_twilight,    // twilight artwork
-  4: level3_starlight,
-  5: level4_midnight,
-  6: level5_deepnight,
-  7: level6_dreamer,
-  8: level7_moonwalker,
-  9: level8_nightsage
+  3: level3_twilight,
+  4: level4_starlight,
+  5: level5_midnight,
+  6: level6_deepnight,
+  7: level7_dreamer,
+  8: level8_moonwalker,
+  9: level9_nightsage
 };
 
 export function getBadgeLevel(puzzlesCompleted) {
