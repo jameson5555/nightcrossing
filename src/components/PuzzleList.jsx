@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './PuzzleList.css';
 import { checkPuzzleStatus } from '../utils/storage';
+import { getBadgeLevel, getBadgeName, getBadgeAsset } from '../utils/badges';
 
 const PuzzleList = ({ onSelectPuzzle }) => {
   const [puzzles, setPuzzles] = useState([]);
@@ -124,10 +125,20 @@ const PuzzleList = ({ onSelectPuzzle }) => {
             return (
               <div key={theme} className={`theme-group ${isExpanded ? 'expanded' : ''}`}>
                 <div className="theme-header" onClick={() => toggleTheme(theme)}>
-                  <div className="theme-header-info">
-                    <span className="theme-name">{theme}</span>
-                    <span className="theme-progress">{completedCount} / {totalCount} Available Completed</span>
-                  </div>
+                      {(() => {
+                        const badgeLevel = getBadgeLevel(completedCount);
+                        const badgeName = getBadgeName(badgeLevel);
+                        const badgeAsset = getBadgeAsset(badgeLevel);
+                        return (
+                          <div className="theme-header-info">
+                            <img src={badgeAsset} alt={badgeName} className={`theme-badge ${badgeLevel === 1 ? 'dim' : 'glow'}`} />
+                            <div className="theme-header-text">
+                              <span className="theme-name">{theme}</span>
+                              <span className="theme-progress">{`Level ${badgeLevel}: ${badgeName} (${completedCount} completed)`}</span>
+                            </div>
+                          </div>
+                        );
+                      })()}
                   <div className="theme-expand-icon">
                     <svg 
                       viewBox="0 0 24 24" 

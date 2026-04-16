@@ -13,7 +13,8 @@ const CrosswordGrid = ({
   setDirection,
   activeWordIndices,
   revealedIndices = new Set(),
-  onCompleteDismiss
+  onCompleteDismiss,
+  badgeUnlockInfo
 }) => {
   const { id, size, grid, gridnums } = puzzleData;
   const cols = size.cols;
@@ -535,14 +536,34 @@ const CrosswordGrid = ({
       {/* Puzzle complete overlay */}
       {puzzleComplete && (
         <div className="puzzle-complete-overlay" onClick={handleDismissComplete}>
-          <div className="puzzle-complete-content">
-            <h2 className="puzzle-complete-title">Puzzle Complete!</h2>
-            <div className="puzzle-complete-reward">
-              <span className="reward-icon">💡</span>
-              <span className="reward-text">Earned 3 hints</span>
-            </div>
-            <p className="puzzle-complete-subtitle">Tap anywhere to return to menu</p>
-          </div>
+              <div className="puzzle-complete-content">
+                {badgeUnlockInfo ? (
+                  <>
+                    <h2 className="puzzle-complete-title">New Badge Unlocked</h2>
+                    <div className="badge-unlock">
+                      <img
+                        src={badgeUnlockInfo.asset}
+                        alt={badgeUnlockInfo.name}
+                        className={`badge-img ${badgeUnlockInfo.level === 1 ? 'badge-dim' : 'badge-glow'}`}
+                      />
+                      <div className="badge-text">
+                        <div className="badge-name">{badgeUnlockInfo.name}</div>
+                        <div className="badge-sub">{`Level ${badgeUnlockInfo.level}: (${badgeUnlockInfo.puzzlesCompleted} completed)`}</div>
+                      </div>
+                    </div>
+                    <p className="puzzle-complete-subtitle">Tap anywhere to return to the menu</p>
+                  </>
+                ) : (
+                  <>
+                    <h2 className="puzzle-complete-title">Puzzle Complete!</h2>
+                    <div className="puzzle-complete-reward">
+                      <span className="reward-icon">💡</span>
+                      <span className="reward-text">You&rsquo;ve earned 3 hints!</span>
+                    </div>
+                    <p className="puzzle-complete-subtitle">Tap anywhere to return to the menu</p>
+                  </>
+                )}
+              </div>
         </div>
       )}
     </>

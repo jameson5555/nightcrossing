@@ -109,4 +109,19 @@ export const clearHintsEmptyTimestamp = async () => {
   await Preferences.remove({ key: 'hints_empty_timestamp' });
 };
 
+// --- THEME BADGE PROGRESS HELPERS ---
+export const saveThemeProgress = async (themeId, progress) => {
+  if (!themeId) return;
+  await Preferences.set({
+    key: `theme_progress_${themeId}`,
+    value: JSON.stringify(progress)
+  });
+};
+
+export const loadThemeProgress = async (themeId) => {
+  if (!themeId) return { themeId: String(themeId), puzzlesCompleted: 0, badgeLevel: 1 };
+  const { value } = await Preferences.get({ key: `theme_progress_${themeId}` });
+  return value ? JSON.parse(value) : { themeId: String(themeId), puzzlesCompleted: 0, badgeLevel: 1 };
+};
+
 

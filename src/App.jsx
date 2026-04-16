@@ -19,6 +19,8 @@ import {
   saveHintsEmptyTimestamp,
   clearHintsEmptyTimestamp
 } from './utils/storage';
+import { loadThemeProgress, saveThemeProgress } from './utils/storage';
+import { getBadgeLevel, getBadgeName, getBadgeAsset } from './utils/badges';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import HintModal from './components/HintModal';
 
@@ -33,6 +35,7 @@ function App() {
   const [revealedIndices, setRevealedIndices] = useState(new Set());
   const [isHintModalOpen, setIsHintModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
+  const [badgeUnlockInfo, setBadgeUnlockInfo] = useState(null);
 
   // Helper to handle bonus hint timeout
   const checkAndAwardBonusHint = async () => {
@@ -102,6 +105,7 @@ function App() {
   const handleBackToMenu = () => {
     setCurrentView('menu');
     setPuzzleData(null);
+    setBadgeUnlockInfo(null);
   };
 
   const activeWord = puzzleData && selectedCell !== null
@@ -136,7 +140,30 @@ function App() {
         } catch (e) {
           // Ignore if Native API is unavailable
         }
-        
+        // Update theme progress and detect badge unlocks.
+        try {
+          const themeId = puzzleData.theme || 'Other';
+          const prevProgress = await loadThemeProgress(themeId);
+          const prevCompleted = prevProgress?.puzzlesCompleted || 0;
+          const prevLevel = prevProgress?.badgeLevel || getBadgeLevel(prevCompleted);
+          const newCompleted = prevCompleted + 1;
+          const newLevel = getBadgeLevel(newCompleted);
+          await saveThemeProgress(themeId, { themeId, puzzlesCompleted: newCompleted, badgeLevel: newLevel });
+
+          if (newLevel > prevLevel) {
+            setBadgeUnlockInfo({
+              level: newLevel,
+              name: getBadgeName(newLevel),
+              asset: getBadgeAsset(newLevel),
+              puzzlesCompleted: newCompleted
+            });
+          } else {
+            setBadgeUnlockInfo(null);
+          }
+        } catch (err) {
+          console.warn('Failed to update theme progress', err);
+        }
+
         await saveRewardClaimed(puzzleData.id);
       };
       checkAndReward();
@@ -360,6 +387,7 @@ function App() {
                 activeWordIndices={activeWord ? activeWord.indices : []}
                 revealedIndices={revealedIndices}
                 onCompleteDismiss={handleBackToMenu}
+                badgeUnlockInfo={badgeUnlockInfo}
               />
             ) : (
               <div className="placeholder-board">

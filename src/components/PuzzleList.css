@@ -58,8 +58,29 @@
 
 .theme-header-info {
   display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.theme-header-text {
+  display: flex;
   flex-direction: column;
   gap: 4px;
+}
+
+.theme-badge {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+}
+
+.theme-badge.dim {
+  opacity: 0.55;
+  filter: none;
+}
+
+.theme-badge.glow {
+  filter: drop-shadow(0 0 4px #00e5ff) drop-shadow(0 0 6px #bf00ff);
 }
 
 .theme-name {
