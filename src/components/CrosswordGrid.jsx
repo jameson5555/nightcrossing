@@ -12,7 +12,8 @@ const CrosswordGrid = ({
   direction, 
   setDirection,
   activeWordIndices,
-  revealedIndices = new Set()
+  revealedIndices = new Set(),
+  onCompleteDismiss
 }) => {
   const { id, size, grid, gridnums } = puzzleData;
   const cols = size.cols;
@@ -444,6 +445,7 @@ const CrosswordGrid = ({
 
   const handleDismissComplete = () => {
     setPuzzleComplete(false);
+    if (onCompleteDismiss) onCompleteDismiss();
   };
 
   return (
@@ -535,7 +537,11 @@ const CrosswordGrid = ({
         <div className="puzzle-complete-overlay" onClick={handleDismissComplete}>
           <div className="puzzle-complete-content">
             <h2 className="puzzle-complete-title">Puzzle Complete!</h2>
-            <p className="puzzle-complete-subtitle">Tap anywhere to dismiss</p>
+            <div className="puzzle-complete-reward">
+              <span className="reward-icon">💡</span>
+              <span className="reward-text">Earned 3 hints</span>
+            </div>
+            <p className="puzzle-complete-subtitle">Tap anywhere to return to menu</p>
           </div>
         </div>
       )}

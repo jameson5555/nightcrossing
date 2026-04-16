@@ -138,9 +138,6 @@ function App() {
         }
         
         await saveRewardClaimed(puzzleData.id);
-        
-        setToastMessage("Puzzle Complete! Earned 3 hints 💡");
-        setTimeout(() => setToastMessage(null), 4000);
       };
       checkAndReward();
     }
@@ -362,6 +359,7 @@ function App() {
                 setDirection={setDirection}
                 activeWordIndices={activeWord ? activeWord.indices : []}
                 revealedIndices={revealedIndices}
+                onCompleteDismiss={handleBackToMenu}
               />
             ) : (
               <div className="placeholder-board">
