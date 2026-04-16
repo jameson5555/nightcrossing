@@ -131,7 +131,7 @@ const PuzzleList = ({ onSelectPuzzle }) => {
                         const badgeAsset = getBadgeAsset(badgeLevel);
                         return (
                           <div className="theme-header-info">
-                            <img src={badgeAsset} alt={badgeName} className={`theme-badge ${badgeLevel === 1 ? 'dim' : 'glow'}`} />
+                            <img src={badgeAsset} alt={badgeName} className={`theme-badge ${badgeLevel === 0 ? 'dim' : 'glow'}`} />
                             <div className="theme-header-text">
                               <span className="theme-name">{theme}</span>
                               <span className="theme-progress">{`Level ${badgeLevel}: ${badgeName} (${completedCount} completed)`}</span>
