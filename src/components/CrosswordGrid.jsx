@@ -14,7 +14,8 @@ const CrosswordGrid = ({
   activeWordIndices,
   revealedIndices = new Set(),
   onCompleteDismiss,
-  badgeUnlockInfo
+  badgeUnlockInfo,
+  isAlreadyCompleted
 }) => {
   const { id, size, grid, gridnums } = puzzleData;
   const cols = size.cols;
@@ -26,7 +27,7 @@ const CrosswordGrid = ({
   const correctCells = getCorrectCells(puzzleData, answers);
   const lockedCells = new Set([...correctCells, ...revealedIndices]);
   const prevCorrectWordsRef = useRef(new Set());
-  const puzzleCompleteShownRef = useRef(false);
+  const puzzleCompleteShownRef = useRef(isAlreadyCompleted);
   const puzzleSequenceTimeoutsRef = useRef([]);
   const [floatingWords, setFloatingWords] = useState([]);
   const [puzzleComplete, setPuzzleComplete] = useState(false);

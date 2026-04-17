@@ -36,6 +36,7 @@ function App() {
   const [isHintModalOpen, setIsHintModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
   const [badgeUnlockInfo, setBadgeUnlockInfo] = useState(null);
+  const [isPuzzleAlreadyCompleted, setIsPuzzleAlreadyCompleted] = useState(false);
 
   // Helper to handle bonus hint timeout
   const checkAndAwardBonusHint = async () => {
@@ -94,6 +95,9 @@ function App() {
       
       const revealed = await loadRevealedIndices(id);
       setRevealedIndices(revealed);
+      
+      const claimed = await loadRewardClaimed(id);
+      setIsPuzzleAlreadyCompleted(claimed);
       
       setCurrentView('play');
     } catch (e) {
@@ -388,6 +392,7 @@ function App() {
                 revealedIndices={revealedIndices}
                 onCompleteDismiss={handleBackToMenu}
                 badgeUnlockInfo={badgeUnlockInfo}
+                isAlreadyCompleted={isPuzzleAlreadyCompleted}
               />
             ) : (
               <div className="placeholder-board">
