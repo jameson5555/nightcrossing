@@ -268,9 +268,7 @@
   animation: badgePop 420ms ease-out forwards;
 }
 
-.badge-dim {
-  filter: none !important;
-}
+
 
 .badge-glow {
   filter: drop-shadow(0 0 4px #00e5ff) drop-shadow(0 0 6px #bf00ff);

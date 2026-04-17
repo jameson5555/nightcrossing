@@ -545,7 +545,7 @@ const CrosswordGrid = ({
                     <img
                       src={badgeUnlockInfo.asset}
                       alt={badgeUnlockInfo.name}
-                      className={`badge-img ${badgeUnlockInfo.level === 1 ? 'badge-dim' : 'badge-glow'}`}
+                      className="badge-img badge-glow"
                     />
                     <div className="badge-text">
                       <div className="badge-name">{badgeUnlockInfo.name}</div>
