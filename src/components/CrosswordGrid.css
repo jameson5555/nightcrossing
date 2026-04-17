@@ -195,7 +195,7 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
   opacity: 0;
-  animation: titleReveal 0.6s ease-out 0.8s forwards;
+  animation: titleReveal 0.6s ease-out 0.4s forwards;
 }
 
 .puzzle-complete-reward {
@@ -207,7 +207,7 @@
   border-radius: 40px;
   border: 1px solid rgba(0, 229, 255, 0.2);
   opacity: 0;
-  animation: titleReveal 0.5s ease-out 1s forwards;
+  animation: titleReveal 0.5s ease-out 0.7s forwards;
 }
 
 .reward-icon {
@@ -226,7 +226,25 @@
   font-size: 0.9rem;
   color: var(--text-secondary);
   opacity: 0;
-  animation: titleReveal 0.4s ease-out 1.4s forwards;
+  animation: titleReveal 0.4s ease-out 1.5s forwards;
+}
+
+.badge-unlock-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.badge-unlock-label {
+  font-family: var(--font-family-ui);
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  color: var(--accent-secondary);
+  opacity: 0;
+  animation: titleReveal 0.4s ease-out 1s forwards;
 }
 
 /* Badge unlock styling and animation */
@@ -238,7 +256,8 @@
   background: rgba(255,255,255,0.02);
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.04);
-  animation: titleReveal 0.45s ease-out 0.9s forwards;
+  opacity: 0;
+  animation: titleReveal 0.45s ease-out 1.2s forwards;
 }
 
 .badge-img {
