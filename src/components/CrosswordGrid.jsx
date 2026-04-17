@@ -151,13 +151,6 @@ const CrosswordGrid = ({
     if (isInitialMount.current) {
       isInitialMount.current = false;
       prevCorrectWordsRef.current = currentCorrectKeys;
-      
-      // Still need to trigger puzzle complete if we loaded a 100% finished puzzle
-      const totalLetterCells = grid.filter(c => c !== '.').length;
-      if (correctCells.size === totalLetterCells && totalLetterCells > 0) {
-        puzzleCompleteShownRef.current = true;
-        setTimeout(() => setPuzzleComplete(true), 0);
-      }
       return;
     }
 
