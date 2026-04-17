@@ -35,8 +35,9 @@ function App() {
   const [revealedIndices, setRevealedIndices] = useState(new Set());
   const [isHintModalOpen, setIsHintModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
-  const [badgeUnlockInfo, setBadgeUnlockInfo] = useState(null);
   const [isPuzzleAlreadyCompleted, setIsPuzzleAlreadyCompleted] = useState(false);
+  const [puzzlesIndex, setPuzzlesIndex] = useState([]);
+  const [badgeUnlockInfo, setBadgeUnlockInfo] = useState(null);
 
   // Helper to handle bonus hint timeout
   const checkAndAwardBonusHint = async () => {
@@ -59,7 +60,7 @@ function App() {
     }
   };
 
-  // Load global hints on mount
+  // Load initial data on mount
   useEffect(() => {
     const initHints = async () => {
       const count = await loadHintsRemaining();
@@ -67,6 +68,18 @@ function App() {
       checkAndAwardBonusHint();
     };
     initHints();
+
+    const fetchIndex = async () => {
+      try {
+        const baseUrl = import.meta.env.BASE_URL;
+        const res = await fetch(`${baseUrl}data/puzzles.json?t=${Date.now()}`);
+        const data = await res.json();
+        setPuzzlesIndex(data);
+      } catch (e) {
+        console.error("Failed to load global puzzles index", e);
+      }
+    };
+    fetchIndex();
     
     const interval = setInterval(checkAndAwardBonusHint, 60000);
     return () => clearInterval(interval);
@@ -144,14 +157,23 @@ function App() {
         } catch (e) {
           // Ignore if Native API is unavailable
         }
-        // Update theme progress and detect badge unlocks.
+        
+        // Update theme progress and detect badge unlocks using global index for robustness
         try {
           const themeId = puzzleData.theme || 'Other';
+          const themePuzzles = puzzlesIndex.filter(p => (p.theme || 'Other') === themeId);
+          
+          // Calculate true completed count by checking storage for all puzzles in this theme
+          const completedStatuses = await Promise.all(themePuzzles.map(async p => {
+            if (p.id === puzzleData.id) return true; // Current one is definitely done
+            return await loadRewardClaimed(p.id);
+          }));
+          
+          const newCompleted = completedStatuses.filter(Boolean).length;
           const prevProgress = await loadThemeProgress(themeId);
-          const prevCompleted = prevProgress?.puzzlesCompleted || 0;
-          const prevLevel = prevProgress?.badgeLevel || getBadgeLevel(prevCompleted);
-          const newCompleted = prevCompleted + 1;
+          const prevLevel = prevProgress?.badgeLevel || 1;
           const newLevel = getBadgeLevel(newCompleted);
+
           await saveThemeProgress(themeId, { themeId, puzzlesCompleted: newCompleted, badgeLevel: newLevel });
 
           if (newLevel > prevLevel) {
@@ -167,12 +189,12 @@ function App() {
         } catch (err) {
           console.warn('Failed to update theme progress', err);
         }
-
+        
         await saveRewardClaimed(puzzleData.id);
       };
       checkAndReward();
     }
-  }, [isPuzzleComplete, puzzleData]); // Removed hintsRemaining
+  }, [isPuzzleComplete, puzzleData, puzzlesIndex]); // Removed hintsRemaining
 
   // Displayed clue state used to control cross-fade when switching clues
   const [displayedClue, setDisplayedClue] = useState({ num: null, text: null, dir: null });
