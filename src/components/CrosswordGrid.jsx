@@ -323,15 +323,16 @@ const CrosswordGrid = ({
         e.target.value = INITIAL_INPUT_VALUE;
         return;
       }
+      
       const newAnswers = [...answers];
-      // If cell not already empty, clear it but stay put
-      if (newAnswers[index] !== '') {
-        if (!lockedCells.has(index)) {
-          newAnswers[index] = '';
-          setAnswers(newAnswers);
-        }
+      const isLocked = lockedCells.has(index);
+
+      // If cell not already empty and not locked, clear it but stay put
+      if (newAnswers[index] !== '' && !isLocked) {
+        newAnswers[index] = '';
+        setAnswers(newAnswers);
       } else {
-        // Cell already empty, move back then clear
+        // Cell already empty OR it is locked: move back then clear if possible
         const prevIndex = getNextIndex(index, direction, -1, false, true);
         if (prevIndex !== -1) {
           setSelectedCell(prevIndex);
