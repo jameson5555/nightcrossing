@@ -33,26 +33,26 @@ const CrosswordGrid = ({
   const [puzzleComplete, setPuzzleComplete] = useState(false);
 
   // Gather all words and their correctness
-  const getAllWords = useCallback(() => {
+  const getAllWords = useCallback((currentAnswers = answers) => {
     const words = [];
     for (let i = 0; i < grid.length; i++) {
       if (gridnums[i] > 0 && grid[i] !== '.') {
         const prevAcross = i - 1;
         const isStartAcross = prevAcross < 0 || grid[prevAcross] === '.' || Math.floor(prevAcross/cols) !== Math.floor(i/cols);
         if (isStartAcross) {
-          const wd = getWordAt(i, 'across', puzzleData, answers);
+          const wd = getWordAt(i, 'across', puzzleData, currentAnswers);
           if (wd && wd.clueIndex !== -1) {
             const answer = puzzleData.answers.across[wd.clueIndex];
-            words.push({ key: `across-${wd.clueNum}`, word: answer, isCorrect: wd.isCorrect, indices: wd.indices, dir: 'across' });
+            words.push({ key: `across-${wd.clueNum}`, word: answer, isCorrect: wd.isCorrect, indices: wd.indices, dir: 'across', clueNum: wd.clueNum });
           }
         }
         const prevDown = i - cols;
         const isStartDown = prevDown < 0 || grid[prevDown] === '.';
         if (isStartDown) {
-          const wd = getWordAt(i, 'down', puzzleData, answers);
+          const wd = getWordAt(i, 'down', puzzleData, currentAnswers);
           if (wd && wd.clueIndex !== -1) {
             const answer = puzzleData.answers.down[wd.clueIndex];
-            words.push({ key: `down-${wd.clueNum}`, word: answer, isCorrect: wd.isCorrect, indices: wd.indices, dir: 'down' });
+            words.push({ key: `down-${wd.clueNum}`, word: answer, isCorrect: wd.isCorrect, indices: wd.indices, dir: 'down', clueNum: wd.clueNum });
           }
         }
       }
@@ -257,30 +257,35 @@ const CrosswordGrid = ({
     }
   }, [selectedCell]);
 
-  const getNextIndex = (currentIndex, dir, step, skipCorrect = false) => {
+  const getNextIndex = (currentIndex, dir, step, skipCorrect = false, jumpGaps = true) => {
     let nextIndex = currentIndex;
     while (true) {
       if (dir === 'across') {
         const currentRow = Math.floor(nextIndex / cols);
         nextIndex += step;
         const newRow = Math.floor(nextIndex / cols);
-        if (newRow !== currentRow || nextIndex < 0 || nextIndex >= grid.length) return -1;
+        // boundary check
+        if (nextIndex < 0 || nextIndex >= grid.length || newRow !== currentRow) return -1;
       } else {
         nextIndex += step * cols;
+        // boundary check
         if (nextIndex < 0 || nextIndex >= grid.length) return -1;
       }
 
-      if (grid[nextIndex] !== '.') {
-        if (skipCorrect && lockedCells.has(nextIndex)) {
-            continue; // Skip this locked cell
-        }
-        return nextIndex;
+      if (grid[nextIndex] === '.') {
+        if (!jumpGaps) return -1;
+        continue; // Keep looking across gap
       }
+
+      if (skipCorrect && lockedCells.has(nextIndex)) {
+        continue; // Skip this correctly solved cell
+      }
+      return nextIndex;
     }
   };
 
-  const moveToNextCell = (currentIndex, dir, step, skipCorrect = false) => {
-    const nextIndex = getNextIndex(currentIndex, dir, step, skipCorrect);
+  const moveToNextCell = (currentIndex, dir, step, skipCorrect = false, jumpGaps = true) => {
+    const nextIndex = getNextIndex(currentIndex, dir, step, skipCorrect, jumpGaps);
     if (nextIndex !== -1) {
       setSelectedCell(nextIndex);
       
@@ -310,45 +315,80 @@ const CrosswordGrid = ({
 
   const handleHiddenInput = (e) => {
     const index = selectedCell;
-    if (index === null || lockedCells.has(index)) {
-      e.target.value = " ";
-      return;
-    }
-
     const val = e.target.value;
     
-    // Deletion detection: if value is empty, it means our placeholder space was deleted
+    // Deletion detection
     if (val === "") {
+      if (index === null) {
+        e.target.value = INITIAL_INPUT_VALUE;
+        return;
+      }
       const newAnswers = [...answers];
+      // If cell not already empty, clear it but stay put
       if (newAnswers[index] !== '') {
-        newAnswers[index] = '';
-        setAnswers(newAnswers);
+        if (!lockedCells.has(index)) {
+          newAnswers[index] = '';
+          setAnswers(newAnswers);
+        }
       } else {
-        const prevIndex = getNextIndex(index, direction, -1, true);
+        // Cell already empty, move back then clear
+        const prevIndex = getNextIndex(index, direction, -1, false, true);
         if (prevIndex !== -1) {
+          setSelectedCell(prevIndex);
           if (!lockedCells.has(prevIndex)) {
             newAnswers[prevIndex] = '';
             setAnswers(newAnswers);
           }
-          setSelectedCell(prevIndex);
         }
       }
       e.target.value = INITIAL_INPUT_VALUE;
       return;
     }
 
-    // Input detection: something was added to our placeholder
+    if (index === null || lockedCells.has(index)) {
+      e.target.value = INITIAL_INPUT_VALUE;
+      return;
+    }
+
+    // Input detection
     const char = val.charAt(val.length - 1);
-    
     if (/^[a-zA-Z]$/.test(char)) {
       const nextChar = char.toUpperCase();
       const newAnswers = [...answers];
       newAnswers[index] = nextChar;
       setAnswers(newAnswers);
-      moveToNextCell(index, direction, 1, true);
+
+      const wordData = getWordAt(index, direction, puzzleData, newAnswers);
+      if (wordData.isCorrect) {
+        // Newly correct! Intelligent jump to next word's first empty cell
+        const allWords = getAllWords(newAnswers);
+        const currentIndex = allWords.findIndex(w => w.dir === direction && w.clueNum === wordData.clueNum);
+        
+        let foundNext = false;
+        for (let i = 1; i < allWords.length; i++) {
+          const idx = (currentIndex + i) % allWords.length;
+          const nextWord = allWords[idx];
+          if (!nextWord.isCorrect) {
+            const firstIncomplete = nextWord.indices.find(cellIdx => newAnswers[cellIdx] === '');
+            if (firstIncomplete !== undefined) {
+              setSelectedCell(firstIncomplete);
+              setDirection(nextWord.dir);
+              foundNext = true;
+              break;
+            }
+          }
+        }
+        
+        // If everything is solved, moveToNextCell might handle wrap or just stop
+        if (!foundNext) {
+          moveToNextCell(index, direction, 1, true, false);
+        }
+      } else {
+        // Not correct yet (or still incomplete): stay in current word
+        moveToNextCell(index, direction, 1, true, false);
+      }
     }
     
-    // Always reset to placeholder
     e.target.value = INITIAL_INPUT_VALUE;
   };
 
@@ -405,11 +445,9 @@ const CrosswordGrid = ({
         if (word && word.clueIndex !== -1) setDirection('across');
       }
     } else if (key === 'Backspace') {
-      // We don't preventDefault here so that onInput can catch the deletion of our placeholder space
-      if (lockedCells.has(index)) {
-        e.preventDefault();
-        return;
-      }
+      // Allow backspace to pass through to onInput even for locked cells,
+      // so we can navigate backwards through the grid.
+      return;
     } else if (key === 'Tab') {
       e.preventDefault();
       // Tab advances to next word
