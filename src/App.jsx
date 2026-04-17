@@ -34,7 +34,7 @@ function App() {
   const [unlockedHints, setUnlockedHints] = useState(new Set());
   const [revealedIndices, setRevealedIndices] = useState(new Set());
   const [isHintModalOpen, setIsHintModalOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState(null);
+  const [toastInfo, setToastInfo] = useState(null);
   const [isPuzzleAlreadyCompleted, setIsPuzzleAlreadyCompleted] = useState(false);
   const [puzzlesIndex, setPuzzlesIndex] = useState([]);
   const [badgeUnlockInfo, setBadgeUnlockInfo] = useState(null);
@@ -55,8 +55,11 @@ function App() {
       });
       await clearHintsEmptyTimestamp();
       
-      setToastMessage("Your bonus hint has arrived! 💡");
-      setTimeout(() => setToastMessage(null), 4000);
+      setToastInfo({
+        message: "Your bonus hint has arrived!",
+        icon: "💡",
+        type: "bonus"
+      });
     }
   };
 
@@ -394,12 +397,6 @@ function App() {
             )}
           </header>
 
-          {toastMessage && (
-            <div className="toast-notification animate-slide-up">
-              {toastMessage}
-            </div>
-          )}
-
           <main className="app-main">
             {puzzleData ? (
               <CrosswordGrid 
@@ -440,6 +437,8 @@ function App() {
             )}
           </footer>
 
+
+
           <HintModal 
             isOpen={isHintModalOpen}
             onClose={() => setIsHintModalOpen(false)}
@@ -451,6 +450,16 @@ function App() {
             hintsRemaining={hintsRemaining}
           />
         </>
+      )}
+
+      {toastInfo && (
+        <div className={`toast-notification animate-slide-up ${toastInfo.type || ''}`} onClick={() => setToastInfo(null)}>
+          <div className="toast-content">
+            {toastInfo.icon && <span className="toast-icon">{toastInfo.icon}</span>}
+            <span className="toast-message">{toastInfo.message}</span>
+            <button className="toast-close" aria-label="Dismiss">&times;</button>
+          </div>
+        </div>
       )}
     </div>
   );
