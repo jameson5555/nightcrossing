@@ -45,9 +45,9 @@ function App() {
     if (!emptyTs) return;
     
     const now = Date.now();
-    const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
+    const TWENTY_THREE_HOURS = 23 * 60 * 60 * 1000;
     
-    if (now - emptyTs >= TWENTY_FOUR_HOURS) {
+    if (now - emptyTs >= TWENTY_THREE_HOURS) {
       setHintsRemaining(prev => {
         const newCount = prev + 1;
         saveHintsRemaining(newCount);
