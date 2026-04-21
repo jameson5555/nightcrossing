@@ -27,6 +27,9 @@ jobs:
       - name: Fetch new theme words
         run: node scripts/fetch-theme-words.js
 
+      - name: Enrich clues and hints
+        run: node scripts/enrich-hints.js
+
       - name: Generate new puzzles
         run: node scripts/generate-starters.js
 

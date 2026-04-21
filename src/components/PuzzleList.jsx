@@ -114,12 +114,20 @@ const PuzzleList = ({ onSelectPuzzle }) => {
         <div className="theme-list">
           {Object.entries(themesMap).map(([theme, themePuzzles]) => {
             const isExpanded = expandedTheme === theme;
-            const completedCount = themePuzzles.filter(p => statuses[p.id] === 'Completed').length;
+            const allCompleted = themePuzzles.filter(p => statuses[p.id] === 'Completed');
+            const allActive = themePuzzles.filter(p => statuses[p.id] !== 'Completed');
             
-            // Progressive unlock logic: 3 base + 1 for each completed
-            const unlockedCount = 3 + completedCount;
-            const visiblePuzzles = themePuzzles.slice(0, unlockedCount);
-            
+            // Sliding window: Show up to 3 active puzzles.
+            // If fewer than 3 active ones exist, fill from the latest completed to reach 3.
+            let visiblePuzzles = allActive.slice(0, 3);
+            if (visiblePuzzles.length < 3 && allCompleted.length > 0) {
+              const needed = Math.min(3 - visiblePuzzles.length, allCompleted.length);
+              const padding = allCompleted.slice(-needed);
+              visiblePuzzles = [...padding, ...visiblePuzzles];
+            }
+
+            // Keep the true completed count for badge calculations
+            const completedCount = allCompleted.length;
             const totalCount = themePuzzles.length;
 
             return (

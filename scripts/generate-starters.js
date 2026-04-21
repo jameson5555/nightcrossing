@@ -38,13 +38,22 @@ async function generateStarters() {
   }
 
   const NEW_PUZZLES_PER_THEME = 3;
+  const TARGET_MAX_VOL = 6; // Cap: don't generate beyond this volume
 
   for (const theme of THEMES) {
     const consumedWords = new Set();
     
-    // Calculate the current highest volume for this theme
+    // Calculate the current highest volume for this theme from the index
     const existingThemePuzzles = index.filter(p => p.theme === theme.name);
     let highestVol = 0;
+    
+    // Also scan disk for puzzle files not yet in the index
+    const themePrefix = `starter-${theme.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}-vol`;
+    const diskFiles = fs.readdirSync(PUZZLES_DIR).filter(f => f.startsWith(themePrefix));
+    for (const f of diskFiles) {
+      const m = f.match(/-vol(\d+)\.json$/);
+      if (m && parseInt(m[1]) > highestVol) highestVol = parseInt(m[1]);
+    }
     
     for (const p of existingThemePuzzles) {
       const match = p.id.match(/-vol(\d+)$/);
@@ -64,44 +73,104 @@ async function generateStarters() {
       }
     }
     
-    console.log(`\nTheme: [${theme.name}] currently has ${highestVol} volumes. Generating ${NEW_PUZZLES_PER_THEME} more...`);
-
-    for (let i = highestVol + 1; i <= highestVol + NEW_PUZZLES_PER_THEME; i++) {
-        const id = `starter-${theme.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}-vol${i}`;
-        
-        const availableWords = theme.words.filter(w => !consumedWords.has(w.answer.toUpperCase()));
-        
-        if (availableWords.length < 10) {
-           console.log(`Not enough available words pool for ${theme.name} to generate Vol ${i}. Add more words to themes.json!`);
-           break;
+    // Also load consumed words from any disk-only puzzle files
+    for (const f of diskFiles) {
+      try {
+        const fileData = JSON.parse(fs.readFileSync(path.join(PUZZLES_DIR, f), 'utf8'));
+        if (fileData.answers) {
+          fileData.answers.across.forEach(ans => consumedWords.add(ans.toUpperCase()));
+          fileData.answers.down.forEach(ans => consumedWords.add(ans.toUpperCase()));
         }
+      } catch (err) { /* ignore */ }
+    }
+    
+    if (highestVol >= TARGET_MAX_VOL) {
+      console.log(`\nTheme: [${theme.name}] already has ${highestVol} volumes. Skipping.`);
+      continue;
+    }
+    
+    const startVol = highestVol + 1;
+    const endVol = Math.min(highestVol + NEW_PUZZLES_PER_THEME, TARGET_MAX_VOL);
+    console.log(`\nTheme: [${theme.name}] currently has ${highestVol} volumes. Generating vol${startVol}-${endVol}...`);
 
-        const { puzzle, usedWords: placedWords } = generateThemedPuzzle(id, theme.name, availableWords);
-        
-        // Track the newly placed words so they aren't used in subsequent volumes
-        placedWords.forEach(w => consumedWords.add(w));
+    try {
+        for (let i = startVol; i <= endVol; i++) {
+            const id = `starter-${theme.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}-vol${i}`;
+            
+            // Skip if this puzzle already exists on disk (from a previous partial run)
+            const existingFile = path.join(PUZZLES_DIR, `${id}.json`);
+            if (fs.existsSync(existingFile) && !index.find(p => p.id === id)) {
+              try {
+                const existing = JSON.parse(fs.readFileSync(existingFile, 'utf8'));
+                if (existing.answers) {
+                  existing.answers.across.forEach(a => consumedWords.add(a.toUpperCase()));
+                  existing.answers.down.forEach(a => consumedWords.add(a.toUpperCase()));
+                }
+                index.push({ id: existing.id, title: existing.title, author: existing.author, date: existing.date, cols: existing.size.cols, rows: existing.size.rows, theme: existing.theme });
+                console.log(`  ⏩ ${id} already exists on disk, added to index.`);
+                continue;
+              } catch(e) { /* corrupt file, regenerate */ }
+            } else if (index.find(p => p.id === id)) {
+              console.log(`  ⏩ ${id} already in index, skipping.`);
+              continue;
+            }
+            
+            const availableWords = theme.words.filter(w => !consumedWords.has(w.answer.toUpperCase()));
+            
+            if (availableWords.length < 10) {
+               console.log(`Not enough available words pool for ${theme.name} to generate Vol ${i}. Add more words to themes.json!`);
+               break;
+            }
 
-        puzzle.title = `${theme.name} ${i}`;
-        puzzle.date = `Starter Pack Vol. ${i}`;
-        
-        // Save individual file
-        fs.writeFileSync(
-          path.join(PUZZLES_DIR, `${id}.json`), 
-          JSON.stringify(puzzle, null, 2)
-        );
-        
-        // Add to index
-        index.push({
-          id: puzzle.id,
-          title: puzzle.title,
-          author: puzzle.author,
-          date: puzzle.date,
-          cols: puzzle.size.cols,
-          rows: puzzle.size.rows,
-          theme: puzzle.theme
-        });
-        
-        console.log(`--> Saved ${id} (used ${placedWords.length} words, pool remaining: ${availableWords.length - placedWords.length})`);
+            const { puzzle, usedWords: placedWords } = generateThemedPuzzle(id, theme.name, availableWords);
+            
+            // Track the newly placed words so they aren't used in subsequent volumes
+            placedWords.forEach(w => consumedWords.add(w));
+
+            // Naming logic: use a shared Volume name for the entire batch
+            // Since we already used 1, 2, 3 as individual volumes, the first batch starts at 4.
+            // Actually, if highestVol is 3, start at batch 4. 
+            // Let's just use the user's specific request: if i is 4, 5, or 6, it's Volume 4.
+            const displayVolume = i >= 4 ? 4 + Math.floor((i - 4) / NEW_PUZZLES_PER_THEME) : i;
+
+            puzzle.title = `${theme.name} ${i}`;
+            puzzle.date = i >= 4 ? `Volume ${displayVolume}` : `Starter Pack Vol. ${i}`;
+            
+            // Save individual file
+            fs.writeFileSync(
+              path.join(PUZZLES_DIR, `${id}.json`), 
+              JSON.stringify(puzzle, null, 2)
+            );
+            
+            // Add to index
+            index.push({
+              id: puzzle.id,
+              title: puzzle.title,
+              author: puzzle.author,
+              date: puzzle.date,
+              cols: puzzle.size.cols,
+              rows: puzzle.size.rows,
+              theme: puzzle.theme
+            });
+            
+            console.log(`--> Saved ${id} (used ${placedWords.length} words, pool remaining: ${availableWords.length - placedWords.length})`);
+        }
+    } catch (themeErr) {
+        console.error(`\n❌ Failed to generate batch for theme [${theme.name}]:`, themeErr.message);
+    }
+  }
+
+  // Reconcile: add any disk-only puzzle files not yet in the index
+  const allDiskFiles = fs.readdirSync(PUZZLES_DIR).filter(f => f.endsWith('.json'));
+  const indexedIds = new Set(index.map(p => p.id));
+  for (const f of allDiskFiles) {
+    const fId = f.replace('.json', '');
+    if (!indexedIds.has(fId)) {
+      try {
+        const p = JSON.parse(fs.readFileSync(path.join(PUZZLES_DIR, f), 'utf8'));
+        index.push({ id: p.id, title: p.title, author: p.author, date: p.date, cols: p.size.cols, rows: p.size.rows, theme: p.theme });
+        console.log(`  📎 Reconciled ${fId} into index.`);
+      } catch(e) { /* skip corrupt */ }
     }
   }
 
