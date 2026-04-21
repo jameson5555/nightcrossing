@@ -38,7 +38,6 @@ async function generateStarters() {
   }
 
   const NEW_PUZZLES_PER_THEME = 3;
-  const TARGET_MAX_VOL = 6; // Cap: don't generate beyond this volume
 
   for (const theme of THEMES) {
     const consumedWords = new Set();
@@ -84,13 +83,10 @@ async function generateStarters() {
       } catch (err) { /* ignore */ }
     }
     
-    if (highestVol >= TARGET_MAX_VOL) {
-      console.log(`\nTheme: [${theme.name}] already has ${highestVol} volumes. Skipping.`);
-      continue;
     }
     
     const startVol = highestVol + 1;
-    const endVol = Math.min(highestVol + NEW_PUZZLES_PER_THEME, TARGET_MAX_VOL);
+    const endVol = highestVol + NEW_PUZZLES_PER_THEME;
     console.log(`\nTheme: [${theme.name}] currently has ${highestVol} volumes. Generating vol${startVol}-${endVol}...`);
 
     try {
