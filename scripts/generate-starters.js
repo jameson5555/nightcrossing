@@ -170,6 +170,18 @@ async function generateStarters() {
     }
   }
 
+  // Sort index by canonical theme order, then by volume number
+  const themeOrder = THEMES.map(t => t.name);
+  index.sort((a, b) => {
+    const themeIdxA = themeOrder.indexOf(a.theme);
+    const themeIdxB = themeOrder.indexOf(b.theme);
+    if (themeIdxA !== themeIdxB) return themeIdxA - themeIdxB;
+    
+    const volA = parseInt((a.id.match(/-vol(\d+)$/) || [0, 0])[1]);
+    const volB = parseInt((b.id.match(/-vol(\d+)$/) || [0, 0])[1]);
+    return volA - volB;
+  });
+
   // Write index
   fs.writeFileSync(INDEX_FILE, JSON.stringify(index, null, 2));
   console.log(`\nSuccess. Total puzzles tracked in index: ${index.length}`);
