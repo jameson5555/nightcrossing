@@ -250,13 +250,19 @@ html, body {
 
 /* Specific theme for bonus hints */
 .toast-notification.bonus .toast-content {
-  border-color: var(--accent-primary);
-  background: linear-gradient(135deg, rgba(0, 229, 255, 0.65), rgba(30, 30, 40, 0.95));
-  box-shadow: 0 8px 25px rgba(0, 229, 255, 0.25);
+  border: 2px solid var(--accent-primary);
+  background: rgba(10, 10, 15, 0.95);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
 }
 
 .toast-notification.bonus .toast-message {
-  color: var(--accent-primary);
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.5);
+}
+
+.toast-notification.bonus .toast-icon {
+  filter: drop-shadow(0 0 5px var(--accent-primary));
 }
 
 .animate-slide-up {
