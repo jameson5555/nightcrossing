@@ -83,8 +83,6 @@ async function generateStarters() {
       } catch (err) { /* ignore */ }
     }
     
-    }
-    
     const startVol = highestVol + 1;
     const endVol = highestVol + NEW_PUZZLES_PER_THEME;
     console.log(`\nTheme: [${theme.name}] currently has ${highestVol} volumes. Generating vol${startVol}-${endVol}...`);

@@ -60,6 +60,10 @@ function generateBestLayout(words, attempts = 4000, maxWords = 22) {
       }
     }
 
+    // 4. Reject clues containing inappropriate words (e.g., "surname")
+    const hintLower = (w.hint || '').toLowerCase();
+    if (/surname/i.test(clueLower) || /surname/i.test(hintLower)) return false;
+
     return true;
   });
 
