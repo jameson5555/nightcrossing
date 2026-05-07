@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './PuzzleList.css';
-import { checkPuzzleStatus } from '../utils/storage';
+import { checkPuzzleStatus, loadPuzzleProgress } from '../utils/storage';
 import { getBadgeLevel, getBadgeName, getBadgeAsset } from '../utils/badges';
+import { getSolvedClueIds } from '../utils/crossword';
 
 const PuzzleList = ({ onSelectPuzzle }) => {
   const [puzzles, setPuzzles] = useState([]);
   const [statuses, setStatuses] = useState({});
+  const [wordsLeftByPuzzle, setWordsLeftByPuzzle] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -26,7 +28,19 @@ const PuzzleList = ({ onSelectPuzzle }) => {
             const puzzleRes = await fetch(`${baseUrl}data/puzzles/${p.id}.json`);
             if (!puzzleRes.ok) throw new Error(`HTTP ${puzzleRes.status}`);
             const puzzleData = await puzzleRes.json();
+
+            const progress = await loadPuzzleProgress(p.id);
+            const currentAnswers = Array.isArray(progress) ? progress : [];
             const status = await checkPuzzleStatus(p.id, puzzleData.grid);
+
+            if (status === 'In Progress') {
+              const totalClues = (puzzleData?.clues?.across?.length || 0) + (puzzleData?.clues?.down?.length || 0);
+              const solvedClues = getSolvedClueIds(puzzleData, currentAnswers).size;
+              const wordsLeft = Math.max(0, totalClues - solvedClues);
+              if (!mounted) return;
+              setWordsLeftByPuzzle(prev => ({ ...prev, [p.id]: wordsLeft }));
+            }
+
             if (!mounted) return;
             setStatuses(prev => ({ ...prev, [p.id]: status }));
           } catch (err) {
@@ -74,7 +88,15 @@ const PuzzleList = ({ onSelectPuzzle }) => {
 
   const renderPuzzleItem = (puzzle, options = {}) => {
     const hideStatus = !!options.hideStatus;
+    const showWordsLeft = !!options.showWordsLeft;
     const status = statuses[puzzle.id] || 'New';
+    const wordsLeft = wordsLeftByPuzzle[puzzle.id];
+    const hasWordsLeftCount = Number.isFinite(wordsLeft);
+    const useWordsLeftLabel = showWordsLeft && status === 'In Progress' && hasWordsLeftCount;
+    const statusLabel = useWordsLeftLabel
+      ? `${wordsLeft} word${wordsLeft === 1 ? '' : 's'} left`
+      : status;
+    const statusClass = status.replace(' ', '');
     const gridSize = `${puzzle.cols}x${puzzle.rows}`;
     return (
       <li 
@@ -90,8 +112,8 @@ const PuzzleList = ({ onSelectPuzzle }) => {
           <span className="puzzle-title">{puzzle.title}</span>
         </div>
         {!hideStatus && (
-          <div className={`puzzle-status status-${status.replace(' ', '')}`}>
-            {status}
+          <div className={`puzzle-status status-${statusClass}`}>
+            {statusLabel}
           </div>
         )}
       </li>
@@ -104,7 +126,7 @@ const PuzzleList = ({ onSelectPuzzle }) => {
         <section className="puzzle-section">
           <h2 className="section-title">In Progress</h2>
           <ul className="puzzle-list">
-            {inProgressPuzzles.map(p => renderPuzzleItem(p, { hideStatus: true }))}
+            {inProgressPuzzles.map(p => renderPuzzleItem(p, { showWordsLeft: true }))}
           </ul>
         </section>
       )}
