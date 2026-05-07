@@ -17,6 +17,7 @@ const THEMES = JSON.parse(fs.readFileSync(THEMES_FILE, 'utf8'));
 const MAX_GRID_ROWS = 10;
 const MAX_GRID_COLS = 10;
 const MIN_PLACED_WORDS = 7;
+const PREFERRED_MIN_PLACED_WORDS = 8;
 const MIN_WORD_TARGET = 7;
 const DEFAULT_LAYOUT_ATTEMPTS = 6000;
 const VERBOSE_GENERATION = process.env.NC_VERBOSE_GENERATION === '1';
@@ -28,6 +29,7 @@ const SCORE_WEIGHTS = {
   minTwoBonus: 36,
   wordCount: 16,
   placedRatio: 26,
+  wordFloorBonus: 18,
   density: 6,
   squareBonus: 3,
   ratioPenalty: 3.5
@@ -93,8 +95,8 @@ function pickCandidateSubset(words, maxWords, letterFrequency) {
   const medium = shuffleArray(scored.filter(item => item.len >= 5 && item.len <= 7)).sort((a, b) => b.priority - a.priority);
   const short = shuffleArray(scored.filter(item => item.len <= 4)).sort((a, b) => b.priority - a.priority);
 
-  const targetLong = Math.min(long.length, Math.max(1, Math.round(maxWords * 0.1)));
-  const targetShort = Math.min(short.length, Math.max(3, Math.round(maxWords * 0.35)));
+  const targetLong = Math.min(long.length, Math.max(1, Math.round(maxWords * 0.08)));
+  const targetShort = Math.min(short.length, Math.max(3, Math.round(maxWords * 0.4)));
   const targetMedium = Math.max(0, maxWords - targetLong - targetShort);
 
   const selected = [];
@@ -156,7 +158,7 @@ function generateBestLayout(words, attempts = DEFAULT_LAYOUT_ATTEMPTS, maxWords 
   const letterFrequency = buildLetterFrequency(preFiltered);
 
   for (let i = 0; i < attempts; i++) {
-    const subset = Math.random() < 0.2
+    const subset = Math.random() < 0.15
       ? shuffleArray(preFiltered).slice(0, maxWords)
       : pickCandidateSubset(preFiltered, maxWords, letterFrequency);
     const input = subset.map(w => ({ 
@@ -255,10 +257,13 @@ function generateBestLayout(words, attempts = DEFAULT_LAYOUT_ATTEMPTS, maxWords 
     const wordCountScore =
       (layout.result.length * SCORE_WEIGHTS.wordCount) +
       (placedRatio * SCORE_WEIGHTS.placedRatio);
+    const wordFloorBonus = layout.result.length >= PREFERRED_MIN_PLACED_WORDS
+      ? SCORE_WEIGHTS.wordFloorBonus
+      : 0;
 
     const densityScore = density * SCORE_WEIGHTS.density;
 
-    const score = overlapScore + wordCountScore + densityScore + squareBonus - ratioPenalty;
+    const score = overlapScore + wordCountScore + wordFloorBonus + densityScore + squareBonus - ratioPenalty;
 
     if (score > bestScore) {
       bestScore = score;
@@ -396,14 +401,14 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
 
   while (maxWordsTry >= MIN_WORD_TARGET) {
     const attempts =
-    maxWordsTry >= 13 ? 2600 :
-    maxWordsTry >= 11 ? 2000 :
-    maxWordsTry >= 9 ? 1500 :
-    1200;
+    maxWordsTry >= 13 ? 3000 :
+    maxWordsTry >= 11 ? 2300 :
+    maxWordsTry >= 9 ? 1700 :
+    1300;
 
     const requiredPlaced = Math.min(
       maxWordsTry,
-      Math.max(MIN_PLACED_WORDS, Math.floor(maxWordsTry * 0.68))
+      Math.max(PREFERRED_MIN_PLACED_WORDS, Math.floor(maxWordsTry * 0.7))
     );
     const candidate = generateBestLayout(availableWords, attempts, maxWordsTry, requiredPlaced);
     if (candidate) {
@@ -425,6 +430,19 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
   if (!layout) {
     // Fallback: one final dense-search pass on a small target set under the 10x10 cap.
     layout = generateBestLayout(availableWords, 2500, MIN_WORD_TARGET, Math.min(MIN_PLACED_WORDS, MIN_WORD_TARGET));
+  }
+
+  // If we only found a 7-word layout, try one more targeted pass for an 8-word floor.
+  if (layout && layout.result.length < PREFERRED_MIN_PLACED_WORDS && availableWords.length >= PREFERRED_MIN_PLACED_WORDS + 2) {
+    const recovery = generateBestLayout(
+      availableWords,
+      2200,
+      Math.min(14, availableWords.length),
+      PREFERRED_MIN_PLACED_WORDS
+    );
+    if (recovery) {
+      layout = recovery;
+    }
   }
   
   if (!layout) {
