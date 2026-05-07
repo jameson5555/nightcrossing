@@ -17,7 +17,8 @@ import {
   saveRewardClaimed,
   loadHintsEmptyTimestamp,
   saveHintsEmptyTimestamp,
-  clearHintsEmptyTimestamp
+  clearHintsEmptyTimestamp,
+  resetPuzzleDataIfDatasetChanged
 } from './utils/storage';
 import { loadThemeProgress, saveThemeProgress } from './utils/storage';
 import { getBadgeLevel, getBadgeName, getBadgeAsset } from './utils/badges';
@@ -75,6 +76,17 @@ function App() {
     const fetchIndex = async () => {
       try {
         const baseUrl = import.meta.env.BASE_URL;
+
+        try {
+          const metaRes = await fetch(`${baseUrl}data/puzzles.meta.json?t=${Date.now()}`);
+          if (metaRes.ok) {
+            const meta = await metaRes.json();
+            await resetPuzzleDataIfDatasetChanged(meta?.version);
+          }
+        } catch (metaErr) {
+          console.warn('Failed to check puzzle dataset version', metaErr);
+        }
+
         const res = await fetch(`${baseUrl}data/puzzles.json?t=${Date.now()}`);
         const data = await res.json();
         setPuzzlesIndex(data);

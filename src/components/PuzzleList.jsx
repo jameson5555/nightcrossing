@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './PuzzleList.css';
-import { checkPuzzleStatus, loadPuzzleProgress } from '../utils/storage';
+import { checkPuzzleStatus, loadPuzzleProgress, resetPuzzleDataIfDatasetChanged } from '../utils/storage';
 import { getBadgeLevel, getBadgeName, getBadgeAsset } from '../utils/badges';
 import { getSolvedClueIds } from '../utils/crossword';
 
@@ -15,6 +15,18 @@ const PuzzleList = ({ onSelectPuzzle }) => {
     const fetchIndex = async () => {
       try {
         const baseUrl = import.meta.env.BASE_URL;
+
+        // One-time migration: wipe stale puzzle state only when puzzle dataset changes.
+        try {
+          const metaRes = await fetch(`${baseUrl}data/puzzles.meta.json?t=${Date.now()}`);
+          if (metaRes.ok) {
+            const meta = await metaRes.json();
+            await resetPuzzleDataIfDatasetChanged(meta?.version);
+          }
+        } catch (metaErr) {
+          console.warn('Failed to check puzzle dataset version', metaErr);
+        }
+
         const res = await fetch(`${baseUrl}data/puzzles.json?t=${Date.now()}`);
         const data = await res.json();
         // Show the list immediately and compute per-puzzle statuses in background.

@@ -8,6 +8,14 @@ const __dirname = path.dirname(__filename);
 const DATA_DIR = path.join(__dirname, '../public/data');
 const PUZZLES_DIR = path.join(DATA_DIR, 'puzzles');
 const INDEX_FILE = path.join(DATA_DIR, 'puzzles.json');
+const PUZZLES_PER_SET = 3;
+
+function formatWaveLabel(volume) {
+  const safeVolume = Number(volume);
+  if (!Number.isFinite(safeVolume) || safeVolume < 1) return '';
+  const waveNumber = Math.floor((safeVolume - 1) / PUZZLES_PER_SET) + 1;
+  return `Wave ${waveNumber}`;
+}
 
 // Ensure directories exist
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -132,14 +140,8 @@ async function generateStarters() {
             // Track the newly placed words so they aren't used in subsequent volumes
             placedWords.forEach(w => consumedWords.add(w));
 
-            // Naming logic: use a shared Volume name for the entire batch
-            // Since we already used 1, 2, 3 as individual volumes, the first batch starts at 4.
-            // Actually, if highestVol is 3, start at batch 4. 
-            // Let's just use the user's specific request: if i is 4, 5, or 6, it's Volume 4.
-            const displayVolume = i >= 4 ? 4 + Math.floor((i - 4) / NEW_PUZZLES_PER_THEME) : i;
-
             puzzle.title = `${theme.name} ${i}`;
-            puzzle.date = i >= 4 ? `Volume ${displayVolume}` : `Starter Pack Vol. ${i}`;
+            puzzle.date = formatWaveLabel(i) || `Wave ${i}`;
             
             // Save individual file
             fs.writeFileSync(

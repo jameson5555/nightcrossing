@@ -1,5 +1,36 @@
 import { Preferences } from '@capacitor/preferences';
 
+const PUZZLE_DATASET_VERSION_KEY = 'puzzle_dataset_version';
+const RESETTABLE_KEY_PREFIXES = [
+  'puzzle_progress_',
+  'unlocked_hints_',
+  'reward_claimed_',
+  'revealed_indices_',
+  'theme_progress_'
+];
+const RESETTABLE_EXACT_KEYS = [
+  'global_hints_remaining',
+  'hints_empty_timestamp'
+];
+
+export const resetPuzzleDataIfDatasetChanged = async (datasetVersion) => {
+  const normalizedVersion = String(datasetVersion || '').trim();
+  if (!normalizedVersion) return false;
+
+  const { value: storedVersion } = await Preferences.get({ key: PUZZLE_DATASET_VERSION_KEY });
+  if (storedVersion === normalizedVersion) return false;
+
+  const { keys } = await Preferences.keys();
+  const keysToRemove = keys.filter((key) => {
+    if (RESETTABLE_EXACT_KEYS.includes(key)) return true;
+    return RESETTABLE_KEY_PREFIXES.some(prefix => key.startsWith(prefix));
+  });
+
+  await Promise.all(keysToRemove.map(key => Preferences.remove({ key })));
+  await Preferences.set({ key: PUZZLE_DATASET_VERSION_KEY, value: normalizedVersion });
+  return true;
+};
+
 export const savePuzzleProgress = async (puzzleId, answers) => {
   await Preferences.set({
     key: `puzzle_progress_${puzzleId}`,
