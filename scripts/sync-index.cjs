@@ -7,6 +7,7 @@ const DATA_DIR = path.join(__dirname, '../public/data');
 const PUZZLES_DIR = path.join(DATA_DIR, 'puzzles');
 const INDEX_FILE = path.join(DATA_DIR, 'puzzles.json');
 const META_FILE = path.join(DATA_DIR, 'puzzles.meta.json');
+const THEMES_FILE = path.join(__dirname, 'themes.json');
 const PUZZLES_PER_SET = 3;
 
 function parseVolumeFromId(id) {
@@ -27,6 +28,14 @@ function loadJSON(filePath) {
     console.error('Failed to read JSON', filePath, e.message);
     return null;
   }
+}
+
+function loadThemeOrder() {
+  const themes = loadJSON(THEMES_FILE);
+  if (!Array.isArray(themes)) return [];
+  return themes
+    .map(theme => theme && theme.name)
+    .filter(name => typeof name === 'string' && name.trim() !== '');
 }
 
 function syncIndex() {
@@ -73,7 +82,20 @@ function syncIndex() {
     });
   }
 
-  entries.sort((a, b) => a.id.localeCompare(b.id));
+  const themeOrder = loadThemeOrder();
+  const themeOrderMap = new Map(themeOrder.map((name, idx) => [name, idx]));
+
+  entries.sort((a, b) => {
+    const themeIdxA = themeOrderMap.has(a.theme) ? themeOrderMap.get(a.theme) : Number.MAX_SAFE_INTEGER;
+    const themeIdxB = themeOrderMap.has(b.theme) ? themeOrderMap.get(b.theme) : Number.MAX_SAFE_INTEGER;
+    if (themeIdxA !== themeIdxB) return themeIdxA - themeIdxB;
+
+    const volA = parseVolumeFromId(a.id) ?? Number.MAX_SAFE_INTEGER;
+    const volB = parseVolumeFromId(b.id) ?? Number.MAX_SAFE_INTEGER;
+    if (volA !== volB) return volA - volB;
+
+    return a.id.localeCompare(b.id);
+  });
 
   const version = hasher.digest('hex').slice(0, 16);
   const meta = {

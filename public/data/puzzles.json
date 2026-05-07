@@ -1,5 +1,35 @@
 [
   {
+    "id": "starter-space---astronomy-vol1",
+    "title": "Space & Astronomy 1",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 1",
+    "cols": 10,
+    "rows": 10,
+    "letterCells": 43,
+    "theme": "Space & Astronomy"
+  },
+  {
+    "id": "starter-space---astronomy-vol2",
+    "title": "Space & Astronomy 2",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 1",
+    "cols": 9,
+    "rows": 9,
+    "letterCells": 38,
+    "theme": "Space & Astronomy"
+  },
+  {
+    "id": "starter-space---astronomy-vol3",
+    "title": "Space & Astronomy 3",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 1",
+    "cols": 10,
+    "rows": 8,
+    "letterCells": 38,
+    "theme": "Space & Astronomy"
+  },
+  {
     "id": "starter-food---cooking-vol1",
     "title": "Food & Cooking 1",
     "author": "Nightcrossing Engine",
@@ -30,34 +60,34 @@
     "theme": "Food & Cooking"
   },
   {
-    "id": "starter-history---civilization-vol1",
-    "title": "History & Civilization 1",
+    "id": "starter-ocean---marine-life-vol1",
+    "title": "Ocean & Marine Life 1",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
     "rows": 10,
-    "letterCells": 37,
-    "theme": "History & Civilization"
+    "letterCells": 41,
+    "theme": "Ocean & Marine Life"
   },
   {
-    "id": "starter-history---civilization-vol2",
-    "title": "History & Civilization 2",
+    "id": "starter-ocean---marine-life-vol2",
+    "title": "Ocean & Marine Life 2",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
     "rows": 10,
-    "letterCells": 36,
-    "theme": "History & Civilization"
+    "letterCells": 48,
+    "theme": "Ocean & Marine Life"
   },
   {
-    "id": "starter-history---civilization-vol3",
-    "title": "History & Civilization 3",
+    "id": "starter-ocean---marine-life-vol3",
+    "title": "Ocean & Marine Life 3",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
     "rows": 10,
-    "letterCells": 46,
-    "theme": "History & Civilization"
+    "letterCells": 38,
+    "theme": "Ocean & Marine Life"
   },
   {
     "id": "starter-music---sound-vol1",
@@ -120,64 +150,64 @@
     "theme": "Nature & Wilderness"
   },
   {
-    "id": "starter-ocean---marine-life-vol1",
-    "title": "Ocean & Marine Life 1",
+    "id": "starter-technology---computing-vol1",
+    "title": "Technology & Computing 1",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
     "rows": 10,
-    "letterCells": 41,
-    "theme": "Ocean & Marine Life"
+    "letterCells": 39,
+    "theme": "Technology & Computing"
   },
   {
-    "id": "starter-ocean---marine-life-vol2",
-    "title": "Ocean & Marine Life 2",
+    "id": "starter-technology---computing-vol2",
+    "title": "Technology & Computing 2",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
-    "rows": 10,
-    "letterCells": 48,
-    "theme": "Ocean & Marine Life"
-  },
-  {
-    "id": "starter-ocean---marine-life-vol3",
-    "title": "Ocean & Marine Life 3",
-    "author": "Nightcrossing Engine",
-    "date": "Wave 1",
-    "cols": 10,
-    "rows": 10,
-    "letterCells": 38,
-    "theme": "Ocean & Marine Life"
-  },
-  {
-    "id": "starter-space---astronomy-vol1",
-    "title": "Space & Astronomy 1",
-    "author": "Nightcrossing Engine",
-    "date": "Wave 1",
-    "cols": 10,
-    "rows": 10,
-    "letterCells": 43,
-    "theme": "Space & Astronomy"
-  },
-  {
-    "id": "starter-space---astronomy-vol2",
-    "title": "Space & Astronomy 2",
-    "author": "Nightcrossing Engine",
-    "date": "Wave 1",
-    "cols": 9,
     "rows": 9,
-    "letterCells": 38,
-    "theme": "Space & Astronomy"
+    "letterCells": 41,
+    "theme": "Technology & Computing"
   },
   {
-    "id": "starter-space---astronomy-vol3",
-    "title": "Space & Astronomy 3",
+    "id": "starter-technology---computing-vol3",
+    "title": "Technology & Computing 3",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
-    "rows": 8,
-    "letterCells": 38,
-    "theme": "Space & Astronomy"
+    "rows": 10,
+    "letterCells": 46,
+    "theme": "Technology & Computing"
+  },
+  {
+    "id": "starter-history---civilization-vol1",
+    "title": "History & Civilization 1",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 1",
+    "cols": 10,
+    "rows": 10,
+    "letterCells": 37,
+    "theme": "History & Civilization"
+  },
+  {
+    "id": "starter-history---civilization-vol2",
+    "title": "History & Civilization 2",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 1",
+    "cols": 10,
+    "rows": 10,
+    "letterCells": 36,
+    "theme": "History & Civilization"
+  },
+  {
+    "id": "starter-history---civilization-vol3",
+    "title": "History & Civilization 3",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 1",
+    "cols": 10,
+    "rows": 10,
+    "letterCells": 46,
+    "theme": "History & Civilization"
   },
   {
     "id": "starter-sports---athletics-vol1",
@@ -208,35 +238,5 @@
     "rows": 8,
     "letterCells": 39,
     "theme": "Sports & Athletics"
-  },
-  {
-    "id": "starter-technology---computing-vol1",
-    "title": "Technology & Computing 1",
-    "author": "Nightcrossing Engine",
-    "date": "Wave 1",
-    "cols": 10,
-    "rows": 10,
-    "letterCells": 39,
-    "theme": "Technology & Computing"
-  },
-  {
-    "id": "starter-technology---computing-vol2",
-    "title": "Technology & Computing 2",
-    "author": "Nightcrossing Engine",
-    "date": "Wave 1",
-    "cols": 10,
-    "rows": 9,
-    "letterCells": 41,
-    "theme": "Technology & Computing"
-  },
-  {
-    "id": "starter-technology---computing-vol3",
-    "title": "Technology & Computing 3",
-    "author": "Nightcrossing Engine",
-    "date": "Wave 1",
-    "cols": 10,
-    "rows": 10,
-    "letterCells": 46,
-    "theme": "Technology & Computing"
   }
 ]
