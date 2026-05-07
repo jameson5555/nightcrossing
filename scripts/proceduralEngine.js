@@ -62,7 +62,8 @@ function generateBestLayout(words, attempts = 4000, maxWords = 22) {
 
     // 4. Reject clues containing inappropriate words
     const hintLower = (w.hint || '').toLowerCase();
-    if (/(surname|legal balls)/i.test(clueLower) || /(surname|legal balls)/i.test(hintLower)) return false;
+    const BANNED = /(surname|legal balls|given name)/i;
+    if (BANNED.test(clueLower) || BANNED.test(hintLower)) return false;
 
     return true;
   });
