@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { generateLayout } from 'crossword-layout-generator';
+import { isWordEntryAcceptable } from './clueQuality.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,74 +14,165 @@ const INDEX_FILE = path.join(DATA_DIR, 'puzzles.json');
 const THEMES_FILE = path.join(__dirname, 'themes.json');
 const THEMES = JSON.parse(fs.readFileSync(THEMES_FILE, 'utf8'));
 
+const MAX_GRID_ROWS = 10;
+const MAX_GRID_COLS = 10;
+const MIN_PLACED_WORDS = 7;
+const MIN_WORD_TARGET = 7;
+const DEFAULT_LAYOUT_ATTEMPTS = 6000;
+const VERBOSE_GENERATION = process.env.NC_VERBOSE_GENERATION === '1';
+
+const SCORE_WEIGHTS = {
+  minIntersection: 32,
+  avgIntersection: 44,
+  totalIntersection: 7,
+  minTwoBonus: 36,
+  wordCount: 16,
+  placedRatio: 26,
+  density: 6,
+  squareBonus: 3,
+  ratioPenalty: 3.5
+};
+
+function shuffleArray(arr) {
+  const out = [...arr];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
+
+function buildLetterFrequency(words) {
+  const freq = new Map();
+  for (const word of words) {
+    const uniqueChars = new Set(word.answer.toLowerCase().replace(/[^a-z]/g, ''));
+    for (const ch of uniqueChars) {
+      freq.set(ch, (freq.get(ch) || 0) + 1);
+    }
+  }
+  return freq;
+}
+
+function wordCrossabilityScore(answer, letterFrequency) {
+  const uniqueChars = new Set(answer.toLowerCase().replace(/[^a-z]/g, ''));
+  if (uniqueChars.size === 0) return 0;
+
+  let score = 0;
+  for (const ch of uniqueChars) {
+    const count = letterFrequency.get(ch) || 0;
+    score += Math.max(0, count - 1);
+  }
+
+  return score / uniqueChars.size;
+}
+
+function themeRelevanceScore(word) {
+  return typeof word.themeScore === 'number' ? word.themeScore : 0;
+}
+
+function pickCandidateSubset(words, maxWords, letterFrequency) {
+  if (words.length <= maxWords) {
+    return shuffleArray(words);
+  }
+
+  const scored = words.map(word => {
+    const len = word.answer.length;
+    const crossability = wordCrossabilityScore(word.answer, letterFrequency);
+    const themeScore = themeRelevanceScore(word);
+    const lenSuitability =
+      len <= 4 ? 1.5 :
+      len <= 7 ? 1.55 :
+      len <= 9 ? 0.95 :
+      len <= 10 ? 0.35 :
+      0;
+    const priority = (crossability * 2.8) + (themeScore * 1.5) + lenSuitability;
+    return { word, len, priority };
+  });
+
+  const long = shuffleArray(scored.filter(item => item.len >= 8)).sort((a, b) => b.priority - a.priority);
+  const medium = shuffleArray(scored.filter(item => item.len >= 5 && item.len <= 7)).sort((a, b) => b.priority - a.priority);
+  const short = shuffleArray(scored.filter(item => item.len <= 4)).sort((a, b) => b.priority - a.priority);
+
+  const targetLong = Math.min(long.length, Math.max(1, Math.round(maxWords * 0.1)));
+  const targetShort = Math.min(short.length, Math.max(3, Math.round(maxWords * 0.35)));
+  const targetMedium = Math.max(0, maxWords - targetLong - targetShort);
+
+  const selected = [];
+  const selectedSet = new Set();
+
+  const takeFromBucket = (bucket, count) => {
+    let taken = 0;
+    for (const item of bucket) {
+      if (taken >= count || selected.length >= maxWords) break;
+      if (selectedSet.has(item.word.answer)) continue;
+      selected.push(item);
+      selectedSet.add(item.word.answer);
+      taken++;
+    }
+  };
+
+  takeFromBucket(long, targetLong);
+  takeFromBucket(medium, targetMedium);
+  takeFromBucket(short, targetShort);
+
+  const leftovers = shuffleArray(scored)
+    .filter(item => !selectedSet.has(item.word.answer))
+    .sort((a, b) => b.priority - a.priority);
+
+  for (const item of leftovers) {
+    if (selected.length >= maxWords) break;
+    selected.push(item);
+  }
+
+  return selected
+    .sort((a, b) => (b.priority + Math.random() * 1.2) - (a.priority + Math.random() * 1.2))
+    .slice(0, maxWords)
+    .map(item => item.word);
+}
+
 // ─── Puzzle Generation Engine ──────────────────────────────────────────────
-function generateBestLayout(words, attempts = 4000, maxWords = 22) {
+function generateBestLayout(words, attempts = DEFAULT_LAYOUT_ATTEMPTS, maxWords = 18, minPlacedWords = MIN_PLACED_WORDS) {
   let best = null;
   let bestScore = -1000;
 
-  // Pre-filter: reject clues over 80 chars, identical hint/clue pairs, and answer leakage
+  // Pre-filter: reject weak, unsafe, or low-quality clue entries.
   const preFiltered = words.filter(w => {
     if (w.clue.length > 80) return false;
-    
-    // 1. Clue and hint cannot be effectively identical
-    if (w.hint && typeof w.hint === 'string') {
-      const normalize = str => str.toLowerCase().replace(/[^a-z0-9]/g, '');
-      if (normalize(w.clue) === normalize(w.hint)) {
-        return false;
-      }
-    }
+    if (w.answer.length > Math.max(MAX_GRID_ROWS, MAX_GRID_COLS)) return false;
 
-    const answerLower = w.answer.toLowerCase();
-    const clueLower = w.clue.toLowerCase();
-    
-    // 2. Exact match check
-    const escapedAnswer = answerLower.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const exactRegex = new RegExp(`\\b${escapedAnswer}\\b`, 'i');
-    if (exactRegex.test(clueLower)) return false;
+    const qualityCheck = isWordEntryAcceptable({
+      answer: w.answer,
+      clue: w.clue,
+      hint: w.hint || null
+    });
 
-    // 3. Common suffix check (s, es, ed, ing, er, est)
-    const clueWords = clueLower.match(/\b\w+\b/g) || [];
-    for (let word of clueWords) {
-      if (word.startsWith(answerLower) && word.length > answerLower.length) {
-        const suffix = word.substring(answerLower.length);
-        if (/^(s|es|ed|ing|er|est)$/.test(suffix)) {
-          return false;
-        }
-      }
-      
-      // Check for words ending in 'e' dropping their 'e' for suffixes (e.g. guide -> guiding)
-      if (answerLower.endsWith('e') && answerLower.length > 3) {
-        const base = answerLower.slice(0, -1);
-        if (word.startsWith(base) && word.length > base.length) {
-          const suffix = word.substring(base.length);
-          if (/^(ing|ed|er|est)$/.test(suffix)) {
-            return false;
-          }
-        }
-      }
-    }
-
-    // 4. Reject clues containing inappropriate words
-    const hintLower = (w.hint || '').toLowerCase();
-    const BANNED = /(surname|legal balls|given name)/i;
-    if (BANNED.test(clueLower) || BANNED.test(hintLower)) return false;
-
-    return true;
+    return qualityCheck.ok;
   });
 
   if (preFiltered.length < 6) {
     console.warn(`  Warning: Only ${preFiltered.length} words survive clue-safety filter`);
   }
 
+  const letterFrequency = buildLetterFrequency(preFiltered);
+
   for (let i = 0; i < attempts; i++) {
-    const shuffled = [...preFiltered].sort(() => Math.random() - 0.5);
-    const subset = shuffled.slice(0, maxWords);
+    const subset = Math.random() < 0.2
+      ? shuffleArray(preFiltered).slice(0, maxWords)
+      : pickCandidateSubset(preFiltered, maxWords, letterFrequency);
     const input = subset.map(w => ({ 
       answer: w.answer.toLowerCase(), 
       clue: w.clue,
       hint: w.hint || null 
     }));
-    let layout = generateLayout(input);
+    let layout;
+    // The layout library is very chatty; silence it for generation throughput/log clarity.
+    const originalLog = console.log;
+    console.log = () => {};
+    try {
+      layout = generateLayout(input);
+    } finally {
+      console.log = originalLog;
+    }
     layout.result = layout.result.filter(w => w.orientation === 'across' || w.orientation === 'down');
     
     // Re-attach hints as the generator might strip them
@@ -93,11 +185,11 @@ function generateBestLayout(words, attempts = 4000, maxWords = 22) {
     layout = trimGrid(layout);
     if (!layout.table || layout.rows === 0 || layout.cols === 0) continue;
     
-    // Enforce 12x12 size limits to keep readable on mobile
-    if (layout.rows > 12 || layout.cols > 12) continue;
+    // Enforce 10x10 size limits to keep puzzles compact and readable on mobile
+    if (layout.rows > MAX_GRID_ROWS || layout.cols > MAX_GRID_COLS) continue;
 
     // Reject layouts with too few words placed
-    if (layout.result.length < 8) continue;
+    if (layout.result.length < minPlacedWords) continue;
 
     let filled = 0;
     for (let r = 0; r < layout.rows; r++) {
@@ -140,32 +232,44 @@ function generateBestLayout(words, attempts = 4000, maxWords = 22) {
     if (visited.size < layout.result.length && layout.result.length > 1) continue;
     
     const minIntersections = layout.result.length > 0 ? Math.min(...wordIntersections) : 0;
-    const avgIntersections = layout.result.length > 0 ? wordIntersections.reduce((a,b)=>a+b,0) / layout.result.length : 0;
+    const sumIntersections = wordIntersections.reduce((a, b) => a + b, 0);
+    const avgIntersections = layout.result.length > 0 ? sumIntersections / layout.result.length : 0;
+    const totalIntersections = sumIntersections / 2;
 
     const total = layout.rows * layout.cols;
     const density = filled / total;
     const placedRatio = layout.result.length / maxWords;
     
-    // Severely penalize large footprint areas to force density
-    const areaPenalty = total > 100 ? (total - 100) * 0.1 : 0;
-    
     // Penalize highly rectangular/not-square grids
     const ratio = Math.max(layout.rows / layout.cols, layout.cols / layout.rows);
-    const ratioPenalty = ratio > 1.3 ? (ratio - 1.3) * 0.5 : 0;
+    const ratioPenalty = ratio > 1.25 ? (ratio - 1.25) * SCORE_WEIGHTS.ratioPenalty : 0;
+    const squareBonus = ratio <= 1.15 ? SCORE_WEIGHTS.squareBonus : 0;
 
-    // Favor layouts where minimum overlap is >=2
-    const overlapBonus = (minIntersections >= 2 ? 50 : 0) + (avgIntersections * 5);
+    // Priority order: overlaps first, then word count, then density.
+    const overlapScore =
+      (minIntersections * SCORE_WEIGHTS.minIntersection) +
+      (avgIntersections * SCORE_WEIGHTS.avgIntersection) +
+      (totalIntersections * SCORE_WEIGHTS.totalIntersection) +
+      (minIntersections >= 2 ? SCORE_WEIGHTS.minTwoBonus : 0);
 
-    // Direct bonus for absolute word count — strongly incentivize packing more words
-    const wordCountBonus = layout.result.length * 3;
+    const wordCountScore =
+      (layout.result.length * SCORE_WEIGHTS.wordCount) +
+      (placedRatio * SCORE_WEIGHTS.placedRatio);
 
-    const score = (density * 10.0) + (placedRatio * 5.0) + wordCountBonus + overlapBonus - areaPenalty - ratioPenalty;
+    const densityScore = density * SCORE_WEIGHTS.density;
+
+    const score = overlapScore + wordCountScore + densityScore + squareBonus - ratioPenalty;
 
     if (score > bestScore) {
       bestScore = score;
       best = layout;
     }
   }
+
+  if (best) {
+    best._engineScore = bestScore;
+  }
+
   return best;
 }
 
@@ -282,26 +386,49 @@ function layoutToNightcrossing(layout, id, title, themeName) {
 }
 
 export function generateThemedPuzzle(id, themeName, availableWords) {
-  console.log(`Theme: ${themeName} | Available Words Pool: ${availableWords.length}`);
+  if (VERBOSE_GENERATION) {
+    console.log(`Theme: ${themeName} | Available Words Pool: ${availableWords.length}`);
+  }
 
   let layout = null;
-  let maxWordsTry = Math.min(20, availableWords.length);
-  
-  while (!layout && maxWordsTry >= 6) {
-      layout = generateBestLayout(availableWords, 200, maxWordsTry);
-      if (!layout) {
-          maxWordsTry--;
+  let bestScore = -Infinity;
+  let maxWordsTry = Math.min(14, availableWords.length);
+
+  while (maxWordsTry >= MIN_WORD_TARGET) {
+    const attempts =
+    maxWordsTry >= 13 ? 2600 :
+    maxWordsTry >= 11 ? 2000 :
+    maxWordsTry >= 9 ? 1500 :
+    1200;
+
+    const requiredPlaced = Math.min(
+      maxWordsTry,
+      Math.max(MIN_PLACED_WORDS, Math.floor(maxWordsTry * 0.68))
+    );
+    const candidate = generateBestLayout(availableWords, attempts, maxWordsTry, requiredPlaced);
+    if (candidate) {
+      const candidateScore = typeof candidate._engineScore === 'number' ? candidate._engineScore : -Infinity;
+      if (candidateScore > bestScore) {
+        bestScore = candidateScore;
+        layout = candidate;
       }
+
+      // Early exit once we place nearly all requested words at this target.
+      if (candidate.result.length >= Math.max(requiredPlaced, maxWordsTry - 1)) {
+        break;
+      }
+    }
+
+    maxWordsTry--;
   }
 
   if (!layout) {
-      // Fallback: if we STILL couldn't get a 12x12 grid with intersections after decaying to 6 words, we run one final time with no bounds but keeping the 12x12 limit by passing an aggressive attempt count for a very small word set
-      layout = generateBestLayout(availableWords, 1000, 6);
+    // Fallback: one final dense-search pass on a small target set under the 10x10 cap.
+    layout = generateBestLayout(availableWords, 2500, MIN_WORD_TARGET, Math.min(MIN_PLACED_WORDS, MIN_WORD_TARGET));
   }
   
   if (!layout) {
-      console.error(`ERROR: Could not generate a constrained puzzle for ${themeName}.`);
-      process.exit(1);
+      throw new Error(`Could not generate a constrained puzzle for ${themeName}.`);
   }
 
   const title = themeName;

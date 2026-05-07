@@ -1,0 +1,92 @@
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { computePuzzleMetrics, summarizeMetrics } from './puzzleMetrics.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+function parseArgs(argv) {
+  const args = { input: path.join(__dirname, '../public/data/puzzles') };
+  for (let i = 0; i < argv.length; i++) {
+    if (argv[i] === '--input' && argv[i + 1]) {
+      args.input = path.resolve(argv[i + 1]);
+      i++;
+    }
+  }
+  return args;
+}
+
+function formatNum(value, digits = 2) {
+  return Number(value).toFixed(digits);
+}
+
+function run() {
+  const args = parseArgs(process.argv.slice(2));
+  if (!fs.existsSync(args.input)) {
+    console.error(`Input folder does not exist: ${args.input}`);
+    process.exit(1);
+  }
+
+  const files = fs.readdirSync(args.input)
+    .filter(name => name.endsWith('.json'))
+    .sort();
+
+  if (files.length === 0) {
+    console.log('No puzzle files found.');
+    return;
+  }
+
+  const metrics = [];
+  const sizeDist = new Map();
+  const failures = [];
+
+  for (const file of files) {
+    const fullPath = path.join(args.input, file);
+    try {
+      const puzzle = JSON.parse(fs.readFileSync(fullPath, 'utf8'));
+      const m = computePuzzleMetrics(puzzle);
+      metrics.push({ file, ...m });
+      const key = `${m.cols}x${m.rows}`;
+      sizeDist.set(key, (sizeDist.get(key) || 0) + 1);
+    } catch (err) {
+      failures.push({ file, error: err.message });
+    }
+  }
+
+  const summary = summarizeMetrics(metrics);
+  const rows = metrics.map(m => m.rows);
+  const cols = metrics.map(m => m.cols);
+  const words = metrics.map(m => m.placedWords);
+
+  console.log(`Analyzed ${metrics.length} puzzles from ${args.input}`);
+  console.log(`Rows min/avg/max: ${Math.min(...rows)}/${formatNum(summary.avgRows)}/${Math.max(...rows)}`);
+  console.log(`Cols min/avg/max: ${Math.min(...cols)}/${formatNum(summary.avgCols)}/${Math.max(...cols)}`);
+  console.log(`Words min/avg/max: ${Math.min(...words)}/${formatNum(summary.avgPlacedWords)}/${Math.max(...words)}`);
+  console.log(`Avg density: ${formatNum(summary.avgDensity * 100)}%`);
+  console.log(`Avg intersections: ${formatNum(summary.avgIntersections)}`);
+  console.log(`Avg min intersections/word: ${formatNum(summary.avgMinIntersectionsPerWord)}`);
+  console.log(`Connected layouts: ${formatNum(summary.connectedRate * 100)}%`);
+
+  console.log('\nGrid size distribution:');
+  [...sizeDist.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .forEach(([size, count]) => {
+      console.log(`  ${size}: ${count}`);
+    });
+
+  const invalidSize = metrics.filter(m => m.rows > 10 || m.cols > 10);
+  if (invalidSize.length > 0) {
+    console.log(`\nFound ${invalidSize.length} puzzles larger than 10x10:`);
+    invalidSize.slice(0, 20).forEach(item => {
+      console.log(`  ${item.file}: ${item.cols}x${item.rows}`);
+    });
+  }
+
+  if (failures.length > 0) {
+    console.log(`\nFailed to parse ${failures.length} files:`);
+    failures.forEach(f => console.log(`  ${f.file}: ${f.error}`));
+  }
+}
+
+run();

@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "sanitize:themes": "node scripts/sanitize-theme-pool.js",
+    "analyze:generation": "node scripts/analyze-generation.js",
+    "bench:layout": "node scripts/benchmark-layout.js"
   },
   "dependencies": {
     "@capacitor-community/admob": "^8.0.0",

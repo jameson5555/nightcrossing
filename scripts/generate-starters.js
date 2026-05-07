@@ -15,6 +15,10 @@ if (!fs.existsSync(PUZZLES_DIR)) fs.mkdirSync(PUZZLES_DIR, { recursive: true });
 
 const REGENERATE = process.argv.includes('--regenerate');
 
+function scoreWordRelevance(wordObj) {
+  return typeof wordObj.themeScore === 'number' ? wordObj.themeScore : 0;
+}
+
 async function generateStarters() {
   let index = [];
   
@@ -109,7 +113,14 @@ async function generateStarters() {
               continue;
             }
             
-            const availableWords = theme.words.filter(w => !consumedWords.has(w.answer.toUpperCase()));
+            const availableWords = theme.words
+              .filter(w => !consumedWords.has(w.answer.toUpperCase()))
+              .sort((a, b) => {
+                const aScore = scoreWordRelevance(a);
+                const bScore = scoreWordRelevance(b);
+                if (aScore === bScore) return Math.random() - 0.5;
+                return bScore - aScore;
+              });
             
             if (availableWords.length < 10) {
                console.log(`Not enough available words pool for ${theme.name} to generate Vol ${i}. Add more words to themes.json!`);

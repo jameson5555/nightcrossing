@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { humanizeClue } from './humanizeClue.js';
+import { isWordEntryAcceptable } from './clueQuality.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,10 +13,58 @@ const EXTRA_SEEDS_PER_THEME = 10;
 
 // Datamuse API endpoints that return different kinds of related words
 const DATAMUSE_STRATEGIES = [
-  (kw) => `https://api.datamuse.com/words?ml=${encodeURIComponent(kw)}&md=d&max=80`,      // meaning-like
-  (kw) => `https://api.datamuse.com/words?rel_trg=${encodeURIComponent(kw)}&md=d&max=60`,  // statistically triggered/associated
-  (kw) => `https://api.datamuse.com/words?rel_spc=${encodeURIComponent(kw)}&md=d&max=40`,  // hyponyms (more specific than)
+  {
+    name: 'ml',
+    baseScore: 1.0,
+    buildUrl: (kw) => `https://api.datamuse.com/words?ml=${encodeURIComponent(kw)}&md=d&max=80`
+  }, // meaning-like
+  {
+    name: 'rel_trg',
+    baseScore: 0.45,
+    buildUrl: (kw) => `https://api.datamuse.com/words?rel_trg=${encodeURIComponent(kw)}&md=d&max=60`
+  }, // statistically triggered/associated
+  {
+    name: 'rel_spc',
+    baseScore: 0.75,
+    buildUrl: (kw) => `https://api.datamuse.com/words?rel_spc=${encodeURIComponent(kw)}&md=d&max=40`
+  }, // hyponyms (more specific than)
 ];
+
+const MIN_THEME_RELEVANCE = 0.95;
+
+function tokenize(str) {
+  return (str || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .split(/\s+/)
+    .filter(token => token.length >= 3);
+}
+
+function scoreThemeRelevance(themeName, candidateWord, clueText, hintText, sourceBaseScore) {
+  const themeTokens = tokenize(themeName);
+  const candidateTokens = tokenize(candidateWord);
+  const clueTokens = tokenize(clueText);
+  const hintTokens = tokenize(hintText);
+
+  const themeTokenSet = new Set(themeTokens);
+
+  let score = sourceBaseScore;
+
+  const candidateOverlap = candidateTokens.filter(token => themeTokenSet.has(token)).length;
+  const clueOverlap = clueTokens.filter(token => themeTokenSet.has(token)).length;
+  const hintOverlap = hintTokens.filter(token => themeTokenSet.has(token)).length;
+
+  score += Math.min(0.6, candidateOverlap * 0.35);
+  score += Math.min(0.5, clueOverlap * 0.15);
+  score += Math.min(0.35, hintOverlap * 0.1);
+
+  // Preserve moderately related words while rejecting clear low-signal noise.
+  if (themeTokens.length > 0 && candidateOverlap === 0 && clueOverlap === 0 && hintOverlap === 0) {
+    score -= 0.2;
+  }
+
+  return Math.max(0, Math.min(2, Number(score.toFixed(3))));
+}
 
 // Rate-limit helper: wait between API calls to be a good citizen
 function sleep(ms) {
@@ -86,8 +135,8 @@ async function fetchThemeWords() {
     console.log(`  Pool: ${theme.words.length} words | Seeds: ${seeds.slice(0, 5).join(', ')}... (${seeds.length} total)`);
 
     for (const seed of seeds) {
-      for (const buildUrl of DATAMUSE_STRATEGIES) {
-        const url = buildUrl(seed);
+      for (const strategy of DATAMUSE_STRATEGIES) {
+        const url = strategy.buildUrl(seed);
         try {
           const res = await fetch(url);
           const data = await res.json();
@@ -115,10 +164,33 @@ async function fetchThemeWords() {
                 hint = humanizeClue(cleanHint);
               }
 
+              const clueText = humanizeClue(cleanDef);
+
+              const themeScore = scoreThemeRelevance(
+                theme.name,
+                d.word,
+                clueText,
+                hint,
+                strategy.baseScore
+              );
+
+              if (themeScore < MIN_THEME_RELEVANCE) continue;
+
+              const candidate = {
+                answer: word,
+                clue: clueText,
+                hint: hint
+              };
+
+              const qualityCheck = isWordEntryAcceptable(candidate);
+              if (!qualityCheck.ok) continue;
+
               theme.words.push({
                 answer: word,
-                clue: humanizeClue(cleanDef),
-                hint: hint
+                clue: clueText,
+                hint: hint,
+                source: strategy.name,
+                themeScore
               });
               existingAnswers.add(word);
               added++;
