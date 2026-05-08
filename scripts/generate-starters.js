@@ -1,7 +1,10 @@
 import fs from 'fs';
 import path from 'path';
+import { spawnSync } from 'child_process';
 import { fileURLToPath } from 'url';
-import { generateThemedPuzzle, THEMES } from './proceduralEngine.js';
+import { generateThemedPuzzle, THEMES, scoreWordForTheme } from './proceduralEngine.js';
+import { runGenerationPreflight } from './preflight-generation.js';
+import { fetchThemeWords } from './fetch-theme-words.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,12 +25,42 @@ if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 if (!fs.existsSync(PUZZLES_DIR)) fs.mkdirSync(PUZZLES_DIR, { recursive: true });
 
 const REGENERATE = process.argv.includes('--regenerate');
+const ALLOW_WEAK_THEMES = process.argv.includes('--allow-weak-themes');
+const SKIP_PREFLIGHT = process.argv.includes('--skip-preflight');
+const SKIP_ENRICHMENT = process.argv.includes('--skip-enrichment');
 
 function scoreWordRelevance(wordObj) {
   return typeof wordObj.themeScore === 'number' ? wordObj.themeScore : 0;
 }
 
 async function generateStarters() {
+  const NEW_PUZZLES_PER_THEME = 3;
+
+  if (!SKIP_ENRICHMENT) {
+    console.log('Enrichment step: updating theme pools before generation...');
+    await fetchThemeWords();
+
+    // proceduralEngine caches THEMES at import time, so rerun once with --skip-enrichment.
+    const rerunArgs = [...process.argv.slice(1), '--skip-enrichment'];
+    const rerun = spawnSync(process.execPath, rerunArgs, { stdio: 'inherit' });
+    process.exit(rerun.status ?? 1);
+  }
+
+  if (!SKIP_PREFLIGHT) {
+    const preflight = runGenerationPreflight({
+      targetPuzzles: NEW_PUZZLES_PER_THEME,
+      ignoreConsumed: REGENERATE
+    });
+    if (!preflight.ok && !ALLOW_WEAK_THEMES) {
+      console.error('❌ Generation preflight failed. Weak themes detected:');
+      for (const weak of preflight.weakThemes) {
+        console.error(`  - ${weak.theme} (projected ${weak.projectedPuzzles}/${weak.targetPuzzles}, core ${weak.coreWords})`);
+      }
+      console.error('Use --allow-weak-themes to override, or strengthen theme pools first.');
+      process.exit(2);
+    }
+  }
+
   let index = [];
   
   if (REGENERATE) {
@@ -48,8 +81,6 @@ async function generateStarters() {
       }
     }
   }
-
-  const NEW_PUZZLES_PER_THEME = 3;
 
   for (const theme of THEMES) {
     const consumedWords = new Set();
@@ -124,8 +155,8 @@ async function generateStarters() {
             const availableWords = theme.words
               .filter(w => !consumedWords.has(w.answer.toUpperCase()))
               .sort((a, b) => {
-                const aScore = scoreWordRelevance(a);
-                const bScore = scoreWordRelevance(b);
+                const aScore = scoreWordRelevance(a) || scoreWordForTheme(theme.name, a);
+                const bScore = scoreWordRelevance(b) || scoreWordForTheme(theme.name, b);
                 if (aScore === bScore) return Math.random() - 0.5;
                 return bScore - aScore;
               });

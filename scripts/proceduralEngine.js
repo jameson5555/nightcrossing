@@ -21,6 +21,21 @@ const PREFERRED_MIN_PLACED_WORDS = 8;
 const MIN_WORD_TARGET = 7;
 const DEFAULT_LAYOUT_ATTEMPTS = 6000;
 const VERBOSE_GENERATION = process.env.NC_VERBOSE_GENERATION === '1';
+const STRICT_THEME_MIN_RELEVANCE = 1.15;
+const RELAXED_THEME_MIN_RELEVANCE = 0.75;
+const MIN_PUZZLE_AVG_RELEVANCE = Number.isFinite(Number(process.env.NC_MIN_PUZZLE_AVG_RELEVANCE))
+  ? Number(process.env.NC_MIN_PUZZLE_AVG_RELEVANCE)
+  : 1.05;
+const MAX_PUZZLE_LOW_RELEVANCE = Number.isFinite(Number(process.env.NC_MAX_PUZZLE_LOW_RELEVANCE))
+  ? Number(process.env.NC_MAX_PUZZLE_LOW_RELEVANCE)
+  : 1;
+const MAX_EXTENDED_WORDS_PER_PUZZLE = Number.isFinite(Number(process.env.NC_MAX_EXTENDED_WORDS_PER_PUZZLE))
+  ? Number(process.env.NC_MAX_EXTENDED_WORDS_PER_PUZZLE)
+  : 2;
+const ALLOW_EMERGENCY_FALLBACK = process.env.NC_ALLOW_EMERGENCY_FALLBACK === '1';
+const ATTEMPT_SCALE = Number.isFinite(Number(process.env.NC_LAYOUT_ATTEMPT_SCALE))
+  ? Math.max(0.2, Math.min(2, Number(process.env.NC_LAYOUT_ATTEMPT_SCALE)))
+  : 1;
 
 const SCORE_WEIGHTS = {
   minIntersection: 32,
@@ -70,6 +85,154 @@ function wordCrossabilityScore(answer, letterFrequency) {
 
 function themeRelevanceScore(word) {
   return typeof word.themeScore === 'number' ? word.themeScore : 0;
+}
+
+function tokenizeForTheme(str) {
+  return (str || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .split(/\s+/)
+    .filter(token => token.length >= 3);
+}
+
+function calculateFallbackThemeRelevance(themeName, word) {
+  const themeTokens = tokenizeForTheme(themeName);
+  if (themeTokens.length === 0) return 0;
+
+  const themeTokenSet = new Set(themeTokens);
+  const answerTokens = tokenizeForTheme(word.answer);
+  const clueTokens = tokenizeForTheme(word.clue);
+  const hintTokens = tokenizeForTheme(word.hint);
+
+  let score = 0.35;
+
+  const answerOverlap = answerTokens.filter(token => themeTokenSet.has(token)).length;
+  const clueOverlap = clueTokens.filter(token => themeTokenSet.has(token)).length;
+  const hintOverlap = hintTokens.filter(token => themeTokenSet.has(token)).length;
+
+  score += Math.min(0.85, answerOverlap * 0.45);
+  score += Math.min(0.95, clueOverlap * 0.2);
+  score += Math.min(0.5, hintOverlap * 0.14);
+
+  const answer = (word.answer || '').toLowerCase();
+  for (const themeToken of themeTokens) {
+    if (answer.includes(themeToken)) score += 0.35;
+    if (themeToken.includes(answer) && answer.length >= 4) score += 0.2;
+  }
+
+  // Keep obvious, high-signal domains available even when clue text is sparse.
+  const domainSignals = {
+    'space astronomy': ['orbit', 'star', 'planet', 'moon', 'solar', 'lunar', 'cosmic', 'galaxy', 'rocket', 'saturn', 'venus', 'mars', 'pluto', 'nebula', 'astro'],
+    'food cooking': ['cook', 'bake', 'fry', 'grill', 'dish', 'meal', 'spice', 'kitchen', 'chef', 'recipe', 'broth', 'sauce'],
+    'ocean marine life': ['ocean', 'sea', 'tide', 'reef', 'fish', 'whale', 'shark', 'coral', 'marine', 'kelp', 'naut', 'sail'],
+    'music sound': ['music', 'song', 'note', 'tune', 'rhythm', 'melody', 'chord', 'tempo', 'audio', 'sound', 'drum', 'piano', 'guitar'],
+    'nature wilderness': ['forest', 'river', 'mountain', 'wild', 'tree', 'leaf', 'fauna', 'flora', 'trail', 'meadow', 'canyon', 'nature'],
+    'technology computing': ['code', 'data', 'chip', 'byte', 'logic', 'cloud', 'server', 'network', 'ai', 'robot', 'device', 'software'],
+    'history civilization': ['ancient', 'empire', 'dynasty', 'historic', 'era', 'civil', 'rome', 'greek', 'medieval', 'war', 'treaty'],
+    'sports athletics': ['sport', 'team', 'score', 'goal', 'match', 'coach', 'league', 'athlete', 'race', 'medal', 'tournament']
+  };
+
+  const themeKey = themeName.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  const signals = domainSignals[themeKey] || [];
+  const combinedText = `${word.answer || ''} ${word.clue || ''} ${word.hint || ''}`.toLowerCase();
+  const matchedSignals = signals.filter(signal => combinedText.includes(signal)).length;
+  if (matchedSignals > 0) {
+    score += 0.65;
+    if (matchedSignals >= 2) score += 0.15;
+    if (matchedSignals >= 3) score += 0.1;
+  }
+
+  const answerLen = (word.answer || '').length;
+  if (answerLen >= 4 && answerLen <= 8) score += 0.08;
+  if (answerLen >= 9 && answerLen <= 10) score += 0.04;
+
+  return Math.max(0, Math.min(2.5, Number(score.toFixed(3))));
+}
+
+export function scoreWordForTheme(themeName, word) {
+  if (typeof word.themeScore === 'number') {
+    return word.themeScore;
+  }
+
+  return calculateFallbackThemeRelevance(themeName, word);
+}
+
+export function createThemePools(themeName, words) {
+  const scoredWords = words.map(word => ({
+    word,
+    score: scoreWordForTheme(themeName, word)
+  })).sort((a, b) => b.score - a.score);
+
+  const coreWords = scoredWords
+    .filter(item => item.score >= STRICT_THEME_MIN_RELEVANCE)
+    .map(item => item.word);
+
+  const extendedWords = scoredWords
+    .filter(item => item.score >= RELAXED_THEME_MIN_RELEVANCE && item.score < STRICT_THEME_MIN_RELEVANCE)
+    .map(item => item.word);
+
+  const relevanceByAnswer = new Map(
+    scoredWords.map(item => [item.word.answer.toUpperCase(), item.score])
+  );
+
+  return {
+    coreWords,
+    extendedWords,
+    rankedWords: scoredWords.map(item => item.word),
+    relevanceByAnswer
+  };
+}
+
+function withLimitedExtended(coreWords, extendedWords, maxExtendedWords) {
+  if (maxExtendedWords <= 0) return [...coreWords];
+  return [...coreWords, ...extendedWords.slice(0, maxExtendedWords)];
+}
+
+function layoutPassesThemeGuardrails(layout, relevanceByAnswer, options = {}) {
+  if (!layout || !Array.isArray(layout.result) || layout.result.length === 0) return false;
+
+  const minAvgRelevance = options.minAvgRelevance ?? MIN_PUZZLE_AVG_RELEVANCE;
+  const lowRelevanceThreshold = options.lowRelevanceThreshold ?? RELAXED_THEME_MIN_RELEVANCE;
+  const maxLowRelevance = options.maxLowRelevance ?? MAX_PUZZLE_LOW_RELEVANCE;
+
+  let sum = 0;
+  let lowCount = 0;
+
+  for (const placed of layout.result) {
+    const score = relevanceByAnswer.get((placed.answer || '').toUpperCase()) || 0;
+    sum += score;
+    if (score < lowRelevanceThreshold) {
+      lowCount++;
+    }
+  }
+
+  const avg = sum / layout.result.length;
+  return avg >= minAvgRelevance && lowCount <= maxLowRelevance;
+}
+
+function choosePrimaryPool(pools) {
+  if (pools.coreWords.length >= 14) {
+    return pools.coreWords;
+  }
+
+  if (pools.coreWords.length >= 10) {
+    return withLimitedExtended(
+      pools.coreWords,
+      pools.extendedWords,
+      Math.max(1, Math.min(MAX_EXTENDED_WORDS_PER_PUZZLE, pools.extendedWords.length))
+    );
+  }
+
+  const targetCoreFill = Math.max(0, 12 - pools.coreWords.length);
+  if (pools.coreWords.length + pools.extendedWords.length >= 10) {
+    return withLimitedExtended(
+      pools.coreWords,
+      pools.extendedWords,
+      Math.max(targetCoreFill, Math.min(MAX_EXTENDED_WORDS_PER_PUZZLE, pools.extendedWords.length))
+    );
+  }
+
+  return pools.rankedWords;
 }
 
 function pickCandidateSubset(words, maxWords, letterFrequency) {
@@ -130,6 +293,10 @@ function pickCandidateSubset(words, maxWords, letterFrequency) {
     .sort((a, b) => (b.priority + Math.random() * 1.2) - (a.priority + Math.random() * 1.2))
     .slice(0, maxWords)
     .map(item => item.word);
+}
+
+function scaledAttempts(baseAttempts) {
+  return Math.max(400, Math.round(baseAttempts * ATTEMPT_SCALE));
 }
 
 // ─── Puzzle Generation Engine ──────────────────────────────────────────────
@@ -391,27 +558,33 @@ function layoutToNightcrossing(layout, id, title, themeName) {
 }
 
 export function generateThemedPuzzle(id, themeName, availableWords) {
+  const pools = createThemePools(themeName, availableWords);
+  const themedWords = choosePrimaryPool(pools);
+
   if (VERBOSE_GENERATION) {
-    console.log(`Theme: ${themeName} | Available Words Pool: ${availableWords.length}`);
+    console.log(
+      `Theme: ${themeName} | Available: ${availableWords.length} | Core: ${pools.coreWords.length} | Extended: ${pools.extendedWords.length} | Active: ${themedWords.length}`
+    );
   }
 
   let layout = null;
   let bestScore = -Infinity;
-  let maxWordsTry = Math.min(14, availableWords.length);
+  let maxWordsTry = Math.min(14, themedWords.length);
 
   while (maxWordsTry >= MIN_WORD_TARGET) {
-    const attempts =
+    const attempts = scaledAttempts(
     maxWordsTry >= 13 ? 3000 :
     maxWordsTry >= 11 ? 2300 :
     maxWordsTry >= 9 ? 1700 :
-    1300;
+    1300
+    );
 
     const requiredPlaced = Math.min(
       maxWordsTry,
       Math.max(PREFERRED_MIN_PLACED_WORDS, Math.floor(maxWordsTry * 0.7))
     );
-    const candidate = generateBestLayout(availableWords, attempts, maxWordsTry, requiredPlaced);
-    if (candidate) {
+    const candidate = generateBestLayout(themedWords, attempts, maxWordsTry, requiredPlaced);
+    if (candidate && layoutPassesThemeGuardrails(candidate, pools.relevanceByAnswer)) {
       const candidateScore = typeof candidate._engineScore === 'number' ? candidate._engineScore : -Infinity;
       if (candidateScore > bestScore) {
         bestScore = candidateScore;
@@ -429,19 +602,67 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
 
   if (!layout) {
     // Fallback: one final dense-search pass on a small target set under the 10x10 cap.
-    layout = generateBestLayout(availableWords, 2500, MIN_WORD_TARGET, Math.min(MIN_PLACED_WORDS, MIN_WORD_TARGET));
+    const fallback = generateBestLayout(
+      themedWords,
+      scaledAttempts(2500),
+      MIN_WORD_TARGET,
+      Math.min(MIN_PLACED_WORDS, MIN_WORD_TARGET)
+    );
+    if (fallback && layoutPassesThemeGuardrails(fallback, pools.relevanceByAnswer)) {
+      layout = fallback;
+    }
+  }
+
+  if (!layout) {
+    // Last-resort fallback for difficult themes: allow one fewer placed word.
+    const fallback = generateBestLayout(
+      themedWords,
+      scaledAttempts(2200),
+      MIN_WORD_TARGET,
+      Math.max(6, MIN_PLACED_WORDS - 1)
+    );
+    if (fallback && layoutPassesThemeGuardrails(fallback, pools.relevanceByAnswer)) {
+      layout = fallback;
+    }
   }
 
   // If we only found a 7-word layout, try one more targeted pass for an 8-word floor.
-  if (layout && layout.result.length < PREFERRED_MIN_PLACED_WORDS && availableWords.length >= PREFERRED_MIN_PLACED_WORDS + 2) {
+  if (layout && layout.result.length < PREFERRED_MIN_PLACED_WORDS && themedWords.length >= PREFERRED_MIN_PLACED_WORDS + 2) {
     const recovery = generateBestLayout(
-      availableWords,
-      2200,
-      Math.min(14, availableWords.length),
+      themedWords,
+      scaledAttempts(2200),
+      Math.min(14, themedWords.length),
       PREFERRED_MIN_PLACED_WORDS
     );
-    if (recovery) {
+    if (recovery && layoutPassesThemeGuardrails(recovery, pools.relevanceByAnswer)) {
       layout = recovery;
+    }
+  }
+
+  if (!layout && themedWords !== availableWords) {
+    // Hard-theme recovery: try once with the unfiltered pool to avoid empty theme batches.
+    const backupTarget = Math.min(12, availableWords.length);
+    const backup = generateBestLayout(
+      availableWords,
+      scaledAttempts(2200),
+      backupTarget,
+      Math.max(6, MIN_PLACED_WORDS - 1)
+    );
+    if (backup && layoutPassesThemeGuardrails(backup, pools.relevanceByAnswer)) {
+      layout = backup;
+    }
+  }
+
+  if (!layout && ALLOW_EMERGENCY_FALLBACK) {
+    // Emergency fallback for sparse/intersection-poor themes.
+    const emergency = generateBestLayout(
+      availableWords,
+      scaledAttempts(2800),
+      Math.min(6, availableWords.length),
+      Math.min(6, availableWords.length)
+    );
+    if (emergency) {
+      layout = emergency;
     }
   }
   

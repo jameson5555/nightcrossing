@@ -9,6 +9,9 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "sanitize:themes": "node scripts/sanitize-theme-pool.js",
+    "generate:monthly": "node scripts/generate-starters.js",
+    "generate:monthly:no-enrich": "node scripts/generate-starters.js --skip-enrichment",
+    "preflight:generation": "node scripts/preflight-generation.js",
     "analyze:generation": "node scripts/analyze-generation.js",
     "bench:layout": "node scripts/benchmark-layout.js"
   },
