@@ -5,8 +5,7 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
-    "rows": 9,
-    "letterCells": 46,
+    "rows": 10,
     "theme": "Space & Astronomy"
   },
   {
@@ -15,8 +14,7 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
-    "rows": 9,
-    "letterCells": 43,
+    "rows": 10,
     "theme": "Space & Astronomy"
   },
   {
@@ -24,9 +22,8 @@
     "title": "Space & Astronomy 3",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 8,
+    "cols": 9,
     "rows": 10,
-    "letterCells": 33,
     "theme": "Space & Astronomy"
   },
   {
@@ -36,7 +33,6 @@
     "date": "Wave 1",
     "cols": 9,
     "rows": 10,
-    "letterCells": 35,
     "theme": "Food & Cooking"
   },
   {
@@ -46,7 +42,6 @@
     "date": "Wave 1",
     "cols": 10,
     "rows": 10,
-    "letterCells": 39,
     "theme": "Food & Cooking"
   },
   {
@@ -56,7 +51,6 @@
     "date": "Wave 1",
     "cols": 10,
     "rows": 10,
-    "letterCells": 41,
     "theme": "Food & Cooking"
   },
   {
@@ -66,7 +60,6 @@
     "date": "Wave 1",
     "cols": 10,
     "rows": 10,
-    "letterCells": 40,
     "theme": "Ocean & Marine Life"
   },
   {
@@ -75,8 +68,7 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
-    "rows": 10,
-    "letterCells": 40,
+    "rows": 9,
     "theme": "Ocean & Marine Life"
   },
   {
@@ -84,9 +76,8 @@
     "title": "Ocean & Marine Life 3",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 9,
-    "rows": 8,
-    "letterCells": 33,
+    "cols": 10,
+    "rows": 10,
     "theme": "Ocean & Marine Life"
   },
   {
@@ -94,9 +85,8 @@
     "title": "Music & Sound 1",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 10,
-    "rows": 10,
-    "letterCells": 33,
+    "cols": 9,
+    "rows": 8,
     "theme": "Music & Sound"
   },
   {
@@ -104,9 +94,8 @@
     "title": "Music & Sound 2",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 10,
-    "rows": 9,
-    "letterCells": 41,
+    "cols": 9,
+    "rows": 10,
     "theme": "Music & Sound"
   },
   {
@@ -116,7 +105,6 @@
     "date": "Wave 1",
     "cols": 10,
     "rows": 8,
-    "letterCells": 35,
     "theme": "Music & Sound"
   },
   {
@@ -125,8 +113,7 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
-    "rows": 9,
-    "letterCells": 37,
+    "rows": 10,
     "theme": "Nature & Wilderness"
   },
   {
@@ -134,9 +121,8 @@
     "title": "Nature & Wilderness 2",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 9,
-    "rows": 9,
-    "letterCells": 38,
+    "cols": 10,
+    "rows": 10,
     "theme": "Nature & Wilderness"
   },
   {
@@ -145,8 +131,7 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
-    "rows": 8,
-    "letterCells": 38,
+    "rows": 10,
     "theme": "Nature & Wilderness"
   },
   {
@@ -155,8 +140,7 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
-    "rows": 8,
-    "letterCells": 37,
+    "rows": 10,
     "theme": "Technology & Computing"
   },
   {
@@ -164,9 +148,8 @@
     "title": "Technology & Computing 2",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 10,
-    "rows": 8,
-    "letterCells": 36,
+    "cols": 9,
+    "rows": 9,
     "theme": "Technology & Computing"
   },
   {
@@ -176,7 +159,6 @@
     "date": "Wave 1",
     "cols": 10,
     "rows": 10,
-    "letterCells": 40,
     "theme": "Technology & Computing"
   },
   {
@@ -186,7 +168,6 @@
     "date": "Wave 1",
     "cols": 10,
     "rows": 10,
-    "letterCells": 38,
     "theme": "History & Civilization"
   },
   {
@@ -195,8 +176,7 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
-    "rows": 9,
-    "letterCells": 35,
+    "rows": 10,
     "theme": "History & Civilization"
   },
   {
@@ -205,8 +185,7 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
-    "rows": 9,
-    "letterCells": 42,
+    "rows": 10,
     "theme": "History & Civilization"
   },
   {
@@ -216,7 +195,6 @@
     "date": "Wave 1",
     "cols": 10,
     "rows": 10,
-    "letterCells": 46,
     "theme": "Sports & Athletics"
   },
   {
@@ -226,7 +204,6 @@
     "date": "Wave 1",
     "cols": 10,
     "rows": 8,
-    "letterCells": 34,
     "theme": "Sports & Athletics"
   },
   {
@@ -234,9 +211,8 @@
     "title": "Sports & Athletics 3",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 10,
-    "rows": 9,
-    "letterCells": 38,
+    "cols": 9,
+    "rows": 10,
     "theme": "Sports & Athletics"
   }
 ]
