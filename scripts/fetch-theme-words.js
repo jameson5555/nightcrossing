@@ -13,6 +13,7 @@ const WIKIPEDIA_API = 'https://en.wikipedia.org/w/api.php';
 const EXTRA_SEEDS_PER_THEME = 24;
 const MAX_NEW_WORDS_PER_THEME = 160;
 const MAX_WIKIPEDIA_WORDS_PER_THEME = 48;
+const DATAMUSE_CLUE_CACHE = new Map();
 
 // Datamuse API endpoints that return different kinds of related words
 const DATAMUSE_STRATEGIES = [
@@ -171,6 +172,46 @@ function rankAdjustedSourceScore(rankIndex, rankWeight) {
   return 0;
 }
 
+function parseDatamuseDefinitions(defs = []) {
+  if (!Array.isArray(defs) || defs.length === 0) return null;
+
+  const rawDef = defs[0];
+  const parts = String(rawDef).split('\t');
+  let cleanDef = parts.length > 1 ? parts[1].trim() : parts[0].trim();
+  cleanDef = cleanDef.replace(/^\([^)]+\)\s*/, '');
+  if (!cleanDef) return null;
+
+  const clueText = humanizeClue(cleanDef.charAt(0).toUpperCase() + cleanDef.slice(1));
+
+  let hint = null;
+  if (defs.length > 1) {
+    const hintParts = String(defs[1]).split('\t');
+    const cleanHint = hintParts.length > 1 ? hintParts[1].trim() : hintParts[0].trim();
+    if (cleanHint) hint = humanizeClue(cleanHint);
+  }
+
+  return { clueText, hint };
+}
+
+async function fetchDatamuseClueForWord(wordLower) {
+  if (DATAMUSE_CLUE_CACHE.has(wordLower)) {
+    return DATAMUSE_CLUE_CACHE.get(wordLower);
+  }
+
+  try {
+    const url = `https://api.datamuse.com/words?sp=${encodeURIComponent(wordLower)}&md=d&max=8`;
+    const res = await fetch(url);
+    const data = await res.json();
+    const exact = data.find(item => String(item.word || '').toLowerCase() === wordLower) || data[0];
+    const parsed = exact ? parseDatamuseDefinitions(exact.defs || []) : null;
+    DATAMUSE_CLUE_CACHE.set(wordLower, parsed);
+    return parsed;
+  } catch {
+    DATAMUSE_CLUE_CACHE.set(wordLower, null);
+    return null;
+  }
+}
+
 // Rate-limit helper: wait between API calls to be a good citizen
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -326,8 +367,11 @@ export async function fetchThemeWords() {
         const word = candidate.word.toUpperCase();
         if (existingAnswers.has(word)) continue;
 
-        const clueText = humanizeClue(`Theme-related term in ${theme.name.toLowerCase()} context.`);
-        const hint = humanizeClue(`Commonly associated with ${theme.name.toLowerCase()}.`);
+        const clueData = await fetchDatamuseClueForWord(candidate.word);
+        if (!clueData) continue;
+
+        const clueText = clueData.clueText;
+        const hint = clueData.hint;
 
         const themeScore = scoreThemeRelevance(
           theme.name,
@@ -390,23 +434,11 @@ export async function fetchThemeWords() {
             if (existingAnswers.has(word)) continue;
 
             if (d.defs && d.defs.length > 0) {
-              // Parse primary definition
-              const rawDef = d.defs[0];
-              const parts = rawDef.split('\t');
-              let cleanDef = parts.length > 1 ? parts[1].trim() : parts[0].trim();
-              cleanDef = cleanDef.replace(/^\([^)]+\)\s*/, '');
-              cleanDef = cleanDef.charAt(0).toUpperCase() + cleanDef.slice(1);
+              const parsedDefs = parseDatamuseDefinitions(d.defs);
+              if (!parsedDefs) continue;
 
-              // Try to get a hint from a second definition
-              let hint = null;
-              if (d.defs.length > 1) {
-                const hintDef = d.defs[1];
-                const hintParts = hintDef.split('\t');
-                const cleanHint = hintParts.length > 1 ? hintParts[1].trim() : hintParts[0].trim();
-                hint = humanizeClue(cleanHint);
-              }
-
-              const clueText = humanizeClue(cleanDef);
+              const clueText = parsedDefs.clueText;
+              const hint = parsedDefs.hint;
 
               const themeScore = scoreThemeRelevance(
                 theme.name,

@@ -7,7 +7,9 @@ const LOW_QUALITY_REGEXES = [
   /\b(alternative\s+form|obsolete\s+form|obsolete\s+spelling|dated\s+spelling|misspelling\s+of|clipping\s+of|ellipsis\s+of|plural\s+of|transliteration\s+of|diminutive\s+of)\b/i,
   /\bsimilar\s+to\s*:/i,
   /\bunincorporated\s+community\b/i,
-  /\bbarangay\b/i
+  /\bbarangay\b/i,
+  /theme-related\s+term\s+in\b/i,
+  /commonly\s+associated\s+with\b/i
 ];
 
 function normalized(str) {
