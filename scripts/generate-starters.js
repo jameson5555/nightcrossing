@@ -28,6 +28,17 @@ const REGENERATE = process.argv.includes('--regenerate');
 const ALLOW_WEAK_THEMES = process.argv.includes('--allow-weak-themes');
 const SKIP_PREFLIGHT = process.argv.includes('--skip-preflight');
 const SKIP_ENRICHMENT = process.argv.includes('--skip-enrichment');
+const ALLOW_REPEAT_ANSWERS = process.argv.includes('--allow-repeat-answers');
+
+function addPuzzleAnswersToSet(puzzleData, targetSet) {
+  if (!puzzleData?.answers) return;
+  for (const answer of puzzleData.answers.across || []) {
+    targetSet.add(String(answer).toUpperCase());
+  }
+  for (const answer of puzzleData.answers.down || []) {
+    targetSet.add(String(answer).toUpperCase());
+  }
+}
 
 function scoreWordRelevance(wordObj) {
   return typeof wordObj.themeScore === 'number' ? wordObj.themeScore : 0;
@@ -35,6 +46,7 @@ function scoreWordRelevance(wordObj) {
 
 async function generateStarters() {
   const NEW_PUZZLES_PER_THEME = 3;
+  const historicalConsumedByTheme = new Map();
 
   if (!SKIP_ENRICHMENT) {
     console.log('Enrichment step: updating theme pools before generation...');
@@ -64,6 +76,24 @@ async function generateStarters() {
   let index = [];
   
   if (REGENERATE) {
+    if (!ALLOW_REPEAT_ANSWERS) {
+      const existingFiles = fs.readdirSync(PUZZLES_DIR).filter(f => f.endsWith('.json'));
+      for (const file of existingFiles) {
+        try {
+          const puzzle = JSON.parse(fs.readFileSync(path.join(PUZZLES_DIR, file), 'utf8'));
+          const themeName = puzzle?.theme;
+          if (!themeName) continue;
+
+          if (!historicalConsumedByTheme.has(themeName)) {
+            historicalConsumedByTheme.set(themeName, new Set());
+          }
+          addPuzzleAnswersToSet(puzzle, historicalConsumedByTheme.get(themeName));
+        } catch {
+          // Ignore malformed legacy files while collecting history.
+        }
+      }
+    }
+
     console.log('🔄 REGENERATE MODE: Wiping existing puzzles and starting fresh...');
     // Delete all existing puzzle JSON files
     const existingFiles = fs.readdirSync(PUZZLES_DIR).filter(f => f.endsWith('.json'));
@@ -71,6 +101,11 @@ async function generateStarters() {
       fs.unlinkSync(path.join(PUZZLES_DIR, f));
     }
     console.log(`  Deleted ${existingFiles.length} existing puzzle files.`);
+    if (!ALLOW_REPEAT_ANSWERS) {
+      let historicalCount = 0;
+      for (const set of historicalConsumedByTheme.values()) historicalCount += set.size;
+      console.log(`  Preserved ${historicalCount} historical answers as exclusions.`);
+    }
   } else {
     console.log('Generating incremental new puzzles...');
     if (fs.existsSync(INDEX_FILE)) {
@@ -84,6 +119,12 @@ async function generateStarters() {
 
   for (const theme of THEMES) {
     const consumedWords = new Set();
+    if (REGENERATE && !ALLOW_REPEAT_ANSWERS) {
+      const historical = historicalConsumedByTheme.get(theme.name);
+      if (historical) {
+        for (const answer of historical) consumedWords.add(answer);
+      }
+    }
     
     // Calculate the current highest volume for this theme from the index
     const existingThemePuzzles = index.filter(p => p.theme === theme.name);
@@ -227,6 +268,14 @@ async function generateStarters() {
   // Write index
   fs.writeFileSync(INDEX_FILE, JSON.stringify(index, null, 2));
   console.log(`\nSuccess. Total puzzles tracked in index: ${index.length}`);
+
+  // Always refresh dataset version metadata so clients can auto-reset stale progress.
+  const syncIndexScript = path.join(__dirname, 'sync-index.cjs');
+  const sync = spawnSync(process.execPath, [syncIndexScript], { stdio: 'inherit' });
+  if (sync.status !== 0) {
+    console.error('❌ Failed to refresh dataset metadata via sync-index.cjs');
+    process.exit(sync.status ?? 1);
+  }
 }
 
 generateStarters();
