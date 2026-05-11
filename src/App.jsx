@@ -24,6 +24,7 @@ import {
 import { loadThemeProgress, saveThemeProgress } from './utils/storage';
 import { getBadgeLevel, getBadgeName, getBadgeAsset } from './utils/badges';
 import { LocalNotifications } from '@capacitor/local-notifications';
+import { Capacitor } from '@capacitor/core';
 import HintModal from './components/HintModal';
 
 function App() {
@@ -173,10 +174,12 @@ function App() {
         });
         
         await clearHintsEmptyTimestamp();
-        try {
-          await LocalNotifications.cancel({ notifications: [{ id: 1 }] });
-        } catch {
-          // Ignore if Native API is unavailable
+        if (Capacitor.isNativePlatform()) {
+          try {
+            await LocalNotifications.cancel({ notifications: [{ id: 1 }] });
+          } catch {
+            // Ignore if Native API is unavailable
+          }
         }
         
         // Update theme progress and detect badge unlocks using global index for robustness
@@ -328,6 +331,10 @@ function App() {
   const handleHintsDepleted = async () => {
     const now = Date.now();
     await saveHintsEmptyTimestamp(now);
+
+    if (!Capacitor.isNativePlatform()) {
+      return;
+    }
 
     try {
       const permStatus = await LocalNotifications.checkPermissions();
