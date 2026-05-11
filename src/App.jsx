@@ -175,7 +175,7 @@ function App() {
         await clearHintsEmptyTimestamp();
         try {
           await LocalNotifications.cancel({ notifications: [{ id: 1 }] });
-        } catch (e) {
+        } catch {
           // Ignore if Native API is unavailable
         }
         
@@ -279,13 +279,24 @@ function App() {
       if (!shouldUseFreeHint && hintsRemaining <= 0) {
         return;
       }
-      
-      // If no hint available, don't charge the user
+
+      // If no word-hint exists, spend the free hint on a letter reveal instead.
+      if (!hintText && shouldUseFreeHint) {
+        const revealed = await handleRevealLetter({ chargeHint: false, closeModal: true });
+        if (revealed) {
+          setHasUsedFreeHint(true);
+          await saveFreeHintClaimed(puzzleData.id, true);
+          setToastInfo({
+            message: 'No clue hint was available, so your free hint revealed a letter.',
+            icon: '✨',
+            type: 'bonus'
+          });
+        }
+        return;
+      }
+
+      // If no hint exists and free hint is already used, do not charge and keep state unchanged.
       if (!hintText) {
-        const newUnlocked = new Set(unlockedHints);
-        newUnlocked.add(selectedClueId);
-        setUnlockedHints(newUnlocked);
-        await saveUnlockedHints(puzzleData.id, newUnlocked);
         return;
       }
 
@@ -306,7 +317,7 @@ function App() {
           await handleHintsDepleted();
         }
       }
-      
+
       const newUnlocked = new Set(unlockedHints);
       newUnlocked.add(selectedClueId);
       setUnlockedHints(newUnlocked);
@@ -343,14 +354,14 @@ function App() {
     }
   };
 
-  const handleRevealLetter = async () => {
-    if (hintsRemaining > 0 && activeWord && puzzleData) {
+  const handleRevealLetter = async ({ chargeHint = true, closeModal = true } = {}) => {
+    if ((!chargeHint || hintsRemaining > 0) && activeWord && puzzleData) {
       const { clueIndex, indices } = activeWord;
-      if (clueIndex === -1) return;
-      
+      if (clueIndex === -1) return false;
+
       const solution = puzzleData.answers[direction][clueIndex];
-      if (!solution) return;
-      
+      if (!solution) return false;
+
       // Find cells in this word that are incorrect or empty
       const candidates = indices.filter((idx, i) => {
         const currentVal = (answers[idx] || '').toUpperCase();
@@ -358,18 +369,22 @@ function App() {
         return currentVal !== correctVal;
       });
 
-      if (candidates.length === 0) return;
-      
-      // Close modal immediately so user can see the revealed letter
-      setIsHintModalOpen(false);
+      if (candidates.length === 0) return false;
 
-      // Deduct hint
-      const newCount = hintsRemaining - 1;
-      setHintsRemaining(newCount);
-      await saveHintsRemaining(newCount);
+      if (closeModal) {
+        // Close modal immediately so user can see the revealed letter
+        setIsHintModalOpen(false);
+      }
 
-      if (newCount === 0) {
-        await handleHintsDepleted();
+      if (chargeHint) {
+        // Deduct hint
+        const newCount = hintsRemaining - 1;
+        setHintsRemaining(newCount);
+        await saveHintsRemaining(newCount);
+
+        if (newCount === 0) {
+          await handleHintsDepleted();
+        }
       }
 
       // Pick a random candidate cell and reveal it
@@ -379,13 +394,16 @@ function App() {
       const newAnswers = [...answers];
       newAnswers[randomIdx] = charInSolution.toUpperCase();
       setAnswers(newAnswers);
-      
+
       const newRevealed = new Set(revealedIndices);
       newRevealed.add(randomIdx);
       setRevealedIndices(newRevealed);
       await saveRevealedIndices(puzzleData.id, newRevealed);
       // savePuzzleProgress is handled by useEffect in CrosswordGrid
+      return true;
     }
+
+    return false;
   };
 
   return (
