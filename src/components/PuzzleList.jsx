@@ -105,8 +105,8 @@ const PuzzleList = ({ onSelectPuzzle }) => {
     const wordsLeft = wordsLeftByPuzzle[puzzle.id];
     const hasWordsLeftCount = Number.isFinite(wordsLeft);
     const useWordsLeftLabel = showWordsLeft && status === 'In Progress' && hasWordsLeftCount;
-    const statusLabel = useWordsLeftLabel
-      ? `${wordsLeft} word${wordsLeft === 1 ? '' : 's'} left`
+      const statusLabel = useWordsLeftLabel
+        ? `${wordsLeft} left`
       : status;
     const statusClass = status.replace(' ', '');
     const gridSize = `${puzzle.cols}x${puzzle.rows}`;
