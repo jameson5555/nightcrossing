@@ -23,6 +23,8 @@ const DATAMUSE_STRATEGIES = [
     rankWeight: 1.0,
     maxCandidates: 120,
     keepTop: 60,
+    minThemeScore: 1.0,
+    maxAddsPerTheme: 72,
     buildUrl: (kw, max) => `https://api.datamuse.com/words?ml=${encodeURIComponent(kw)}&md=d&max=${max}`
   }, // meaning-like
   {
@@ -31,6 +33,8 @@ const DATAMUSE_STRATEGIES = [
     rankWeight: 0.45,
     maxCandidates: 100,
     keepTop: 26,
+    minThemeScore: 1.2,
+    maxAddsPerTheme: 14,
     buildUrl: (kw, max) => `https://api.datamuse.com/words?rel_trg=${encodeURIComponent(kw)}&md=d&max=${max}`
   }, // statistically triggered/associated
   {
@@ -39,6 +43,8 @@ const DATAMUSE_STRATEGIES = [
     rankWeight: 0.8,
     maxCandidates: 80,
     keepTop: 36,
+    minThemeScore: 1.1,
+    maxAddsPerTheme: 38,
     buildUrl: (kw, max) => `https://api.datamuse.com/words?rel_spc=${encodeURIComponent(kw)}&md=d&max=${max}`
   }, // hyponyms (more specific than)
   {
@@ -47,6 +53,8 @@ const DATAMUSE_STRATEGIES = [
     rankWeight: 0.75,
     maxCandidates: 90,
     keepTop: 34,
+    minThemeScore: 1.08,
+    maxAddsPerTheme: 28,
     buildUrl: (kw, max) => `https://api.datamuse.com/words?rel_jjb=${encodeURIComponent(kw)}&md=d&max=${max}`
   }, // nouns often described by this adjective
   {
@@ -55,12 +63,27 @@ const DATAMUSE_STRATEGIES = [
     rankWeight: 0.65,
     maxCandidates: 90,
     keepTop: 30,
+    minThemeScore: 1.08,
+    maxAddsPerTheme: 24,
     buildUrl: (kw, max) => `https://api.datamuse.com/words?rel_jja=${encodeURIComponent(kw)}&md=d&max=${max}`
   }, // adjectives used to describe this noun
 ];
 
-const MIN_THEME_RELEVANCE = 0.95;
-const MIN_THEME_RELEVANCE_WIKIPEDIA = 1.1;
+const MIN_THEME_RELEVANCE = Number.isFinite(Number(process.env.NC_MIN_THEME_RELEVANCE_FETCH))
+  ? Math.max(0.6, Math.min(1.8, Number(process.env.NC_MIN_THEME_RELEVANCE_FETCH)))
+  : 1.05;
+const MIN_THEME_RELEVANCE_WIKIPEDIA = Number.isFinite(Number(process.env.NC_MIN_THEME_RELEVANCE_WIKI_FETCH))
+  ? Math.max(0.7, Math.min(2, Number(process.env.NC_MIN_THEME_RELEVANCE_WIKI_FETCH)))
+  : 1.2;
+const MIN_CLUE_ACCESSIBILITY = Number.isFinite(Number(process.env.NC_MIN_CLUE_ACCESSIBILITY))
+  ? Math.max(0.2, Math.min(1, Number(process.env.NC_MIN_CLUE_ACCESSIBILITY)))
+  : 0.58;
+const MAX_ANSWER_LENGTH_FOR_EASY_POOL = Number.isFinite(Number(process.env.NC_MAX_ANSWER_LENGTH_FOR_EASY_POOL))
+  ? Math.max(8, Math.min(15, Number(process.env.NC_MAX_ANSWER_LENGTH_FOR_EASY_POOL)))
+  : 11;
+const MAX_RARE_LETTER_RATIO = Number.isFinite(Number(process.env.NC_MAX_RARE_LETTER_RATIO))
+  ? Math.max(0.15, Math.min(0.8, Number(process.env.NC_MAX_RARE_LETTER_RATIO)))
+  : 0.34;
 
 const WIKIPEDIA_THEME_CATEGORIES = {
   'space astronomy': ['Astronomy', 'Planets', 'Stars', 'Galaxies'],
@@ -191,6 +214,37 @@ function parseDatamuseDefinitions(defs = []) {
   }
 
   return { clueText, hint };
+}
+
+function scoreClueAccessibility(clueText, hintText) {
+  const clue = String(clueText || '');
+  const hint = String(hintText || '');
+  if (!clue) return 0;
+
+  let score = 1;
+  const clueWordCount = clue.trim().split(/\s+/).filter(Boolean).length;
+  const hintWordCount = hint.trim().split(/\s+/).filter(Boolean).length;
+
+  if (clue.length > 78) score -= 0.16;
+  if (clue.length > 95) score -= 0.14;
+  if (clueWordCount > 13) score -= 0.14;
+  if (clueWordCount > 18) score -= 0.1;
+  if (hintWordCount > 14) score -= 0.06;
+  if (/[;:]/.test(clue)) score -= 0.12;
+  if (/\([^)]*\)/.test(clue)) score -= 0.09;
+  if (/[,].*[,]/.test(clue)) score -= 0.08;
+  if (/\b(archaic|obsolete|literary|mythological|formal|technical)\b/i.test(clue)) score -= 0.12;
+
+  return Math.max(0, Math.min(1, Number(score.toFixed(3))));
+}
+
+function hasHardLetterProfile(answer) {
+  const upper = String(answer || '').toUpperCase();
+  if (!upper) return false;
+  const rareMatches = upper.match(/[JQXZVK]/g);
+  const rareCount = rareMatches ? rareMatches.length : 0;
+  const rareRatio = rareCount / upper.length;
+  return rareRatio > MAX_RARE_LETTER_RATIO;
 }
 
 async function fetchDatamuseClueForWord(wordLower) {
@@ -351,6 +405,7 @@ export async function fetchThemeWords() {
     const existingAnswers = new Set(theme.words.map(w => w.answer.toUpperCase()));
     const seeds = pickSeeds(theme.words, theme.name);
     let added = 0;
+    const addedByStrategy = new Map(DATAMUSE_STRATEGIES.map(strategy => [strategy.name, 0]));
 
     console.log(`\n━━━ ${theme.name} ━━━`);
     console.log(`  Pool: ${theme.words.length} words | Seeds: ${seeds.slice(0, 5).join(', ')}... (${seeds.length} total)`);
@@ -365,6 +420,8 @@ export async function fetchThemeWords() {
         if (wikiAdded >= MAX_WIKIPEDIA_WORDS_PER_THEME) break;
 
         const word = candidate.word.toUpperCase();
+        if (word.length > MAX_ANSWER_LENGTH_FOR_EASY_POOL) continue;
+        if (hasHardLetterProfile(word)) continue;
         if (existingAnswers.has(word)) continue;
 
         const clueData = await fetchDatamuseClueForWord(candidate.word);
@@ -380,6 +437,9 @@ export async function fetchThemeWords() {
           hint,
           1.15
         ) + Math.min(0.18, candidate.occurrences * 0.04);
+        const clueAccessibility = scoreClueAccessibility(clueText, hint);
+
+        if (clueAccessibility < MIN_CLUE_ACCESSIBILITY) continue;
 
         if (themeScore < MIN_THEME_RELEVANCE_WIKIPEDIA) continue;
 
@@ -397,7 +457,7 @@ export async function fetchThemeWords() {
           clue: clueText,
           hint,
           source: 'wikipedia-category',
-          themeScore: Number(themeScore.toFixed(3))
+          themeScore: Number((themeScore + clueAccessibility * 0.08).toFixed(3))
         });
         existingAnswers.add(word);
         added++;
@@ -417,6 +477,7 @@ export async function fetchThemeWords() {
 
       for (const strategy of DATAMUSE_STRATEGIES) {
         if (added >= MAX_NEW_WORDS_PER_THEME) break;
+        if ((addedByStrategy.get(strategy.name) || 0) >= strategy.maxAddsPerTheme) continue;
 
         const url = strategy.buildUrl(seed, strategy.maxCandidates);
         try {
@@ -431,6 +492,8 @@ export async function fetchThemeWords() {
             const word = d.word.toUpperCase();
 
             if (!isValidCrosswordWord(d.word)) continue;
+            if (word.length > MAX_ANSWER_LENGTH_FOR_EASY_POOL) continue;
+            if (hasHardLetterProfile(word)) continue;
             if (existingAnswers.has(word)) continue;
 
             if (d.defs && d.defs.length > 0) {
@@ -447,8 +510,11 @@ export async function fetchThemeWords() {
                 hint,
                 strategy.baseScore
               ) + rankAdjustedSourceScore(rankIndex, strategy.rankWeight);
+              const clueAccessibility = scoreClueAccessibility(clueText, hint);
+              const effectiveMinThemeScore = Math.max(MIN_THEME_RELEVANCE, strategy.minThemeScore || 0);
 
-              if (themeScore < MIN_THEME_RELEVANCE) continue;
+              if (themeScore < effectiveMinThemeScore) continue;
+              if (clueAccessibility < MIN_CLUE_ACCESSIBILITY) continue;
 
               const candidate = {
                 answer: word,
@@ -464,10 +530,11 @@ export async function fetchThemeWords() {
                 clue: clueText,
                 hint: hint,
                 source: strategy.name,
-                themeScore
+                themeScore: Number((themeScore + clueAccessibility * 0.08).toFixed(3))
               });
               existingAnswers.add(word);
               added++;
+              addedByStrategy.set(strategy.name, (addedByStrategy.get(strategy.name) || 0) + 1);
               totalUpdated++;
 
               if (added >= MAX_NEW_WORDS_PER_THEME) break;

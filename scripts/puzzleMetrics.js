@@ -4,6 +4,9 @@ function parseClueNumber(entry) {
   return match ? Number(match[1]) : null;
 }
 
+const LONG_WORD_LENGTH = 8;
+const VERY_LONG_WORD_LENGTH = 10;
+
 function collectWordPathFromStart(grid, cols, rows, startIndex, direction) {
   const indices = [];
 
@@ -101,6 +104,23 @@ export function computePuzzleMetrics(puzzle) {
     return count;
   });
 
+  const wordLengths = paths.map(path => path.indices.length);
+  const longWordIndices = wordLengths
+    .map((len, idx) => ({ len, idx }))
+    .filter(item => item.len >= LONG_WORD_LENGTH)
+    .map(item => item.idx);
+  const veryLongWordIndices = wordLengths
+    .map((len, idx) => ({ len, idx }))
+    .filter(item => item.len >= VERY_LONG_WORD_LENGTH)
+    .map(item => item.idx);
+
+  const longWordsWithTwoPlusCrossings = longWordIndices
+    .filter(idx => (intersectionsPerWord[idx] || 0) >= 2)
+    .length;
+  const veryLongWordsWithThreePlusCrossings = veryLongWordIndices
+    .filter(idx => (intersectionsPerWord[idx] || 0) >= 3)
+    .length;
+
   const minIntersectionsPerWord = intersectionsPerWord.length > 0
     ? Math.min(...intersectionsPerWord)
     : 0;
@@ -156,6 +176,16 @@ export function computePuzzleMetrics(puzzle) {
     totalIntersections,
     minIntersectionsPerWord,
     avgIntersectionsPerWord,
+    longWordCount: longWordIndices.length,
+    veryLongWordCount: veryLongWordIndices.length,
+    longWordsWithTwoPlusCrossings,
+    veryLongWordsWithThreePlusCrossings,
+    longWordTwoPlusRate: longWordIndices.length > 0
+      ? longWordsWithTwoPlusCrossings / longWordIndices.length
+      : 1,
+    veryLongWordThreePlusRate: veryLongWordIndices.length > 0
+      ? veryLongWordsWithThreePlusCrossings / veryLongWordIndices.length
+      : 1,
     connected
   };
 }
@@ -170,6 +200,10 @@ export function summarizeMetrics(items) {
       avgPlacedWords: 0,
       avgIntersections: 0,
       avgMinIntersectionsPerWord: 0,
+      avgLongWordCount: 0,
+      avgVeryLongWordCount: 0,
+      avgLongWordTwoPlusRate: 0,
+      avgVeryLongWordThreePlusRate: 0,
       connectedRate: 0
     };
   }
@@ -184,6 +218,10 @@ export function summarizeMetrics(items) {
     avgPlacedWords: sum('placedWords') / items.length,
     avgIntersections: sum('totalIntersections') / items.length,
     avgMinIntersectionsPerWord: sum('minIntersectionsPerWord') / items.length,
+    avgLongWordCount: sum('longWordCount') / items.length,
+    avgVeryLongWordCount: sum('veryLongWordCount') / items.length,
+    avgLongWordTwoPlusRate: sum('longWordTwoPlusRate') / items.length,
+    avgVeryLongWordThreePlusRate: sum('veryLongWordThreePlusRate') / items.length,
     connectedRate: items.filter(item => item.connected).length / items.length
   };
 }

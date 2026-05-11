@@ -6,7 +6,8 @@ const RESETTABLE_KEY_PREFIXES = [
   'unlocked_hints_',
   'reward_claimed_',
   'revealed_indices_',
-  'theme_progress_'
+  'theme_progress_',
+  'free_hint_claimed_'
 ];
 const RESETTABLE_EXACT_KEYS = [
   'global_hints_remaining',
@@ -84,8 +85,8 @@ export const saveHintsRemaining = async (count) => {
 
 export const loadHintsRemaining = async () => {
   const { value } = await Preferences.get({ key: 'global_hints_remaining' });
-  // Default to 3 hints if never set
-  return value !== null ? parseInt(value, 10) : 3;
+  // Default to 4 hints if never set.
+  return value !== null ? parseInt(value, 10) : 4;
 };
 
 export const saveUnlockedHints = async (puzzleId, hintIdsSet) => {
@@ -138,6 +139,18 @@ export const loadHintsEmptyTimestamp = async () => {
 
 export const clearHintsEmptyTimestamp = async () => {
   await Preferences.remove({ key: 'hints_empty_timestamp' });
+};
+
+export const saveFreeHintClaimed = async (puzzleId, claimed) => {
+  await Preferences.set({
+    key: `free_hint_claimed_${puzzleId}`,
+    value: claimed ? 'true' : 'false'
+  });
+};
+
+export const loadFreeHintClaimed = async (puzzleId) => {
+  const { value } = await Preferences.get({ key: `free_hint_claimed_${puzzleId}` });
+  return value === 'true';
 };
 
 // --- THEME BADGE PROGRESS HELPERS ---

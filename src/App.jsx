@@ -6,7 +6,6 @@ import PuzzleList from './components/PuzzleList';
 import { getWordAt, getSolvedClueIds } from './utils/crossword';
 import { 
   loadPuzzleProgress, 
-  savePuzzleProgress,
   loadHintsRemaining, 
   saveHintsRemaining, 
   loadUnlockedHints, 
@@ -18,6 +17,8 @@ import {
   loadHintsEmptyTimestamp,
   saveHintsEmptyTimestamp,
   clearHintsEmptyTimestamp,
+  loadFreeHintClaimed,
+  saveFreeHintClaimed,
   resetPuzzleDataIfDatasetChanged
 } from './utils/storage';
 import { loadThemeProgress, saveThemeProgress } from './utils/storage';
@@ -31,7 +32,7 @@ function App() {
   const [direction, setDirection] = useState('across');
   const [selectedCell, setSelectedCell] = useState(null);
   const [answers, setAnswers] = useState([]);
-  const [hintsRemaining, setHintsRemaining] = useState(3);
+  const [hintsRemaining, setHintsRemaining] = useState(4);
   const [unlockedHints, setUnlockedHints] = useState(new Set());
   const [revealedIndices, setRevealedIndices] = useState(new Set());
   const [isHintModalOpen, setIsHintModalOpen] = useState(false);
@@ -39,6 +40,8 @@ function App() {
   const [isPuzzleAlreadyCompleted, setIsPuzzleAlreadyCompleted] = useState(false);
   const [puzzlesIndex, setPuzzlesIndex] = useState([]);
   const [badgeUnlockInfo, setBadgeUnlockInfo] = useState(null);
+  const [hasUsedFreeHint, setHasUsedFreeHint] = useState(false);
+  const BONUS_HINT_COOLDOWN_MS = 12 * 60 * 60 * 1000;
 
   // Helper to handle bonus hint timeout
   const checkAndAwardBonusHint = async () => {
@@ -46,9 +49,8 @@ function App() {
     if (!emptyTs) return;
     
     const now = Date.now();
-    const TWENTY_THREE_HOURS = 23 * 60 * 60 * 1000;
-    
-    if (now - emptyTs >= TWENTY_THREE_HOURS) {
+
+    if (now - emptyTs >= BONUS_HINT_COOLDOWN_MS) {
       setHintsRemaining(prev => {
         const newCount = prev + 1;
         saveHintsRemaining(newCount);
@@ -120,6 +122,9 @@ function App() {
       
       const unlocked = await loadUnlockedHints(id);
       setUnlockedHints(unlocked);
+
+      const freeHintClaimed = await loadFreeHintClaimed(id);
+      setHasUsedFreeHint(freeHintClaimed);
       
       const revealed = await loadRevealedIndices(id);
       setRevealedIndices(revealed);
@@ -138,6 +143,7 @@ function App() {
     setCurrentView('menu');
     setPuzzleData(null);
     setBadgeUnlockInfo(null);
+    setHasUsedFreeHint(false);
   };
 
   const activeWord = puzzleData && selectedCell !== null
@@ -161,7 +167,7 @@ function App() {
         if (alreadyClaimed) return;
 
         setHintsRemaining(prev => {
-          const newCount = prev + 3;
+          const newCount = prev + 4;
           saveHintsRemaining(newCount); // Side effect inside state update is usually avoided, but here we need the exact new value
           return newCount;
         });
@@ -266,8 +272,13 @@ function App() {
   };
 
   const handleUnlockHint = async () => {
-    if (hintsRemaining > 0 && selectedClueId && !unlockedHints.has(selectedClueId)) {
+    if (selectedClueId && !unlockedHints.has(selectedClueId)) {
       const hintText = puzzleData?.hints?.[selectedClueId];
+      const shouldUseFreeHint = !hasUsedFreeHint;
+
+      if (!shouldUseFreeHint && hintsRemaining <= 0) {
+        return;
+      }
       
       // If no hint available, don't charge the user
       if (!hintText) {
@@ -278,12 +289,22 @@ function App() {
         return;
       }
 
-      const newCount = hintsRemaining - 1;
-      setHintsRemaining(newCount);
-      await saveHintsRemaining(newCount);
-      
-      if (newCount === 0) {
-        await handleHintsDepleted();
+      if (shouldUseFreeHint) {
+        setHasUsedFreeHint(true);
+        await saveFreeHintClaimed(puzzleData.id, true);
+        setToastInfo({
+          message: 'First hint on this puzzle is free.',
+          icon: '✨',
+          type: 'bonus'
+        });
+      } else {
+        const newCount = hintsRemaining - 1;
+        setHintsRemaining(newCount);
+        await saveHintsRemaining(newCount);
+
+        if (newCount === 0) {
+          await handleHintsDepleted();
+        }
       }
       
       const newUnlocked = new Set(unlockedHints);
@@ -307,9 +328,9 @@ function App() {
         notifications: [
           {
             title: "Bonus Hint Available!",
-            body: "Looks like you were stuck. A bonus hint is waiting for you in Nightcrossing! 💡",
+            body: "A bonus hint is ready for your next Nightcrossing clue.",
             id: 1,
-            schedule: { at: new Date(now + 24 * 60 * 60 * 1000) },
+            schedule: { at: new Date(now + BONUS_HINT_COOLDOWN_MS) },
             sound: null,
             attachments: null,
             actionTypeId: "",
@@ -460,6 +481,7 @@ function App() {
             onRevealLetter={handleRevealLetter}
             isWordSolved={activeWord?.isCorrect}
             hintsRemaining={hintsRemaining}
+            hasFreeHintAvailable={!hasUsedFreeHint}
           />
         </>
       )}

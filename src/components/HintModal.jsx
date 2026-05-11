@@ -9,7 +9,8 @@ const HintModal = ({
   onUnlock, 
   onRevealLetter,
   isWordSolved,
-  hintsRemaining 
+  hintsRemaining,
+  hasFreeHintAvailable
 }) => {
   if (!isOpen) return null;
 
@@ -37,14 +38,14 @@ const HintModal = ({
           ) : (
             <div className="hint-locked">
               <p className="hint-description">
-                Stuck? Unlock a hint to help you solve this word. You can earn more hints by solving puzzles!
+                Stuck? Unlock a hint to help you solve this word. You can earn more hints by solving puzzles.
               </p>
               <button 
                 className="unlock-btn" 
                 onClick={onUnlock}
-                disabled={hintsRemaining <= 0}
+                disabled={!hasFreeHintAvailable && hintsRemaining <= 0}
               >
-                Unlock Hint (-1 💡)
+                {hasFreeHintAvailable ? 'Unlock Hint (Free ✨)' : 'Unlock Hint (-1 💡)'}
               </button>
             </div>
           )}
@@ -65,7 +66,7 @@ const HintModal = ({
             </div>
           )}
 
-          {hintsRemaining <= 0 && (
+          {hintsRemaining <= 0 && !hasFreeHintAvailable && (
             <p className="hint-error">You're out of hints! Complete a puzzle to earn more.</p>
           )}
         </div>

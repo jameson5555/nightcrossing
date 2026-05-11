@@ -36,12 +36,31 @@ const ALLOW_EMERGENCY_FALLBACK = process.env.NC_ALLOW_EMERGENCY_FALLBACK === '1'
 const ATTEMPT_SCALE = Number.isFinite(Number(process.env.NC_LAYOUT_ATTEMPT_SCALE))
   ? Math.max(0.2, Math.min(2, Number(process.env.NC_LAYOUT_ATTEMPT_SCALE)))
   : 1;
+const LONG_WORD_LENGTH = Number.isFinite(Number(process.env.NC_LONG_WORD_LENGTH))
+  ? Math.max(7, Math.min(12, Number(process.env.NC_LONG_WORD_LENGTH)))
+  : 8;
+const VERY_LONG_WORD_LENGTH = Number.isFinite(Number(process.env.NC_VERY_LONG_WORD_LENGTH))
+  ? Math.max(LONG_WORD_LENGTH + 1, Math.min(14, Number(process.env.NC_VERY_LONG_WORD_LENGTH)))
+  : 10;
+const MIN_LONG_WORD_INTERSECTIONS = Number.isFinite(Number(process.env.NC_MIN_LONG_WORD_INTERSECTIONS))
+  ? Math.max(1, Math.min(4, Number(process.env.NC_MIN_LONG_WORD_INTERSECTIONS)))
+  : 2;
+const TARGET_VERY_LONG_WORD_INTERSECTIONS = Number.isFinite(Number(process.env.NC_TARGET_VERY_LONG_WORD_INTERSECTIONS))
+  ? Math.max(MIN_LONG_WORD_INTERSECTIONS, Math.min(5, Number(process.env.NC_TARGET_VERY_LONG_WORD_INTERSECTIONS)))
+  : 3;
+const MIN_LONG_WORD_CROSSABILITY = Number.isFinite(Number(process.env.NC_MIN_LONG_WORD_CROSSABILITY))
+  ? Math.max(0.4, Math.min(2.5, Number(process.env.NC_MIN_LONG_WORD_CROSSABILITY)))
+  : 0.9;
 
 const SCORE_WEIGHTS = {
-  minIntersection: 32,
-  avgIntersection: 44,
+  minIntersection: 38,
+  avgIntersection: 50,
   totalIntersection: 7,
-  minTwoBonus: 36,
+  minTwoBonus: 42,
+  longWordTwoPlusBonus: 14,
+  veryLongWordThreePlusBonus: 18,
+  longWordMissPenalty: 20,
+  veryLongWordMissPenalty: 22,
   wordCount: 16,
   placedRatio: 26,
   wordFloorBonus: 18,
@@ -245,21 +264,26 @@ function pickCandidateSubset(words, maxWords, letterFrequency) {
     const crossability = wordCrossabilityScore(word.answer, letterFrequency);
     const themeScore = themeRelevanceScore(word);
     const lenSuitability =
-      len <= 4 ? 1.5 :
-      len <= 7 ? 1.55 :
+      len <= 4 ? 1.25 :
+      len <= 7 ? 1.8 :
       len <= 9 ? 0.95 :
-      len <= 10 ? 0.35 :
+      len <= 10 ? 0.15 :
       0;
-    const priority = (crossability * 2.8) + (themeScore * 1.5) + lenSuitability;
-    return { word, len, priority };
+    const priority = (crossability * 3.1) + (themeScore * 1.4) + lenSuitability;
+    return { word, len, crossability, priority };
   });
 
-  const long = shuffleArray(scored.filter(item => item.len >= 8)).sort((a, b) => b.priority - a.priority);
+  const longStrong = shuffleArray(
+    scored.filter(item => item.len >= LONG_WORD_LENGTH && item.crossability >= MIN_LONG_WORD_CROSSABILITY)
+  ).sort((a, b) => b.priority - a.priority);
+  const longWeak = shuffleArray(
+    scored.filter(item => item.len >= LONG_WORD_LENGTH && item.crossability < MIN_LONG_WORD_CROSSABILITY)
+  ).sort((a, b) => b.priority - a.priority);
   const medium = shuffleArray(scored.filter(item => item.len >= 5 && item.len <= 7)).sort((a, b) => b.priority - a.priority);
   const short = shuffleArray(scored.filter(item => item.len <= 4)).sort((a, b) => b.priority - a.priority);
 
-  const targetLong = Math.min(long.length, Math.max(1, Math.round(maxWords * 0.08)));
-  const targetShort = Math.min(short.length, Math.max(3, Math.round(maxWords * 0.4)));
+  const targetLong = Math.min(longStrong.length, Math.max(0, Math.round(maxWords * 0.06)));
+  const targetShort = Math.min(short.length, Math.max(2, Math.round(maxWords * 0.33)));
   const targetMedium = Math.max(0, maxWords - targetLong - targetShort);
 
   const selected = [];
@@ -276,11 +300,11 @@ function pickCandidateSubset(words, maxWords, letterFrequency) {
     }
   };
 
-  takeFromBucket(long, targetLong);
+  takeFromBucket(longStrong, targetLong);
   takeFromBucket(medium, targetMedium);
   takeFromBucket(short, targetShort);
 
-  const leftovers = shuffleArray(scored)
+  const leftovers = shuffleArray([...medium, ...short, ...longWeak, ...longStrong])
     .filter(item => !selectedSet.has(item.word.answer))
     .sort((a, b) => b.priority - a.priority);
 
@@ -300,9 +324,17 @@ function scaledAttempts(baseAttempts) {
 }
 
 // ─── Puzzle Generation Engine ──────────────────────────────────────────────
-function generateBestLayout(words, attempts = DEFAULT_LAYOUT_ATTEMPTS, maxWords = 18, minPlacedWords = MIN_PLACED_WORDS) {
+function generateBestLayout(
+  words,
+  attempts = DEFAULT_LAYOUT_ATTEMPTS,
+  maxWords = 18,
+  minPlacedWords = MIN_PLACED_WORDS,
+  options = {}
+) {
   let best = null;
   let bestScore = -1000;
+  const enforceLongIntersections = options.enforceLongIntersections ?? true;
+  const allowLongMisses = options.allowLongMisses ?? 0;
 
   // Pre-filter: reject weak, unsafe, or low-quality clue entries.
   const preFiltered = words.filter(w => {
@@ -405,6 +437,33 @@ function generateBestLayout(words, attempts = DEFAULT_LAYOUT_ATTEMPTS, maxWords 
     const avgIntersections = layout.result.length > 0 ? sumIntersections / layout.result.length : 0;
     const totalIntersections = sumIntersections / 2;
 
+    let longWordCount = 0;
+    let longWordsAtMin = 0;
+    let veryLongWordCount = 0;
+    let veryLongWordsAtTarget = 0;
+
+    for (let idx = 0; idx < layout.result.length; idx++) {
+      const answerLength = (layout.result[idx]?.answer || '').length;
+      const crossings = wordIntersections[idx] || 0;
+      if (answerLength >= LONG_WORD_LENGTH) {
+        longWordCount++;
+        if (crossings >= MIN_LONG_WORD_INTERSECTIONS) {
+          longWordsAtMin++;
+        }
+      }
+      if (answerLength >= VERY_LONG_WORD_LENGTH) {
+        veryLongWordCount++;
+        if (crossings >= TARGET_VERY_LONG_WORD_INTERSECTIONS) {
+          veryLongWordsAtTarget++;
+        }
+      }
+    }
+
+    const longWordMisses = Math.max(0, longWordCount - longWordsAtMin);
+    if (enforceLongIntersections && longWordMisses > allowLongMisses) {
+      continue;
+    }
+
     const total = layout.rows * layout.cols;
     const density = filled / total;
     const placedRatio = layout.result.length / maxWords;
@@ -421,6 +480,12 @@ function generateBestLayout(words, attempts = DEFAULT_LAYOUT_ATTEMPTS, maxWords 
       (totalIntersections * SCORE_WEIGHTS.totalIntersection) +
       (minIntersections >= 2 ? SCORE_WEIGHTS.minTwoBonus : 0);
 
+    const longWordScore =
+      (longWordsAtMin * SCORE_WEIGHTS.longWordTwoPlusBonus) +
+      (veryLongWordsAtTarget * SCORE_WEIGHTS.veryLongWordThreePlusBonus) -
+      (longWordMisses * SCORE_WEIGHTS.longWordMissPenalty) -
+      (Math.max(0, veryLongWordCount - veryLongWordsAtTarget) * SCORE_WEIGHTS.veryLongWordMissPenalty);
+
     const wordCountScore =
       (layout.result.length * SCORE_WEIGHTS.wordCount) +
       (placedRatio * SCORE_WEIGHTS.placedRatio);
@@ -430,7 +495,7 @@ function generateBestLayout(words, attempts = DEFAULT_LAYOUT_ATTEMPTS, maxWords 
 
     const densityScore = density * SCORE_WEIGHTS.density;
 
-    const score = overlapScore + wordCountScore + wordFloorBonus + densityScore + squareBonus - ratioPenalty;
+    const score = overlapScore + longWordScore + wordCountScore + wordFloorBonus + densityScore + squareBonus - ratioPenalty;
 
     if (score > bestScore) {
       bestScore = score;
@@ -583,7 +648,13 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
       maxWordsTry,
       Math.max(PREFERRED_MIN_PLACED_WORDS, Math.floor(maxWordsTry * 0.7))
     );
-    const candidate = generateBestLayout(themedWords, attempts, maxWordsTry, requiredPlaced);
+    const candidate = generateBestLayout(
+      themedWords,
+      attempts,
+      maxWordsTry,
+      requiredPlaced,
+      { enforceLongIntersections: true, allowLongMisses: 0 }
+    );
     if (candidate && layoutPassesThemeGuardrails(candidate, pools.relevanceByAnswer)) {
       const candidateScore = typeof candidate._engineScore === 'number' ? candidate._engineScore : -Infinity;
       if (candidateScore > bestScore) {
@@ -606,7 +677,8 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
       themedWords,
       scaledAttempts(2500),
       MIN_WORD_TARGET,
-      Math.min(MIN_PLACED_WORDS, MIN_WORD_TARGET)
+      Math.min(MIN_PLACED_WORDS, MIN_WORD_TARGET),
+      { enforceLongIntersections: true, allowLongMisses: 1 }
     );
     if (fallback && layoutPassesThemeGuardrails(fallback, pools.relevanceByAnswer)) {
       layout = fallback;
@@ -619,7 +691,8 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
       themedWords,
       scaledAttempts(2200),
       MIN_WORD_TARGET,
-      Math.max(6, MIN_PLACED_WORDS - 1)
+      Math.max(6, MIN_PLACED_WORDS - 1),
+      { enforceLongIntersections: false }
     );
     if (fallback && layoutPassesThemeGuardrails(fallback, pools.relevanceByAnswer)) {
       layout = fallback;
@@ -632,7 +705,8 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
       themedWords,
       scaledAttempts(2200),
       Math.min(14, themedWords.length),
-      PREFERRED_MIN_PLACED_WORDS
+      PREFERRED_MIN_PLACED_WORDS,
+      { enforceLongIntersections: true, allowLongMisses: 1 }
     );
     if (recovery && layoutPassesThemeGuardrails(recovery, pools.relevanceByAnswer)) {
       layout = recovery;
@@ -646,7 +720,8 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
       availableWords,
       scaledAttempts(2200),
       backupTarget,
-      Math.max(6, MIN_PLACED_WORDS - 1)
+      Math.max(6, MIN_PLACED_WORDS - 1),
+      { enforceLongIntersections: false }
     );
     if (backup && layoutPassesThemeGuardrails(backup, pools.relevanceByAnswer)) {
       layout = backup;
@@ -659,7 +734,8 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
       availableWords,
       scaledAttempts(2800),
       Math.min(6, availableWords.length),
-      Math.min(6, availableWords.length)
+      Math.min(6, availableWords.length),
+      { enforceLongIntersections: false }
     );
     if (emergency) {
       layout = emergency;

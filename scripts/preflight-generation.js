@@ -10,6 +10,7 @@ const PUZZLES_DIR = path.join(__dirname, '../public/data/puzzles');
 const DEFAULT_TARGET_PUZZLES = 3;
 const EXPECTED_WORDS_PER_PUZZLE = 8;
 const MAX_EXTENDED_PER_PUZZLE = 2;
+const MAX_LONG_WORD_SHARE = 0.35;
 
 function parseArgs(argv) {
   const args = {
@@ -106,6 +107,9 @@ export function analyzeThemeReadiness(theme, consumedAnswers = new Set(), target
   ];
 
   const lengths = summarizeLengths(effectiveWords);
+  const longShare = effectiveWords.length > 0
+    ? (lengths.long + lengths.extra) / effectiveWords.length
+    : 0;
   const letterFrequency = buildLetterFrequency(effectiveWords);
   const avgCrossability = effectiveWords.length === 0
     ? 0
@@ -120,7 +124,8 @@ export function analyzeThemeReadiness(theme, consumedAnswers = new Set(), target
   let penalties = 0;
   if (lengths.medium < targetPuzzles * 3) penalties++;
   if ((lengths.short + lengths.medium) < targetPuzzles * 5) penalties++;
-  if (avgCrossability < 1.15) penalties++;
+  if (avgCrossability < 1.22) penalties++;
+  if (longShare > MAX_LONG_WORD_SHARE) penalties++;
 
   const projectedPuzzles = Math.max(0, projectedByWords - penalties);
 

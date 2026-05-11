@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import { generateThemedPuzzle, THEMES, scoreWordForTheme } from './proceduralEngine.js';
 import { runGenerationPreflight } from './preflight-generation.js';
 import { fetchThemeWords } from './fetch-theme-words.js';
+import { computePuzzleMetrics } from './puzzleMetrics.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,6 +30,15 @@ const ALLOW_WEAK_THEMES = process.argv.includes('--allow-weak-themes');
 const SKIP_PREFLIGHT = process.argv.includes('--skip-preflight');
 const SKIP_ENRICHMENT = process.argv.includes('--skip-enrichment');
 const ALLOW_REPEAT_ANSWERS = process.argv.includes('--allow-repeat-answers');
+const MAX_LAYOUT_QUALITY_RETRIES = Number.isFinite(Number(process.env.NC_MAX_LAYOUT_QUALITY_RETRIES))
+  ? Math.max(1, Math.min(8, Number(process.env.NC_MAX_LAYOUT_QUALITY_RETRIES)))
+  : 3;
+const MIN_LONG_TWO_PLUS_RATE = Number.isFinite(Number(process.env.NC_MIN_LONG_TWO_PLUS_RATE))
+  ? Math.max(0, Math.min(1, Number(process.env.NC_MIN_LONG_TWO_PLUS_RATE)))
+  : 0.72;
+const MIN_VERY_LONG_THREE_PLUS_RATE = Number.isFinite(Number(process.env.NC_MIN_VERY_LONG_THREE_PLUS_RATE))
+  ? Math.max(0, Math.min(1, Number(process.env.NC_MIN_VERY_LONG_THREE_PLUS_RATE)))
+  : 0.5;
 
 function addPuzzleAnswersToSet(puzzleData, targetSet) {
   if (!puzzleData?.answers) return;
@@ -42,6 +52,14 @@ function addPuzzleAnswersToSet(puzzleData, targetSet) {
 
 function scoreWordRelevance(wordObj) {
   return typeof wordObj.themeScore === 'number' ? wordObj.themeScore : 0;
+}
+
+function passesLayoutQualityGate(metrics) {
+  const longWordGate = metrics.longWordCount === 0 || metrics.longWordTwoPlusRate >= MIN_LONG_TWO_PLUS_RATE;
+  const veryLongWordGate =
+    metrics.veryLongWordCount === 0 ||
+    metrics.veryLongWordThreePlusRate >= MIN_VERY_LONG_THREE_PLUS_RATE;
+  return longWordGate && veryLongWordGate;
 }
 
 async function generateStarters() {
@@ -207,7 +225,21 @@ async function generateStarters() {
                break;
             }
 
-            const { puzzle, usedWords: placedWords } = generateThemedPuzzle(id, theme.name, availableWords);
+            let generated = null;
+            let generatedMetrics = null;
+            for (let attempt = 1; attempt <= MAX_LAYOUT_QUALITY_RETRIES; attempt++) {
+              const candidate = generateThemedPuzzle(id, theme.name, availableWords);
+              const candidateMetrics = computePuzzleMetrics(candidate.puzzle);
+              const accepted = passesLayoutQualityGate(candidateMetrics);
+
+              if (accepted || attempt === MAX_LAYOUT_QUALITY_RETRIES) {
+                generated = candidate;
+                generatedMetrics = candidateMetrics;
+                break;
+              }
+            }
+
+            const { puzzle, usedWords: placedWords } = generated;
             
             // Track the newly placed words so they aren't used in subsequent volumes
             placedWords.forEach(w => consumedWords.add(w));
@@ -232,7 +264,11 @@ async function generateStarters() {
               theme: puzzle.theme
             });
             
-            console.log(`--> Saved ${id} (used ${placedWords.length} words, pool remaining: ${availableWords.length - placedWords.length})`);
+            const longRatePct = (generatedMetrics.longWordTwoPlusRate * 100).toFixed(0);
+            const veryLongRatePct = (generatedMetrics.veryLongWordThreePlusRate * 100).toFixed(0);
+            console.log(
+              `--> Saved ${id} (used ${placedWords.length} words, pool remaining: ${availableWords.length - placedWords.length}, long 2+ cross: ${longRatePct}%, very long 3+ cross: ${veryLongRatePct}%)`
+            );
         }
     } catch (themeErr) {
         console.error(`\n❌ Failed to generate batch for theme [${theme.name}]:`, themeErr.message);

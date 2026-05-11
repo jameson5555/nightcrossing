@@ -66,6 +66,10 @@ function run() {
   console.log(`Avg density: ${formatNum(summary.avgDensity * 100)}%`);
   console.log(`Avg intersections: ${formatNum(summary.avgIntersections)}`);
   console.log(`Avg min intersections/word: ${formatNum(summary.avgMinIntersectionsPerWord)}`);
+  console.log(`Avg long words (>=8): ${formatNum(summary.avgLongWordCount)}`);
+  console.log(`Avg very long words (>=10): ${formatNum(summary.avgVeryLongWordCount)}`);
+  console.log(`Long words with 2+ crossings: ${formatNum(summary.avgLongWordTwoPlusRate * 100)}%`);
+  console.log(`Very long words with 3+ crossings: ${formatNum(summary.avgVeryLongWordThreePlusRate * 100)}%`);
   console.log(`Connected layouts: ${formatNum(summary.connectedRate * 100)}%`);
 
   console.log('\nGrid size distribution:');

@@ -12,6 +12,13 @@ const LOW_QUALITY_REGEXES = [
   /commonly\s+associated\s+with\b/i
 ];
 
+const COMPLEX_CLUE_REGEXES = [
+  /[;:]/,
+  /\([^)]*\)/,
+  /,.+,/,
+  /\b(archaic|obsolete|technical\s+term|mythological)\b/i
+];
+
 function normalized(str) {
   return (str || '').toLowerCase().replace(/[^a-z0-9]/g, '');
 }
@@ -27,6 +34,11 @@ export function containsProfanity(text) {
 export function isLowQualityClueText(text) {
   const value = text || '';
   return LOW_QUALITY_REGEXES.some(regex => regex.test(value));
+}
+
+export function isComplexClueText(text) {
+  const value = text || '';
+  return COMPLEX_CLUE_REGEXES.some(regex => regex.test(value));
 }
 
 export function hasAnswerLeakage(answer, clue) {
@@ -70,7 +82,7 @@ export function isWordEntryAcceptable(entry) {
     return { ok: false, reason: 'invalid-answer' };
   }
 
-  if (clue.length < 8 || clue.length > 120) {
+  if (clue.length < 8 || clue.length > 96) {
     return { ok: false, reason: 'invalid-clue-length' };
   }
 
@@ -84,6 +96,10 @@ export function isWordEntryAcceptable(entry) {
 
   if (isLowQualityClueText(clue) || isLowQualityClueText(hint)) {
     return { ok: false, reason: 'low-quality' };
+  }
+
+  if (isComplexClueText(clue)) {
+    return { ok: false, reason: 'clue-complexity' };
   }
 
   if (hasAnswerLeakage(answer, clue)) {
