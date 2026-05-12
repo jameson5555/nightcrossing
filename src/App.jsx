@@ -27,14 +27,12 @@ import { LocalNotifications } from '@capacitor/local-notifications';
 import { Capacitor } from '@capacitor/core';
 import HintModal from './components/HintModal';
 
-const TITLE_CROSSFADE_MS = 240;
+const TITLE_CROSSFADE_MS = 340;
 
 const clearTitleFadeTimers = (timersRef) => {
-  const { swap, cleanup } = timersRef.current;
+  const { swap } = timersRef.current;
   if (swap) clearTimeout(swap);
-  if (cleanup) clearTimeout(cleanup);
   timersRef.current.swap = null;
-  timersRef.current.cleanup = null;
 };
 
 const clearTitleFadeRafs = (rafsRef) => {
@@ -64,7 +62,7 @@ function App() {
   const [incomingHeaderTitle, setIncomingHeaderTitle] = useState(null);
   const [isTitleCrossfading, setIsTitleCrossfading] = useState(false);
   const BONUS_HINT_COOLDOWN_MS = 12 * 60 * 60 * 1000;
-  const titleFadeTimersRef = useRef({ swap: null, cleanup: null });
+  const titleFadeTimersRef = useRef({ swap: null });
   const titleFadeRafsRef = useRef({ startA: null, startB: null });
 
   const triggerHeaderTitleMorph = (nextTitle) => {
@@ -92,14 +90,9 @@ function App() {
 
     titleFadeTimersRef.current.swap = setTimeout(() => {
       setHeaderTitle(target);
+      setIncomingHeaderTitle(null);
       setIsTitleCrossfading(false);
       titleFadeTimersRef.current.swap = null;
-
-      // Remove the extra layer only after the fade back to steady state finishes.
-      titleFadeTimersRef.current.cleanup = setTimeout(() => {
-        setIncomingHeaderTitle(null);
-        titleFadeTimersRef.current.cleanup = null;
-      }, TITLE_CROSSFADE_MS);
     }, TITLE_CROSSFADE_MS);
   };
 
@@ -495,7 +488,7 @@ function App() {
         : '')
     : '';
   const titleModeClass = isPlayView ? 'puzzle-title' : 'menu-title';
-  const isTitleDebugEnabled = import.meta.env.DEV && typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('debugTitle') === '1';
+  const isTitleDebugEnabled = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('debugTitle') === '1';
 
   return (
     <div className="app-container animate-fade-in">
