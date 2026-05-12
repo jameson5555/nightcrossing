@@ -27,60 +27,18 @@ import { LocalNotifications } from '@capacitor/local-notifications';
 import { Capacitor } from '@capacitor/core';
 import HintModal from './components/HintModal';
 
-const TITLE_MORPH_DURATION_MS = 880;
-const TITLE_MORPH_GLYPHS = ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&-\'/';
+const TITLE_HANDOFF_MS = 220;
+const TITLE_SETTLE_MS = 680;
 
-const clamp01 = (value) => Math.min(1, Math.max(0, value));
-
-const easeInOutCubic = (value) => {
-  const t = clamp01(value);
-  return t < 0.5
-    ? 4 * t * t * t
-    : 1 - Math.pow(-2 * t + 2, 3) / 2;
-};
-
-const easeInOutSine = (value) => {
-  const t = clamp01(value);
-  return -(Math.cos(Math.PI * t) - 1) / 2;
-};
-
-const morphGlyph = (fromChar, toChar, progress, index) => {
-  if (fromChar === toChar || progress >= 1) return toChar;
-  if (progress <= 0) return fromChar;
-
-  if (fromChar === ' ' && progress < 0.26) return ' ';
-  if (toChar === ' ' && progress < 0.74) return fromChar;
-
-  const fromIndex = TITLE_MORPH_GLYPHS.indexOf(fromChar);
-  const toIndex = TITLE_MORPH_GLYPHS.indexOf(toChar);
-
-  if (fromIndex === -1 || toIndex === -1) {
-    return progress < 0.5 ? fromChar : toChar;
+const clearTitleSwapTimers = (timersRef) => {
+  if (timersRef.current.handoff) {
+    clearTimeout(timersRef.current.handoff);
+    timersRef.current.handoff = null;
   }
-
-  const baseIndex = fromIndex + (toIndex - fromIndex) * progress;
-  const shimmerAmplitude = (1 - progress) * 2.4;
-  const shimmer = Math.sin(index * 0.62 + progress * Math.PI * 3.2) * shimmerAmplitude;
-  const drift = Math.sin(index * 0.31 + progress * Math.PI) * (1 - progress) * 0.85;
-  const rawIndex = Math.round(baseIndex + shimmer + drift);
-  const glyphIndex = Math.max(0, Math.min(TITLE_MORPH_GLYPHS.length - 1, rawIndex));
-  return TITLE_MORPH_GLYPHS[glyphIndex];
-};
-
-const buildMorphTitleFrame = (fromText, toText, progress) => {
-  const from = (fromText || '').toUpperCase();
-  const to = (toText || '').toUpperCase();
-  const maxLength = Math.max(from.length, to.length);
-  let output = '';
-
-  for (let index = 0; index < maxLength; index += 1) {
-    const fromChar = from[index] || ' ';
-    const toChar = to[index] || ' ';
-    const staggered = clamp01(progress * 1.08 - index * 0.02);
-    output += morphGlyph(fromChar, toChar, staggered, index);
+  if (timersRef.current.settle) {
+    clearTimeout(timersRef.current.settle);
+    timersRef.current.settle = null;
   }
-
-  return output.trimEnd();
 };
 
 function App() {
@@ -99,44 +57,35 @@ function App() {
   const [badgeUnlockInfo, setBadgeUnlockInfo] = useState(null);
   const [hasUsedFreeHint, setHasUsedFreeHint] = useState(false);
   const [headerTitle, setHeaderTitle] = useState('Nightcrossing');
-  const [isHeaderTitleMorphing, setIsHeaderTitleMorphing] = useState(false);
+  const [incomingHeaderTitle, setIncomingHeaderTitle] = useState(null);
+  const [titleSwapPhase, setTitleSwapPhase] = useState('idle'); // idle | handoff | settle
   const BONUS_HINT_COOLDOWN_MS = 12 * 60 * 60 * 1000;
-  const headerTitleMorphRafRef = useRef(null);
+  const titleSwapTimersRef = useRef({ handoff: null, settle: null });
 
   const triggerHeaderTitleMorph = (nextTitle) => {
     const target = nextTitle || 'Nightcrossing';
 
-    if (headerTitleMorphRafRef.current) {
-      cancelAnimationFrame(headerTitleMorphRafRef.current);
-    }
-
-    if (headerTitle === target) {
-      setIsHeaderTitleMorphing(false);
+    if (headerTitle === target && !incomingHeaderTitle) {
+      setTitleSwapPhase('idle');
       return;
     }
 
-    setIsHeaderTitleMorphing(true);
-    const start = performance.now();
-    const fromTitle = headerTitle;
+    clearTitleSwapTimers(titleSwapTimersRef);
 
-    const step = (now) => {
-      const elapsed = now - start;
-      const progress = clamp01(elapsed / TITLE_MORPH_DURATION_MS);
-      const easedSine = easeInOutSine(progress);
-      const easedDream = clamp01(easedSine * 0.75 + easeInOutCubic(progress) * 0.25);
-      setHeaderTitle(buildMorphTitleFrame(fromTitle, target, easedDream));
+    setIncomingHeaderTitle(target);
+    setTitleSwapPhase('handoff');
 
-      if (progress < 1) {
-        headerTitleMorphRafRef.current = requestAnimationFrame(step);
-        return;
-      }
-
+    titleSwapTimersRef.current.handoff = setTimeout(() => {
       setHeaderTitle(target);
-      setIsHeaderTitleMorphing(false);
-      headerTitleMorphRafRef.current = null;
-    };
+      setIncomingHeaderTitle(null);
+      setTitleSwapPhase('settle');
+      titleSwapTimersRef.current.handoff = null;
 
-    headerTitleMorphRafRef.current = requestAnimationFrame(step);
+      titleSwapTimersRef.current.settle = setTimeout(() => {
+        setTitleSwapPhase('idle');
+        titleSwapTimersRef.current.settle = null;
+      }, TITLE_SETTLE_MS);
+    }, TITLE_HANDOFF_MS);
   };
 
   // Helper to handle bonus hint timeout
@@ -200,9 +149,7 @@ function App() {
 
   useEffect(() => {
     return () => {
-      if (headerTitleMorphRafRef.current) {
-        cancelAnimationFrame(headerTitleMorphRafRef.current);
-      }
+      clearTitleSwapTimers(titleSwapTimersRef);
     };
   }, []);
 
@@ -523,6 +470,12 @@ function App() {
   const hasVisibleTopClue = Boolean(displayedClue.text);
   const shouldCompactHeaderTitle = isPlayView && hasVisibleTopClue;
   const titleClueLabel = displayedClue.num ? `${displayedClue.num}${displayedClue.dir === 'across' ? 'a' : 'd'}` : '';
+  const titleForSizing = (incomingHeaderTitle || headerTitle || '').trim();
+  const titleLengthClass = titleForSizing.length > 30
+    ? 'title-very-long'
+    : titleForSizing.length > 22
+      ? 'title-long'
+      : '';
 
   return (
     <div className="app-container animate-fade-in">
@@ -539,9 +492,16 @@ function App() {
 
         <div className={`header-title-stack ${shouldCompactHeaderTitle ? 'compact' : 'expanded'}`}>
           <div className="title-row">
-            <h1 className={`logo-text top-logo-text ${isHeaderTitleMorphing ? 'morphing' : ''}`}>
-              {headerTitle}
-            </h1>
+            <div className={`title-layer-stack phase-${titleSwapPhase}`}>
+              <h1 className={`logo-text top-logo-text title-layer title-layer-current ${titleLengthClass}`}>
+                {headerTitle}
+              </h1>
+              {incomingHeaderTitle && (
+                <h1 className={`logo-text top-logo-text title-layer title-layer-next ${titleLengthClass}`}>
+                  {incomingHeaderTitle}
+                </h1>
+              )}
+            </div>
             {isPlayView && hasVisibleTopClue && titleClueLabel && (
               <span className={`title-clue-id ${isContentFading ? 'fading' : ''}`}>
                 {titleClueLabel}

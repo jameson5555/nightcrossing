@@ -55,6 +55,7 @@ html, body {
   width: 100%;
   max-width: 680px;
   margin: 0 auto;
+  container-type: inline-size;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -73,22 +74,35 @@ html, body {
   min-width: 0;
 }
 
+.title-layer-stack {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  display: grid;
+  place-items: center;
+}
+
+.title-layer {
+  grid-area: 1 / 1;
+  width: 100%;
+}
+
 .top-logo-text {
   margin: 0;
-  width: auto;
-  max-width: calc(100% - 56px);
+  width: 100%;
+  max-width: 100%;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
   transform-origin: center;
-  will-change: transform, letter-spacing, font-size, text-shadow;
+  will-change: transform, letter-spacing, font-size, text-shadow, opacity;
   transition: transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1), letter-spacing 240ms cubic-bezier(0.2, 0.8, 0.2, 1), font-size 240ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 180ms ease;
 }
 
 .header-title-stack.expanded .top-logo-text {
-  font-size: clamp(1.35rem, 4.2vw, 1.7rem);
-  letter-spacing: 4px;
+  font-size: clamp(1rem, 3.8vw, 1.72rem);
+  font-size: clamp(1rem, 3.6cqi, 1.72rem);
+  letter-spacing: clamp(1.2px, 0.58cqi, 4px);
   transform: scale(1);
 }
 
@@ -97,24 +111,70 @@ html, body {
 }
 
 .header-title-stack.compact .top-logo-text {
-  font-size: clamp(1rem, 3.5vw, 1.3rem);
-  letter-spacing: 2.2px;
+  font-size: clamp(0.84rem, 2.8vw, 1.18rem);
+  font-size: clamp(0.84rem, 2.6cqi, 1.18rem);
+  letter-spacing: clamp(0.8px, 0.38cqi, 2.2px);
   transform: scale(0.9);
 }
 
-.top-logo-text.morphing {
-  animation: dreamyTitleGlow 880ms ease-in-out;
+.header-title-stack.expanded .top-logo-text.title-long {
+  font-size: clamp(0.9rem, 3.1vw, 1.42rem);
+  font-size: clamp(0.9rem, 2.95cqi, 1.42rem);
+  letter-spacing: clamp(1px, 0.44cqi, 2.4px);
 }
 
-@keyframes dreamyTitleGlow {
+.header-title-stack.expanded .top-logo-text.title-very-long {
+  font-size: clamp(0.8rem, 2.55vw, 1.2rem);
+  font-size: clamp(0.8rem, 2.35cqi, 1.2rem);
+  letter-spacing: clamp(0.7px, 0.28cqi, 1.6px);
+}
+
+.header-title-stack.compact .top-logo-text.title-long {
+  font-size: clamp(0.76rem, 2.35vw, 1rem);
+  font-size: clamp(0.76rem, 2.2cqi, 1rem);
+  letter-spacing: clamp(0.65px, 0.24cqi, 1.4px);
+}
+
+.header-title-stack.compact .top-logo-text.title-very-long {
+  font-size: clamp(0.68rem, 2vw, 0.9rem);
+  font-size: clamp(0.68rem, 1.85cqi, 0.9rem);
+  letter-spacing: clamp(0.5px, 0.17cqi, 1.1px);
+}
+
+.title-layer-current {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.title-layer-next {
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+}
+
+.title-layer-stack.phase-handoff .title-layer-current {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+.title-layer-stack.phase-handoff .title-layer-next {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.title-layer-stack.phase-settle .title-layer-current {
+  animation: titleSettleGlow 680ms ease-out;
+}
+
+@keyframes titleSettleGlow {
   0% {
-    text-shadow: 0 0 5px rgba(0, 229, 255, 0.12), 0 0 10px rgba(90, 117, 255, 0.1);
+    text-shadow: 0 0 10px rgba(0, 229, 255, 0.24), 0 0 24px rgba(90, 117, 255, 0.22);
   }
-  50% {
-    text-shadow: 0 0 13px rgba(0, 229, 255, 0.34), 0 0 28px rgba(90, 117, 255, 0.26);
+  65% {
+    text-shadow: 0 0 6px rgba(0, 229, 255, 0.14), 0 0 12px rgba(90, 117, 255, 0.12);
   }
   100% {
-    text-shadow: 0 0 5px rgba(0, 229, 255, 0.12), 0 0 10px rgba(90, 117, 255, 0.1);
+    text-shadow: 0 0 3px rgba(0, 229, 255, 0.08), 0 0 8px rgba(90, 117, 255, 0.08);
   }
 }
 
