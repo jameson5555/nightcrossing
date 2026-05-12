@@ -27,20 +27,15 @@ import { LocalNotifications } from '@capacitor/local-notifications';
 import { Capacitor } from '@capacitor/core';
 import HintModal from './components/HintModal';
 
-const TITLE_CROSSFADE_MS = 340;
+const TITLE_FADE_OUT_MS = 220;
+const TITLE_FADE_IN_MS = 280;
 
 const clearTitleFadeTimers = (timersRef) => {
-  const { swap } = timersRef.current;
+  const { swap, settle } = timersRef.current;
   if (swap) clearTimeout(swap);
+  if (settle) clearTimeout(settle);
   timersRef.current.swap = null;
-};
-
-const clearTitleFadeRafs = (rafsRef) => {
-  const { startA, startB } = rafsRef.current;
-  if (startA) cancelAnimationFrame(startA);
-  if (startB) cancelAnimationFrame(startB);
-  rafsRef.current.startA = null;
-  rafsRef.current.startB = null;
+  timersRef.current.settle = null;
 };
 
 const getTitleLengthClass = (title) => {
@@ -66,41 +61,30 @@ function App() {
   const [badgeUnlockInfo, setBadgeUnlockInfo] = useState(null);
   const [hasUsedFreeHint, setHasUsedFreeHint] = useState(false);
   const [headerTitle, setHeaderTitle] = useState('Nightcrossing');
-  const [incomingHeaderTitle, setIncomingHeaderTitle] = useState(null);
-  const [isTitleCrossfading, setIsTitleCrossfading] = useState(false);
+  const [titleAnimState, setTitleAnimState] = useState('idle'); // idle | out | in
   const BONUS_HINT_COOLDOWN_MS = 12 * 60 * 60 * 1000;
-  const titleFadeTimersRef = useRef({ swap: null });
-  const titleFadeRafsRef = useRef({ startA: null, startB: null });
+  const titleFadeTimersRef = useRef({ swap: null, settle: null });
 
   const triggerHeaderTitleMorph = (nextTitle) => {
     const target = nextTitle || 'Nightcrossing';
-    const fromTitle = incomingHeaderTitle || headerTitle;
 
-    if (fromTitle === target) {
+    if (headerTitle === target && titleAnimState === 'idle') {
       return;
     }
 
     clearTitleFadeTimers(titleFadeTimersRef);
-    clearTitleFadeRafs(titleFadeRafsRef);
-    setHeaderTitle(fromTitle);
-    setIncomingHeaderTitle(target);
-    setIsTitleCrossfading(false);
-
-    // Ensure the incoming layer first mounts at opacity 0 before crossfading.
-    titleFadeRafsRef.current.startA = requestAnimationFrame(() => {
-      titleFadeRafsRef.current.startA = null;
-      titleFadeRafsRef.current.startB = requestAnimationFrame(() => {
-        setIsTitleCrossfading(true);
-        titleFadeRafsRef.current.startB = null;
-      });
-    });
+    setTitleAnimState('out');
 
     titleFadeTimersRef.current.swap = setTimeout(() => {
       setHeaderTitle(target);
-      setIncomingHeaderTitle(null);
-      setIsTitleCrossfading(false);
+      setTitleAnimState('in');
       titleFadeTimersRef.current.swap = null;
-    }, TITLE_CROSSFADE_MS);
+
+      titleFadeTimersRef.current.settle = setTimeout(() => {
+        setTitleAnimState('idle');
+        titleFadeTimersRef.current.settle = null;
+      }, TITLE_FADE_IN_MS);
+    }, TITLE_FADE_OUT_MS);
   };
 
   // Helper to handle bonus hint timeout
@@ -165,7 +149,6 @@ function App() {
   useEffect(() => {
     return () => {
       clearTitleFadeTimers(titleFadeTimersRef);
-      clearTitleFadeRafs(titleFadeRafsRef);
     };
   }, []);
 
@@ -487,7 +470,6 @@ function App() {
   const shouldCompactHeaderTitle = isPlayView && hasVisibleTopClue;
   const titleClueLabel = displayedClue.num ? `${displayedClue.num}${displayedClue.dir === 'across' ? 'a' : 'd'}` : '';
   const currentTitleLengthClass = isPlayView ? getTitleLengthClass(headerTitle) : '';
-  const incomingTitleLengthClass = isPlayView ? getTitleLengthClass(incomingHeaderTitle || headerTitle) : '';
   const titleModeClass = isPlayView ? 'puzzle-title' : 'menu-title';
   const isTitleDebugEnabled = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('debugTitle') === '1';
 
@@ -506,19 +488,9 @@ function App() {
 
         <div className={`header-title-stack ${shouldCompactHeaderTitle ? 'compact' : 'expanded'}`}>
           <div className="title-row">
-            <div className={`title-crossfade-wrap ${isTitleCrossfading ? 'is-crossfading' : ''} ${incomingHeaderTitle ? 'has-incoming' : ''}`}>
-              <h1 className={`logo-text top-logo-text title-crossfade-sizer ${titleModeClass} ${incomingTitleLengthClass}`} aria-hidden="true">
-                {incomingHeaderTitle || headerTitle}
-              </h1>
-              <h1 className={`logo-text top-logo-text title-layer title-layer-current ${titleModeClass} ${currentTitleLengthClass}`}>
-                {headerTitle}
-              </h1>
-              {incomingHeaderTitle && (
-                <h1 className={`logo-text top-logo-text title-layer title-layer-next ${titleModeClass} ${incomingTitleLengthClass}`}>
-                  {incomingHeaderTitle}
-                </h1>
-              )}
-            </div>
+            <h1 className={`logo-text top-logo-text ${titleModeClass} ${currentTitleLengthClass} title-anim-${titleAnimState}`}>
+              {headerTitle}
+            </h1>
             {isPlayView && hasVisibleTopClue && titleClueLabel && (
               <span className={`title-clue-id ${isContentFading ? 'fading' : ''}`}>
                 {titleClueLabel}
@@ -527,7 +499,7 @@ function App() {
 
             {isTitleDebugEnabled && (
               <div className="title-debug-pill" aria-hidden="true">
-                {isTitleCrossfading ? 'crossfade' : 'idle'} | {headerTitle}{incomingHeaderTitle ? ` -> ${incomingHeaderTitle}` : ''}
+                {titleAnimState} | {headerTitle}
               </div>
             )}
           </div>
