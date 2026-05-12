@@ -27,7 +27,7 @@ import { LocalNotifications } from '@capacitor/local-notifications';
 import { Capacitor } from '@capacitor/core';
 import HintModal from './components/HintModal';
 
-const TITLE_FADE_OUT_MS = 440;
+const TITLE_CROSSFADE_MS = 240;
 
 const clearTitleFadeTimers = (timersRef) => {
   if (timersRef.current.swap) {
@@ -52,25 +52,30 @@ function App() {
   const [badgeUnlockInfo, setBadgeUnlockInfo] = useState(null);
   const [hasUsedFreeHint, setHasUsedFreeHint] = useState(false);
   const [headerTitle, setHeaderTitle] = useState('Nightcrossing');
-  const [isTitleFadingOut, setIsTitleFadingOut] = useState(false);
+  const [incomingHeaderTitle, setIncomingHeaderTitle] = useState(null);
+  const [isTitleCrossfading, setIsTitleCrossfading] = useState(false);
   const BONUS_HINT_COOLDOWN_MS = 12 * 60 * 60 * 1000;
   const titleFadeTimersRef = useRef({ swap: null });
 
   const triggerHeaderTitleMorph = (nextTitle) => {
     const target = nextTitle || 'Nightcrossing';
+    const fromTitle = incomingHeaderTitle || headerTitle;
 
-    if (headerTitle === target) {
+    if (fromTitle === target) {
       return;
     }
 
     clearTitleFadeTimers(titleFadeTimersRef);
-    setIsTitleFadingOut(true);
+    setHeaderTitle(fromTitle);
+    setIncomingHeaderTitle(target);
+    setIsTitleCrossfading(true);
 
     titleFadeTimersRef.current.swap = setTimeout(() => {
       setHeaderTitle(target);
-      setIsTitleFadingOut(false);
+      setIncomingHeaderTitle(null);
+      setIsTitleCrossfading(false);
       titleFadeTimersRef.current.swap = null;
-    }, TITLE_FADE_OUT_MS);
+    }, TITLE_CROSSFADE_MS);
   };
 
   // Helper to handle bonus hint timeout
@@ -455,7 +460,7 @@ function App() {
   const hasVisibleTopClue = Boolean(displayedClue.text);
   const shouldCompactHeaderTitle = isPlayView && hasVisibleTopClue;
   const titleClueLabel = displayedClue.num ? `${displayedClue.num}${displayedClue.dir === 'across' ? 'a' : 'd'}` : '';
-  const titleForSizing = (headerTitle || '').trim();
+  const titleForSizing = (incomingHeaderTitle || headerTitle || '').trim();
   const titleLengthClass = isPlayView
     ? (titleForSizing.length > 30
       ? 'title-very-long'
@@ -480,9 +485,19 @@ function App() {
 
         <div className={`header-title-stack ${shouldCompactHeaderTitle ? 'compact' : 'expanded'}`}>
           <div className="title-row">
-            <h1 className={`logo-text top-logo-text ${isTitleFadingOut ? 'fade-out' : 'fade-in'} ${titleModeClass} ${titleLengthClass}`}>
-              {headerTitle}
-            </h1>
+            <div className={`title-crossfade-wrap ${isTitleCrossfading ? 'is-crossfading' : ''}`}>
+              <h1 className={`logo-text top-logo-text title-crossfade-sizer ${titleModeClass} ${titleLengthClass}`} aria-hidden="true">
+                {incomingHeaderTitle || headerTitle}
+              </h1>
+              <h1 className={`logo-text top-logo-text title-layer title-layer-current ${titleModeClass} ${titleLengthClass}`}>
+                {headerTitle}
+              </h1>
+              {incomingHeaderTitle && (
+                <h1 className={`logo-text top-logo-text title-layer title-layer-next ${titleModeClass} ${titleLengthClass}`}>
+                  {incomingHeaderTitle}
+                </h1>
+              )}
+            </div>
             {isPlayView && hasVisibleTopClue && titleClueLabel && (
               <span className={`title-clue-id ${isContentFading ? 'fading' : ''}`}>
                 {titleClueLabel}
