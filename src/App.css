@@ -66,7 +66,7 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
   min-width: 0;
 }
 
@@ -104,7 +104,7 @@ html, body {
 }
 
 .header-title-stack.compact {
-  gap: var(--spacing-xs);
+  gap: 6px;
 }
 
 .header-title-stack.compact .top-logo-text.puzzle-title {
@@ -212,7 +212,7 @@ html, body {
   grid-template-columns: minmax(0, 1fr) 34px;
   align-items: center;
   gap: 8px;
-  padding-left: 36px;
+  padding-left: 42px;
   font-family: var(--font-family-ui);
   transform: translateY(-10px);
   pointer-events: none;
