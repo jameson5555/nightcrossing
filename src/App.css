@@ -66,15 +66,12 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
   min-width: 0;
 }
 
 .top-logo-text {
   margin: 0;
-  flex: 1 1 auto;
-  min-width: 0;
-  width: 100%;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
@@ -112,7 +109,7 @@ html, body {
 .header-title-stack.compact .top-logo-text.puzzle-title {
   /* font-size: min(1.14rem, 3.2cqi);
   letter-spacing: min(2.1px, 0.38cqi); */
-  font-size: clamp(0.5rem, 3.5cqi, 1rem);
+  font-size: clamp(0.5rem, 4cqi, 1rem);
   /* transform: scale(0.75); */
 }
 
