@@ -38,13 +38,6 @@ const clearTitleFadeTimers = (timersRef) => {
   timersRef.current.settle = null;
 };
 
-const getTitleLengthClass = (title) => {
-  const normalized = (title || '').trim();
-  if (normalized.length > 30) return 'title-very-long';
-  if (normalized.length > 22) return 'title-long';
-  return '';
-};
-
 function App() {
   const [currentView, setCurrentView] = useState('menu'); // 'menu' | 'play'
   const [puzzleData, setPuzzleData] = useState(null);
@@ -469,9 +462,7 @@ function App() {
   const hasVisibleTopClue = Boolean(displayedClue.text);
   const shouldCompactHeaderTitle = isPlayView && hasVisibleTopClue;
   const titleClueLabel = displayedClue.num ? `${displayedClue.num}${displayedClue.dir === 'across' ? 'a' : 'd'}` : '';
-  const currentTitleLengthClass = isPlayView ? getTitleLengthClass(headerTitle) : '';
   const titleModeClass = isPlayView ? 'puzzle-title' : 'menu-title';
-  const isTitleDebugEnabled = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('debugTitle') === '1';
 
   return (
     <div className="app-container animate-fade-in">
@@ -488,19 +479,13 @@ function App() {
 
         <div className={`header-title-stack ${shouldCompactHeaderTitle ? 'compact' : 'expanded'}`}>
           <div className="title-row">
-            <h1 className={`logo-text top-logo-text ${titleModeClass} ${currentTitleLengthClass} title-anim-${titleAnimState}`}>
+            <h1 className={`logo-text top-logo-text ${titleModeClass} title-anim-${titleAnimState}`}>
               {headerTitle}
             </h1>
             {isPlayView && hasVisibleTopClue && titleClueLabel && (
               <span className={`title-clue-id ${isContentFading ? 'fading' : ''}`}>
                 {titleClueLabel}
               </span>
-            )}
-
-            {isTitleDebugEnabled && (
-              <div className="title-debug-pill" aria-hidden="true">
-                {titleAnimState} | {headerTitle}
-              </div>
             )}
           </div>
 

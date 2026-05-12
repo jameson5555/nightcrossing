@@ -98,13 +98,14 @@ html, body {
 }
 
 .top-logo-text.menu-title {
-  font-size: 1.5rem;
-  letter-spacing: 4px;
+  font-size: clamp(1.4rem, 3.2cqi, 2rem);
+  /* letter-spacing: 4px; */
 }
 
-.header-title-stack.expanded .top-logo-text.puzzle-title {
-  font-size: min(1.5rem, 3.9cqi);
-  letter-spacing: min(4px, 0.58cqi);
+.top-logo-text.puzzle-title {
+  /* font-size: min(1.5rem, 3.9cqi);
+  letter-spacing: min(4px, 0.58cqi); */
+  font-size: clamp(1.4rem, 3.2cqi, 2rem);
   transform: scale(1);
 }
 
@@ -113,29 +114,9 @@ html, body {
 }
 
 .header-title-stack.compact .top-logo-text.puzzle-title {
-  font-size: min(1.14rem, 3.2cqi);
-  letter-spacing: min(2.1px, 0.38cqi);
+  /* font-size: min(1.14rem, 3.2cqi);
+  letter-spacing: min(2.1px, 0.38cqi); */
   transform: scale(0.92);
-}
-
-.header-title-stack.expanded .top-logo-text.puzzle-title.title-long {
-  font-size: min(1.26rem, 3.15cqi);
-  letter-spacing: min(2.5px, 0.44cqi);
-}
-
-.header-title-stack.expanded .top-logo-text.puzzle-title.title-very-long {
-  font-size: min(1.08rem, 2.62cqi);
-  letter-spacing: min(1.7px, 0.28cqi);
-}
-
-.header-title-stack.compact .top-logo-text.puzzle-title.title-long {
-  font-size: min(0.98rem, 2.38cqi);
-  letter-spacing: min(1.4px, 0.24cqi);
-}
-
-.header-title-stack.compact .top-logo-text.puzzle-title.title-very-long {
-  font-size: min(0.88rem, 2.02cqi);
-  letter-spacing: min(1.1px, 0.17cqi);
 }
 
 @container (max-width: 470px) {
@@ -168,25 +149,6 @@ html, body {
 .title-clue-id.fading {
   opacity: 0;
   transform: translateY(-5px);
-}
-
-.title-debug-pill {
-  position: absolute;
-  top: -8px;
-  right: 6px;
-  max-width: min(70vw, 520px);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-family: var(--font-family-ui);
-  font-size: 0.62rem;
-  line-height: 1;
-  padding: 5px 7px;
-  border-radius: 999px;
-  color: rgba(255, 255, 255, 0.88);
-  background: rgba(0, 0, 0, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  pointer-events: none;
 }
 
 .app-main {
