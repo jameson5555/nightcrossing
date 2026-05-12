@@ -110,7 +110,7 @@ html, body {
 .header-title-stack.compact .top-logo-text.puzzle-title {
   /* font-size: min(1.14rem, 3.2cqi);
   letter-spacing: min(2.1px, 0.38cqi); */
-  font-size: clamp(0.5rem, 4cqi, 1rem);
+  font-size: clamp(0.5rem, 4.2cqi, 1rem);
   /* transform: scale(0.75); */
 }
 
@@ -122,7 +122,7 @@ html, body {
 } */
 
 .title-clue-id {
-  font-size: clamp(0.5rem, 3.8cqi, 1rem);
+  font-size: clamp(0.5rem, 4cqi, 1rem);
   text-transform: uppercase;
   color: var(--accent-primary);
   transition: opacity 180ms ease;
@@ -233,7 +233,7 @@ html, body {
 .floating-clue-text {
   width: 100%;
   color: var(--text-primary);
-  font-size: clamp(0.78rem, 2.6vw, 0.98rem);
+  font-size: clamp(0.78rem, 3.2cqi, 0.98rem);
   font-weight: 500;
   margin: 0;
   line-height: 1.3;

@@ -466,7 +466,7 @@ function App() {
 
   return (
     <div className="app-container animate-fade-in">
-      <header className={`app-header ${isPlayView ? 'glass-panel app-header-play' : 'app-header-menu'} ${shouldCompactHeaderTitle ? 'header-compact' : ''}`}>
+      <header className={`app-header ${isPlayView ? 'app-header-play' : 'app-header-menu'} ${shouldCompactHeaderTitle ? 'header-compact' : ''}`}>
         {isPlayView && (
           <button className="back-btn" onClick={handleBackToMenu} aria-label="Menu">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
