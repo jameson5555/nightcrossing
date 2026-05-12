@@ -18,7 +18,7 @@ html, body {
   justify-content: flex-start;
   align-items: center;
   position: relative;
-  min-height: 80px;
+  min-height: 70px;
   flex-shrink: 0;
   overflow: hidden;
   /* padding: 0 var(--spacing-md); */
@@ -27,11 +27,11 @@ html, body {
 
 .app-header-menu {
   justify-content: center;
-  min-height: 80px;
+  min-height: 70px;
 }
 
 .app-header-play {
-  min-height: 80px;
+  min-height: 70px;
 }
 
 .logo-text {
