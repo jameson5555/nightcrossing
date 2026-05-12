@@ -102,7 +102,7 @@ html, body {
   letter-spacing: min(4px, 0.58cqi); */
   font-size: clamp(1rem, 4cqi, 2.5rem);
   transform: scale(1);
-  padding-left: 36px;
+  max-width: calc(100% - 72px);
 }
 
 .header-title-stack.compact {
@@ -145,7 +145,6 @@ html, body {
 
 .title-clue-id.fading {
   opacity: 0;
-  transform: translateY(-5px);
 }
 
 .app-main {
