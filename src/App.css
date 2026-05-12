@@ -96,13 +96,17 @@ html, body {
   overflow: hidden;
   transform-origin: center;
   will-change: transform, letter-spacing, font-size, text-shadow, opacity;
-  transition: transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1), letter-spacing 240ms cubic-bezier(0.2, 0.8, 0.2, 1), font-size 240ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 180ms ease;
+  transition: transform 260ms cubic-bezier(0.22, 0.8, 0.22, 1), letter-spacing 260ms cubic-bezier(0.22, 0.8, 0.22, 1), font-size 260ms cubic-bezier(0.22, 0.8, 0.22, 1);
 }
 
-.header-title-stack.expanded .top-logo-text {
-  font-size: clamp(1rem, 3.8vw, 1.72rem);
-  font-size: clamp(1rem, 3.6cqi, 1.72rem);
-  letter-spacing: clamp(1.2px, 0.58cqi, 4px);
+.top-logo-text.menu-title {
+  font-size: 1.5rem;
+  letter-spacing: 4px;
+}
+
+.header-title-stack.expanded .top-logo-text.puzzle-title {
+  font-size: min(1.5rem, 3.9cqi);
+  letter-spacing: min(4px, 0.58cqi);
   transform: scale(1);
 }
 
@@ -110,51 +114,58 @@ html, body {
   gap: var(--spacing-xs);
 }
 
-.header-title-stack.compact .top-logo-text {
-  font-size: clamp(0.84rem, 2.8vw, 1.18rem);
-  font-size: clamp(0.84rem, 2.6cqi, 1.18rem);
-  letter-spacing: clamp(0.8px, 0.38cqi, 2.2px);
-  transform: scale(0.9);
+.header-title-stack.compact .top-logo-text.puzzle-title {
+  font-size: min(1.14rem, 3.2cqi);
+  letter-spacing: min(2.1px, 0.38cqi);
+  transform: scale(0.92);
 }
 
-.header-title-stack.expanded .top-logo-text.title-long {
-  font-size: clamp(0.9rem, 3.1vw, 1.42rem);
-  font-size: clamp(0.9rem, 2.95cqi, 1.42rem);
-  letter-spacing: clamp(1px, 0.44cqi, 2.4px);
+.header-title-stack.expanded .top-logo-text.puzzle-title.title-long {
+  font-size: min(1.26rem, 3.15cqi);
+  letter-spacing: min(2.5px, 0.44cqi);
 }
 
-.header-title-stack.expanded .top-logo-text.title-very-long {
-  font-size: clamp(0.8rem, 2.55vw, 1.2rem);
-  font-size: clamp(0.8rem, 2.35cqi, 1.2rem);
-  letter-spacing: clamp(0.7px, 0.28cqi, 1.6px);
+.header-title-stack.expanded .top-logo-text.puzzle-title.title-very-long {
+  font-size: min(1.08rem, 2.62cqi);
+  letter-spacing: min(1.7px, 0.28cqi);
 }
 
-.header-title-stack.compact .top-logo-text.title-long {
-  font-size: clamp(0.76rem, 2.35vw, 1rem);
-  font-size: clamp(0.76rem, 2.2cqi, 1rem);
-  letter-spacing: clamp(0.65px, 0.24cqi, 1.4px);
+.header-title-stack.compact .top-logo-text.puzzle-title.title-long {
+  font-size: min(0.98rem, 2.38cqi);
+  letter-spacing: min(1.4px, 0.24cqi);
 }
 
-.header-title-stack.compact .top-logo-text.title-very-long {
-  font-size: clamp(0.68rem, 2vw, 0.9rem);
-  font-size: clamp(0.68rem, 1.85cqi, 0.9rem);
-  letter-spacing: clamp(0.5px, 0.17cqi, 1.1px);
+.header-title-stack.compact .top-logo-text.puzzle-title.title-very-long {
+  font-size: min(0.88rem, 2.02cqi);
+  letter-spacing: min(1.1px, 0.17cqi);
 }
 
 .title-layer-current {
   opacity: 1;
   transform: translateY(0);
+  transition: opacity 220ms ease, transform 220ms cubic-bezier(0.22, 0.8, 0.22, 1);
 }
 
 .title-layer-next {
   opacity: 0;
   transform: translateY(8px);
   pointer-events: none;
+  transition: opacity 220ms ease, transform 220ms cubic-bezier(0.22, 0.8, 0.22, 1);
+}
+
+.title-layer-stack.phase-pre .title-layer-current {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.title-layer-stack.phase-pre .title-layer-next {
+  opacity: 0;
+  transform: translateY(8px);
 }
 
 .title-layer-stack.phase-handoff .title-layer-current {
   opacity: 0;
-  transform: translateY(-8px);
+  transform: translateY(-7px);
 }
 
 .title-layer-stack.phase-handoff .title-layer-next {
@@ -168,13 +179,20 @@ html, body {
 
 @keyframes titleSettleGlow {
   0% {
-    text-shadow: 0 0 10px rgba(0, 229, 255, 0.24), 0 0 24px rgba(90, 117, 255, 0.22);
+    text-shadow: 0 0 8px rgba(0, 229, 255, 0.2), 0 0 18px rgba(90, 117, 255, 0.19);
   }
   65% {
-    text-shadow: 0 0 6px rgba(0, 229, 255, 0.14), 0 0 12px rgba(90, 117, 255, 0.12);
+    text-shadow: 0 0 4px rgba(0, 229, 255, 0.12), 0 0 10px rgba(90, 117, 255, 0.1);
   }
   100% {
     text-shadow: 0 0 3px rgba(0, 229, 255, 0.08), 0 0 8px rgba(90, 117, 255, 0.08);
+  }
+}
+
+@container (max-width: 470px) {
+  .top-logo-text.menu-title {
+    font-size: 1.4rem;
+    letter-spacing: 3.2px;
   }
 }
 

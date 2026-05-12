@@ -41,6 +41,13 @@ const clearTitleSwapTimers = (timersRef) => {
   }
 };
 
+const clearTitleSwapRaf = (rafRef) => {
+  if (rafRef.current) {
+    cancelAnimationFrame(rafRef.current);
+    rafRef.current = null;
+  }
+};
+
 function App() {
   const [currentView, setCurrentView] = useState('menu'); // 'menu' | 'play'
   const [puzzleData, setPuzzleData] = useState(null);
@@ -58,9 +65,10 @@ function App() {
   const [hasUsedFreeHint, setHasUsedFreeHint] = useState(false);
   const [headerTitle, setHeaderTitle] = useState('Nightcrossing');
   const [incomingHeaderTitle, setIncomingHeaderTitle] = useState(null);
-  const [titleSwapPhase, setTitleSwapPhase] = useState('idle'); // idle | handoff | settle
+  const [titleSwapPhase, setTitleSwapPhase] = useState('idle'); // idle | pre | handoff | settle
   const BONUS_HINT_COOLDOWN_MS = 12 * 60 * 60 * 1000;
   const titleSwapTimersRef = useRef({ handoff: null, settle: null });
+  const titleSwapRafRef = useRef(null);
 
   const triggerHeaderTitleMorph = (nextTitle) => {
     const target = nextTitle || 'Nightcrossing';
@@ -71,21 +79,30 @@ function App() {
     }
 
     clearTitleSwapTimers(titleSwapTimersRef);
+    clearTitleSwapRaf(titleSwapRafRef);
 
     setIncomingHeaderTitle(target);
-    setTitleSwapPhase('handoff');
+    setTitleSwapPhase('pre');
 
-    titleSwapTimersRef.current.handoff = setTimeout(() => {
-      setHeaderTitle(target);
-      setIncomingHeaderTitle(null);
-      setTitleSwapPhase('settle');
-      titleSwapTimersRef.current.handoff = null;
+    // Allow the incoming layer to mount in its initial state before animating to handoff.
+    titleSwapRafRef.current = requestAnimationFrame(() => {
+      titleSwapRafRef.current = requestAnimationFrame(() => {
+        setTitleSwapPhase('handoff');
+        titleSwapRafRef.current = null;
 
-      titleSwapTimersRef.current.settle = setTimeout(() => {
-        setTitleSwapPhase('idle');
-        titleSwapTimersRef.current.settle = null;
-      }, TITLE_SETTLE_MS);
-    }, TITLE_HANDOFF_MS);
+        titleSwapTimersRef.current.handoff = setTimeout(() => {
+          setHeaderTitle(target);
+          setIncomingHeaderTitle(null);
+          setTitleSwapPhase('settle');
+          titleSwapTimersRef.current.handoff = null;
+
+          titleSwapTimersRef.current.settle = setTimeout(() => {
+            setTitleSwapPhase('idle');
+            titleSwapTimersRef.current.settle = null;
+          }, TITLE_SETTLE_MS);
+        }, TITLE_HANDOFF_MS);
+      });
+    });
   };
 
   // Helper to handle bonus hint timeout
@@ -150,6 +167,7 @@ function App() {
   useEffect(() => {
     return () => {
       clearTitleSwapTimers(titleSwapTimersRef);
+      clearTitleSwapRaf(titleSwapRafRef);
     };
   }, []);
 
@@ -471,11 +489,14 @@ function App() {
   const shouldCompactHeaderTitle = isPlayView && hasVisibleTopClue;
   const titleClueLabel = displayedClue.num ? `${displayedClue.num}${displayedClue.dir === 'across' ? 'a' : 'd'}` : '';
   const titleForSizing = (incomingHeaderTitle || headerTitle || '').trim();
-  const titleLengthClass = titleForSizing.length > 30
-    ? 'title-very-long'
-    : titleForSizing.length > 22
-      ? 'title-long'
-      : '';
+  const titleLengthClass = isPlayView
+    ? (titleForSizing.length > 30
+      ? 'title-very-long'
+      : titleForSizing.length > 22
+        ? 'title-long'
+        : '')
+    : '';
+  const titleModeClass = isPlayView ? 'puzzle-title' : 'menu-title';
 
   return (
     <div className="app-container animate-fade-in">
@@ -493,11 +514,11 @@ function App() {
         <div className={`header-title-stack ${shouldCompactHeaderTitle ? 'compact' : 'expanded'}`}>
           <div className="title-row">
             <div className={`title-layer-stack phase-${titleSwapPhase}`}>
-              <h1 className={`logo-text top-logo-text title-layer title-layer-current ${titleLengthClass}`}>
+              <h1 className={`logo-text top-logo-text title-layer title-layer-current ${titleModeClass} ${titleLengthClass}`}>
                 {headerTitle}
               </h1>
               {incomingHeaderTitle && (
-                <h1 className={`logo-text top-logo-text title-layer title-layer-next ${titleLengthClass}`}>
+                <h1 className={`logo-text top-logo-text title-layer title-layer-next ${titleModeClass} ${titleLengthClass}`}>
                   {incomingHeaderTitle}
                 </h1>
               )}
