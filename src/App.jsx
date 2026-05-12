@@ -27,6 +27,59 @@ import { LocalNotifications } from '@capacitor/local-notifications';
 import { Capacitor } from '@capacitor/core';
 import HintModal from './components/HintModal';
 
+const TITLE_MORPH_DURATION_MS = 620;
+const TITLE_MORPH_GLYPHS = ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&-\'/';
+
+const clamp01 = (value) => Math.min(1, Math.max(0, value));
+
+const easeInOutCubic = (value) => {
+  const t = clamp01(value);
+  return t < 0.5
+    ? 4 * t * t * t
+    : 1 - Math.pow(-2 * t + 2, 3) / 2;
+};
+
+const morphGlyph = (fromChar, toChar, progress, index) => {
+  if (fromChar === toChar || progress >= 1) return toChar;
+  if (progress <= 0) return fromChar;
+
+  if (fromChar === ' ' && progress < 0.26) return ' ';
+  if (toChar === ' ' && progress < 0.74) return fromChar;
+
+  const fromIndex = TITLE_MORPH_GLYPHS.indexOf(fromChar);
+  const toIndex = TITLE_MORPH_GLYPHS.indexOf(toChar);
+
+  if (fromIndex === -1 || toIndex === -1) {
+    return progress < 0.5 ? fromChar : toChar;
+  }
+
+  const window = Math.max(0, Math.floor((1 - progress) * 3));
+  const wobble = window > 0
+    ? ((index + Math.floor(progress * 20)) % (window * 2 + 1)) - window
+    : 0;
+
+  const baseIndex = fromIndex + (toIndex - fromIndex) * progress;
+  const rawIndex = Math.round(baseIndex + wobble);
+  const glyphIndex = Math.max(0, Math.min(TITLE_MORPH_GLYPHS.length - 1, rawIndex));
+  return TITLE_MORPH_GLYPHS[glyphIndex];
+};
+
+const buildMorphTitleFrame = (fromText, toText, progress) => {
+  const from = (fromText || '').toUpperCase();
+  const to = (toText || '').toUpperCase();
+  const maxLength = Math.max(from.length, to.length);
+  let output = '';
+
+  for (let index = 0; index < maxLength; index += 1) {
+    const fromChar = from[index] || ' ';
+    const toChar = to[index] || ' ';
+    const staggered = clamp01(progress * 1.12 - index * 0.023);
+    output += morphGlyph(fromChar, toChar, staggered, index);
+  }
+
+  return output.trimEnd();
+};
+
 function App() {
   const [currentView, setCurrentView] = useState('menu'); // 'menu' | 'play'
   const [puzzleData, setPuzzleData] = useState(null);
@@ -45,18 +98,41 @@ function App() {
   const [headerTitle, setHeaderTitle] = useState('Nightcrossing');
   const [isHeaderTitleMorphing, setIsHeaderTitleMorphing] = useState(false);
   const BONUS_HINT_COOLDOWN_MS = 12 * 60 * 60 * 1000;
-  const headerTitleMorphTimeoutRef = useRef(null);
+  const headerTitleMorphRafRef = useRef(null);
 
   const triggerHeaderTitleMorph = (nextTitle) => {
-    if (headerTitleMorphTimeoutRef.current) {
-      clearTimeout(headerTitleMorphTimeoutRef.current);
+    const target = nextTitle || 'Nightcrossing';
+
+    if (headerTitleMorphRafRef.current) {
+      cancelAnimationFrame(headerTitleMorphRafRef.current);
     }
 
-    setHeaderTitle(nextTitle);
-    setIsHeaderTitleMorphing(true);
-    headerTitleMorphTimeoutRef.current = setTimeout(() => {
+    if (headerTitle === target) {
       setIsHeaderTitleMorphing(false);
-    }, 460);
+      return;
+    }
+
+    setIsHeaderTitleMorphing(true);
+    const start = performance.now();
+    const fromTitle = headerTitle;
+
+    const step = (now) => {
+      const elapsed = now - start;
+      const progress = clamp01(elapsed / TITLE_MORPH_DURATION_MS);
+      const eased = easeInOutCubic(progress);
+      setHeaderTitle(buildMorphTitleFrame(fromTitle, target, eased));
+
+      if (progress < 1) {
+        headerTitleMorphRafRef.current = requestAnimationFrame(step);
+        return;
+      }
+
+      setHeaderTitle(target);
+      setIsHeaderTitleMorphing(false);
+      headerTitleMorphRafRef.current = null;
+    };
+
+    headerTitleMorphRafRef.current = requestAnimationFrame(step);
   };
 
   // Helper to handle bonus hint timeout
@@ -120,8 +196,8 @@ function App() {
 
   useEffect(() => {
     return () => {
-      if (headerTitleMorphTimeoutRef.current) {
-        clearTimeout(headerTitleMorphTimeoutRef.current);
+      if (headerTitleMorphRafRef.current) {
+        cancelAnimationFrame(headerTitleMorphRafRef.current);
       }
     };
   }, []);
@@ -442,6 +518,7 @@ function App() {
   const isPlayView = currentView === 'play';
   const hasVisibleTopClue = Boolean(displayedClue.text);
   const shouldCompactHeaderTitle = isPlayView && hasVisibleTopClue;
+  const titleClueLabel = displayedClue.num ? `${displayedClue.num}${displayedClue.dir === 'across' ? 'a' : 'd'}` : '';
 
   return (
     <div className="app-container animate-fade-in">
@@ -457,13 +534,19 @@ function App() {
         )}
 
         <div className={`header-title-stack ${shouldCompactHeaderTitle ? 'compact' : 'expanded'}`}>
-          <h1 className={`logo-text top-logo-text ${isHeaderTitleMorphing ? 'morphing' : ''}`}>
-            {headerTitle}
-          </h1>
+          <div className="title-row">
+            <h1 className={`logo-text top-logo-text ${isHeaderTitleMorphing ? 'morphing' : ''}`}>
+              {headerTitle}
+            </h1>
+            {isPlayView && hasVisibleTopClue && titleClueLabel && (
+              <span className={`title-clue-id ${isContentFading ? 'fading' : ''}`}>
+                {titleClueLabel}
+              </span>
+            )}
+          </div>
 
           {isPlayView && (
             <div className={`floating-active-clue ${hasVisibleTopClue ? 'visible' : ''} ${isContentFading ? 'content-fade' : ''}`}>
-              <span className="floating-clue-num">{displayedClue.num ? `${displayedClue.num}${displayedClue.dir === 'across' ? 'a' : 'd'}` : ''}</span>
               <p className="floating-clue-text">{displayedClue.text || ''}</p>
               {activeClueText && (
                 <button
