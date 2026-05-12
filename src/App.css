@@ -120,7 +120,7 @@ html, body {
   transform-origin: center;
   will-change: transform, letter-spacing, font-size, text-shadow, opacity;
   opacity: 1;
-  transition: opacity 180ms ease, transform 260ms cubic-bezier(0.22, 0.8, 0.22, 1), letter-spacing 260ms cubic-bezier(0.22, 0.8, 0.22, 1), font-size 260ms cubic-bezier(0.22, 0.8, 0.22, 1);
+  transition: transform 260ms cubic-bezier(0.22, 0.8, 0.22, 1), letter-spacing 260ms cubic-bezier(0.22, 0.8, 0.22, 1), font-size 260ms cubic-bezier(0.22, 0.8, 0.22, 1);
 }
 
 .top-logo-text.menu-title {

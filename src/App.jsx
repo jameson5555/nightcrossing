@@ -30,10 +30,19 @@ import HintModal from './components/HintModal';
 const TITLE_CROSSFADE_MS = 240;
 
 const clearTitleFadeTimers = (timersRef) => {
-  if (timersRef.current.swap) {
-    clearTimeout(timersRef.current.swap);
-    timersRef.current.swap = null;
-  }
+  const { swap, cleanup } = timersRef.current;
+  if (swap) clearTimeout(swap);
+  if (cleanup) clearTimeout(cleanup);
+  timersRef.current.swap = null;
+  timersRef.current.cleanup = null;
+};
+
+const clearTitleFadeRafs = (rafsRef) => {
+  const { startA, startB } = rafsRef.current;
+  if (startA) cancelAnimationFrame(startA);
+  if (startB) cancelAnimationFrame(startB);
+  rafsRef.current.startA = null;
+  rafsRef.current.startB = null;
 };
 
 function App() {
@@ -55,7 +64,8 @@ function App() {
   const [incomingHeaderTitle, setIncomingHeaderTitle] = useState(null);
   const [isTitleCrossfading, setIsTitleCrossfading] = useState(false);
   const BONUS_HINT_COOLDOWN_MS = 12 * 60 * 60 * 1000;
-  const titleFadeTimersRef = useRef({ swap: null });
+  const titleFadeTimersRef = useRef({ swap: null, cleanup: null });
+  const titleFadeRafsRef = useRef({ startA: null, startB: null });
 
   const triggerHeaderTitleMorph = (nextTitle) => {
     const target = nextTitle || 'Nightcrossing';
@@ -66,15 +76,30 @@ function App() {
     }
 
     clearTitleFadeTimers(titleFadeTimersRef);
+    clearTitleFadeRafs(titleFadeRafsRef);
     setHeaderTitle(fromTitle);
     setIncomingHeaderTitle(target);
-    setIsTitleCrossfading(true);
+    setIsTitleCrossfading(false);
+
+    // Ensure the incoming layer first mounts at opacity 0 before crossfading.
+    titleFadeRafsRef.current.startA = requestAnimationFrame(() => {
+      titleFadeRafsRef.current.startA = null;
+      titleFadeRafsRef.current.startB = requestAnimationFrame(() => {
+        setIsTitleCrossfading(true);
+        titleFadeRafsRef.current.startB = null;
+      });
+    });
 
     titleFadeTimersRef.current.swap = setTimeout(() => {
       setHeaderTitle(target);
-      setIncomingHeaderTitle(null);
       setIsTitleCrossfading(false);
       titleFadeTimersRef.current.swap = null;
+
+      // Remove the extra layer only after the fade back to steady state finishes.
+      titleFadeTimersRef.current.cleanup = setTimeout(() => {
+        setIncomingHeaderTitle(null);
+        titleFadeTimersRef.current.cleanup = null;
+      }, TITLE_CROSSFADE_MS);
     }, TITLE_CROSSFADE_MS);
   };
 
@@ -140,6 +165,7 @@ function App() {
   useEffect(() => {
     return () => {
       clearTitleFadeTimers(titleFadeTimersRef);
+      clearTitleFadeRafs(titleFadeRafsRef);
     };
   }, []);
 
@@ -487,7 +513,7 @@ function App() {
           <div className="title-row">
             <div className={`title-crossfade-wrap ${isTitleCrossfading ? 'is-crossfading' : ''}`}>
               <h1 className={`logo-text top-logo-text title-crossfade-sizer ${titleModeClass} ${titleLengthClass}`} aria-hidden="true">
-                {incomingHeaderTitle || headerTitle}
+                {headerTitle}
               </h1>
               <h1 className={`logo-text top-logo-text title-layer title-layer-current ${titleModeClass} ${titleLengthClass}`}>
                 {headerTitle}
