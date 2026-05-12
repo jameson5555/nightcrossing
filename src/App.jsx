@@ -495,6 +495,7 @@ function App() {
         : '')
     : '';
   const titleModeClass = isPlayView ? 'puzzle-title' : 'menu-title';
+  const isTitleDebugEnabled = import.meta.env.DEV && typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('debugTitle') === '1';
 
   return (
     <div className="app-container animate-fade-in">
@@ -528,6 +529,12 @@ function App() {
               <span className={`title-clue-id ${isContentFading ? 'fading' : ''}`}>
                 {titleClueLabel}
               </span>
+            )}
+
+            {isTitleDebugEnabled && (
+              <div className="title-debug-pill" aria-hidden="true">
+                {isTitleCrossfading ? 'crossfade' : 'idle'} | {headerTitle}{incomingHeaderTitle ? ` -> ${incomingHeaderTitle}` : ''}
+              </div>
             )}
           </div>
 
