@@ -98,14 +98,14 @@ html, body {
 }
 
 .top-logo-text.menu-title {
-  font-size: clamp(1.4rem, 3.2cqi, 2rem);
+  font-size: clamp(1rem, 5cqi, 5rem);
   /* letter-spacing: 4px; */
 }
 
 .top-logo-text.puzzle-title {
   /* font-size: min(1.5rem, 3.9cqi);
   letter-spacing: min(4px, 0.58cqi); */
-  font-size: clamp(1.4rem, 3.2cqi, 2rem);
+  font-size: clamp(1rem, 5cqi, 5rem);
   transform: scale(1);
 }
 
@@ -119,12 +119,12 @@ html, body {
   transform: scale(0.92);
 }
 
-@container (max-width: 470px) {
+/* @container (max-width: 470px) {
   .top-logo-text.menu-title {
     font-size: 1.4rem;
     letter-spacing: 3.2px;
   }
-}
+} */
 
 .title-clue-id {
   display: inline-flex;
