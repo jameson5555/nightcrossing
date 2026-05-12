@@ -18,7 +18,7 @@ html, body {
   justify-content: flex-start;
   align-items: center;
   position: relative;
-  min-height: 84px;
+  min-height: 80px;
   flex-shrink: 0;
   overflow: hidden;
   /* padding: 0 var(--spacing-md); */
@@ -27,11 +27,11 @@ html, body {
 
 .app-header-menu {
   justify-content: center;
-  min-height: 84px;
+  min-height: 80px;
 }
 
 .app-header-play {
-  min-height: 84px;
+  min-height: 80px;
 }
 
 .logo-text {
@@ -104,7 +104,7 @@ html, body {
 }
 
 .header-title-stack.compact {
-  gap: 6px;
+  gap: 5px;
 }
 
 .header-title-stack.compact .top-logo-text.puzzle-title {
