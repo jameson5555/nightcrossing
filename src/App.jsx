@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import CrosswordGrid from './components/CrosswordGrid';
 import ClueList from './components/ClueList';
@@ -42,7 +42,22 @@ function App() {
   const [puzzlesIndex, setPuzzlesIndex] = useState([]);
   const [badgeUnlockInfo, setBadgeUnlockInfo] = useState(null);
   const [hasUsedFreeHint, setHasUsedFreeHint] = useState(false);
+  const [headerTitle, setHeaderTitle] = useState('Nightcrossing');
+  const [isHeaderTitleMorphing, setIsHeaderTitleMorphing] = useState(false);
   const BONUS_HINT_COOLDOWN_MS = 12 * 60 * 60 * 1000;
+  const headerTitleMorphTimeoutRef = useRef(null);
+
+  const triggerHeaderTitleMorph = (nextTitle) => {
+    if (headerTitleMorphTimeoutRef.current) {
+      clearTimeout(headerTitleMorphTimeoutRef.current);
+    }
+
+    setHeaderTitle(nextTitle);
+    setIsHeaderTitleMorphing(true);
+    headerTitleMorphTimeoutRef.current = setTimeout(() => {
+      setIsHeaderTitleMorphing(false);
+    }, 460);
+  };
 
   // Helper to handle bonus hint timeout
   const checkAndAwardBonusHint = async () => {
@@ -103,6 +118,14 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    return () => {
+      if (headerTitleMorphTimeoutRef.current) {
+        clearTimeout(headerTitleMorphTimeoutRef.current);
+      }
+    };
+  }, []);
+
   const handleSelectPuzzle = async (id) => {
     try {
       // Show loading or transition
@@ -132,6 +155,8 @@ function App() {
       
       const claimed = await loadRewardClaimed(id);
       setIsPuzzleAlreadyCompleted(claimed);
+
+      triggerHeaderTitleMorph(data.title || 'Nightcrossing');
       
       setCurrentView('play');
     } catch (e) {
@@ -141,6 +166,7 @@ function App() {
   };
 
   const handleBackToMenu = () => {
+    triggerHeaderTitleMorph('Nightcrossing');
     setCurrentView('menu');
     setPuzzleData(null);
     setBadgeUnlockInfo(null);
@@ -413,48 +439,52 @@ function App() {
     return false;
   };
 
+  const isPlayView = currentView === 'play';
+  const hasVisibleTopClue = Boolean(displayedClue.text);
+  const shouldCompactHeaderTitle = isPlayView && hasVisibleTopClue;
+
   return (
     <div className="app-container animate-fade-in">
-      {currentView === 'menu' ? (
-        <div className="menu-container">
-          <header className="menu-header">
-            <h1 className="logo-text">Nightcrossing</h1>
-          </header>
-          <PuzzleList onSelectPuzzle={handleSelectPuzzle} />
-        </div>
-      ) : (
-        <>
-          <header className="app-header glass-panel">
-            <button className="back-btn" onClick={handleBackToMenu} aria-label="Menu">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="3" y1="12" x2="21" y2="12"></line>
-                <line x1="3" y1="6" x2="21" y2="6"></line>
-                <line x1="3" y1="18" x2="21" y2="18"></line>
-              </svg>
-            </button>
-            <h1 className="logo-text">Nightcrossing</h1>
-            
-            {puzzleData && (
-              <div className={`floating-active-clue ${activeClueText ? 'visible' : ''} ${isContentFading ? 'content-fade' : ''}`}>
-                <span className="floating-clue-num">{displayedClue.num ? `${displayedClue.num}${displayedClue.dir === 'across' ? 'a' : 'd'}` : ''}</span>
-                <p className="floating-clue-text">{displayedClue.text || ''}</p>
-                {activeClueText && (
-                  <button 
-                    className={`hint-btn ${unlockedHints.has(selectedClueId) ? 'unlocked' : ''}`} 
-                    onClick={() => setIsHintModalOpen(true)}
-                    aria-label="Hint"
-                  >
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="12" r="10"></circle>
-                      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                      <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                    </svg>
-                  </button>
-                )}
-              </div>
-            )}
-          </header>
+      <header className={`app-header ${isPlayView ? 'glass-panel app-header-play' : 'app-header-menu'}`}>
+        {isPlayView && (
+          <button className="back-btn" onClick={handleBackToMenu} aria-label="Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+        )}
 
+        <div className={`header-title-stack ${shouldCompactHeaderTitle ? 'compact' : 'expanded'}`}>
+          <h1 className={`logo-text top-logo-text ${isHeaderTitleMorphing ? 'morphing' : ''}`}>
+            {headerTitle}
+          </h1>
+
+          {isPlayView && (
+            <div className={`floating-active-clue ${hasVisibleTopClue ? 'visible' : ''} ${isContentFading ? 'content-fade' : ''}`}>
+              <span className="floating-clue-num">{displayedClue.num ? `${displayedClue.num}${displayedClue.dir === 'across' ? 'a' : 'd'}` : ''}</span>
+              <p className="floating-clue-text">{displayedClue.text || ''}</p>
+              {activeClueText && (
+                <button
+                  className={`hint-btn ${unlockedHints.has(selectedClueId) ? 'unlocked' : ''}`}
+                  onClick={() => setIsHintModalOpen(true)}
+                  aria-label="Hint"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                  </svg>
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+      </header>
+
+      {isPlayView ? (
+        <>
           <main className="app-main">
             {puzzleData ? (
               <CrosswordGrid 
@@ -486,7 +516,6 @@ function App() {
                 selectedClueId={selectedClueId}
                 solvedClueIds={solvedClueIds}
                 onClueClick={handleClueClick}
-                puzzleTitle={puzzleData.title}
               />
             ) : (
               <div className="placeholder-clues">
@@ -494,8 +523,6 @@ function App() {
               </div>
             )}
           </footer>
-
-
 
           <HintModal 
             isOpen={isHintModalOpen}
@@ -509,6 +536,10 @@ function App() {
             hasFreeHintAvailable={!hasUsedFreeHint}
           />
         </>
+      ) : (
+        <div className="menu-container">
+          <PuzzleList onSelectPuzzle={handleSelectPuzzle} />
+        </div>
       )}
 
       {toastInfo && (

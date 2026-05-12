@@ -68,34 +68,3 @@
   transition: opacity 0.5s ease, text-decoration 0.5s ease;
 }
 
-/* Root wrapper to allow stacking the footer under the columns */
-.clue-list-root {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  gap: var(--spacing-sm);
-}
-
-.clue-list-footer {
-  text-align: center;
-  color: var(--text-secondary);
-  font-family: var(--font-family-ui);
-  font-weight: 700;
-  font-size: 0.95rem;
-  padding-top: 8px;
-  border-top: 1px solid rgba(255,255,255,0.03);
-}
-
-.puzzle-footer-title {
-  font-family: var(--font-family-game);
-  font-weight: 800;
-  letter-spacing: 2px;
-  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 0.95rem;
-  text-transform: uppercase;
-}
-
