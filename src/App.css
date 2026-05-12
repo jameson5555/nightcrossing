@@ -18,7 +18,7 @@ html, body {
   justify-content: flex-start;
   align-items: center;
   position: relative;
-  min-height: 112px;
+  min-height: 100px;
   flex-shrink: 0;
   overflow: hidden;
   padding: 0 var(--spacing-md);
@@ -27,11 +27,11 @@ html, body {
 
 .app-header-menu {
   justify-content: center;
-  min-height: 112px;
+  min-height: 100px;
 }
 
 .app-header-play {
-  min-height: 112px;
+  min-height: 100px;
 }
 
 .logo-text {
@@ -100,7 +100,7 @@ html, body {
 .top-logo-text.puzzle-title {
   /* font-size: min(1.5rem, 3.9cqi);
   letter-spacing: min(4px, 0.58cqi); */
-  font-size: clamp(1rem, 6cqi, 2.5rem);
+  font-size: clamp(1rem, 5.5cqi, 2.5rem);
   transform: scale(1);
 }
 
