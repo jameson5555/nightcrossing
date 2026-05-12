@@ -74,29 +74,26 @@ html, body {
   min-width: 0;
 }
 
-.title-layer-stack {
-  position: relative;
-  flex: 1 1 auto;
-  min-width: 0;
-  display: grid;
-  place-items: center;
-}
-
-.title-layer {
-  grid-area: 1 / 1;
-  width: 100%;
-}
-
 .top-logo-text {
   margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;
   width: 100%;
-  max-width: 100%;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   transform-origin: center;
   will-change: transform, letter-spacing, font-size, text-shadow, opacity;
-  transition: transform 260ms cubic-bezier(0.22, 0.8, 0.22, 1), letter-spacing 260ms cubic-bezier(0.22, 0.8, 0.22, 1), font-size 260ms cubic-bezier(0.22, 0.8, 0.22, 1);
+  opacity: 1;
+  transition: opacity 180ms ease, transform 260ms cubic-bezier(0.22, 0.8, 0.22, 1), letter-spacing 260ms cubic-bezier(0.22, 0.8, 0.22, 1), font-size 260ms cubic-bezier(0.22, 0.8, 0.22, 1);
+}
+
+.top-logo-text.fade-out {
+  opacity: 0;
+}
+
+.top-logo-text.fade-in {
+  opacity: 1;
 }
 
 .top-logo-text.menu-title {
@@ -138,55 +135,6 @@ html, body {
 .header-title-stack.compact .top-logo-text.puzzle-title.title-very-long {
   font-size: min(0.88rem, 2.02cqi);
   letter-spacing: min(1.1px, 0.17cqi);
-}
-
-.title-layer-current {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 220ms ease, transform 220ms cubic-bezier(0.22, 0.8, 0.22, 1);
-}
-
-.title-layer-next {
-  opacity: 0;
-  transform: translateY(8px);
-  pointer-events: none;
-  transition: opacity 220ms ease, transform 220ms cubic-bezier(0.22, 0.8, 0.22, 1);
-}
-
-.title-layer-stack.phase-pre .title-layer-current {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.title-layer-stack.phase-pre .title-layer-next {
-  opacity: 0;
-  transform: translateY(8px);
-}
-
-.title-layer-stack.phase-handoff .title-layer-current {
-  opacity: 0;
-  transform: translateY(-7px);
-}
-
-.title-layer-stack.phase-handoff .title-layer-next {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.title-layer-stack.phase-settle .title-layer-current {
-  animation: titleSettleGlow 680ms ease-out;
-}
-
-@keyframes titleSettleGlow {
-  0% {
-    text-shadow: 0 0 8px rgba(0, 229, 255, 0.2), 0 0 18px rgba(90, 117, 255, 0.19);
-  }
-  65% {
-    text-shadow: 0 0 4px rgba(0, 229, 255, 0.12), 0 0 10px rgba(90, 117, 255, 0.1);
-  }
-  100% {
-    text-shadow: 0 0 3px rgba(0, 229, 255, 0.08), 0 0 8px rgba(90, 117, 255, 0.08);
-  }
 }
 
 @container (max-width: 470px) {

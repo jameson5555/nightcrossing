@@ -27,24 +27,12 @@ import { LocalNotifications } from '@capacitor/local-notifications';
 import { Capacitor } from '@capacitor/core';
 import HintModal from './components/HintModal';
 
-const TITLE_HANDOFF_MS = 220;
-const TITLE_SETTLE_MS = 680;
+const TITLE_FADE_OUT_MS = 140;
 
-const clearTitleSwapTimers = (timersRef) => {
-  if (timersRef.current.handoff) {
-    clearTimeout(timersRef.current.handoff);
-    timersRef.current.handoff = null;
-  }
-  if (timersRef.current.settle) {
-    clearTimeout(timersRef.current.settle);
-    timersRef.current.settle = null;
-  }
-};
-
-const clearTitleSwapRaf = (rafRef) => {
-  if (rafRef.current) {
-    cancelAnimationFrame(rafRef.current);
-    rafRef.current = null;
+const clearTitleFadeTimers = (timersRef) => {
+  if (timersRef.current.swap) {
+    clearTimeout(timersRef.current.swap);
+    timersRef.current.swap = null;
   }
 };
 
@@ -64,45 +52,25 @@ function App() {
   const [badgeUnlockInfo, setBadgeUnlockInfo] = useState(null);
   const [hasUsedFreeHint, setHasUsedFreeHint] = useState(false);
   const [headerTitle, setHeaderTitle] = useState('Nightcrossing');
-  const [incomingHeaderTitle, setIncomingHeaderTitle] = useState(null);
-  const [titleSwapPhase, setTitleSwapPhase] = useState('idle'); // idle | pre | handoff | settle
+  const [isTitleFadingOut, setIsTitleFadingOut] = useState(false);
   const BONUS_HINT_COOLDOWN_MS = 12 * 60 * 60 * 1000;
-  const titleSwapTimersRef = useRef({ handoff: null, settle: null });
-  const titleSwapRafRef = useRef(null);
+  const titleFadeTimersRef = useRef({ swap: null });
 
   const triggerHeaderTitleMorph = (nextTitle) => {
     const target = nextTitle || 'Nightcrossing';
 
-    if (headerTitle === target && !incomingHeaderTitle) {
-      setTitleSwapPhase('idle');
+    if (headerTitle === target) {
       return;
     }
 
-    clearTitleSwapTimers(titleSwapTimersRef);
-    clearTitleSwapRaf(titleSwapRafRef);
+    clearTitleFadeTimers(titleFadeTimersRef);
+    setIsTitleFadingOut(true);
 
-    setIncomingHeaderTitle(target);
-    setTitleSwapPhase('pre');
-
-    // Allow the incoming layer to mount in its initial state before animating to handoff.
-    titleSwapRafRef.current = requestAnimationFrame(() => {
-      titleSwapRafRef.current = requestAnimationFrame(() => {
-        setTitleSwapPhase('handoff');
-        titleSwapRafRef.current = null;
-
-        titleSwapTimersRef.current.handoff = setTimeout(() => {
-          setHeaderTitle(target);
-          setIncomingHeaderTitle(null);
-          setTitleSwapPhase('settle');
-          titleSwapTimersRef.current.handoff = null;
-
-          titleSwapTimersRef.current.settle = setTimeout(() => {
-            setTitleSwapPhase('idle');
-            titleSwapTimersRef.current.settle = null;
-          }, TITLE_SETTLE_MS);
-        }, TITLE_HANDOFF_MS);
-      });
-    });
+    titleFadeTimersRef.current.swap = setTimeout(() => {
+      setHeaderTitle(target);
+      setIsTitleFadingOut(false);
+      titleFadeTimersRef.current.swap = null;
+    }, TITLE_FADE_OUT_MS);
   };
 
   // Helper to handle bonus hint timeout
@@ -166,8 +134,7 @@ function App() {
 
   useEffect(() => {
     return () => {
-      clearTitleSwapTimers(titleSwapTimersRef);
-      clearTitleSwapRaf(titleSwapRafRef);
+      clearTitleFadeTimers(titleFadeTimersRef);
     };
   }, []);
 
@@ -488,7 +455,7 @@ function App() {
   const hasVisibleTopClue = Boolean(displayedClue.text);
   const shouldCompactHeaderTitle = isPlayView && hasVisibleTopClue;
   const titleClueLabel = displayedClue.num ? `${displayedClue.num}${displayedClue.dir === 'across' ? 'a' : 'd'}` : '';
-  const titleForSizing = (incomingHeaderTitle || headerTitle || '').trim();
+  const titleForSizing = (headerTitle || '').trim();
   const titleLengthClass = isPlayView
     ? (titleForSizing.length > 30
       ? 'title-very-long'
@@ -513,16 +480,9 @@ function App() {
 
         <div className={`header-title-stack ${shouldCompactHeaderTitle ? 'compact' : 'expanded'}`}>
           <div className="title-row">
-            <div className={`title-layer-stack phase-${titleSwapPhase}`}>
-              <h1 className={`logo-text top-logo-text title-layer title-layer-current ${titleModeClass} ${titleLengthClass}`}>
-                {headerTitle}
-              </h1>
-              {incomingHeaderTitle && (
-                <h1 className={`logo-text top-logo-text title-layer title-layer-next ${titleModeClass} ${titleLengthClass}`}>
-                  {incomingHeaderTitle}
-                </h1>
-              )}
-            </div>
+            <h1 className={`logo-text top-logo-text ${isTitleFadingOut ? 'fade-out' : 'fade-in'} ${titleModeClass} ${titleLengthClass}`}>
+              {headerTitle}
+            </h1>
             {isPlayView && hasVisibleTopClue && titleClueLabel && (
               <span className={`title-clue-id ${isContentFading ? 'fading' : ''}`}>
                 {titleClueLabel}
