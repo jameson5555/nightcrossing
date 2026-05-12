@@ -94,14 +94,14 @@ html, body {
 }
 
 .top-logo-text.menu-title {
-  font-size: clamp(1rem, 6.5cqi, 2.5rem);
+  font-size: clamp(1rem, 7.5cqi, 2.5rem);
   letter-spacing: 4px;
 }
 
 .top-logo-text.puzzle-title {
   /* font-size: min(1.5rem, 3.9cqi);
   letter-spacing: min(4px, 0.58cqi); */
-  font-size: clamp(1rem, 4cqi, 2.5rem);
+  font-size: clamp(1rem, 5.5cqi, 2.5rem);
   transform: scale(1);
 }
 
