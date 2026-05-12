@@ -56,7 +56,7 @@ html, body {
   justify-content: center;
   align-items: center;
   gap: 0;
-  padding-left: 40px;
+  /* padding-left: 40px; */
   transition: gap 220ms ease;
 }
 
@@ -100,8 +100,9 @@ html, body {
 .top-logo-text.puzzle-title {
   /* font-size: min(1.5rem, 3.9cqi);
   letter-spacing: min(4px, 0.58cqi); */
-  font-size: clamp(1rem, 5cqi, 2.5rem);
+  font-size: clamp(1rem, 4cqi, 2.5rem);
   transform: scale(1);
+  padding-left: 36px;
 }
 
 .header-title-stack.compact {
@@ -139,7 +140,7 @@ html, body {
   text-transform: lowercase;
   color: var(--accent-primary);
   background: rgba(0, 229, 255, 0.12);
-  transition: opacity 180ms ease, transform 180ms ease, background-color 180ms ease;
+  transition: opacity 180ms ease, background-color 180ms ease;
 }
 
 .title-clue-id.fading {
@@ -226,6 +227,7 @@ html, body {
   grid-template-columns: minmax(0, 1fr) 34px;
   align-items: center;
   gap: 8px;
+  padding-left: 36px;
   font-family: var(--font-family-ui);
   transform: translateY(-10px);
   pointer-events: none;
