@@ -491,7 +491,6 @@ function App() {
 
           {isPlayView && (
             <div className={`floating-active-clue ${hasVisibleTopClue ? 'visible' : ''} ${isContentFading ? 'content-fade' : ''}`}>
-                <span className="clue-side-spacer" aria-hidden="true"></span>
               <p className="floating-clue-text">{displayedClue.text || ''}</p>
                 {activeClueText ? (
                 <button
