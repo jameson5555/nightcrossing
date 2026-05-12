@@ -43,6 +43,13 @@ const clearTitleFadeRafs = (rafsRef) => {
   rafsRef.current.startB = null;
 };
 
+const getTitleLengthClass = (title) => {
+  const normalized = (title || '').trim();
+  if (normalized.length > 30) return 'title-very-long';
+  if (normalized.length > 22) return 'title-long';
+  return '';
+};
+
 function App() {
   const [currentView, setCurrentView] = useState('menu'); // 'menu' | 'play'
   const [puzzleData, setPuzzleData] = useState(null);
@@ -479,14 +486,8 @@ function App() {
   const hasVisibleTopClue = Boolean(displayedClue.text);
   const shouldCompactHeaderTitle = isPlayView && hasVisibleTopClue;
   const titleClueLabel = displayedClue.num ? `${displayedClue.num}${displayedClue.dir === 'across' ? 'a' : 'd'}` : '';
-  const titleForSizing = (incomingHeaderTitle || headerTitle || '').trim();
-  const titleLengthClass = isPlayView
-    ? (titleForSizing.length > 30
-      ? 'title-very-long'
-      : titleForSizing.length > 22
-        ? 'title-long'
-        : '')
-    : '';
+  const currentTitleLengthClass = isPlayView ? getTitleLengthClass(headerTitle) : '';
+  const incomingTitleLengthClass = isPlayView ? getTitleLengthClass(incomingHeaderTitle || headerTitle) : '';
   const titleModeClass = isPlayView ? 'puzzle-title' : 'menu-title';
   const isTitleDebugEnabled = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('debugTitle') === '1';
 
@@ -506,14 +507,14 @@ function App() {
         <div className={`header-title-stack ${shouldCompactHeaderTitle ? 'compact' : 'expanded'}`}>
           <div className="title-row">
             <div className={`title-crossfade-wrap ${isTitleCrossfading ? 'is-crossfading' : ''} ${incomingHeaderTitle ? 'has-incoming' : ''}`}>
-              <h1 className={`logo-text top-logo-text title-crossfade-sizer ${titleModeClass} ${titleLengthClass}`} aria-hidden="true">
-                {headerTitle}
+              <h1 className={`logo-text top-logo-text title-crossfade-sizer ${titleModeClass} ${incomingTitleLengthClass}`} aria-hidden="true">
+                {incomingHeaderTitle || headerTitle}
               </h1>
-              <h1 className={`logo-text top-logo-text title-layer title-layer-current ${titleModeClass} ${titleLengthClass}`}>
+              <h1 className={`logo-text top-logo-text title-layer title-layer-current ${titleModeClass} ${currentTitleLengthClass}`}>
                 {headerTitle}
               </h1>
               {incomingHeaderTitle && (
-                <h1 className={`logo-text top-logo-text title-layer title-layer-next ${titleModeClass} ${titleLengthClass}`}>
+                <h1 className={`logo-text top-logo-text title-layer title-layer-next ${titleModeClass} ${incomingTitleLengthClass}`}>
                   {incomingHeaderTitle}
                 </h1>
               )}
