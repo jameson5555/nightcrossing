@@ -50,7 +50,6 @@ html, body {
   width: 100%;
   max-width: 680px;
   margin: 0 auto;
-  container-type: inline-size;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -62,6 +61,8 @@ html, body {
 
 .title-row {
   width: 100%;
+  max-width: calc(100% - 72px);
+  container-type: inline-size;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -102,7 +103,6 @@ html, body {
   letter-spacing: min(4px, 0.58cqi); */
   font-size: clamp(1rem, 4cqi, 2.5rem);
   transform: scale(1);
-  max-width: calc(100% - 72px);
 }
 
 .header-title-stack.compact {
