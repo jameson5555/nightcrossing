@@ -101,11 +101,11 @@ html, body {
   pointer-events: none;
 }
 
-.title-crossfade-wrap.is-crossfading .title-layer-current {
+.title-crossfade-wrap.is-crossfading.has-incoming .title-layer-current {
   opacity: 0;
 }
 
-.title-crossfade-wrap.is-crossfading .title-layer-next {
+.title-crossfade-wrap.is-crossfading.has-incoming .title-layer-next {
   opacity: 1;
 }
 

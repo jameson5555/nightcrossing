@@ -505,7 +505,7 @@ function App() {
 
         <div className={`header-title-stack ${shouldCompactHeaderTitle ? 'compact' : 'expanded'}`}>
           <div className="title-row">
-            <div className={`title-crossfade-wrap ${isTitleCrossfading ? 'is-crossfading' : ''}`}>
+            <div className={`title-crossfade-wrap ${isTitleCrossfading ? 'is-crossfading' : ''} ${incomingHeaderTitle ? 'has-incoming' : ''}`}>
               <h1 className={`logo-text top-logo-text title-crossfade-sizer ${titleModeClass} ${titleLengthClass}`} aria-hidden="true">
                 {headerTitle}
               </h1>
