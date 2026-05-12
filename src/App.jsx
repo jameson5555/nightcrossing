@@ -27,7 +27,7 @@ import { LocalNotifications } from '@capacitor/local-notifications';
 import { Capacitor } from '@capacitor/core';
 import HintModal from './components/HintModal';
 
-const TITLE_MORPH_DURATION_MS = 620;
+const TITLE_MORPH_DURATION_MS = 880;
 const TITLE_MORPH_GLYPHS = ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&-\'/';
 
 const clamp01 = (value) => Math.min(1, Math.max(0, value));
@@ -37,6 +37,11 @@ const easeInOutCubic = (value) => {
   return t < 0.5
     ? 4 * t * t * t
     : 1 - Math.pow(-2 * t + 2, 3) / 2;
+};
+
+const easeInOutSine = (value) => {
+  const t = clamp01(value);
+  return -(Math.cos(Math.PI * t) - 1) / 2;
 };
 
 const morphGlyph = (fromChar, toChar, progress, index) => {
@@ -53,13 +58,11 @@ const morphGlyph = (fromChar, toChar, progress, index) => {
     return progress < 0.5 ? fromChar : toChar;
   }
 
-  const window = Math.max(0, Math.floor((1 - progress) * 3));
-  const wobble = window > 0
-    ? ((index + Math.floor(progress * 20)) % (window * 2 + 1)) - window
-    : 0;
-
   const baseIndex = fromIndex + (toIndex - fromIndex) * progress;
-  const rawIndex = Math.round(baseIndex + wobble);
+  const shimmerAmplitude = (1 - progress) * 2.4;
+  const shimmer = Math.sin(index * 0.62 + progress * Math.PI * 3.2) * shimmerAmplitude;
+  const drift = Math.sin(index * 0.31 + progress * Math.PI) * (1 - progress) * 0.85;
+  const rawIndex = Math.round(baseIndex + shimmer + drift);
   const glyphIndex = Math.max(0, Math.min(TITLE_MORPH_GLYPHS.length - 1, rawIndex));
   return TITLE_MORPH_GLYPHS[glyphIndex];
 };
@@ -73,7 +76,7 @@ const buildMorphTitleFrame = (fromText, toText, progress) => {
   for (let index = 0; index < maxLength; index += 1) {
     const fromChar = from[index] || ' ';
     const toChar = to[index] || ' ';
-    const staggered = clamp01(progress * 1.12 - index * 0.023);
+    const staggered = clamp01(progress * 1.08 - index * 0.02);
     output += morphGlyph(fromChar, toChar, staggered, index);
   }
 
@@ -119,8 +122,9 @@ function App() {
     const step = (now) => {
       const elapsed = now - start;
       const progress = clamp01(elapsed / TITLE_MORPH_DURATION_MS);
-      const eased = easeInOutCubic(progress);
-      setHeaderTitle(buildMorphTitleFrame(fromTitle, target, eased));
+      const easedSine = easeInOutSine(progress);
+      const easedDream = clamp01(easedSine * 0.75 + easeInOutCubic(progress) * 0.25);
+      setHeaderTitle(buildMorphTitleFrame(fromTitle, target, easedDream));
 
       if (progress < 1) {
         headerTitleMorphRafRef.current = requestAnimationFrame(step);
@@ -522,7 +526,7 @@ function App() {
 
   return (
     <div className="app-container animate-fade-in">
-      <header className={`app-header ${isPlayView ? 'glass-panel app-header-play' : 'app-header-menu'}`}>
+      <header className={`app-header ${isPlayView ? 'glass-panel app-header-play' : 'app-header-menu'} ${shouldCompactHeaderTitle ? 'header-compact' : ''}`}>
         {isPlayView && (
           <button className="back-btn" onClick={handleBackToMenu} aria-label="Menu">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -547,8 +551,9 @@ function App() {
 
           {isPlayView && (
             <div className={`floating-active-clue ${hasVisibleTopClue ? 'visible' : ''} ${isContentFading ? 'content-fade' : ''}`}>
+                <span className="clue-side-spacer" aria-hidden="true"></span>
               <p className="floating-clue-text">{displayedClue.text || ''}</p>
-              {activeClueText && (
+                {activeClueText ? (
                 <button
                   className={`hint-btn ${unlockedHints.has(selectedClueId) ? 'unlocked' : ''}`}
                   onClick={() => setIsHintModalOpen(true)}
@@ -560,6 +565,8 @@ function App() {
                     <line x1="12" y1="17" x2="12.01" y2="17"></line>
                   </svg>
                 </button>
+                ) : (
+                  <span className="clue-side-spacer" aria-hidden="true"></span>
               )}
             </div>
           )}
