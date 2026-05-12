@@ -27,7 +27,7 @@ import { LocalNotifications } from '@capacitor/local-notifications';
 import { Capacitor } from '@capacitor/core';
 import HintModal from './components/HintModal';
 
-const TITLE_FADE_OUT_MS = 140;
+const TITLE_FADE_OUT_MS = 440;
 
 const clearTitleFadeTimers = (timersRef) => {
   if (timersRef.current.swap) {
