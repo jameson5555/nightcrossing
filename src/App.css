@@ -122,23 +122,10 @@ html, body {
 } */
 
 .title-clue-id {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
-  min-width: 34px;
-  padding: 2px 8px;
-  margin-left: 2px;
-  border-radius: 999px;
-  font-family: var(--font-family-ui);
-  font-size: 0.78rem;
-  line-height: 1.1;
-  font-weight: 700;
-  letter-spacing: 0.35px;
+  font-size: clamp(0.5rem, 4cqi, 1rem);
   text-transform: lowercase;
   color: var(--accent-primary);
-  background: rgba(0, 229, 255, 0.12);
-  transition: opacity 180ms ease, background-color 180ms ease;
+  transition: opacity 180ms ease;
 }
 
 .title-clue-id.fading {
