@@ -122,10 +122,11 @@ html, body {
 } */
 
 .title-clue-id {
-  font-size: clamp(0.5rem, 4cqi, 1rem);
-  text-transform: lowercase;
+  font-size: clamp(0.5rem, 3.8cqi, 1rem);
+  text-transform: uppercase;
   color: var(--accent-primary);
   transition: opacity 180ms ease;
+  font-weight: 600;
 }
 
 .title-clue-id.fading {
