@@ -38,7 +38,7 @@ html, body {
   font-family: var(--font-family-game);
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 4px;
+  letter-spacing: 2px;
   background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
   -webkit-background-clip: text;
   background-clip: text;
@@ -95,7 +95,7 @@ html, body {
 
 .top-logo-text.menu-title {
   font-size: clamp(1rem, 6.5cqi, 2.5rem);
-  /* letter-spacing: 4px; */
+  letter-spacing: 4px;
 }
 
 .top-logo-text.puzzle-title {
