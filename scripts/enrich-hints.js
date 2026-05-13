@@ -6,6 +6,17 @@ import { humanizeClue } from './humanizeClue.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const THEMES_FILE = path.join(__dirname, 'themes.json');
+const FALLBACK_HINT_PREFIXES = ['Similar to:', 'Related words:'];
+
+function hasUsableHint(value) {
+    return typeof value === 'string' && value.trim().length > 0;
+}
+
+function isFallbackHint(value) {
+    if (!hasUsableHint(value)) return false;
+    const trimmed = value.trim();
+    return FALLBACK_HINT_PREFIXES.some(prefix => trimmed.startsWith(prefix));
+}
 
 async function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -39,7 +50,7 @@ async function enrichHints() {
 
         for (const wordObj of theme.words) {
             // We'll skip if it has a good hint already (not a synonym fallback or empty)
-            if (wordObj.hint && !wordObj.hint.startsWith('Similar to:')) continue;
+            if (hasUsableHint(wordObj.hint) && !isFallbackHint(wordObj.hint)) continue;
 
             const word = wordObj.answer.toLowerCase();
             process.stdout.write(`  Fetching: ${word}... `);
@@ -84,7 +95,7 @@ async function enrichHints() {
                         .slice(0, 3);
                       
                       if (filteredSyns.length > 0) {
-                          hint = `Similar to: ${filteredSyns.join(', ')}`;
+                          hint = `Related words: ${filteredSyns.join(', ')}`;
                           process.stdout.write(`Found Synonyms`);
                       }
                   }
@@ -109,6 +120,31 @@ async function enrichHints() {
         
         // Save after each theme
         fs.writeFileSync(THEMES_FILE, JSON.stringify(themes, null, 2));
+    }
+
+    const sourceStats = new Map();
+    for (const theme of themes) {
+        let missingInTheme = 0;
+        for (const wordObj of theme.words) {
+            const source = wordObj.source || 'unknown';
+            if (!sourceStats.has(source)) {
+                sourceStats.set(source, { total: 0, missing: 0 });
+            }
+            const sourceEntry = sourceStats.get(source);
+            sourceEntry.total += 1;
+
+            if (!hasUsableHint(wordObj.hint)) {
+                sourceEntry.missing += 1;
+                missingInTheme += 1;
+            }
+        }
+        console.log(`  Coverage ${theme.name}: ${theme.words.length - missingInTheme}/${theme.words.length} hints`);
+    }
+
+    console.log('\nHint coverage by source:');
+    for (const [source, stats] of sourceStats.entries()) {
+        const coverage = stats.total > 0 ? (((stats.total - stats.missing) / stats.total) * 100).toFixed(1) : '100.0';
+        console.log(`  ${source}: ${stats.total - stats.missing}/${stats.total} (${coverage}%)`);
     }
 
     console.log(`\nFinished! Total updated: ${totalUpdated}`);

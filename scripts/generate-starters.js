@@ -35,10 +35,13 @@ const MAX_LAYOUT_QUALITY_RETRIES = Number.isFinite(Number(process.env.NC_MAX_LAY
   : 3;
 const MIN_LONG_TWO_PLUS_RATE = Number.isFinite(Number(process.env.NC_MIN_LONG_TWO_PLUS_RATE))
   ? Math.max(0, Math.min(1, Number(process.env.NC_MIN_LONG_TWO_PLUS_RATE)))
-  : 0.72;
+  : 0.78;
 const MIN_VERY_LONG_THREE_PLUS_RATE = Number.isFinite(Number(process.env.NC_MIN_VERY_LONG_THREE_PLUS_RATE))
   ? Math.max(0, Math.min(1, Number(process.env.NC_MIN_VERY_LONG_THREE_PLUS_RATE)))
-  : 0.5;
+  : 0.58;
+const MIN_HINT_COVERAGE = Number.isFinite(Number(process.env.NC_MIN_HINT_COVERAGE))
+  ? Math.max(0, Math.min(1, Number(process.env.NC_MIN_HINT_COVERAGE)))
+  : 0.95;
 
 function addPuzzleAnswersToSet(puzzleData, targetSet) {
   if (!puzzleData?.answers) return;
@@ -54,12 +57,33 @@ function scoreWordRelevance(wordObj) {
   return typeof wordObj.themeScore === 'number' ? wordObj.themeScore : 0;
 }
 
-function passesLayoutQualityGate(metrics) {
+function computeHintCoverage(puzzle) {
+  const clueCount = (puzzle?.answers?.across?.length || 0) + (puzzle?.answers?.down?.length || 0);
+  const hintCount = Object.keys(puzzle?.hints || {}).length;
+  if (clueCount <= 0) {
+    return { clueCount, hintCount, coverage: 1 };
+  }
+  return {
+    clueCount,
+    hintCount,
+    coverage: hintCount / clueCount
+  };
+}
+
+function passesLayoutQualityGate(metrics, puzzle) {
   const longWordGate = metrics.longWordCount === 0 || metrics.longWordTwoPlusRate >= MIN_LONG_TWO_PLUS_RATE;
   const veryLongWordGate =
     metrics.veryLongWordCount === 0 ||
     metrics.veryLongWordThreePlusRate >= MIN_VERY_LONG_THREE_PLUS_RATE;
-  return longWordGate && veryLongWordGate;
+  const hintCoverage = computeHintCoverage(puzzle);
+  const hintGate = hintCoverage.coverage >= MIN_HINT_COVERAGE;
+  return {
+    accepted: longWordGate && veryLongWordGate && hintGate,
+    hintCoverage,
+    longWordGate,
+    veryLongWordGate,
+    hintGate
+  };
 }
 
 async function generateStarters() {
@@ -227,19 +251,56 @@ async function generateStarters() {
 
             let generated = null;
             let generatedMetrics = null;
+            let generatedHintCoverage = null;
+            let generatedQuality = null;
+            let bestFallbackCandidate = null;
+            let bestFallbackMetrics = null;
+            let bestFallbackQuality = null;
             for (let attempt = 1; attempt <= MAX_LAYOUT_QUALITY_RETRIES; attempt++) {
               const candidate = generateThemedPuzzle(id, theme.name, availableWords);
               const candidateMetrics = computePuzzleMetrics(candidate.puzzle);
-              const accepted = passesLayoutQualityGate(candidateMetrics);
+              const quality = passesLayoutQualityGate(candidateMetrics, candidate.puzzle);
 
-              if (accepted || attempt === MAX_LAYOUT_QUALITY_RETRIES) {
+              const fallbackScore =
+                (quality.hintCoverage.coverage * 1000) +
+                (candidateMetrics.longWordTwoPlusRate * 100) +
+                (candidateMetrics.veryLongWordThreePlusRate * 80);
+              const bestFallbackScore = bestFallbackQuality
+                ? (bestFallbackQuality.hintCoverage.coverage * 1000) +
+                  (bestFallbackMetrics.longWordTwoPlusRate * 100) +
+                  (bestFallbackMetrics.veryLongWordThreePlusRate * 80)
+                : -Infinity;
+
+              if (fallbackScore > bestFallbackScore) {
+                bestFallbackCandidate = candidate;
+                bestFallbackMetrics = candidateMetrics;
+                bestFallbackQuality = quality;
+              }
+
+              if (quality.accepted) {
                 generated = candidate;
                 generatedMetrics = candidateMetrics;
+                generatedHintCoverage = quality.hintCoverage;
+                generatedQuality = quality;
                 break;
+              }
+
+              if (attempt === MAX_LAYOUT_QUALITY_RETRIES && bestFallbackCandidate) {
+                generated = bestFallbackCandidate;
+                generatedMetrics = bestFallbackMetrics;
+                generatedHintCoverage = bestFallbackQuality.hintCoverage;
+                generatedQuality = bestFallbackQuality;
               }
             }
 
             const { puzzle, usedWords: placedWords } = generated;
+
+            if (!generatedQuality?.accepted) {
+              const hintPct = ((generatedHintCoverage?.coverage || 0) * 100).toFixed(0);
+              console.warn(
+                `  ⚠️ ${id} accepted below quality gates after ${MAX_LAYOUT_QUALITY_RETRIES} attempts (hint coverage ${hintPct}%, long gate ${generatedQuality?.longWordGate ? 'ok' : 'fail'}, very long gate ${generatedQuality?.veryLongWordGate ? 'ok' : 'fail'}).`
+              );
+            }
             
             // Track the newly placed words so they aren't used in subsequent volumes
             placedWords.forEach(w => consumedWords.add(w));
@@ -266,8 +327,11 @@ async function generateStarters() {
             
             const longRatePct = (generatedMetrics.longWordTwoPlusRate * 100).toFixed(0);
             const veryLongRatePct = (generatedMetrics.veryLongWordThreePlusRate * 100).toFixed(0);
+            const hintCoveragePct = ((generatedHintCoverage?.coverage || 0) * 100).toFixed(0);
+            const longCount = generatedMetrics.longWordCount;
+            const veryLongCount = generatedMetrics.veryLongWordCount;
             console.log(
-              `--> Saved ${id} (used ${placedWords.length} words, pool remaining: ${availableWords.length - placedWords.length}, long 2+ cross: ${longRatePct}%, very long 3+ cross: ${veryLongRatePct}%)`
+              `--> Saved ${id} (used ${placedWords.length} words, pool remaining: ${availableWords.length - placedWords.length}, long words: ${longCount}, very long: ${veryLongCount}, long 2+ cross: ${longRatePct}%, very long 3+ cross: ${veryLongRatePct}%, hint coverage: ${hintCoveragePct}% [${generatedHintCoverage?.hintCount || 0}/${generatedHintCoverage?.clueCount || 0}])`
             );
         }
     } catch (themeErr) {

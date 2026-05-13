@@ -195,6 +195,28 @@ function rankAdjustedSourceScore(rankIndex, rankWeight) {
   return 0;
 }
 
+function normalizeForComparison(value) {
+  return String(value || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
+function buildDefinitionBackstopHint(definitionText) {
+  const cleaned = String(definitionText || '')
+    .replace(/\([^)]*\)/g, ' ')
+    .replace(/[.;:!?]+$/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  if (!cleaned) return null;
+
+  const words = cleaned.split(' ').filter(Boolean);
+  if (words.length === 0) return null;
+
+  const core = words.slice(0, Math.min(7, words.length)).join(' ');
+  if (!core) return null;
+
+  return `Key idea: ${core}`;
+}
+
 function parseDatamuseDefinitions(defs = []) {
   if (!Array.isArray(defs) || defs.length === 0) return null;
 
@@ -207,10 +229,24 @@ function parseDatamuseDefinitions(defs = []) {
   const clueText = humanizeClue(cleanDef.charAt(0).toUpperCase() + cleanDef.slice(1));
 
   let hint = null;
-  if (defs.length > 1) {
-    const hintParts = String(defs[1]).split('\t');
+  for (let i = 1; i < defs.length; i++) {
+    const hintParts = String(defs[i]).split('\t');
     const cleanHint = hintParts.length > 1 ? hintParts[1].trim() : hintParts[0].trim();
-    if (cleanHint) hint = humanizeClue(cleanHint);
+    if (!cleanHint) continue;
+
+    const humanizedHint = humanizeClue(cleanHint);
+    if (!humanizedHint) continue;
+    if (normalizeForComparison(humanizedHint) === normalizeForComparison(clueText)) continue;
+
+    hint = humanizedHint;
+    break;
+  }
+
+  if (!hint) {
+    const fallbackHint = buildDefinitionBackstopHint(cleanDef);
+    if (fallbackHint && normalizeForComparison(fallbackHint) !== normalizeForComparison(clueText)) {
+      hint = fallbackHint;
+    }
   }
 
   return { clueText, hint };

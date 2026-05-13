@@ -50,17 +50,20 @@ const TARGET_VERY_LONG_WORD_INTERSECTIONS = Number.isFinite(Number(process.env.N
   : 3;
 const MIN_LONG_WORD_CROSSABILITY = Number.isFinite(Number(process.env.NC_MIN_LONG_WORD_CROSSABILITY))
   ? Math.max(0.4, Math.min(2.5, Number(process.env.NC_MIN_LONG_WORD_CROSSABILITY)))
-  : 0.9;
+  : 1.0;
+const LONG_WORD_TARGET_SHARE = Number.isFinite(Number(process.env.NC_LONG_WORD_TARGET_SHARE))
+  ? Math.max(0, Math.min(0.3, Number(process.env.NC_LONG_WORD_TARGET_SHARE)))
+  : 0.045;
 
 const SCORE_WEIGHTS = {
-  minIntersection: 38,
-  avgIntersection: 50,
+  minIntersection: 42,
+  avgIntersection: 56,
   totalIntersection: 7,
   minTwoBonus: 42,
-  longWordTwoPlusBonus: 14,
-  veryLongWordThreePlusBonus: 18,
-  longWordMissPenalty: 20,
-  veryLongWordMissPenalty: 22,
+  longWordTwoPlusBonus: 18,
+  veryLongWordThreePlusBonus: 22,
+  longWordMissPenalty: 26,
+  veryLongWordMissPenalty: 28,
   wordCount: 16,
   placedRatio: 26,
   wordFloorBonus: 18,
@@ -207,6 +210,10 @@ function withLimitedExtended(coreWords, extendedWords, maxExtendedWords) {
   return [...coreWords, ...extendedWords.slice(0, maxExtendedWords)];
 }
 
+function hasUsableHint(value) {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
 function layoutPassesThemeGuardrails(layout, relevanceByAnswer, options = {}) {
   if (!layout || !Array.isArray(layout.result) || layout.result.length === 0) return false;
 
@@ -266,7 +273,7 @@ function pickCandidateSubset(words, maxWords, letterFrequency) {
     const lenSuitability =
       len <= 4 ? 1.25 :
       len <= 7 ? 1.8 :
-      len <= 9 ? 0.95 :
+      len <= 9 ? 0.75 :
       len <= 10 ? 0.15 :
       0;
     const priority = (crossability * 3.1) + (themeScore * 1.4) + lenSuitability;
@@ -282,7 +289,7 @@ function pickCandidateSubset(words, maxWords, letterFrequency) {
   const medium = shuffleArray(scored.filter(item => item.len >= 5 && item.len <= 7)).sort((a, b) => b.priority - a.priority);
   const short = shuffleArray(scored.filter(item => item.len <= 4)).sort((a, b) => b.priority - a.priority);
 
-  const targetLong = Math.min(longStrong.length, Math.max(0, Math.round(maxWords * 0.06)));
+  const targetLong = Math.min(longStrong.length, Math.max(0, Math.round(maxWords * LONG_WORD_TARGET_SHARE)));
   const targetShort = Math.min(short.length, Math.max(2, Math.round(maxWords * 0.33)));
   const targetMedium = Math.max(0, maxWords - targetLong - targetShort);
 
@@ -340,6 +347,7 @@ function generateBestLayout(
   const preFiltered = words.filter(w => {
     if (w.clue.length > 80) return false;
     if (w.answer.length > Math.max(MAX_GRID_ROWS, MAX_GRID_COLS)) return false;
+    if (!hasUsableHint(w.hint) && w.answer.length >= 6) return false;
 
     const qualityCheck = isWordEntryAcceptable({
       answer: w.answer,
@@ -571,6 +579,7 @@ function layoutToNightcrossing(layout, id, title, themeName) {
   const clues = { across: [], down: [] };
   const answers = { across: [], down: [] };
   const hints = {};
+  let missingHintCount = 0;
 
   // Generate standard crossword numbering
   let currentNum = 1;
@@ -602,10 +611,17 @@ function layoutToNightcrossing(layout, id, title, themeName) {
       answers.down.push(item.answer.toUpperCase());
     }
     
-    if (item.hint) {
-      hints[id] = item.hint;
+    const normalizedHint = hasUsableHint(item.hint) ? item.hint.trim() : '';
+    if (normalizedHint) {
+      hints[id] = normalizedHint;
+    } else {
+      missingHintCount++;
     }
   });
+
+  if (missingHintCount > 0 && VERBOSE_GENERATION) {
+    console.warn(`  Hint coverage warning for ${id}: ${missingHintCount} clue(s) missing hints.`);
+  }
 
   return {
     id,
