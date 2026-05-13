@@ -11,6 +11,8 @@ const THEMES_FILE = path.join(__dirname, 'themes.json');
 const PUZZLES_PER_SET = 3;
 const LONG_WORD_LENGTH = 8;
 const VERY_LONG_WORD_LENGTH = 10;
+const NORMAL_QUANTILE = 0.6;
+const HARD_QUANTILE = 0.85;
 
 function parseVolumeFromId(id) {
   const match = String(id || '').match(/-vol(\d+)$/);
@@ -215,21 +217,33 @@ function computeDifficultyScore(puzzle, cols, rows, letterCells) {
   return clamp(score, 0, 1);
 }
 
+function quantile(sortedValues, q) {
+  if (!Array.isArray(sortedValues) || sortedValues.length === 0) return 0;
+  const clampedQ = clamp(q, 0, 1);
+  const position = (sortedValues.length - 1) * clampedQ;
+  const lower = Math.floor(position);
+  const upper = Math.ceil(position);
+  if (lower === upper) return sortedValues[lower];
+
+  const weight = position - lower;
+  return (sortedValues[lower] * (1 - weight)) + (sortedValues[upper] * weight);
+}
+
 function assignDifficultyById(drafts) {
   const byDifficulty = [...drafts].sort((a, b) => {
     if (a.difficultyScore !== b.difficultyScore) return a.difficultyScore - b.difficultyScore;
     return a.id.localeCompare(b.id);
   });
 
-  const total = byDifficulty.length;
-  const normalCutoff = Math.floor(total / 3);
-  const hardCutoff = Math.floor((2 * total) / 3);
+  const scores = byDifficulty.map(item => item.difficultyScore);
+  const normalThreshold = quantile(scores, NORMAL_QUANTILE);
+  const hardThreshold = quantile(scores, HARD_QUANTILE);
   const result = new Map();
 
-  byDifficulty.forEach((item, index) => {
+  byDifficulty.forEach((item) => {
     let label = 'Expert';
-    if (index < normalCutoff) label = 'Normal';
-    else if (index < hardCutoff) label = 'Hard';
+    if (item.difficultyScore <= normalThreshold) label = 'Normal';
+    else if (item.difficultyScore <= hardThreshold) label = 'Hard';
     result.set(item.id, label);
   });
 

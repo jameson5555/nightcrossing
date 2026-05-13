@@ -19,7 +19,7 @@
     "rows": 10,
     "letterCells": 40,
     "theme": "Space & Astronomy",
-    "difficulty": "Hard"
+    "difficulty": "Normal"
   },
   {
     "id": "starter-space---astronomy-vol3",
@@ -30,7 +30,7 @@
     "rows": 9,
     "letterCells": 41,
     "theme": "Space & Astronomy",
-    "difficulty": "Expert"
+    "difficulty": "Hard"
   },
   {
     "id": "starter-food---cooking-vol1",
@@ -74,7 +74,7 @@
     "rows": 10,
     "letterCells": 39,
     "theme": "Ocean & Marine Life",
-    "difficulty": "Hard"
+    "difficulty": "Normal"
   },
   {
     "id": "starter-ocean---marine-life-vol2",
@@ -85,7 +85,7 @@
     "rows": 9,
     "letterCells": 38,
     "theme": "Ocean & Marine Life",
-    "difficulty": "Hard"
+    "difficulty": "Normal"
   },
   {
     "id": "starter-ocean---marine-life-vol3",
@@ -118,7 +118,7 @@
     "rows": 9,
     "letterCells": 36,
     "theme": "Music & Sound",
-    "difficulty": "Hard"
+    "difficulty": "Normal"
   },
   {
     "id": "starter-music---sound-vol3",
@@ -151,7 +151,7 @@
     "rows": 9,
     "letterCells": 41,
     "theme": "Nature & Wilderness",
-    "difficulty": "Expert"
+    "difficulty": "Hard"
   },
   {
     "id": "starter-nature---wilderness-vol3",
@@ -184,7 +184,7 @@
     "rows": 9,
     "letterCells": 40,
     "theme": "Technology & Computing",
-    "difficulty": "Expert"
+    "difficulty": "Hard"
   },
   {
     "id": "starter-technology---computing-vol3",
@@ -228,7 +228,7 @@
     "rows": 10,
     "letterCells": 42,
     "theme": "History & Civilization",
-    "difficulty": "Hard"
+    "difficulty": "Normal"
   },
   {
     "id": "starter-sports---athletics-vol1",
@@ -239,7 +239,7 @@
     "rows": 9,
     "letterCells": 40,
     "theme": "Sports & Athletics",
-    "difficulty": "Expert"
+    "difficulty": "Hard"
   },
   {
     "id": "starter-sports---athletics-vol2",
@@ -250,7 +250,7 @@
     "rows": 10,
     "letterCells": 38,
     "theme": "Sports & Athletics",
-    "difficulty": "Hard"
+    "difficulty": "Normal"
   },
   {
     "id": "starter-sports---athletics-vol3",
