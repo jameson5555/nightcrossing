@@ -110,6 +110,7 @@
 .hint-error {
   color: #ff4444;
   font-size: 0.85rem;
+  line-height: 1.4;
   margin-top: var(--spacing-sm);
   text-align: center;
 }

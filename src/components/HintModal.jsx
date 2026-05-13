@@ -11,7 +11,8 @@ const HintModal = ({
   isWordSolved,
   hintsRemaining,
   hasFreeHintAvailable,
-  canUnlockHint
+  canUnlockHint,
+  outOfHintsMessage
 }) => {
   if (!isOpen) return null;
 
@@ -76,7 +77,7 @@ const HintModal = ({
           )}
 
           {hintsRemaining <= 0 && !hasFreeHintAvailable && (
-            <p className="hint-error">You're out of hints! Complete a puzzle to earn more.</p>
+            <p className="hint-error">{outOfHintsMessage || 'You are out of hints for now. A free bonus hint is on the way. Complete a puzzle to earn +4 hints immediately.'}</p>
           )}
         </div>
 

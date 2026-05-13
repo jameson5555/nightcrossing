@@ -38,6 +38,37 @@ const clearTitleFadeTimers = (timersRef) => {
   timersRef.current.settle = null;
 };
 
+const formatApproximateWait = (remainingMs) => {
+  const totalMinutes = Math.max(1, Math.ceil(remainingMs / 60000));
+
+  if (totalMinutes < 60) {
+    return `about ${totalMinutes}m`;
+  }
+
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+
+  if (minutes === 0) {
+    return `about ${hours}h`;
+  }
+
+  return `about ${hours}h ${minutes}m`;
+};
+
+const buildOutOfHintsMessage = (emptyTimestamp, cooldownMs) => {
+  if (!emptyTimestamp) {
+    return 'You are out of hints for now. A free bonus hint is on the way. Complete a puzzle to earn +4 hints immediately.';
+  }
+
+  const remainingMs = emptyTimestamp + cooldownMs - Date.now();
+
+  if (remainingMs <= 0) {
+    return 'You are out of hints for now. Your free bonus hint should arrive any minute. Complete a puzzle to earn +4 hints immediately.';
+  }
+
+  return `You are out of hints for now. A free bonus hint arrives in ${formatApproximateWait(remainingMs)}. Complete a puzzle to earn +4 hints immediately.`;
+};
+
 function App() {
   const [currentView, setCurrentView] = useState('menu'); // 'menu' | 'play'
   const [puzzleData, setPuzzleData] = useState(null);
@@ -53,6 +84,7 @@ function App() {
   const [puzzlesIndex, setPuzzlesIndex] = useState([]);
   const [badgeUnlockInfo, setBadgeUnlockInfo] = useState(null);
   const [hasUsedFreeHint, setHasUsedFreeHint] = useState(false);
+  const [outOfHintsMessage, setOutOfHintsMessage] = useState('You are out of hints for now. A free bonus hint is on the way. Complete a puzzle to earn +4 hints immediately.');
   const [headerTitle, setHeaderTitle] = useState('Nightcrossing');
   const [titleAnimState, setTitleAnimState] = useState('idle'); // idle | out | in
   const BONUS_HINT_COOLDOWN_MS = 12 * 60 * 60 * 1000;
@@ -88,11 +120,10 @@ function App() {
     const now = Date.now();
 
     if (now - emptyTs >= BONUS_HINT_COOLDOWN_MS) {
-      setHintsRemaining(prev => {
-        const newCount = prev + 1;
-        saveHintsRemaining(newCount);
-        return newCount;
-      });
+      const currentCount = await loadHintsRemaining();
+      const newCount = currentCount + 1;
+      await saveHintsRemaining(newCount);
+      setHintsRemaining(newCount);
       await clearHintsEmptyTimestamp();
       
       setToastInfo({
@@ -101,6 +132,20 @@ function App() {
         type: "bonus"
       });
     }
+  };
+
+  const handleOpenHintModal = async () => {
+    await checkAndAwardBonusHint();
+
+    const latestHints = await loadHintsRemaining();
+    setHintsRemaining(latestHints);
+
+    if (latestHints <= 0 && hasUsedFreeHint) {
+      const emptyTs = await loadHintsEmptyTimestamp();
+      setOutOfHintsMessage(buildOutOfHintsMessage(emptyTs, BONUS_HINT_COOLDOWN_MS));
+    }
+
+    setIsHintModalOpen(true);
   };
 
   // Load initial data on mount
@@ -503,7 +548,7 @@ function App() {
                 {canShowHintButton ? (
                 <button
                   className={`hint-btn ${unlockedHints.has(selectedClueId) ? 'unlocked' : ''}`}
-                  onClick={() => setIsHintModalOpen(true)}
+                  onClick={handleOpenHintModal}
                   aria-label="Hint"
                 >
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -572,6 +617,7 @@ function App() {
             hintsRemaining={hintsRemaining}
             hasFreeHintAvailable={!hasUsedFreeHint}
             canUnlockHint={canUnlockSelectedClueHint}
+            outOfHintsMessage={outOfHintsMessage}
           />
         </>
       ) : (
