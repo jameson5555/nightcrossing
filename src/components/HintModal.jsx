@@ -77,7 +77,7 @@ const HintModal = ({
           )}
 
           {hintsRemaining <= 0 && !hasFreeHintAvailable && (
-            <p className="hint-error">{outOfHintsMessage || 'You are out of hints for now. A free bonus hint is on the way. Complete a puzzle to earn +4 hints immediately.'}</p>
+            <p className="hint-error">{outOfHintsMessage || 'Free bonus hint coming soon.'}</p>
           )}
         </div>
 

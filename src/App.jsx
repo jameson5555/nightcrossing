@@ -57,16 +57,16 @@ const formatApproximateWait = (remainingMs) => {
 
 const buildOutOfHintsMessage = (emptyTimestamp, cooldownMs) => {
   if (!emptyTimestamp) {
-    return 'You are out of hints for now. A free bonus hint is on the way. Complete a puzzle to earn +4 hints immediately.';
+    return 'Free bonus hint coming soon.';
   }
 
   const remainingMs = emptyTimestamp + cooldownMs - Date.now();
 
   if (remainingMs <= 0) {
-    return 'You are out of hints for now. Your free bonus hint should arrive any minute. Complete a puzzle to earn +4 hints immediately.';
+    return 'Free bonus hint arriving now.';
   }
 
-  return `You are out of hints for now. A free bonus hint arrives in ${formatApproximateWait(remainingMs)}. Complete a puzzle to earn +4 hints immediately.`;
+  return `Free bonus hint in ${formatApproximateWait(remainingMs)}.`;
 };
 
 function App() {
@@ -84,7 +84,7 @@ function App() {
   const [puzzlesIndex, setPuzzlesIndex] = useState([]);
   const [badgeUnlockInfo, setBadgeUnlockInfo] = useState(null);
   const [hasUsedFreeHint, setHasUsedFreeHint] = useState(false);
-  const [outOfHintsMessage, setOutOfHintsMessage] = useState('You are out of hints for now. A free bonus hint is on the way. Complete a puzzle to earn +4 hints immediately.');
+  const [outOfHintsMessage, setOutOfHintsMessage] = useState('Free bonus hint coming soon.');
   const [headerTitle, setHeaderTitle] = useState('Nightcrossing');
   const [titleAnimState, setTitleAnimState] = useState('idle'); // idle | out | in
   const BONUS_HINT_COOLDOWN_MS = 12 * 60 * 60 * 1000;
