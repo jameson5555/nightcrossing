@@ -13,6 +13,10 @@ const LONG_WORD_LENGTH = 8;
 const VERY_LONG_WORD_LENGTH = 10;
 const NORMAL_QUANTILE = 0.6;
 const HARD_QUANTILE = 0.85;
+const RARE_LETTERS = new Set(['J', 'K', 'Q', 'V', 'W', 'X', 'Y', 'Z']);
+
+const PROPER_NOUN_HINT_REGEX = /\b(god|goddess|deity|constellation|moon|planet|star|satellite|asteroid|myth|mythological|roman|greek)\b/i;
+const CLUE_OBSCURITY_REGEX = /[;:()]|\b(archaic|obsolete|mythological|technical|primordial|kuiper|trojan|alpha\s+[a-z]+|beta\s+[a-z]+)\b/i;
 
 function parseVolumeFromId(id) {
   const match = String(id || '').match(/-vol(\d+)$/);
@@ -50,6 +54,90 @@ function parseClueNumber(entry) {
   if (typeof entry !== 'string') return null;
   const match = entry.match(/^(\d+)\./);
   return match ? Number(match[1]) : null;
+}
+
+function stripCluePrefix(entry) {
+  if (typeof entry !== 'string') return '';
+  return entry.replace(/^\d+\.\s*/, '').trim();
+}
+
+function hasInnerCapitalizedToken(text) {
+  const value = String(text || '').trim();
+  if (!value) return false;
+
+  let firstWordSkipped = false;
+  const matches = value.match(/\b[A-Z][a-z]{2,}\b/g) || [];
+  for (const token of matches) {
+    if (!firstWordSkipped) {
+      firstWordSkipped = true;
+      continue;
+    }
+    return true;
+  }
+
+  return false;
+}
+
+function safeRatio(numerator, denominator) {
+  if (!Number.isFinite(numerator) || !Number.isFinite(denominator) || denominator <= 0) return 0;
+  return numerator / denominator;
+}
+
+function answerRareLetterRatio(answer) {
+  const chars = String(answer || '').toUpperCase().replace(/[^A-Z]/g, '').split('');
+  if (chars.length === 0) return 0;
+  const rareCount = chars.filter(ch => RARE_LETTERS.has(ch)).length;
+  return rareCount / chars.length;
+}
+
+function collectLexicalSignals(puzzle, wordLengths = []) {
+  const acrossAnswers = Array.isArray(puzzle?.answers?.across) ? puzzle.answers.across : [];
+  const downAnswers = Array.isArray(puzzle?.answers?.down) ? puzzle.answers.down : [];
+  const acrossClues = Array.isArray(puzzle?.clues?.across) ? puzzle.clues.across : [];
+  const downClues = Array.isArray(puzzle?.clues?.down) ? puzzle.clues.down : [];
+  const hints = puzzle?.hints && typeof puzzle.hints === 'object' ? puzzle.hints : {};
+
+  const answerWords = [...acrossAnswers, ...downAnswers].map(value => String(value || '').trim()).filter(Boolean);
+  const lengths = answerWords.length > 0
+    ? answerWords.map(answer => answer.length)
+    : wordLengths;
+
+  const totalWords = lengths.length;
+  const longWordCount = lengths.filter(len => len >= LONG_WORD_LENGTH).length;
+  const veryLongWordCount = lengths.filter(len => len >= VERY_LONG_WORD_LENGTH).length;
+  const longWordShare = safeRatio(longWordCount, totalWords);
+  const veryLongWordShare = safeRatio(veryLongWordCount, totalWords);
+
+  const rareLetterLoad = answerWords.length > 0
+    ? answerWords.reduce((sum, answer) => sum + answerRareLetterRatio(answer), 0) / answerWords.length
+    : 0;
+
+  const clueTexts = [...acrossClues, ...downClues].map(stripCluePrefix).filter(Boolean);
+  const hintTexts = Object.values(hints).map(value => String(value || '').trim()).filter(Boolean);
+  const totalTextItems = clueTexts.length + hintTexts.length;
+
+  let properNounHits = 0;
+  let obscureTextHits = 0;
+
+  for (const text of [...clueTexts, ...hintTexts]) {
+    if (PROPER_NOUN_HINT_REGEX.test(text) || hasInnerCapitalizedToken(text)) {
+      properNounHits += 1;
+    }
+    if (CLUE_OBSCURITY_REGEX.test(text)) {
+      obscureTextHits += 1;
+    }
+  }
+
+  const keyIdeaHints = hintTexts.filter(text => /^Key idea:/i.test(text)).length;
+
+  return {
+    longWordLoad: clamp((longWordShare - 0.2) / 0.35, 0, 1),
+    veryLongWordLoad: clamp((veryLongWordShare - 0.08) / 0.22, 0, 1),
+    rareLetterLoad: clamp((rareLetterLoad - 0.12) / 0.25, 0, 1),
+    properNounLoad: clamp(safeRatio(properNounHits, totalTextItems) / 0.55, 0, 1),
+    clueObscurityLoad: clamp(safeRatio(obscureTextHits, totalTextItems) / 0.55, 0, 1),
+    fallbackHintLoad: clamp(safeRatio(keyIdeaHints, Math.max(1, hintTexts.length)) / 0.45, 0, 1)
+  };
 }
 
 function collectWordPathFromStart(grid, cols, rows, startIndex, direction) {
@@ -115,9 +203,16 @@ function computeDifficultyScore(puzzle, cols, rows, letterCells) {
   const totalCells = cols * rows;
   const density = totalCells > 0 ? letterCells / totalCells : 0;
   const paths = collectWordPaths(puzzle, cols, rows);
+  const wordLengths = paths.map(path => path.length);
+  const lexical = collectLexicalSignals(puzzle, wordLengths);
 
   if (paths.length === 0) {
-    return clamp((density - 0.34) / 0.16, 0, 1);
+    let sparseScore = 0;
+    sparseScore += clamp((density - 0.34) / 0.16, 0, 1) * 0.6;
+    sparseScore += lexical.longWordLoad * 0.2;
+    sparseScore += lexical.properNounLoad * 0.1;
+    sparseScore += lexical.clueObscurityLoad * 0.1;
+    return clamp(sparseScore, 0, 1);
   }
 
   const occupancy = new Map();
@@ -143,7 +238,6 @@ function computeDifficultyScore(puzzle, cols, rows, letterCells) {
     ? intersectionsPerWord.reduce((sum, count) => sum + count, 0) / intersectionsPerWord.length
     : 0;
 
-  const wordLengths = paths.map(path => path.length);
   const longWordIndices = wordLengths
     .map((len, idx) => ({ len, idx }))
     .filter(item => item.len >= LONG_WORD_LENGTH)
@@ -206,13 +300,19 @@ function computeDifficultyScore(puzzle, cols, rows, letterCells) {
   }
 
   let score = 0;
-  score += clamp((density - 0.34) / 0.16, 0, 1) * 0.34;
-  score += (1 - clamp(avgIntersectionsPerWord / 2.2, 0, 1)) * 0.22;
-  score += (1 - clamp(minIntersectionsPerWord / 1.2, 0, 1)) * 0.14;
-  score += (1 - longWordTwoPlusRate) * 0.18;
-  score += (1 - veryLongWordThreePlusRate) * 0.09;
+  score += clamp((density - 0.34) / 0.16, 0, 1) * 0.18;
+  score += (1 - clamp(avgIntersectionsPerWord / 2.2, 0, 1)) * 0.2;
+  score += (1 - clamp(minIntersectionsPerWord / 1.2, 0, 1)) * 0.12;
+  score += (1 - longWordTwoPlusRate) * 0.13;
+  score += (1 - veryLongWordThreePlusRate) * 0.06;
   score += connected ? 0 : 0.03;
   score += clamp((paths.length - 8) / 6, 0, 1) * 0.03;
+  score += lexical.longWordLoad * 0.1;
+  score += lexical.veryLongWordLoad * 0.05;
+  score += lexical.properNounLoad * 0.05;
+  score += lexical.clueObscurityLoad * 0.03;
+  score += lexical.rareLetterLoad * 0.03;
+  score += lexical.fallbackHintLoad * 0.02;
 
   return clamp(score, 0, 1);
 }
