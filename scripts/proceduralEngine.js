@@ -54,6 +54,11 @@ const MIN_LONG_WORD_CROSSABILITY = Number.isFinite(Number(process.env.NC_MIN_LON
 const LONG_WORD_TARGET_SHARE = Number.isFinite(Number(process.env.NC_LONG_WORD_TARGET_SHARE))
   ? Math.max(0, Math.min(0.3, Number(process.env.NC_LONG_WORD_TARGET_SHARE)))
   : 0.045;
+const MAX_LAYOUT_OBSCURE_PROPER_NOUN_LOAD = Number.isFinite(Number(process.env.NC_MAX_LAYOUT_OBSCURE_PROPER_NOUN_LOAD))
+  ? Math.max(0, Math.min(1, Number(process.env.NC_MAX_LAYOUT_OBSCURE_PROPER_NOUN_LOAD)))
+  : 0.34;
+
+const LAYOUT_OBSCURE_PROPER_NOUN_REGEX = /\b(goddess|god|deity|mythological|myth|constellation|kuiper|planetoid|primordial|trojan|tau\s+[a-z]+|mistress\s+of\s+zeus|one\s+of\s+the\s+moons\s+of\s+jupiter|pegasi|uranian|salacia|aoede|elara|amalthea|ganymede|callisto)\b/i;
 
 const SCORE_WEIGHTS = {
   minIntersection: 42,
@@ -234,6 +239,25 @@ function layoutPassesThemeGuardrails(layout, relevanceByAnswer, options = {}) {
 
   const avg = sum / layout.result.length;
   return avg >= minAvgRelevance && lowCount <= maxLowRelevance;
+}
+
+function layoutPassesLexicalGuardrails(layout, options = {}) {
+  if (!layout || !Array.isArray(layout.result) || layout.result.length === 0) return false;
+
+  const maxObscureProperNounLoad = options.maxObscureProperNounLoad ?? MAX_LAYOUT_OBSCURE_PROPER_NOUN_LOAD;
+
+  let obscureHits = 0;
+  for (const placed of layout.result) {
+    const clue = String(placed?.clue || '');
+    const hint = String(placed?.hint || '');
+    const joined = `${clue} ${hint}`.trim();
+    if (LAYOUT_OBSCURE_PROPER_NOUN_REGEX.test(joined)) {
+      obscureHits++;
+    }
+  }
+
+  const obscureLoad = obscureHits / layout.result.length;
+  return obscureLoad <= maxObscureProperNounLoad;
 }
 
 function choosePrimaryPool(pools) {
@@ -671,7 +695,11 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
       requiredPlaced,
       { enforceLongIntersections: true, allowLongMisses: 0 }
     );
-    if (candidate && layoutPassesThemeGuardrails(candidate, pools.relevanceByAnswer)) {
+    if (
+      candidate &&
+      layoutPassesThemeGuardrails(candidate, pools.relevanceByAnswer) &&
+      layoutPassesLexicalGuardrails(candidate)
+    ) {
       const candidateScore = typeof candidate._engineScore === 'number' ? candidate._engineScore : -Infinity;
       if (candidateScore > bestScore) {
         bestScore = candidateScore;
@@ -696,7 +724,11 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
       Math.min(MIN_PLACED_WORDS, MIN_WORD_TARGET),
       { enforceLongIntersections: true, allowLongMisses: 1 }
     );
-    if (fallback && layoutPassesThemeGuardrails(fallback, pools.relevanceByAnswer)) {
+    if (
+      fallback &&
+      layoutPassesThemeGuardrails(fallback, pools.relevanceByAnswer) &&
+      layoutPassesLexicalGuardrails(fallback)
+    ) {
       layout = fallback;
     }
   }
@@ -710,7 +742,11 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
       Math.max(6, MIN_PLACED_WORDS - 1),
       { enforceLongIntersections: false }
     );
-    if (fallback && layoutPassesThemeGuardrails(fallback, pools.relevanceByAnswer)) {
+    if (
+      fallback &&
+      layoutPassesThemeGuardrails(fallback, pools.relevanceByAnswer) &&
+      layoutPassesLexicalGuardrails(fallback)
+    ) {
       layout = fallback;
     }
   }
@@ -724,7 +760,11 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
       PREFERRED_MIN_PLACED_WORDS,
       { enforceLongIntersections: true, allowLongMisses: 1 }
     );
-    if (recovery && layoutPassesThemeGuardrails(recovery, pools.relevanceByAnswer)) {
+    if (
+      recovery &&
+      layoutPassesThemeGuardrails(recovery, pools.relevanceByAnswer) &&
+      layoutPassesLexicalGuardrails(recovery)
+    ) {
       layout = recovery;
     }
   }
@@ -739,7 +779,11 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
       Math.max(6, MIN_PLACED_WORDS - 1),
       { enforceLongIntersections: false }
     );
-    if (backup && layoutPassesThemeGuardrails(backup, pools.relevanceByAnswer)) {
+    if (
+      backup &&
+      layoutPassesThemeGuardrails(backup, pools.relevanceByAnswer) &&
+      layoutPassesLexicalGuardrails(backup)
+    ) {
       layout = backup;
     }
   }

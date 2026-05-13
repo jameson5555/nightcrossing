@@ -14,6 +14,17 @@ const PUZZLES_DIR = path.join(DATA_DIR, 'puzzles');
 const INDEX_FILE = path.join(DATA_DIR, 'puzzles.json');
 const PUZZLES_PER_SET = 3;
 
+function slugifyThemeName(themeName) {
+  return String(themeName || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '-');
+}
+
+function buildPuzzleId(themeName, volume, legacyPrefix = false) {
+  const prefix = legacyPrefix ? 'starter-' : '';
+  return `${prefix}${slugifyThemeName(themeName)}-vol${volume}`;
+}
+
 function formatWaveLabel(volume) {
   const safeVolume = Number(volume);
   if (!Number.isFinite(safeVolume) || safeVolume < 1) return '';
@@ -173,8 +184,11 @@ async function generateStarters() {
     let highestVol = 0;
     
     // Also scan disk for puzzle files not yet in the index
-    const themePrefix = `starter-${theme.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}-vol`;
-    const diskFiles = fs.readdirSync(PUZZLES_DIR).filter(f => f.startsWith(themePrefix));
+    const themeSlug = slugifyThemeName(theme.name);
+    const themePrefix = `${themeSlug}-vol`;
+    const legacyThemePrefix = `starter-${themeSlug}-vol`;
+    const diskFiles = fs.readdirSync(PUZZLES_DIR)
+      .filter(f => f.startsWith(themePrefix) || f.startsWith(legacyThemePrefix));
     for (const f of diskFiles) {
       const m = f.match(/-vol(\d+)\.json$/);
       if (m && parseInt(m[1]) > highestVol) highestVol = parseInt(m[1]);
@@ -215,13 +229,16 @@ async function generateStarters() {
 
     try {
         for (let i = startVol; i <= endVol; i++) {
-            const id = `starter-${theme.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}-vol${i}`;
+            const id = buildPuzzleId(theme.name, i);
+            const legacyId = buildPuzzleId(theme.name, i, true);
             
             // Skip if this puzzle already exists on disk (from a previous partial run)
             const existingFile = path.join(PUZZLES_DIR, `${id}.json`);
-            if (fs.existsSync(existingFile) && !index.find(p => p.id === id)) {
+            const legacyFile = path.join(PUZZLES_DIR, `${legacyId}.json`);
+            if ((fs.existsSync(existingFile) || fs.existsSync(legacyFile)) && !index.find(p => p.id === id || p.id === legacyId)) {
+              const existingPath = fs.existsSync(existingFile) ? existingFile : legacyFile;
               try {
-                const existing = JSON.parse(fs.readFileSync(existingFile, 'utf8'));
+                const existing = JSON.parse(fs.readFileSync(existingPath, 'utf8'));
                 if (existing.answers) {
                   existing.answers.across.forEach(a => consumedWords.add(a.toUpperCase()));
                   existing.answers.down.forEach(a => consumedWords.add(a.toUpperCase()));
@@ -230,7 +247,7 @@ async function generateStarters() {
                 console.log(`  ⏩ ${id} already exists on disk, added to index.`);
                 continue;
               } catch(e) { /* corrupt file, regenerate */ }
-            } else if (index.find(p => p.id === id)) {
+            } else if (index.find(p => p.id === id || p.id === legacyId)) {
               console.log(`  ⏩ ${id} already in index, skipping.`);
               continue;
             }

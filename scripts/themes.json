@@ -10799,6 +10799,48 @@
         "hint": "Key idea: Shaped like a star",
         "source": "ml",
         "themeScore": 1.26
+      },
+      {
+        "answer": "DRAGON",
+        "clue": "Legendary serpentine or reptilian creature.",
+        "hint": "In European mythologies, a gigantic beast, typically reptilian with leathery bat-like wings, lion-like claws, scaly skin and a serpent-like body, often a monster with fiery breath.",
+        "source": "ml",
+        "themeScore": 1.225
+      },
+      {
+        "answer": "DRAKE",
+        "clue": "Male duck.",
+        "hint": "Dragon",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "DRAGGER",
+        "clue": "One who takes part in drag racing.",
+        "hint": "Something that drags.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "CHARON",
+        "clue": "Ferryman of Hades, who rowed the shades of the dead across the river Styx.",
+        "hint": "The largest of the five moons of Pluto.",
+        "source": "ml",
+        "themeScore": 1.149
+      },
+      {
+        "answer": "SEMELE",
+        "clue": "Mother of Dionysus.",
+        "hint": "86 Semele, a main belt asteroid.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "ALCYONE",
+        "clue": "One of the stars of the Pleiades star cluster, named after the mythical character.",
+        "hint": "One of the Pleiades, daughters of Atlas and Pleione.",
+        "source": "ml",
+        "themeScore": 1.236
       }
     ]
   },
@@ -21203,6 +21245,139 @@
         "hint": "Key idea: A dish similar to mashed potatoes, but",
         "source": "ml",
         "themeScore": 1.16
+      },
+      {
+        "answer": "PULLET",
+        "clue": "Young hen, especially one less than a year old.",
+        "hint": "A spineless person; a coward.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "BROILER",
+        "clue": "Chicken raised for meat.",
+        "hint": "Specifically, a young chicken 6 to 10 weeks old, as contrasted with a roaster.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "STOCKPOT",
+        "clue": "Large pot, such as is used for making stock or for cooking large amounts of soup.",
+        "hint": "Key idea: A large pot, such as is used",
+        "source": "ml",
+        "themeScore": 1.706
+      },
+      {
+        "answer": "KETTLES",
+        "clue": "Vessel for boiling a liquid or cooking food, usually metal and equipped with a lid.",
+        "hint": "Vessel or appliance used to boil water for the preparation of hot beverages and other foodstuffs.",
+        "source": "ml",
+        "themeScore": 1.731
+      },
+      {
+        "answer": "PRECOOKED",
+        "clue": "Alternative spelling of pre-cooked.",
+        "hint": "Key idea: Alternative spelling of pre-cooked. [Partially or completely",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "OVENWARE",
+        "clue": "Cooking utensils that can be safely used in an oven.",
+        "hint": "Key idea: Cooking utensils that can be safely used",
+        "source": "ml",
+        "themeScore": 1.71
+      },
+      {
+        "answer": "SAUCES",
+        "clue": "Liquid condiment or accompaniment to food.",
+        "hint": "Tomato sauce , as in:",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "FREEZABLE",
+        "clue": "Any food item that can be frozen.",
+        "hint": "Key idea: Any food item that can be frozen",
+        "source": "ml",
+        "themeScore": 1.33
+      },
+      {
+        "answer": "KHORKHOG",
+        "clue": "Mongolian dish of meat cooked in a container with hot stones and water.",
+        "hint": "Key idea: A Mongolian dish of meat cooked in",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "BUDBOD",
+        "clue": "Dish made of glutinous rice rolled in banana leaves, similar to suman.",
+        "hint": "Similar dish rolled in banana leaves.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "PIEDISH",
+        "clue": "Dish in which pies can be baked.",
+        "hint": "Key idea: A dish in which pies can be",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "PIEMAN",
+        "clue": "Man who sells pies.",
+        "hint": "The man who called heads or tails in street gambling games of coin tossing.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "PATISSIER",
+        "clue": "Pastry chef",
+        "hint": "Key idea: pastry chef",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "BROCHETTE",
+        "clue": "Small skewer or spit on which small pieces of meat, fish or vegetables are roasted or broiled.",
+        "hint": "Food cooked on such a device.",
+        "source": "ml",
+        "themeScore": 1.656
+      },
+      {
+        "answer": "TOASTER",
+        "clue": "Electrical device for toasting food, typically sliced bread.",
+        "hint": "Toasting fork.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "BREADER",
+        "clue": "Someone or something that coats food items with breadcrumbs.",
+        "hint": "Key idea: Someone or something that coats food items",
+        "source": "ml",
+        "themeScore": 1.33
+      },
+      {
+        "answer": "CRISPY",
+        "clue": "Well-baked fat on the surface of a piece of roasted meat.",
+        "hint": "Key idea: The well-baked fat on the surface of",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "PAELLERA",
+        "clue": "Large shallow frying pan in which paella is cooked.",
+        "hint": "Key idea: A large shallow frying pan in which",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "KAWALI",
+        "clue": "Frying pan",
+        "hint": "Key idea: frying pan",
+        "source": "ml",
+        "themeScore": 1.26
       }
     ]
   },
@@ -30866,6 +31041,517 @@
         "answer": "PARAFLIGHT",
         "clue": "Parasail",
         "hint": "Instance of paraflying",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "DRYSIDE",
+        "clue": "The terrestrial side of a coastline.",
+        "hint": "Key idea: Relating to the terrestrial side of a",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "SUPERTIDAL",
+        "clue": "A supertide",
+        "hint": "Key idea: Relating to a supertide",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "LAGOONAL",
+        "clue": "Pertaining to a lagoon, especially one behind a coral reef",
+        "hint": "Key idea: Of or pertaining to a lagoon, especially",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "OCEANOLOGIC",
+        "clue": "Oceanology.",
+        "hint": "Key idea: Relating to oceanology",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "AMPHIBOREAL",
+        "clue": "Both sides of the North Atlantic Ocean.",
+        "hint": "Key idea: Relating to both sides of the North",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "PANOCEANIC",
+        "clue": "All oceans",
+        "hint": "Key idea: Relating to all oceans",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "HORNFISH",
+        "clue": "Garfish or sea needle.",
+        "hint": "Key idea: A garfish or sea needle",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "HATFISH",
+        "clue": "Synonym of halibut.",
+        "hint": "Hide one's bald spot or bad hair under a hat in a profile picture for online dating.",
+        "source": "ml",
+        "themeScore": 1.505
+      },
+      {
+        "answer": "BUGFISH",
+        "clue": "Menhaden.",
+        "hint": "Key idea: The menhaden",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "SALEMA",
+        "clue": "Seabream, Sarpa salpa.",
+        "hint": "Key idea: A seabream, Sarpa salpa",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "WEATHERFISH",
+        "clue": "Loach of the genus Misgurnus",
+        "hint": "Especially, Misgurnus fossilis",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "MOUSEFISH",
+        "clue": "Sargassum fish, Histrio histrio.",
+        "hint": "Gonorynchus gonorynchus, a kind of beaked salmon.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "BARFISH",
+        "clue": "White bass",
+        "hint": "Yellow bass",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REEDFISH",
+        "clue": "Erpetoichthys calabaricus",
+        "hint": "Key idea: Erpetoichthys calabaricus",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "COCKFISH",
+        "clue": "Male fish, especially a salmon or trout.",
+        "hint": "Callorhinchid fish, Callorhinchus callorynchus, native to South America.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "AMBERFISH",
+        "clue": "Amberjack.",
+        "hint": "Key idea: An amberjack",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "FLYFISH",
+        "clue": "Sebastes ensifer , a brightly-coloured scorpaenoid fish of California.",
+        "hint": "Key idea: Sebastes ensifer , a brightly-coloured scorpaenoid fish",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "HORNBEAK",
+        "clue": "Hornfish.",
+        "hint": "Key idea: A hornfish",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "GUARDFISH",
+        "clue": "Synonym of houndfish.",
+        "hint": "Key idea: Synonym of houndfish",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "LEMONFISH",
+        "clue": "Marine fish, the cobia.",
+        "hint": "Key idea: A marine fish, the cobia",
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "SANDFISH",
+        "clue": "Several marine fishes that burrow into sandy seabeds",
+        "hint": "Genus Gonorynchus , long, thin ray-finned fishes",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "CHINAFISH",
+        "clue": "Several fish of the family Ophicephalidae or of the genus Sebastodes",
+        "hint": "Key idea: Any of several fish of the family",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "GREENFISH",
+        "clue": "Especially, Pomatomus saltatrix.",
+        "hint": "Certain of the fish called bluefish.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "LAMPRIFORM",
+        "clue": "Related to the order Lampridiformes of ray-finned fish",
+        "hint": "The fish in the order Lampridiformes",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "LORICARIINE",
+        "clue": "Catfish of the subfamily Loricariinae",
+        "hint": "Key idea: Relating to catfish of the subfamily Loricariinae",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "SUBBRACHIAN",
+        "clue": "Fish of the order Subbrachiales.",
+        "hint": "Any fish of the order Subbrachiales",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "LONGJAW",
+        "clue": "Applied to various kinds of fish characterized by a long jaw.",
+        "hint": "Key idea: Applied to various kinds of fish characterized",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "CALIGIFORM",
+        "clue": "Having the form of a sea louse",
+        "hint": "Key idea: Having the form of a sea louse",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "LYRIFEROUS",
+        "clue": "Having a lyre-shaped shoulder girdle, as certain fishes do.",
+        "hint": "Key idea: Having a lyre-shaped shoulder girdle, as certain",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "CLUPEOID",
+        "clue": "A group of fish closely related taxonomically to herring.",
+        "hint": "Key idea: Any of a group of fish closely",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "GADOID",
+        "clue": "Any fish of the family Gadidae",
+        "hint": "Key idea: Any fish of the family Gadidae",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "ICHTHYOID",
+        "clue": "Any fish, or other vertebrate having the form of a fish.",
+        "hint": "Key idea: Any fish, or other vertebrate having the",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "PERCIFORM",
+        "clue": "Such a fish.",
+        "hint": "Key idea: Such a fish",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "LARGENOSE",
+        "clue": "Applied to various kinds of fish characterized by a large nose.",
+        "hint": "Key idea: Applied to various kinds of fish characterized",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "ALEPIDOTE",
+        "clue": "Not having scales.",
+        "hint": "A fish that has no scales.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "SPAROID",
+        "clue": "Any fish of the family Sparidae.",
+        "hint": "Pertaining to the family, Sparidae, of deep-bodied, spinous-finned marine fish, including the sea bream, porgy, scup, and sheepshead.",
+        "source": "ml",
+        "themeScore": 1.455
+      },
+      {
+        "answer": "SCORPAENOID",
+        "clue": "Scorpionfish.",
+        "hint": "Key idea: A scorpionfish",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "EMBIOTOCOID",
+        "clue": "Belonging to the fish family Embiotocidae.",
+        "hint": "One of family Embiotocidae of surfperches, abundant on the coast of California, remarkable for being viviparous.",
+        "source": "ml",
+        "themeScore": 1.155
+      },
+      {
+        "answer": "BERYCOID",
+        "clue": "Resembling or relating to the Berycidae, a family of marine fishes.",
+        "hint": "Key idea: Resembling or relating to the Berycidae, a",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "LIPARID",
+        "clue": "Any fish in the family Liparidae.",
+        "hint": "Key idea: Any fish in the family Liparidae",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "SCORPAENID",
+        "clue": "Any fish in the family Scorpaenidae, a scorpionfish.",
+        "hint": "Key idea: Any fish in the family Scorpaenidae, a",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "SNOOK",
+        "clue": "Freshwater and marine fish of the family Centropomidae in the order Perciformes.",
+        "hint": "Centropomus undecimalis.",
+        "source": "ml",
+        "themeScore": 1.717
+      },
+      {
+        "answer": "SCORPENE",
+        "clue": "Scorpionfish, a marine food fish of the genus Scorpaena.",
+        "hint": "Key idea: The scorpionfish, a marine food fish of",
+        "source": "ml",
+        "themeScore": 1.83
+      },
+      {
+        "answer": "LIZARDFISH",
+        "clue": "Any member of the family Synodontidae of aulopiform fish.",
+        "hint": "Key idea: Any member of the family Synodontidae of",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "JOBFISH",
+        "clue": "Various fishes of the family Lutjanidae.",
+        "hint": "Key idea: Any of various fishes of the family",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "VELVETFISH",
+        "clue": "A family of scorpaeniform fish.",
+        "hint": "Key idea: Any of a family of scorpaeniform fish",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "LEAFFISH",
+        "clue": "Small South American freshwater fish of the family Polycentridae.",
+        "hint": "Asian leaffish, of family Nandidae",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "LIMACINOID",
+        "clue": "Any sea snail of the superfamily Limacinoidea",
+        "hint": "Key idea: Any sea snail of the superfamily Limacinoidea",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "SWEETLIPS",
+        "clue": "Any member of the genus Plectorhinchus of fish with large fleshy lips.",
+        "hint": "Key idea: Any member of the genus Plectorhinchus of",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "SCAPHANDRID",
+        "clue": "Any in the family Scaphandridae of sea snails.",
+        "hint": "Key idea: Any in the family Scaphandridae of sea",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "LINOPHRYNID",
+        "clue": "Any fish in the family Linophrynidae.",
+        "hint": "Key idea: Any fish in the family Linophrynidae",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "GOOSEFISH",
+        "clue": "Any anglerfish of the family Lophiidae.",
+        "hint": "Key idea: Any anglerfish of the family Lophiidae",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "SNIPEFISH",
+        "clue": "Either of the two species of fish of the genus Macroramphosus.",
+        "hint": "Key idea: Either of the two species of fish",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "LUMPSUCKER",
+        "clue": "The scorpaeniform fish in the family Cyclopteridae, with adhesive pelvic discs.",
+        "hint": "Key idea: Any of the scorpaeniform fish in the",
+        "source": "ml",
+        "themeScore": 1.247
+      },
+      {
+        "answer": "FACELINID",
+        "clue": "Any sea slug of the family Facelinidae.",
+        "hint": "Key idea: Any sea slug of the family Facelinidae",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "COWFISH",
+        "clue": "Genera Acanthostracion and Lactoria, of the boxfish family Ostraciidae.",
+        "hint": "Marine plectognath fish, Acanthostracion quadricornis and allied species, having two projections, like horns, in front.",
+        "source": "ml",
+        "themeScore": 1.455
+      },
+      {
+        "answer": "PINFISH",
+        "clue": "Lagodon rhomboides, a saltwater sparid fish.",
+        "hint": "Key idea: Lagodon rhomboides, a saltwater sparid fish",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "PIGFISH",
+        "clue": "Any one of several species of salt-water grunts, called also hogfish.",
+        "hint": "Golden-spot hogfish",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "SCATOPHAGID",
+        "clue": "Any fish in the family Scatophagidae.",
+        "hint": "Key idea: Any fish in the family Scatophagidae",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "LAMPRID",
+        "clue": "Any fish in the family Lamprididae, the opahs.",
+        "hint": "Key idea: Any fish in the family Lamprididae, the",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "SOAPFISH",
+        "clue": "A number of serranid fish that can secrete a toxic soaplike mucus",
+        "hint": "Rypticus spp.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "LOPHOTID",
+        "clue": "Any fish in the family Lophotidae, the crestfish or unicornfish.",
+        "hint": "Key idea: Any fish in the family Lophotidae, the",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "SCIAENOID",
+        "clue": "Relating to the Sciaenidae, a family of marine fishes.",
+        "hint": "Any of the Sciaenidae, a family of marine fishes.",
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "STINGFISH",
+        "clue": "Several species of scorpionfish",
+        "hint": "Key idea: Any of several species of scorpionfish",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "SNAKEFISH",
+        "clue": "The several fish that resemble a snake.",
+        "hint": "Trachinocephalus myops",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "FIREFISH",
+        "clue": "Various fish of the genera Pterois and Parapterois.",
+        "hint": "Several species of fish in the genus Nemateleotris",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "DEVILFISH",
+        "clue": "Octopus.",
+        "hint": "Manta ray; any ray in the genus Mobula.",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "SPADEFISH",
+        "clue": "Several marine fish of the family Ephippidae",
+        "hint": "Polyodon spathula, the American paddlefish.",
+        "source": "ml",
+        "themeScore": 1.73
+      },
+      {
+        "answer": "SCARINE",
+        "clue": "Any fish of the subfamily Scarinae",
+        "hint": "Key idea: Any fish of the subfamily Scarinae",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "STEENBRAS",
+        "clue": "Various fish of the sparid genus Lithognathus.",
+        "hint": "Biskop, any fish of species Cymatoceps nasutus or Sparodon durbanensis.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "LAMPFISH",
+        "clue": "Several deep-water fishes that glow due to bioluminescence.",
+        "hint": "Key idea: Any of several deep-water fishes that glow",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "RASCASSE",
+        "clue": "Scorpaena scrofa, the red scorpionfish.",
+        "hint": "Key idea: Scorpaena scrofa, the red scorpionfish",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "SPOOKFISH",
+        "clue": "Fish, the barreleye.",
+        "hint": "Several species of chimaera",
         "source": "ml",
         "themeScore": 1.16
       }
@@ -41176,6 +41862,272 @@
         "hint": "Worthy of being sung about.",
         "source": "ml",
         "themeScore": 1.16
+      },
+      {
+        "answer": "TWIDDLE",
+        "clue": "Wiggling movement.",
+        "hint": "Slight twist with the fingers.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "TOOTLE",
+        "clue": "Soft toot sound.",
+        "hint": "A trip or excursion.",
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "SING",
+        "clue": "Produce musical or harmonious sounds with one’s voice.",
+        "hint": "To perform a vocal part in a musical composition, regardless of technique.",
+        "source": "rel_spc",
+        "themeScore": 1.19
+      },
+      {
+        "answer": "SWELL",
+        "clue": "Become bigger, especially due to being engorged.",
+        "hint": "To cause to become bigger.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "FRACTURE",
+        "clue": "Break in bone or cartilage.",
+        "hint": "Instance of breaking, a place where something has broken.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "SMASHING",
+        "clue": "Wonderful, very good or impressive.",
+        "hint": "An overwhelming victory or success.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "RIPPING",
+        "clue": "Action of one who rips.",
+        "hint": "Process of copying audio or video content from a CD, DVD, etc. to a hard disk.",
+        "source": "ml",
+        "themeScore": 1.155
+      },
+      {
+        "answer": "VIOLINISTIC",
+        "clue": "Of, pertaining or proper to a violinist.",
+        "hint": "Key idea: Of, pertaining or proper to a violinist",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "VIBRIONIC",
+        "clue": "Vibrions.",
+        "hint": "Key idea: Relating to vibrions",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "VIVALDIAN",
+        "clue": "Pertaining to Antonio Vivaldi.",
+        "hint": "Key idea: Of or pertaining to Antonio Vivaldi",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "VIBRATIONAL",
+        "clue": "Pertaining to vibration.",
+        "hint": "Key idea: Of or pertaining to vibration",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "VOICIST",
+        "clue": "One who discriminates against or judges people negatively based on how their voices sound.",
+        "hint": "Voice actor.",
+        "source": "ml",
+        "themeScore": 1.706
+      },
+      {
+        "answer": "UVULAR",
+        "clue": "Relating to the uvula.",
+        "hint": "Of a sound, articulated with the uvula.",
+        "source": "ml",
+        "themeScore": 1.46
+      },
+      {
+        "answer": "PIANISTIC",
+        "clue": "Pertaining to piano playing.",
+        "hint": "Suitable for playing on a piano, well-suited to piano playing.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "BEETHOVIAN",
+        "clue": "Pertaining to Ludwig van Beethoven, in particular his style of music.",
+        "hint": "Key idea: Of or pertaining to Ludwig van Beethoven,",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "GRIND",
+        "clue": "Reduce to smaller pieces by crushing with lateral motion.",
+        "hint": "To shape with the force of friction.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "SCRUNCH",
+        "clue": "Crunching noise.",
+        "hint": "Key idea: A crunching noise",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "CREPITATE",
+        "clue": "Crackle, to make a crackling sound.",
+        "hint": "To crackle, as crepitant lungs do, as some arthritic joints may do, or as some fractured bones may do.",
+        "source": "ml",
+        "themeScore": 1.505
+      },
+      {
+        "answer": "SQUSH",
+        "clue": "Squashing or squishing sound.",
+        "hint": "Key idea: A squashing or squishing sound",
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "SQUOOSH",
+        "clue": "Squashing or squishing sound.",
+        "hint": "Key idea: A squashing or squishing sound",
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "CLOMP",
+        "clue": "Sound of feet hitting the ground loudly.",
+        "hint": "Key idea: The sound of feet hitting the ground",
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "BUMP",
+        "clue": "Light blow or jolting collision.",
+        "hint": "Sound of such a collision.",
+        "source": "ml",
+        "themeScore": 1.46
+      },
+      {
+        "answer": "CLICKING",
+        "clue": "Sound or action of a click.",
+        "hint": "Key idea: The sound or action of a click",
+        "source": "ml",
+        "themeScore": 1.96
+      },
+      {
+        "answer": "CHIRRUP",
+        "clue": "Series of chirps, clicks or clucks.",
+        "hint": "A brief, high-pitched, insignificant statement.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "TOCKING",
+        "clue": "Clicking sound of the hands of a clock.",
+        "hint": "Key idea: The clicking sound of the hands of",
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "CHOMPING",
+        "clue": "Sound or action of one who chomps.",
+        "hint": "Key idea: The sound or action of one who",
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "GLUGGING",
+        "clue": "Sound that glugs.",
+        "hint": "Key idea: A sound that glugs",
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "TWITTER",
+        "clue": "Sound of a succession of chirps as uttered by birds.",
+        "hint": "Unwanted flicker that occurs in interlaced displays when the image contains vertical detail that approaches the horizontal resolution of the video format.",
+        "source": "ml",
+        "themeScore": 1.505
+      },
+      {
+        "answer": "PULE",
+        "clue": "Whimper or whine.",
+        "hint": "Plaintive melancholy whine.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "WARBLING",
+        "clue": "Sound that warbles.",
+        "hint": "Key idea: A sound that warbles",
+        "source": "ml",
+        "themeScore": 1.71
+      },
+      {
+        "answer": "YIPPING",
+        "clue": "Sound that yips.",
+        "hint": "Key idea: A sound that yips",
+        "source": "ml",
+        "themeScore": 1.71
+      },
+      {
+        "answer": "CAWING",
+        "clue": "Act of producing a caw sound.",
+        "hint": "Key idea: The act of producing a caw sound",
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "CACKLING",
+        "clue": "Sound that cackles.",
+        "hint": "Key idea: A sound that cackles",
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "YOOP",
+        "clue": "Sobbing sound.",
+        "hint": "Key idea: A sobbing sound",
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "CROAKING",
+        "clue": "Sound of something that croaks.",
+        "hint": "Key idea: The sound of something that croaks",
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "YAPPING",
+        "clue": "Sound that yaps, especially the continued barking of a small dog.",
+        "hint": "Key idea: A sound that yaps, especially the continued",
+        "source": "ml",
+        "themeScore": 1.71
+      },
+      {
+        "answer": "YODEL",
+        "clue": "Act of yodelling.",
+        "hint": "Song incorporating yodelling.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "PLAINTIVE",
+        "clue": "Sounding sorrowful, mournful or melancholic.",
+        "hint": "Key idea: Sounding sorrowful, mournful or melancholic",
+        "source": "rel_jjb",
+        "themeScore": 1.223
       }
     ]
   },
@@ -51441,6 +52393,41 @@
         "hint": "Several varieties of friable earthy clay, usually coloured red by iron oxide, and composed essentially of hydrous silicates of alumina, or more rarely of magnesia.",
         "source": "ml",
         "themeScore": 1.375
+      },
+      {
+        "answer": "NEW",
+        "clue": "Recently made, or created.",
+        "hint": "Of recent origin; having taken place recently.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "BACK",
+        "clue": "At or near the rear.",
+        "hint": "Returned or restored to a previous place or condition.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "THELARCHAL",
+        "clue": "Pertaining to thelarche.",
+        "hint": "Key idea: Of or pertaining to thelarche",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "THELARCHEAL",
+        "clue": "Pertaining to thelarche.",
+        "hint": "Key idea: Of or pertaining to thelarche",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "ELMEN",
+        "clue": "Pertaining to an elm tree.",
+        "hint": "Made of elm wood.",
+        "source": "ml",
+        "themeScore": 1.26
       }
     ]
   },
@@ -62540,6 +63527,643 @@
         "hint": "Having the qualities of mucus; resembling mucus.",
         "source": "rel_jjb",
         "themeScore": 1.223
+      },
+      {
+        "answer": "REOXYGENATE",
+        "clue": "Oxygenate again or anew.",
+        "hint": "Key idea: To oxygenate again or anew",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "REOXYGENIZE",
+        "clue": "Oxygenize again.",
+        "hint": "Key idea: To oxygenize again",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "REVENTILATE",
+        "clue": "Ventilate again",
+        "hint": "Key idea: to ventilate again",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "AERATE",
+        "clue": "Supply with oxygen or air.",
+        "hint": "To incorporate a gas, especially oxygen or air, into a solid or semisolid material.",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "REAGITATE",
+        "clue": "Agitate again",
+        "hint": "Key idea: To agitate again",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "REENERGIZE",
+        "clue": "Energize again or anew.",
+        "hint": "Key idea: To energize again or anew",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "REINFLATE",
+        "clue": "Inflate or fill with air again.",
+        "hint": "Key idea: To inflate or fill with air again",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "REIRRIGATE",
+        "clue": "Irrigate again.",
+        "hint": "Key idea: To irrigate again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "RESTRETCH",
+        "clue": "Stretch again or anew.",
+        "hint": "Key idea: To stretch again or anew",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REFERTILIZE",
+        "clue": "Fertilize again.",
+        "hint": "Key idea: To fertilize again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REFRESHEN",
+        "clue": "Freshen again.",
+        "hint": "Key idea: To freshen again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REACTIVATE",
+        "clue": "Activate again.",
+        "hint": "Key idea: To activate again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REACETYLATE",
+        "clue": "Acetylate again.",
+        "hint": "Key idea: To acetylate again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "RESATURATE",
+        "clue": "Saturate again.",
+        "hint": "Key idea: To saturate again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REINCUBATE",
+        "clue": "Incubate again.",
+        "hint": "Key idea: To incubate again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REACTUATE",
+        "clue": "Actuate again.",
+        "hint": "Key idea: To actuate again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REAUGMENT",
+        "clue": "Augment again.",
+        "hint": "Key idea: To augment again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "RETHEORIZE",
+        "clue": "Theorize again or anew.",
+        "hint": "Key idea: To theorize again or anew",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "RENOURISH",
+        "clue": "Nourish again or anew.",
+        "hint": "To replenish with sediment in order to compensate for drift or erosion.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REREINFORCE",
+        "clue": "Reinforce again or further.",
+        "hint": "Key idea: To reinforce again or further",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REEVOKE",
+        "clue": "Evoke again or anew.",
+        "hint": "Key idea: To evoke again or anew",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REASPIRE",
+        "clue": "Aspire again.",
+        "hint": "Key idea: To aspire again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REAROUSE",
+        "clue": "Arouse again.",
+        "hint": "Key idea: To arouse again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REBREW",
+        "clue": "Brew again.",
+        "hint": "Key idea: To brew again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REARISE",
+        "clue": "Arise again.",
+        "hint": "Key idea: To arise again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REDRILL",
+        "clue": "Drill again or anew.",
+        "hint": "Key idea: To drill again or anew",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REALKALIZE",
+        "clue": "Alkalize again.",
+        "hint": "Key idea: To alkalize again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REAGGRAVATE",
+        "clue": "Aggravate again.",
+        "hint": "Key idea: To aggravate again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "RECHARGE",
+        "clue": "Process of charging again.",
+        "hint": "Water that has percolated from the ground surface to an aquifer.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REAFFECT",
+        "clue": "Affect again.",
+        "hint": "Key idea: To affect again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REBATHE",
+        "clue": "Bathe again.",
+        "hint": "Key idea: To bathe again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "RESTIMULATE",
+        "clue": "Stimulate again.",
+        "hint": "To \"awaken\" a previously lost or hidden memory from the past, in.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REBUILD",
+        "clue": "Build again or anew.",
+        "hint": "To attempt to improve one's performance during a period of struggling.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REPROPAGATE",
+        "clue": "Propagate again or anew.",
+        "hint": "Key idea: To propagate again or anew",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REACCRETE",
+        "clue": "Accrete again.",
+        "hint": "Key idea: To accrete again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REPREPARE",
+        "clue": "Prepare again",
+        "hint": "Key idea: To prepare again",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "REWATCH",
+        "clue": "Watch again.",
+        "hint": "Key idea: To watch again",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "RESTOKE",
+        "clue": "Stoke again.",
+        "hint": "Key idea: To stoke again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REMEDITATE",
+        "clue": "Meditate again.",
+        "hint": "Key idea: To meditate again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REDISCUSS",
+        "clue": "Discuss again.",
+        "hint": "Key idea: To discuss again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "RETASTE",
+        "clue": "Taste again.",
+        "hint": "Key idea: To taste again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REPURSUE",
+        "clue": "Pursue again.",
+        "hint": "Key idea: To pursue again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "RERESTORE",
+        "clue": "Restore again.",
+        "hint": "Key idea: To restore again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REDREAM",
+        "clue": "Dream again.",
+        "hint": "Key idea: To dream again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "READD",
+        "clue": "Add again.",
+        "hint": "Key idea: To add again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "RERETURN",
+        "clue": "Return again.",
+        "hint": "Another return.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REAWAKE",
+        "clue": "Wake up again.",
+        "hint": "Key idea: To wake up again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REEXPLORE",
+        "clue": "Explore again.",
+        "hint": "Key idea: To explore again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "RELEARN",
+        "clue": "Learn again.",
+        "hint": "Key idea: To learn again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REDEFEND",
+        "clue": "Defend again.",
+        "hint": "Key idea: To defend again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REDEBATE",
+        "clue": "Debate again.",
+        "hint": "Key idea: To debate again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REPOLISH",
+        "clue": "Polish again.",
+        "hint": "Key idea: To polish again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REPERUSE",
+        "clue": "Peruse again.",
+        "hint": "Key idea: To peruse again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "RECONQUER",
+        "clue": "Conquer again.",
+        "hint": "Key idea: To conquer again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "RETEACH",
+        "clue": "Teach again",
+        "hint": "Key idea: To teach again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "RESTIPULATE",
+        "clue": "Stipulate again.",
+        "hint": "Key idea: To stipulate again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REMEMORIZE",
+        "clue": "Memorize again.",
+        "hint": "Key idea: To memorize again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "THOROUGH",
+        "clue": "Painstaking and careful not to miss or omit any detail.",
+        "hint": "Utter; complete; absolute.",
+        "source": "rel_jjb",
+        "themeScore": 1.223
+      },
+      {
+        "answer": "REREIGN",
+        "clue": "Reign again.",
+        "hint": "Key idea: To reign again",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "REERECT",
+        "clue": "Erect again.",
+        "hint": "Key idea: To erect again",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "REKILL",
+        "clue": "Kill again.",
+        "hint": "Key idea: To kill again",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "REARCHIVE",
+        "clue": "Archive again.",
+        "hint": "Key idea: To archive again",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "REMAIL",
+        "clue": "Mail again.",
+        "hint": "Key idea: To mail again",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "REHEAL",
+        "clue": "Heal again.",
+        "hint": "Key idea: To heal again",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "RETILT",
+        "clue": "Tilt again.",
+        "hint": "Key idea: To tilt again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "RESTREAM",
+        "clue": "Stream again or differently.",
+        "hint": "Key idea: To stream again or differently",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REARRIVE",
+        "clue": "Arrive again.",
+        "hint": "Key idea: To arrive again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REDREDGE",
+        "clue": "Dredge again.",
+        "hint": "Key idea: To dredge again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REANCHOR",
+        "clue": "Anchor again.",
+        "hint": "Key idea: To anchor again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REBOOK",
+        "clue": "Book again.",
+        "hint": "Key idea: To book again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "RECIRCLE",
+        "clue": "Circle again.",
+        "hint": "Key idea: To circle again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "RESTEEL",
+        "clue": "Steel again.",
+        "hint": "Key idea: To steel again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "RECONDUCT",
+        "clue": "Conduct again or back.",
+        "hint": "Key idea: To conduct again or back",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REBECOME",
+        "clue": "Become again.",
+        "hint": "Key idea: To become again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REALLOW",
+        "clue": "Allow again.",
+        "hint": "Key idea: To allow again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REPERCOLATE",
+        "clue": "Percolate again.",
+        "hint": "Key idea: To percolate again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REPROVIDE",
+        "clue": "Provide again.",
+        "hint": "Key idea: To provide again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REFEEL",
+        "clue": "Feel again.",
+        "hint": "Key idea: To feel again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "RECURL",
+        "clue": "Curl again.",
+        "hint": "Key idea: To curl again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REBEGIN",
+        "clue": "Begin again.",
+        "hint": "Key idea: To begin again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REBALE",
+        "clue": "Bale again.",
+        "hint": "Key idea: To bale again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REWEAVE",
+        "clue": "Weave again, to weave back.",
+        "hint": "Key idea: To weave again, to weave back",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "RECATCH",
+        "clue": "Catch again.",
+        "hint": "Key idea: To catch again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REBELIEVE",
+        "clue": "Believe again.",
+        "hint": "Key idea: To believe again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REGEAR",
+        "clue": "Gear again or anew.",
+        "hint": "To prepare again or change one's preparations.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "RESEND",
+        "clue": "Send again.",
+        "hint": "To forward , especially a message.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REWEAR",
+        "clue": "Wear again.",
+        "hint": "Key idea: To wear again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REPLAIT",
+        "clue": "Plait again.",
+        "hint": "To interweave.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "RETRANSLATE",
+        "clue": "Translate again or anew.",
+        "hint": "Key idea: To translate again or anew",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "RECRACK",
+        "clue": "Crack again.",
+        "hint": "Key idea: To crack again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REINTRODUCE",
+        "clue": "Introduce again.",
+        "hint": "Key idea: To introduce again",
+        "source": "ml",
+        "themeScore": 1.16
       }
     ]
   },
@@ -73218,6 +74842,41 @@
         "answer": "ENLIGHTENED",
         "clue": "Educated or informed.",
         "hint": "Made aware of something.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "DESCEND",
+        "clue": "Senses relating to moving from a higher to a lower position.",
+        "hint": "To pass from a higher to a lower part of ; to go down along or upon.",
+        "source": "ml",
+        "themeScore": 1.225
+      },
+      {
+        "answer": "DEVOLVE",
+        "clue": "Transfer authority and responsibility for to.",
+        "hint": "To delegate on or upon someone.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "DECLIVITY",
+        "clue": "Downward slope of a curve.",
+        "hint": "Downward bend in a path.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "DOWNTURN",
+        "clue": "Downward trend, or the beginnings of one.",
+        "hint": "Decline.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "DESCENDING",
+        "clue": "Moving or sloping downwards.",
+        "hint": "Ordered such that each element is less than or equal to the previous element.",
         "source": "ml",
         "themeScore": 1.16
       }
@@ -84226,6 +85885,209 @@
         "answer": "BALLCLUB",
         "clue": "Baseball team.",
         "hint": "Key idea: A baseball team",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "KILLER",
+        "clue": "One who or that which kills.",
+        "hint": "That which causes stress or is extremely difficult, especially that which may cause failure at a task.",
+        "source": "ml",
+        "themeScore": 1.225
+      },
+      {
+        "answer": "MURDERER",
+        "clue": "Person who commits murder.",
+        "hint": "Key idea: A person who commits murder",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "TEAMKILLER",
+        "clue": "One who teamkills.",
+        "hint": "Key idea: One who teamkills",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "KUROBOSHI",
+        "clue": "Loss in a bout",
+        "hint": "Key idea: A loss in a bout",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "FUSENSHO",
+        "clue": "Win by default due to the opponent not appearing, normally due to injury",
+        "hint": "Key idea: a win by default due to the",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "HIWAZA",
+        "clue": "Passive several ways of winning because the opponent makes a mistake",
+        "hint": "Key idea: Any of passive several ways of winning",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "KIMARITE",
+        "clue": "The 82 techniques that may be used to win a match",
+        "hint": "Key idea: any of the 82 techniques that may",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "SCRUMMER",
+        "clue": "Player who takes part in a scrum.",
+        "hint": "Key idea: A player who takes part in a",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "CRICKETER",
+        "clue": "Person who plays cricket.",
+        "hint": "Key idea: A person who plays cricket",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "RACER",
+        "clue": "Person who participates in races, especially an athlete.",
+        "hint": "Agent noun of race: one that races or is used for racing.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "RACKETER",
+        "clue": "One who is skilled in racket sports.",
+        "hint": "One who instigates or perpetrates a racket , a hustler, swindler, or racketeer.",
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "FOOTRACER",
+        "clue": "One who runs a race on foot.",
+        "hint": "Key idea: One who runs a race on foot",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "TWIRLER",
+        "clue": "Someone who twirls something.",
+        "hint": "Majorette who twirls a baton.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "RIGHTHANDER",
+        "clue": "Right-handed person",
+        "hint": "Key idea: A right-handed person",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "FIREBALLER",
+        "clue": "Pitcher who throws very fast balls.",
+        "hint": "Key idea: A pitcher who throws very fast balls",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "SOUTHPAW",
+        "clue": "One who is left-handed, especially in sports.",
+        "hint": "A left-handed pitcher.",
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "STARTERS",
+        "clue": "Someone who starts, or who starts something.",
+        "hint": "Person who starts a race by firing a gun or waving a flag.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "BULLPEN",
+        "clue": "Enclosed area for pitchers to warm up in during a game.",
+        "hint": "The relief pitchers of a team collectively.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "INNINGS",
+        "clue": "One side's or individual player's turn to bat or the runs scored during those durations.",
+        "hint": "The time during which any party is in possession of power, or enjoying good luck, etc.; a turn of any kind.",
+        "source": "ml",
+        "themeScore": 1.231
+      },
+      {
+        "answer": "GOALKEEPERS",
+        "clue": "Designated player that attempts to prevent the opposing team from scoring by protecting a goal.",
+        "hint": "Key idea: A designated player that attempts to prevent",
+        "source": "ml",
+        "themeScore": 1.136
+      },
+      {
+        "answer": "SCORERS",
+        "clue": "One who scores.",
+        "hint": "One who keeps track of scores in a game; a scorekeeper.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "HURDLERS",
+        "clue": "Athlete who competes in the hurdling event.",
+        "hint": "Key idea: An athlete who competes in the hurdling",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "NETMINDER",
+        "clue": "Goalkeeper or goaltender.",
+        "hint": "Key idea: A goalkeeper or goaltender",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "RUSHERS",
+        "clue": "Person who rushes.",
+        "hint": "The fast defensive position whose objective is to sack the offensive team's quarterback.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "GOALTENDER",
+        "clue": "Designated player that attempts to prevent the opposing team from scoring by protecting a goal.",
+        "hint": "Key idea: a designated player that attempts to prevent",
+        "source": "ml",
+        "themeScore": 1.136
+      },
+      {
+        "answer": "NINE",
+        "clue": "Digit or figure 9.",
+        "hint": "A playing card with nine pips.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "BEANBRAWL",
+        "clue": "Fight between teams at a baseball game, typically caused by a beanball.",
+        "hint": "A fiercely competitive baseball game.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "BASEBALLESE",
+        "clue": "Jargon associated with the sport of baseball.",
+        "hint": "Key idea: The jargon associated with the sport of",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "SNOWCOACH",
+        "clue": "Coach equipped for travelling on snow.",
+        "hint": "Key idea: A coach equipped for travelling on snow",
         "source": "ml",
         "themeScore": 1.16
       }

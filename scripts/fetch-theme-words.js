@@ -84,6 +84,7 @@ const MAX_ANSWER_LENGTH_FOR_EASY_POOL = Number.isFinite(Number(process.env.NC_MA
 const MAX_RARE_LETTER_RATIO = Number.isFinite(Number(process.env.NC_MAX_RARE_LETTER_RATIO))
   ? Math.max(0.15, Math.min(0.8, Number(process.env.NC_MAX_RARE_LETTER_RATIO)))
   : 0.34;
+const ENABLE_MODERATE_PROPER_NOUN_FILTER = process.env.NC_ENABLE_MODERATE_PROPER_NOUN_FILTER !== '0';
 
 const WIKIPEDIA_THEME_CATEGORIES = {
   'space astronomy': ['Astronomy', 'Planets', 'Stars', 'Galaxies'],
@@ -95,6 +96,16 @@ const WIKIPEDIA_THEME_CATEGORIES = {
   'history civilization': ['History', 'Ancient history', 'Civilizations', 'Empires'],
   'sports athletics': ['Sports terminology', 'Athletics (track and field)', 'Team sports', 'Ball games']
 };
+
+const THEME_PROPER_NOUN_ALLOWLIST = {
+  'space astronomy': new Set([
+    'MARS', 'VENUS', 'EARTH', 'JUPITER', 'SATURN', 'URANUS', 'NEPTUNE', 'PLUTO',
+    'MOON', 'SUN', 'STAR', 'ORBIT', 'GALAXY', 'TITAN', 'EUROPA', 'ASTEROID',
+    'COMET', 'NEBULA'
+  ])
+};
+
+const OBSCURE_PROPER_NOUN_SIGNAL_REGEX = /\b(goddess|god|deity|mythological|myth|constellation|kuiper|planetoid|primordial|trojan|tau\s+[a-z]+|mistress\s+of\s+zeus|one\s+of\s+the\s+moons\s+of\s+jupiter)\b/i;
 
 const TITLE_STOPWORDS = new Set([
   'the', 'and', 'for', 'with', 'from', 'into', 'over', 'under', 'about', 'between',
@@ -199,6 +210,44 @@ function normalizeForComparison(value) {
   return String(value || '').toLowerCase().replace(/[^a-z0-9]/g, '');
 }
 
+function hasInnerCapitalizedToken(text) {
+  const value = String(text || '').trim();
+  if (!value) return false;
+
+  let firstWordSkipped = false;
+  const matches = value.match(/\b[A-Z][a-z]{2,}\b/g) || [];
+  for (const token of matches) {
+    if (!firstWordSkipped) {
+      firstWordSkipped = true;
+      continue;
+    }
+    return true;
+  }
+
+  return false;
+}
+
+function isThemeAnchorAllowed(themeName, answerUpper) {
+  const allowlist = THEME_PROPER_NOUN_ALLOWLIST[normalizedThemeKey(themeName)];
+  return Boolean(allowlist?.has(answerUpper));
+}
+
+function isLikelyObscureProperNoun(themeName, answerUpper, clueText, hintText) {
+  if (!ENABLE_MODERATE_PROPER_NOUN_FILTER) return false;
+  if (isThemeAnchorAllowed(themeName, answerUpper)) return false;
+
+  const clue = String(clueText || '');
+  const hint = String(hintText || '');
+  const joined = `${clue} ${hint}`.trim();
+
+  let score = 0;
+  if (OBSCURE_PROPER_NOUN_SIGNAL_REGEX.test(joined)) score += 2;
+  if (hasInnerCapitalizedToken(clue) || hasInnerCapitalizedToken(hint)) score += 1;
+  if (/\b(pegasi|uranian|salacia|aoede|elara|callisto|ganymede|amalthea)\b/i.test(joined)) score += 1.5;
+
+  return score >= 2;
+}
+
 function buildDefinitionBackstopHint(definitionText) {
   const cleaned = String(definitionText || '')
     .replace(/\([^)]*\)/g, ' ')
@@ -270,6 +319,8 @@ function scoreClueAccessibility(clueText, hintText) {
   if (/\([^)]*\)/.test(clue)) score -= 0.09;
   if (/[,].*[,]/.test(clue)) score -= 0.08;
   if (/\b(archaic|obsolete|literary|mythological|formal|technical)\b/i.test(clue)) score -= 0.12;
+  if (/\b(goddess|god|deity|constellation|kuiper|planetoid|primordial|trojan)\b/i.test(`${clue} ${hint}`)) score -= 0.16;
+  if (/\b(one\s+of\s+the\s+moons\s+of\s+jupiter|mistress\s+of\s+zeus|tau\s+[a-z]+)\b/i.test(`${clue} ${hint}`)) score -= 0.2;
 
   return Math.max(0, Math.min(1, Number(score.toFixed(3))));
 }
@@ -485,6 +536,8 @@ export async function fetchThemeWords() {
           hint
         };
 
+        if (isLikelyObscureProperNoun(theme.name, word, clueText, hint)) continue;
+
         const qualityCheck = isWordEntryAcceptable(candidateEntry);
         if (!qualityCheck.ok) continue;
 
@@ -557,6 +610,8 @@ export async function fetchThemeWords() {
                 clue: clueText,
                 hint: hint
               };
+
+              if (isLikelyObscureProperNoun(theme.name, word, clueText, hint)) continue;
 
               const qualityCheck = isWordEntryAcceptable(candidate);
               if (!qualityCheck.ok) continue;

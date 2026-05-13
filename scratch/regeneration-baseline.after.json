@@ -1,0 +1,22 @@
+{
+  "generatedAt": "2026-05-13T22:58:36.641Z",
+  "datasetVersion": "2d58ed8068b3e6ef",
+  "allThemes": {
+    "puzzleCount": 24,
+    "avgProperNounLoad": 0.3002,
+    "avgClueObscurityLoad": 0.2974,
+    "avgFallbackHintLoad": 0.3888,
+    "properHitRate": 0.1639,
+    "obscureHitRate": 0.1611,
+    "keyIdeaHintRate": 0.1889
+  },
+  "astronomy": {
+    "puzzleCount": 3,
+    "avgProperNounLoad": 0.8528,
+    "avgClueObscurityLoad": 0.2646,
+    "avgFallbackHintLoad": 0.2704,
+    "properHitRate": 0.5217,
+    "obscureHitRate": 0.1522,
+    "keyIdeaHintRate": 0.1304
+  }
+}
