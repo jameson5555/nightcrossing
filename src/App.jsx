@@ -38,29 +38,6 @@ const clearTitleFadeTimers = (timersRef) => {
   timersRef.current.settle = null;
 };
 
-const buildGeneratedHint = (solution) => {
-  const raw = typeof solution === 'string' ? solution.trim() : '';
-  if (!raw) return null;
-
-  const wordLengths = raw
-    .split(/[^A-Za-z]+/)
-    .filter(Boolean)
-    .map((segment) => segment.length);
-
-  if (wordLengths.length === 0) return null;
-
-  const firstLetterMatch = raw.match(/[A-Za-z]/);
-  const firstLetter = firstLetterMatch ? firstLetterMatch[0].toUpperCase() : null;
-  const totalLetters = wordLengths.reduce((sum, len) => sum + len, 0);
-
-  const lengthText = wordLengths.length > 1
-    ? `Word lengths: ${wordLengths.join('-')}.`
-    : `This answer has ${totalLetters} letters.`;
-
-  const firstLetterText = firstLetter ? ` It starts with "${firstLetter}".` : '';
-  return `Generated hint: ${lengthText}${firstLetterText}`;
-};
-
 function App() {
   const [currentView, setCurrentView] = useState('menu'); // 'menu' | 'play'
   const [puzzleData, setPuzzleData] = useState(null);
@@ -229,12 +206,9 @@ function App() {
   const authoredHintText = typeof authoredHintTextRaw === 'string' && authoredHintTextRaw.trim()
     ? authoredHintTextRaw.trim()
     : null;
-  const generatedHintText = !authoredHintText && puzzleData && activeWord && activeWord.clueIndex !== -1
-    ? buildGeneratedHint(puzzleData.answers?.[direction]?.[activeWord.clueIndex])
-    : null;
-  const selectedHintText = authoredHintText || generatedHintText;
-  const canUnlockSelectedClueHint = Boolean(selectedHintText);
-  const canShowHintButton = Boolean(activeClueText) && (canUnlockSelectedClueHint || !hasUsedFreeHint);
+  const selectedHintText = authoredHintText;
+  const canUnlockSelectedClueHint = Boolean(selectedHintText) || !hasUsedFreeHint;
+  const canShowHintButton = Boolean(activeClueText) && canUnlockSelectedClueHint;
     
   const solvedClueIds = puzzleData ? getSolvedClueIds(puzzleData, answers) : new Set();
   const isPuzzleComplete = puzzleData && solvedClueIds.size === (puzzleData.answers.across.length + puzzleData.answers.down.length);
@@ -377,7 +351,7 @@ function App() {
         return;
       }
 
-      // If we still have no hint text (generated or authored), do not charge and keep state unchanged.
+      // If we still have no authored hint text, do not charge and keep state unchanged.
       if (!selectedHintText) {
         return;
       }
