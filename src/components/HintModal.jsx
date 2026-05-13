@@ -10,7 +10,8 @@ const HintModal = ({
   onRevealLetter,
   isWordSolved,
   hintsRemaining,
-  hasFreeHintAvailable
+  hasFreeHintAvailable,
+  canUnlockHint
 }) => {
   if (!isOpen) return null;
 
@@ -37,16 +38,24 @@ const HintModal = ({
             </div>
           ) : (
             <div className="hint-locked">
-              <p className="hint-description">
-                Stuck? Unlock a hint to help you solve this word. You can earn more hints by solving puzzles.
-              </p>
-              <button 
-                className="unlock-btn" 
-                onClick={onUnlock}
-                disabled={!hasFreeHintAvailable && hintsRemaining <= 0}
-              >
-                {hasFreeHintAvailable ? 'Unlock Hint (Free ✨)' : 'Unlock Hint (-1 💡)'}
-              </button>
+              {canUnlockHint ? (
+                <>
+                  <p className="hint-description">
+                    Stuck? Unlock a hint to help you solve this word. You can earn more hints by solving puzzles.
+                  </p>
+                  <button 
+                    className="unlock-btn" 
+                    onClick={onUnlock}
+                    disabled={!hasFreeHintAvailable && hintsRemaining <= 0}
+                  >
+                    {hasFreeHintAvailable ? 'Unlock Hint (Free ✨)' : 'Unlock Hint (-1 💡)'}
+                  </button>
+                </>
+              ) : (
+                <p className="hint-description">
+                  No word hint is available for this clue. Try revealing a letter instead.
+                </p>
+              )}
             </div>
           )}
 

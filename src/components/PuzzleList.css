@@ -146,7 +146,7 @@
   font-family: var(--font-family-game);
 }
 
-.puzzle-size-badge {
+.puzzle-difficulty-badge {
   font-size: 0.70rem;
   font-family: var(--font-family-ui);
   text-transform: uppercase;

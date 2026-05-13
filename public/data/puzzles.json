@@ -7,7 +7,8 @@
     "cols": 10,
     "rows": 9,
     "letterCells": 37,
-    "theme": "Space & Astronomy"
+    "theme": "Space & Astronomy",
+    "difficulty": "Hard"
   },
   {
     "id": "starter-space---astronomy-vol2",
@@ -17,7 +18,8 @@
     "cols": 9,
     "rows": 9,
     "letterCells": 36,
-    "theme": "Space & Astronomy"
+    "theme": "Space & Astronomy",
+    "difficulty": "Expert"
   },
   {
     "id": "starter-space---astronomy-vol3",
@@ -27,7 +29,8 @@
     "cols": 9,
     "rows": 10,
     "letterCells": 37,
-    "theme": "Space & Astronomy"
+    "theme": "Space & Astronomy",
+    "difficulty": "Hard"
   },
   {
     "id": "starter-food---cooking-vol1",
@@ -37,7 +40,8 @@
     "cols": 10,
     "rows": 9,
     "letterCells": 36,
-    "theme": "Food & Cooking"
+    "theme": "Food & Cooking",
+    "difficulty": "Hard"
   },
   {
     "id": "starter-food---cooking-vol2",
@@ -47,7 +51,8 @@
     "cols": 10,
     "rows": 9,
     "letterCells": 34,
-    "theme": "Food & Cooking"
+    "theme": "Food & Cooking",
+    "difficulty": "Normal"
   },
   {
     "id": "starter-food---cooking-vol3",
@@ -57,7 +62,8 @@
     "cols": 10,
     "rows": 9,
     "letterCells": 33,
-    "theme": "Food & Cooking"
+    "theme": "Food & Cooking",
+    "difficulty": "Normal"
   },
   {
     "id": "starter-ocean---marine-life-vol1",
@@ -67,7 +73,8 @@
     "cols": 10,
     "rows": 9,
     "letterCells": 41,
-    "theme": "Ocean & Marine Life"
+    "theme": "Ocean & Marine Life",
+    "difficulty": "Expert"
   },
   {
     "id": "starter-ocean---marine-life-vol2",
@@ -77,7 +84,8 @@
     "cols": 10,
     "rows": 9,
     "letterCells": 39,
-    "theme": "Ocean & Marine Life"
+    "theme": "Ocean & Marine Life",
+    "difficulty": "Expert"
   },
   {
     "id": "starter-ocean---marine-life-vol3",
@@ -87,7 +95,8 @@
     "cols": 10,
     "rows": 10,
     "letterCells": 41,
-    "theme": "Ocean & Marine Life"
+    "theme": "Ocean & Marine Life",
+    "difficulty": "Expert"
   },
   {
     "id": "starter-music---sound-vol1",
@@ -97,7 +106,8 @@
     "cols": 8,
     "rows": 10,
     "letterCells": 38,
-    "theme": "Music & Sound"
+    "theme": "Music & Sound",
+    "difficulty": "Expert"
   },
   {
     "id": "starter-music---sound-vol2",
@@ -107,7 +117,8 @@
     "cols": 10,
     "rows": 10,
     "letterCells": 33,
-    "theme": "Music & Sound"
+    "theme": "Music & Sound",
+    "difficulty": "Normal"
   },
   {
     "id": "starter-music---sound-vol3",
@@ -117,7 +128,8 @@
     "cols": 10,
     "rows": 10,
     "letterCells": 40,
-    "theme": "Music & Sound"
+    "theme": "Music & Sound",
+    "difficulty": "Hard"
   },
   {
     "id": "starter-nature---wilderness-vol1",
@@ -127,7 +139,8 @@
     "cols": 10,
     "rows": 10,
     "letterCells": 38,
-    "theme": "Nature & Wilderness"
+    "theme": "Nature & Wilderness",
+    "difficulty": "Normal"
   },
   {
     "id": "starter-nature---wilderness-vol2",
@@ -137,7 +150,8 @@
     "cols": 10,
     "rows": 8,
     "letterCells": 31,
-    "theme": "Nature & Wilderness"
+    "theme": "Nature & Wilderness",
+    "difficulty": "Normal"
   },
   {
     "id": "starter-nature---wilderness-vol3",
@@ -147,7 +161,8 @@
     "cols": 9,
     "rows": 10,
     "letterCells": 41,
-    "theme": "Nature & Wilderness"
+    "theme": "Nature & Wilderness",
+    "difficulty": "Expert"
   },
   {
     "id": "starter-technology---computing-vol1",
@@ -157,7 +172,8 @@
     "cols": 10,
     "rows": 10,
     "letterCells": 36,
-    "theme": "Technology & Computing"
+    "theme": "Technology & Computing",
+    "difficulty": "Hard"
   },
   {
     "id": "starter-technology---computing-vol2",
@@ -167,7 +183,8 @@
     "cols": 10,
     "rows": 10,
     "letterCells": 34,
-    "theme": "Technology & Computing"
+    "theme": "Technology & Computing",
+    "difficulty": "Normal"
   },
   {
     "id": "starter-technology---computing-vol3",
@@ -177,7 +194,8 @@
     "cols": 10,
     "rows": 10,
     "letterCells": 39,
-    "theme": "Technology & Computing"
+    "theme": "Technology & Computing",
+    "difficulty": "Hard"
   },
   {
     "id": "starter-history---civilization-vol1",
@@ -187,7 +205,8 @@
     "cols": 10,
     "rows": 10,
     "letterCells": 39,
-    "theme": "History & Civilization"
+    "theme": "History & Civilization",
+    "difficulty": "Hard"
   },
   {
     "id": "starter-history---civilization-vol2",
@@ -197,7 +216,8 @@
     "cols": 10,
     "rows": 7,
     "letterCells": 31,
-    "theme": "History & Civilization"
+    "theme": "History & Civilization",
+    "difficulty": "Expert"
   },
   {
     "id": "starter-history---civilization-vol3",
@@ -207,7 +227,8 @@
     "cols": 10,
     "rows": 8,
     "letterCells": 32,
-    "theme": "History & Civilization"
+    "theme": "History & Civilization",
+    "difficulty": "Normal"
   },
   {
     "id": "starter-sports---athletics-vol1",
@@ -217,7 +238,8 @@
     "cols": 9,
     "rows": 9,
     "letterCells": 35,
-    "theme": "Sports & Athletics"
+    "theme": "Sports & Athletics",
+    "difficulty": "Hard"
   },
   {
     "id": "starter-sports---athletics-vol2",
@@ -227,7 +249,8 @@
     "cols": 10,
     "rows": 9,
     "letterCells": 44,
-    "theme": "Sports & Athletics"
+    "theme": "Sports & Athletics",
+    "difficulty": "Expert"
   },
   {
     "id": "starter-sports---athletics-vol3",
@@ -237,6 +260,7 @@
     "cols": 10,
     "rows": 10,
     "letterCells": 40,
-    "theme": "Sports & Athletics"
+    "theme": "Sports & Athletics",
+    "difficulty": "Normal"
   }
 ]

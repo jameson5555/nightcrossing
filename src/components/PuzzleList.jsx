@@ -109,7 +109,7 @@ const PuzzleList = ({ onSelectPuzzle }) => {
         ? `${wordsLeft} left`
       : status;
     const statusClass = status.replace(' ', '');
-    const gridSize = `${puzzle.cols}x${puzzle.rows}`;
+    const difficultyLabel = puzzle.difficulty || 'Normal';
     return (
       <li 
         key={puzzle.id} 
@@ -119,7 +119,7 @@ const PuzzleList = ({ onSelectPuzzle }) => {
         <div className="puzzle-info">
           <div className="puzzle-meta">
             <span className="puzzle-date">{puzzle.date}</span>
-            <span className="puzzle-size-badge">{gridSize}</span>
+            <span className="puzzle-difficulty-badge">{difficultyLabel}</span>
           </div>
           <span className="puzzle-title">{puzzle.title}</span>
         </div>

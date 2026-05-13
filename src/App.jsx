@@ -38,6 +38,29 @@ const clearTitleFadeTimers = (timersRef) => {
   timersRef.current.settle = null;
 };
 
+const buildGeneratedHint = (solution) => {
+  const raw = typeof solution === 'string' ? solution.trim() : '';
+  if (!raw) return null;
+
+  const wordLengths = raw
+    .split(/[^A-Za-z]+/)
+    .filter(Boolean)
+    .map((segment) => segment.length);
+
+  if (wordLengths.length === 0) return null;
+
+  const firstLetterMatch = raw.match(/[A-Za-z]/);
+  const firstLetter = firstLetterMatch ? firstLetterMatch[0].toUpperCase() : null;
+  const totalLetters = wordLengths.reduce((sum, len) => sum + len, 0);
+
+  const lengthText = wordLengths.length > 1
+    ? `Word lengths: ${wordLengths.join('-')}.`
+    : `This answer has ${totalLetters} letters.`;
+
+  const firstLetterText = firstLetter ? ` It starts with "${firstLetter}".` : '';
+  return `Generated hint: ${lengthText}${firstLetterText}`;
+};
+
 function App() {
   const [currentView, setCurrentView] = useState('menu'); // 'menu' | 'play'
   const [puzzleData, setPuzzleData] = useState(null);
@@ -201,6 +224,17 @@ function App() {
   const activeClueText = puzzleData && activeWord && activeWord.clueIndex !== -1
     ? puzzleData.clues[direction][activeWord.clueIndex]
     : null;
+
+  const authoredHintTextRaw = selectedClueId ? puzzleData?.hints?.[selectedClueId] : null;
+  const authoredHintText = typeof authoredHintTextRaw === 'string' && authoredHintTextRaw.trim()
+    ? authoredHintTextRaw.trim()
+    : null;
+  const generatedHintText = !authoredHintText && puzzleData && activeWord && activeWord.clueIndex !== -1
+    ? buildGeneratedHint(puzzleData.answers?.[direction]?.[activeWord.clueIndex])
+    : null;
+  const selectedHintText = authoredHintText || generatedHintText;
+  const canUnlockSelectedClueHint = Boolean(selectedHintText);
+  const canShowHintButton = Boolean(activeClueText) && (canUnlockSelectedClueHint || !hasUsedFreeHint);
     
   const solvedClueIds = puzzleData ? getSolvedClueIds(puzzleData, answers) : new Set();
   const isPuzzleComplete = puzzleData && solvedClueIds.size === (puzzleData.answers.across.length + puzzleData.answers.down.length);
@@ -321,15 +355,15 @@ function App() {
 
   const handleUnlockHint = async () => {
     if (selectedClueId && !unlockedHints.has(selectedClueId)) {
-      const hintText = puzzleData?.hints?.[selectedClueId];
       const shouldUseFreeHint = !hasUsedFreeHint;
+      const hasAuthoredHint = Boolean(authoredHintText);
 
       if (!shouldUseFreeHint && hintsRemaining <= 0) {
         return;
       }
 
       // If no word-hint exists, spend the free hint on a letter reveal instead.
-      if (!hintText && shouldUseFreeHint) {
+      if (!hasAuthoredHint && shouldUseFreeHint) {
         const revealed = await handleRevealLetter({ chargeHint: false, closeModal: true });
         if (revealed) {
           setHasUsedFreeHint(true);
@@ -343,8 +377,8 @@ function App() {
         return;
       }
 
-      // If no hint exists and free hint is already used, do not charge and keep state unchanged.
-      if (!hintText) {
+      // If we still have no hint text (generated or authored), do not charge and keep state unchanged.
+      if (!selectedHintText) {
         return;
       }
 
@@ -492,7 +526,7 @@ function App() {
           {isPlayView && (
             <div className={`floating-active-clue ${hasVisibleTopClue ? 'visible' : ''} ${isContentFading ? 'content-fade' : ''}`}>
               <p className="floating-clue-text">{displayedClue.text || ''}</p>
-                {activeClueText ? (
+                {canShowHintButton ? (
                 <button
                   className={`hint-btn ${unlockedHints.has(selectedClueId) ? 'unlocked' : ''}`}
                   onClick={() => setIsHintModalOpen(true)}
@@ -556,13 +590,14 @@ function App() {
           <HintModal 
             isOpen={isHintModalOpen}
             onClose={() => setIsHintModalOpen(false)}
-            hintText={puzzleData?.hints?.[selectedClueId]}
+            hintText={selectedHintText}
             isUnlocked={unlockedHints.has(selectedClueId)}
             onUnlock={handleUnlockHint}
             onRevealLetter={handleRevealLetter}
             isWordSolved={activeWord?.isCorrect}
             hintsRemaining={hintsRemaining}
             hasFreeHintAvailable={!hasUsedFreeHint}
+            canUnlockHint={canUnlockSelectedClueHint}
           />
         </>
       ) : (
