@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-05-13T21:59:41.491Z",
-  "datasetVersion": "9e9a370fbd32e3ff",
+  "generatedAt": "2026-05-14T16:57:50.105Z",
+  "datasetVersion": "89ffdab155fc7392",
   "allThemes": {
     "puzzleCount": 24,
-    "avgProperNounLoad": 0.3203,
-    "avgClueObscurityLoad": 0.322,
-    "avgFallbackHintLoad": 0.4323,
-    "properHitRate": 0.2115,
-    "obscureHitRate": 0.1758,
-    "keyIdeaHintRate": 0.1978
+    "avgProperNounLoad": 0.2443,
+    "avgClueObscurityLoad": 0.215,
+    "avgFallbackHintLoad": 0,
+    "properHitRate": 0.1302,
+    "obscureHitRate": 0.1183,
+    "keyIdeaHintRate": 0
   },
   "astronomy": {
     "puzzleCount": 3,
-    "avgProperNounLoad": 1,
-    "avgClueObscurityLoad": 0.5541,
-    "avgFallbackHintLoad": 0.619,
-    "properHitRate": 0.7917,
-    "obscureHitRate": 0.2917,
-    "keyIdeaHintRate": 0.2917
+    "avgProperNounLoad": 0.4257,
+    "avgClueObscurityLoad": 0.1822,
+    "avgFallbackHintLoad": 0,
+    "properHitRate": 0.2381,
+    "obscureHitRate": 0.0952,
+    "keyIdeaHintRate": 0
   }
 }

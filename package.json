@@ -13,7 +13,9 @@
     "generate:monthly:no-enrich": "node scripts/generate-starters.js --skip-enrichment",
     "preflight:generation": "node scripts/preflight-generation.js",
     "analyze:generation": "node scripts/analyze-generation.js",
-    "bench:layout": "node scripts/benchmark-layout.js"
+    "bench:layout": "node scripts/benchmark-layout.js",
+    "metrics:regeneration": "node scripts/regeneration-metrics.js",
+    "report:regeneration": "node scripts/regeneration-compare.js"
   },
   "dependencies": {
     "@capacitor-community/admob": "^8.0.0",

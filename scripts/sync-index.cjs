@@ -11,9 +11,14 @@ const THEMES_FILE = path.join(__dirname, 'themes.json');
 const PUZZLES_PER_SET = 3;
 const LONG_WORD_LENGTH = 8;
 const VERY_LONG_WORD_LENGTH = 10;
-const NORMAL_QUANTILE = 0.6;
-const HARD_QUANTILE = 0.85;
+const EASY_QUANTILE = 0.2;
+const NORMAL_QUANTILE = 0.65;
+const HARD_QUANTILE = 0.88;
 const RARE_LETTERS = new Set(['J', 'K', 'Q', 'V', 'W', 'X', 'Y', 'Z']);
+const THEME_DIFFICULTY_BIAS = {
+  'Ocean & Marine Life': -0.05,
+  'Technology & Computing': -0.04
+};
 
 const PROPER_NOUN_HINT_REGEX = /\b(god|goddess|deity|constellation|moon|planet|star|satellite|asteroid|myth|mythological|roman|greek)\b/i;
 const CLUE_OBSCURITY_REGEX = /[;:()]|\b(archaic|obsolete|mythological|technical|primordial|kuiper|trojan|alpha\s+[a-z]+|beta\s+[a-z]+)\b/i;
@@ -336,16 +341,39 @@ function assignDifficultyById(drafts) {
   });
 
   const scores = byDifficulty.map(item => item.difficultyScore);
+  const easyThreshold = quantile(scores, EASY_QUANTILE);
   const normalThreshold = quantile(scores, NORMAL_QUANTILE);
   const hardThreshold = quantile(scores, HARD_QUANTILE);
   const result = new Map();
 
   byDifficulty.forEach((item) => {
     let label = 'Expert';
-    if (item.difficultyScore <= normalThreshold) label = 'Normal';
+    if (item.difficultyScore <= easyThreshold) label = 'Easy';
+    else if (item.difficultyScore <= normalThreshold) label = 'Normal';
     else if (item.difficultyScore <= hardThreshold) label = 'Hard';
     result.set(item.id, label);
   });
+
+  // Onboarding guardrail: keep the first volume per theme below Expert.
+  const byTheme = new Map();
+  for (const item of byDifficulty) {
+    if (!byTheme.has(item.theme)) byTheme.set(item.theme, []);
+    byTheme.get(item.theme).push(item);
+  }
+
+  for (const items of byTheme.values()) {
+    const ordered = [...items].sort((a, b) => {
+      const volA = parseVolumeFromId(a.id) ?? Number.MAX_SAFE_INTEGER;
+      const volB = parseVolumeFromId(b.id) ?? Number.MAX_SAFE_INTEGER;
+      return volA - volB;
+    });
+    if (ordered.length === 0) continue;
+
+    const first = ordered[0];
+    if (result.get(first.id) === 'Expert') {
+      result.set(first.id, 'Hard');
+    }
+  }
 
   return result;
 }
@@ -382,7 +410,9 @@ function syncIndex() {
       letterCells = cols * rows;
     }
 
-    const difficultyScore = computeDifficultyScore(puzzle, cols, rows, letterCells);
+    const baseDifficultyScore = computeDifficultyScore(puzzle, cols, rows, letterCells);
+    const themeBias = THEME_DIFFICULTY_BIAS[puzzle.theme || ''] || 0;
+    const difficultyScore = clamp(baseDifficultyScore + themeBias, 0, 1);
 
     entryDrafts.push({
       id,

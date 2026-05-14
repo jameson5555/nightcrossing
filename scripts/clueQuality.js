@@ -1,6 +1,6 @@
 const BANNED_CONTENT_REGEX = /\b(surname|surnames|given\s+name|given\s+names|male\s+given\s+name|male\s+given\s+names|female\s+given\s+name|female\s+given\s+names|unisex\s+given\s+name|unisex\s+given\s+names|legal\s+balls|first\s+name|first\s+names|last\s+name|last\s+names)\b/i;
 
-const PROFANITY_REGEX = /\b(fuck|fucking|shit|shitty|bitch|asshole|cunt|slut|motherfucker|dickhead)\b/i;
+const PROFANITY_REGEX = /\b(fuck|fucking|shit|shitty|bitch|asshole|cunt|slut|motherfucker|dickhead|porn|pornography|masturbat|flatus|anal\s+sex|oral\s+sex)\b/i;
 
 const LOW_QUALITY_REGEXES = [
   /\b(initialism|acronym|abbreviation|abbr\.)\b/i,
@@ -9,7 +9,10 @@ const LOW_QUALITY_REGEXES = [
   /\bunincorporated\s+community\b/i,
   /\bbarangay\b/i,
   /theme-related\s+term\s+in\b/i,
-  /commonly\s+associated\s+with\b/i
+  /commonly\s+associated\s+with\b/i,
+  /\bkey\s+idea\s*:/i,
+  /\b(television\s+series|episode\s+\d+|season\s+\d+|syndicated)\b/i,
+  /\b(commune\s+of|county\b|capital\s+city\s+of|north\s+korea)\b/i
 ];
 
 const COMPLEX_CLUE_REGEXES = [
@@ -21,6 +24,66 @@ const COMPLEX_CLUE_REGEXES = [
 
 function normalized(str) {
   return (str || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
+const HINT_STOPWORDS = new Set([
+  'the', 'and', 'for', 'with', 'from', 'that', 'this', 'into', 'over', 'under',
+  'about', 'often', 'used', 'type', 'kind', 'form', 'term', 'word', 'idea'
+]);
+
+function contentTokens(str) {
+  return (str || '')
+    .toLowerCase()
+    .match(/[a-z0-9]+/g)
+    ?.filter(token => token.length >= 3 && !HINT_STOPWORDS.has(token)) || [];
+}
+
+function ngrams(str, size = 4) {
+  const compact = normalized(str);
+  if (compact.length < size) return [];
+
+  const grams = [];
+  for (let i = 0; i <= compact.length - size; i++) {
+    grams.push(compact.slice(i, i + size));
+  }
+  return grams;
+}
+
+function hintEchoesClue(clue, hint) {
+  if (!hint) return false;
+
+  const clueNorm = normalized(clue);
+  const hintNorm = normalized(hint);
+  if (!clueNorm || !hintNorm) return false;
+  if (clueNorm === hintNorm) return true;
+
+  if (clueNorm.length >= 12 && hintNorm.length >= 12) {
+    if (clueNorm.includes(hintNorm) || hintNorm.includes(clueNorm)) {
+      return true;
+    }
+  }
+
+  const clueTokenSet = new Set(contentTokens(clue));
+  const hintTokens = contentTokens(hint);
+  if (hintTokens.length > 0) {
+    const shared = hintTokens.filter(token => clueTokenSet.has(token));
+    const sharedRatio = shared.length / hintTokens.length;
+    if (shared.length >= 3 && sharedRatio >= 0.7) {
+      return true;
+    }
+  }
+
+  const clueNgrams = new Set(ngrams(clue, 4));
+  const hintNgrams = ngrams(hint, 4);
+  if (hintNgrams.length > 0) {
+    const overlap = hintNgrams.filter(gram => clueNgrams.has(gram)).length;
+    const overlapRatio = overlap / hintNgrams.length;
+    if (overlapRatio >= 0.66) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 export function containsBannedContent(text) {
@@ -106,7 +169,7 @@ export function isWordEntryAcceptable(entry) {
     return { ok: false, reason: 'answer-leakage' };
   }
 
-  if (hint && normalized(clue) === normalized(hint)) {
+  if (hint && hintEchoesClue(clue, hint)) {
     return { ok: false, reason: 'hint-duplicate' };
   }
 

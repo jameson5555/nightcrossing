@@ -105,7 +105,8 @@ const THEME_PROPER_NOUN_ALLOWLIST = {
   ])
 };
 
-const OBSCURE_PROPER_NOUN_SIGNAL_REGEX = /\b(goddess|god|deity|mythological|myth|constellation|kuiper|planetoid|primordial|trojan|tau\s+[a-z]+|mistress\s+of\s+zeus|one\s+of\s+the\s+moons\s+of\s+jupiter)\b/i;
+const OBSCURE_PROPER_NOUN_SIGNAL_REGEX = /\b(goddess|god|deity|mythological|myth|constellation|kuiper|planetoid|primordial|trojan|tau\s+[a-z]+|mistress\s+of\s+zeus|one\s+of\s+the\s+moons\s+of\s+jupiter|one\s+of\s+the\s+moons\s+of\s+saturn|roman\s+deity|greek\s+deity)\b/i;
+const ASTRONOMY_NICHE_NAME_REGEX = /\b(aoede|elara|amalthea|hygiea|tau\s+[a-z]+|pegasi|ursa\s+major|capricorni|salacia|uranian)\b/i;
 
 const TITLE_STOPWORDS = new Set([
   'the', 'and', 'for', 'with', 'from', 'into', 'over', 'under', 'about', 'between',
@@ -210,6 +211,33 @@ function normalizeForComparison(value) {
   return String(value || '').toLowerCase().replace(/[^a-z0-9]/g, '');
 }
 
+function contentTokens(str) {
+  return (str || '')
+    .toLowerCase()
+    .match(/[a-z0-9]+/g)
+    ?.filter(token => token.length >= 3) || [];
+}
+
+function looksLikeClueEcho(candidateHint, clueText) {
+  const hintNorm = normalizeForComparison(candidateHint);
+  const clueNorm = normalizeForComparison(clueText);
+  if (!hintNorm || !clueNorm) return false;
+  if (hintNorm === clueNorm) return true;
+
+  if (hintNorm.length >= 12 && clueNorm.length >= 12) {
+    if (hintNorm.includes(clueNorm) || clueNorm.includes(hintNorm)) return true;
+  }
+
+  const clueSet = new Set(contentTokens(clueText));
+  const hintTokens = contentTokens(candidateHint);
+  if (hintTokens.length > 0) {
+    const overlap = hintTokens.filter(token => clueSet.has(token)).length;
+    if (overlap >= 3 && overlap / hintTokens.length >= 0.7) return true;
+  }
+
+  return false;
+}
+
 function hasInnerCapitalizedToken(text) {
   const value = String(text || '').trim();
   if (!value) return false;
@@ -236,6 +264,7 @@ function isLikelyObscureProperNoun(themeName, answerUpper, clueText, hintText) {
   if (!ENABLE_MODERATE_PROPER_NOUN_FILTER) return false;
   if (isThemeAnchorAllowed(themeName, answerUpper)) return false;
 
+  const themeKey = normalizedThemeKey(themeName);
   const clue = String(clueText || '');
   const hint = String(hintText || '');
   const joined = `${clue} ${hint}`.trim();
@@ -244,11 +273,18 @@ function isLikelyObscureProperNoun(themeName, answerUpper, clueText, hintText) {
   if (OBSCURE_PROPER_NOUN_SIGNAL_REGEX.test(joined)) score += 2;
   if (hasInnerCapitalizedToken(clue) || hasInnerCapitalizedToken(hint)) score += 1;
   if (/\b(pegasi|uranian|salacia|aoede|elara|callisto|ganymede|amalthea)\b/i.test(joined)) score += 1.5;
+  if (themeKey === 'space astronomy') {
+    if (ASTRONOMY_NICHE_NAME_REGEX.test(joined) || ASTRONOMY_NICHE_NAME_REGEX.test(answerUpper)) score += 1.6;
+    if (/\b(alpha|beta|gamma|delta)\s+[a-z]+\b/i.test(joined)) score += 1.2;
+    if (/\b(moon\s+of\s+jupiter|moon\s+of\s+saturn|moon\s+of\s+uranus)\b/i.test(joined)) score += 1.1;
+    if (/\b(roman|greek)\s+(goddess|god|deity)\b/i.test(joined)) score += 1.2;
+  }
 
-  return score >= 2;
+  const threshold = themeKey === 'space astronomy' ? 1.8 : 2;
+  return score >= threshold;
 }
 
-function buildDefinitionBackstopHint(definitionText) {
+function buildDefinitionBackstopHint(definitionText, clueText = '', answer = '') {
   const cleaned = String(definitionText || '')
     .replace(/\([^)]*\)/g, ' ')
     .replace(/[.;:!?]+$/g, '')
@@ -260,13 +296,28 @@ function buildDefinitionBackstopHint(definitionText) {
   const words = cleaned.split(' ').filter(Boolean);
   if (words.length === 0) return null;
 
-  const core = words.slice(0, Math.min(7, words.length)).join(' ');
-  if (!core) return null;
+  const clueTokenSet = new Set(contentTokens(clueText));
+  const answerTokenSet = new Set(contentTokens(answer));
+  const filtered = words.filter(word => {
+    const token = word.toLowerCase().replace(/[^a-z0-9]/g, '');
+    if (!token || token.length < 4) return false;
+    if (clueTokenSet.has(token)) return false;
+    if (answerTokenSet.has(token)) return false;
+    return true;
+  });
 
-  return `Key idea: ${core}`;
+  const conceptWords = (filtered.length >= 2 ? filtered : words)
+    .slice(0, Math.min(6, words.length))
+    .join(' ');
+  if (!conceptWords) return null;
+
+  const hint = `Related concept: ${conceptWords}`;
+  if (looksLikeClueEcho(hint, clueText)) return null;
+
+  return hint;
 }
 
-function parseDatamuseDefinitions(defs = []) {
+function parseDatamuseDefinitions(defs = [], answerText = '') {
   if (!Array.isArray(defs) || defs.length === 0) return null;
 
   const rawDef = defs[0];
@@ -285,15 +336,15 @@ function parseDatamuseDefinitions(defs = []) {
 
     const humanizedHint = humanizeClue(cleanHint);
     if (!humanizedHint) continue;
-    if (normalizeForComparison(humanizedHint) === normalizeForComparison(clueText)) continue;
+    if (looksLikeClueEcho(humanizedHint, clueText)) continue;
 
     hint = humanizedHint;
     break;
   }
 
   if (!hint) {
-    const fallbackHint = buildDefinitionBackstopHint(cleanDef);
-    if (fallbackHint && normalizeForComparison(fallbackHint) !== normalizeForComparison(clueText)) {
+    const fallbackHint = buildDefinitionBackstopHint(cleanDef, clueText, answerText);
+    if (fallbackHint && !looksLikeClueEcho(fallbackHint, clueText)) {
       hint = fallbackHint;
     }
   }
@@ -344,7 +395,7 @@ async function fetchDatamuseClueForWord(wordLower) {
     const res = await fetch(url);
     const data = await res.json();
     const exact = data.find(item => String(item.word || '').toLowerCase() === wordLower) || data[0];
-    const parsed = exact ? parseDatamuseDefinitions(exact.defs || []) : null;
+    const parsed = exact ? parseDatamuseDefinitions(exact.defs || [], wordLower) : null;
     DATAMUSE_CLUE_CACHE.set(wordLower, parsed);
     return parsed;
   } catch {
@@ -586,7 +637,7 @@ export async function fetchThemeWords() {
             if (existingAnswers.has(word)) continue;
 
             if (d.defs && d.defs.length > 0) {
-              const parsedDefs = parseDatamuseDefinitions(d.defs);
+              const parsedDefs = parseDatamuseDefinitions(d.defs, d.word);
               if (!parsedDefs) continue;
 
               const clueText = parsedDefs.clueText;

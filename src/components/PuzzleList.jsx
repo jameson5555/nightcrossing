@@ -4,6 +4,29 @@ import { checkPuzzleStatus, loadPuzzleProgress, resetPuzzleDataIfDatasetChanged 
 import { getBadgeLevel, getBadgeName, getBadgeAsset } from '../utils/badges';
 import { getSolvedClueIds } from '../utils/crossword';
 
+const APPROACHABLE_DIFFICULTIES = new Set(['Easy', 'Normal']);
+
+function parseVolumeFromId(id) {
+  const match = String(id || '').match(/-vol(\d+)$/);
+  return match ? Number(match[1]) : Number.MAX_SAFE_INTEGER;
+}
+
+function hashString(value) {
+  let hash = 2166136261;
+  for (let i = 0; i < value.length; i++) {
+    hash ^= value.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+}
+
+function rotateArray(items, offset) {
+  if (!Array.isArray(items) || items.length <= 1) return items;
+  const safeOffset = ((offset % items.length) + items.length) % items.length;
+  if (safeOffset === 0) return items;
+  return [...items.slice(safeOffset), ...items.slice(0, safeOffset)];
+}
+
 const PuzzleList = ({ onSelectPuzzle }) => {
   const [puzzles, setPuzzles] = useState([]);
   const [statuses, setStatuses] = useState({});
@@ -150,10 +173,32 @@ const PuzzleList = ({ onSelectPuzzle }) => {
             const isExpanded = expandedTheme === theme;
             const allCompleted = themePuzzles.filter(p => statuses[p.id] === 'Completed');
             const allActive = themePuzzles.filter(p => statuses[p.id] !== 'Completed');
+
+            const sortedActive = [...allActive].sort((a, b) => {
+              const volA = parseVolumeFromId(a.id);
+              const volB = parseVolumeFromId(b.id);
+              if (volA !== volB) return volA - volB;
+              return String(a.id).localeCompare(String(b.id));
+            });
+
+            const inProgress = sortedActive.filter(p => statuses[p.id] === 'In Progress');
+            const pendingActive = sortedActive.filter(p => statuses[p.id] !== 'In Progress');
+
+            const dateSeed = new Date().toISOString().slice(0, 10);
+            const seed = hashString(`${theme}|${dateSeed}`);
+            const rotatedPending = rotateArray(pendingActive, pendingActive.length > 0 ? seed % pendingActive.length : 0);
+
+            let orderedActive = [...inProgress, ...rotatedPending];
+            if (inProgress.length === 0 && orderedActive.length > 1) {
+              const approachableIdx = orderedActive.findIndex(p => APPROACHABLE_DIFFICULTIES.has(p.difficulty || 'Normal'));
+              if (approachableIdx > 0) {
+                orderedActive = [orderedActive[approachableIdx], ...orderedActive.slice(0, approachableIdx), ...orderedActive.slice(approachableIdx + 1)];
+              }
+            }
             
             // Sliding window: Show up to 3 active puzzles.
             // If fewer than 3 active ones exist, fill from the latest completed to reach 3.
-            let visiblePuzzles = allActive.slice(0, 3);
+            let visiblePuzzles = orderedActive.slice(0, 3);
             if (visiblePuzzles.length < 3 && allCompleted.length > 0) {
               const needed = Math.min(3 - visiblePuzzles.length, allCompleted.length);
               const padding = allCompleted.slice(-needed);
@@ -162,7 +207,6 @@ const PuzzleList = ({ onSelectPuzzle }) => {
 
             // Keep the true completed count for badge calculations
             const completedCount = allCompleted.length;
-            const totalCount = themePuzzles.length;
 
             return (
               <div key={theme} className={`theme-group ${isExpanded ? 'expanded' : ''}`}>

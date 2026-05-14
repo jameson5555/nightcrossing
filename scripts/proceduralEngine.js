@@ -56,7 +56,10 @@ const LONG_WORD_TARGET_SHARE = Number.isFinite(Number(process.env.NC_LONG_WORD_T
   : 0.045;
 const MAX_LAYOUT_OBSCURE_PROPER_NOUN_LOAD = Number.isFinite(Number(process.env.NC_MAX_LAYOUT_OBSCURE_PROPER_NOUN_LOAD))
   ? Math.max(0, Math.min(1, Number(process.env.NC_MAX_LAYOUT_OBSCURE_PROPER_NOUN_LOAD)))
-  : 0.34;
+  : 0.26;
+const SPACE_LAYOUT_OBSCURE_PROPER_NOUN_LOAD = Number.isFinite(Number(process.env.NC_SPACE_LAYOUT_OBSCURE_PROPER_NOUN_LOAD))
+  ? Math.max(0, Math.min(1, Number(process.env.NC_SPACE_LAYOUT_OBSCURE_PROPER_NOUN_LOAD)))
+  : 0.2;
 
 const LAYOUT_OBSCURE_PROPER_NOUN_REGEX = /\b(goddess|god|deity|mythological|myth|constellation|kuiper|planetoid|primordial|trojan|tau\s+[a-z]+|mistress\s+of\s+zeus|one\s+of\s+the\s+moons\s+of\s+jupiter|pegasi|uranian|salacia|aoede|elara|amalthea|ganymede|callisto)\b/i;
 
@@ -177,11 +180,13 @@ function calculateFallbackThemeRelevance(themeName, word) {
 }
 
 export function scoreWordForTheme(themeName, word) {
+  const fallbackScore = calculateFallbackThemeRelevance(themeName, word);
   if (typeof word.themeScore === 'number') {
-    return word.themeScore;
+    const cappedScore = Math.min(word.themeScore, fallbackScore + 0.35);
+    return Math.max(0, Number(cappedScore.toFixed(3)));
   }
 
-  return calculateFallbackThemeRelevance(themeName, word);
+  return fallbackScore;
 }
 
 export function createThemePools(themeName, words) {
@@ -244,7 +249,11 @@ function layoutPassesThemeGuardrails(layout, relevanceByAnswer, options = {}) {
 function layoutPassesLexicalGuardrails(layout, options = {}) {
   if (!layout || !Array.isArray(layout.result) || layout.result.length === 0) return false;
 
-  const maxObscureProperNounLoad = options.maxObscureProperNounLoad ?? MAX_LAYOUT_OBSCURE_PROPER_NOUN_LOAD;
+  const normalizedTheme = String(options.themeName || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  const defaultMaxLoad = normalizedTheme === 'space astronomy'
+    ? SPACE_LAYOUT_OBSCURE_PROPER_NOUN_LOAD
+    : MAX_LAYOUT_OBSCURE_PROPER_NOUN_LOAD;
+  const maxObscureProperNounLoad = options.maxObscureProperNounLoad ?? defaultMaxLoad;
 
   let obscureHits = 0;
   for (const placed of layout.result) {
@@ -698,7 +707,7 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
     if (
       candidate &&
       layoutPassesThemeGuardrails(candidate, pools.relevanceByAnswer) &&
-      layoutPassesLexicalGuardrails(candidate)
+      layoutPassesLexicalGuardrails(candidate, { themeName })
     ) {
       const candidateScore = typeof candidate._engineScore === 'number' ? candidate._engineScore : -Infinity;
       if (candidateScore > bestScore) {
@@ -727,7 +736,7 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
     if (
       fallback &&
       layoutPassesThemeGuardrails(fallback, pools.relevanceByAnswer) &&
-      layoutPassesLexicalGuardrails(fallback)
+      layoutPassesLexicalGuardrails(fallback, { themeName })
     ) {
       layout = fallback;
     }
@@ -745,7 +754,7 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
     if (
       fallback &&
       layoutPassesThemeGuardrails(fallback, pools.relevanceByAnswer) &&
-      layoutPassesLexicalGuardrails(fallback)
+      layoutPassesLexicalGuardrails(fallback, { themeName })
     ) {
       layout = fallback;
     }
@@ -763,7 +772,7 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
     if (
       recovery &&
       layoutPassesThemeGuardrails(recovery, pools.relevanceByAnswer) &&
-      layoutPassesLexicalGuardrails(recovery)
+      layoutPassesLexicalGuardrails(recovery, { themeName })
     ) {
       layout = recovery;
     }
@@ -782,7 +791,7 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
     if (
       backup &&
       layoutPassesThemeGuardrails(backup, pools.relevanceByAnswer) &&
-      layoutPassesLexicalGuardrails(backup)
+      layoutPassesLexicalGuardrails(backup, { themeName })
     ) {
       layout = backup;
     }

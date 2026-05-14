@@ -42,17 +42,22 @@ const SKIP_PREFLIGHT = process.argv.includes('--skip-preflight');
 const SKIP_ENRICHMENT = process.argv.includes('--skip-enrichment');
 const ALLOW_REPEAT_ANSWERS = process.argv.includes('--allow-repeat-answers');
 const MAX_LAYOUT_QUALITY_RETRIES = Number.isFinite(Number(process.env.NC_MAX_LAYOUT_QUALITY_RETRIES))
-  ? Math.max(1, Math.min(8, Number(process.env.NC_MAX_LAYOUT_QUALITY_RETRIES)))
-  : 3;
+  ? Math.max(1, Math.min(10, Number(process.env.NC_MAX_LAYOUT_QUALITY_RETRIES)))
+  : 5;
 const MIN_LONG_TWO_PLUS_RATE = Number.isFinite(Number(process.env.NC_MIN_LONG_TWO_PLUS_RATE))
   ? Math.max(0, Math.min(1, Number(process.env.NC_MIN_LONG_TWO_PLUS_RATE)))
-  : 0.78;
+  : 0.82;
 const MIN_VERY_LONG_THREE_PLUS_RATE = Number.isFinite(Number(process.env.NC_MIN_VERY_LONG_THREE_PLUS_RATE))
   ? Math.max(0, Math.min(1, Number(process.env.NC_MIN_VERY_LONG_THREE_PLUS_RATE)))
-  : 0.58;
+  : 0.62;
 const MIN_HINT_COVERAGE = Number.isFinite(Number(process.env.NC_MIN_HINT_COVERAGE))
   ? Math.max(0, Math.min(1, Number(process.env.NC_MIN_HINT_COVERAGE)))
-  : 0.95;
+  : 0.97;
+const MAX_LEXICAL_OBSCURE_SIGNAL_LOAD = Number.isFinite(Number(process.env.NC_MAX_LEXICAL_OBSCURE_SIGNAL_LOAD))
+  ? Math.max(0, Math.min(1, Number(process.env.NC_MAX_LEXICAL_OBSCURE_SIGNAL_LOAD)))
+  : 0.24;
+
+const LEXICAL_OBSCURE_SIGNAL_REGEX = /\b(goddess|god|deity|mythological|myth|constellation|kuiper|trojan|tau\s+[a-z]+|mistress\s+of\s+zeus|one\s+of\s+the\s+moons?\s+of\s+(jupiter|saturn|uranus)|aoede|elara|amalthea|hygiea|pegasi|capricorni|ursa\s+major)\b/i;
 
 function addPuzzleAnswersToSet(puzzleData, targetSet) {
   if (!puzzleData?.answers) return;
@@ -62,10 +67,6 @@ function addPuzzleAnswersToSet(puzzleData, targetSet) {
   for (const answer of puzzleData.answers.down || []) {
     targetSet.add(String(answer).toUpperCase());
   }
-}
-
-function scoreWordRelevance(wordObj) {
-  return typeof wordObj.themeScore === 'number' ? wordObj.themeScore : 0;
 }
 
 function computeHintCoverage(puzzle) {
@@ -81,19 +82,48 @@ function computeHintCoverage(puzzle) {
   };
 }
 
+function computeLexicalObscureSignalLoad(puzzle) {
+  const acrossClues = Array.isArray(puzzle?.clues?.across) ? puzzle.clues.across : [];
+  const downClues = Array.isArray(puzzle?.clues?.down) ? puzzle.clues.down : [];
+  const hints = puzzle?.hints && typeof puzzle.hints === 'object' ? Object.values(puzzle.hints) : [];
+
+  const texts = [...acrossClues, ...downClues, ...hints]
+    .map(text => String(text || '').replace(/^\d+\.\s*/, '').trim())
+    .filter(Boolean);
+
+  if (texts.length === 0) {
+    return { load: 0, hits: 0, total: 0 };
+  }
+
+  let hits = 0;
+  for (const text of texts) {
+    if (LEXICAL_OBSCURE_SIGNAL_REGEX.test(text)) hits++;
+  }
+
+  return {
+    load: hits / texts.length,
+    hits,
+    total: texts.length
+  };
+}
+
 function passesLayoutQualityGate(metrics, puzzle) {
   const longWordGate = metrics.longWordCount === 0 || metrics.longWordTwoPlusRate >= MIN_LONG_TWO_PLUS_RATE;
   const veryLongWordGate =
     metrics.veryLongWordCount === 0 ||
     metrics.veryLongWordThreePlusRate >= MIN_VERY_LONG_THREE_PLUS_RATE;
   const hintCoverage = computeHintCoverage(puzzle);
+  const lexicalSignals = computeLexicalObscureSignalLoad(puzzle);
   const hintGate = hintCoverage.coverage >= MIN_HINT_COVERAGE;
+  const lexicalGate = lexicalSignals.load <= MAX_LEXICAL_OBSCURE_SIGNAL_LOAD;
   return {
-    accepted: longWordGate && veryLongWordGate && hintGate,
+    accepted: longWordGate && veryLongWordGate && hintGate && lexicalGate,
     hintCoverage,
+    lexicalSignals,
     longWordGate,
     veryLongWordGate,
-    hintGate
+    hintGate,
+    lexicalGate
   };
 }
 
@@ -255,8 +285,8 @@ async function generateStarters() {
             const availableWords = theme.words
               .filter(w => !consumedWords.has(w.answer.toUpperCase()))
               .sort((a, b) => {
-                const aScore = scoreWordRelevance(a) || scoreWordForTheme(theme.name, a);
-                const bScore = scoreWordRelevance(b) || scoreWordForTheme(theme.name, b);
+                const aScore = scoreWordForTheme(theme.name, a);
+                const bScore = scoreWordForTheme(theme.name, b);
                 if (aScore === bScore) return Math.random() - 0.5;
                 return bScore - aScore;
               });
@@ -281,11 +311,13 @@ async function generateStarters() {
               const fallbackScore =
                 (quality.hintCoverage.coverage * 1000) +
                 (candidateMetrics.longWordTwoPlusRate * 100) +
-                (candidateMetrics.veryLongWordThreePlusRate * 80);
+                (candidateMetrics.veryLongWordThreePlusRate * 80) +
+                ((1 - quality.lexicalSignals.load) * 140);
               const bestFallbackScore = bestFallbackQuality
                 ? (bestFallbackQuality.hintCoverage.coverage * 1000) +
                   (bestFallbackMetrics.longWordTwoPlusRate * 100) +
-                  (bestFallbackMetrics.veryLongWordThreePlusRate * 80)
+                  (bestFallbackMetrics.veryLongWordThreePlusRate * 80) +
+                  ((1 - bestFallbackQuality.lexicalSignals.load) * 140)
                 : -Infinity;
 
               if (fallbackScore > bestFallbackScore) {
@@ -314,8 +346,9 @@ async function generateStarters() {
 
             if (!generatedQuality?.accepted) {
               const hintPct = ((generatedHintCoverage?.coverage || 0) * 100).toFixed(0);
+              const lexicalPct = ((generatedQuality?.lexicalSignals?.load || 0) * 100).toFixed(0);
               console.warn(
-                `  ⚠️ ${id} accepted below quality gates after ${MAX_LAYOUT_QUALITY_RETRIES} attempts (hint coverage ${hintPct}%, long gate ${generatedQuality?.longWordGate ? 'ok' : 'fail'}, very long gate ${generatedQuality?.veryLongWordGate ? 'ok' : 'fail'}).`
+                `  ⚠️ ${id} accepted below quality gates after ${MAX_LAYOUT_QUALITY_RETRIES} attempts (hint coverage ${hintPct}%, lexical signal ${lexicalPct}%, long gate ${generatedQuality?.longWordGate ? 'ok' : 'fail'}, very long gate ${generatedQuality?.veryLongWordGate ? 'ok' : 'fail'}, lexical gate ${generatedQuality?.lexicalGate ? 'ok' : 'fail'}).`
               );
             }
             
@@ -345,10 +378,11 @@ async function generateStarters() {
             const longRatePct = (generatedMetrics.longWordTwoPlusRate * 100).toFixed(0);
             const veryLongRatePct = (generatedMetrics.veryLongWordThreePlusRate * 100).toFixed(0);
             const hintCoveragePct = ((generatedHintCoverage?.coverage || 0) * 100).toFixed(0);
+            const lexicalSignalPct = ((generatedQuality?.lexicalSignals?.load || 0) * 100).toFixed(0);
             const longCount = generatedMetrics.longWordCount;
             const veryLongCount = generatedMetrics.veryLongWordCount;
             console.log(
-              `--> Saved ${id} (used ${placedWords.length} words, pool remaining: ${availableWords.length - placedWords.length}, long words: ${longCount}, very long: ${veryLongCount}, long 2+ cross: ${longRatePct}%, very long 3+ cross: ${veryLongRatePct}%, hint coverage: ${hintCoveragePct}% [${generatedHintCoverage?.hintCount || 0}/${generatedHintCoverage?.clueCount || 0}])`
+              `--> Saved ${id} (used ${placedWords.length} words, pool remaining: ${availableWords.length - placedWords.length}, long words: ${longCount}, very long: ${veryLongCount}, long 2+ cross: ${longRatePct}%, very long 3+ cross: ${veryLongRatePct}%, hint coverage: ${hintCoveragePct}% [${generatedHintCoverage?.hintCount || 0}/${generatedHintCoverage?.clueCount || 0}], lexical signal: ${lexicalSignalPct}%)`
             );
         }
     } catch (themeErr) {
