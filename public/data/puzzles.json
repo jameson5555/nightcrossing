@@ -41,7 +41,7 @@
     "rows": 9,
     "letterCells": 37,
     "theme": "Food & Cooking",
-    "difficulty": "Normal"
+    "difficulty": "Hard"
   },
   {
     "id": "food---cooking-vol2",
@@ -63,7 +63,7 @@
     "rows": 10,
     "letterCells": 36,
     "theme": "Food & Cooking",
-    "difficulty": "Hard"
+    "difficulty": "Easy"
   },
   {
     "id": "ocean---marine-life-vol1",
@@ -85,7 +85,7 @@
     "rows": 10,
     "letterCells": 37,
     "theme": "Ocean & Marine Life",
-    "difficulty": "Easy"
+    "difficulty": "Normal"
   },
   {
     "id": "ocean---marine-life-vol3",
@@ -140,7 +140,7 @@
     "rows": 10,
     "letterCells": 29,
     "theme": "Nature & Wilderness",
-    "difficulty": "Easy"
+    "difficulty": "Normal"
   },
   {
     "id": "nature---wilderness-vol2",
@@ -151,7 +151,7 @@
     "rows": 8,
     "letterCells": 37,
     "theme": "Nature & Wilderness",
-    "difficulty": "Hard"
+    "difficulty": "Expert"
   },
   {
     "id": "nature---wilderness-vol3",
@@ -184,7 +184,7 @@
     "rows": 9,
     "letterCells": 30,
     "theme": "Technology & Computing",
-    "difficulty": "Easy"
+    "difficulty": "Normal"
   },
   {
     "id": "technology---computing-vol3",
@@ -250,7 +250,7 @@
     "rows": 9,
     "letterCells": 34,
     "theme": "Sports & Athletics",
-    "difficulty": "Easy"
+    "difficulty": "Normal"
   },
   {
     "id": "sports---athletics-vol3",
@@ -261,6 +261,6 @@
     "rows": 8,
     "letterCells": 34,
     "theme": "Sports & Athletics",
-    "difficulty": "Normal"
+    "difficulty": "Hard"
   }
 ]

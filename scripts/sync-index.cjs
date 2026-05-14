@@ -20,6 +20,16 @@ const THEME_DIFFICULTY_BIAS = {
   'Technology & Computing': -0.04
 };
 
+const EASY_ABSOLUTE_GATES = {
+  maxAvgWordLength: 5.9,
+  maxLongWordCount: 1,
+  maxVeryLongWordCount: 0,
+  minAvgIntersectionsPerWord: 1.75,
+  maxProperNounLoad: 0.22,
+  maxClueObscurityLoad: 0.22,
+  minPlacedWords: 7
+};
+
 const PROPER_NOUN_HINT_REGEX = /\b(god|goddess|deity|constellation|moon|planet|star|satellite|asteroid|myth|mythological|roman|greek)\b/i;
 const CLUE_OBSCURITY_REGEX = /[;:()]|\b(archaic|obsolete|mythological|technical|primordial|kuiper|trojan|alpha\s+[a-z]+|beta\s+[a-z]+)\b/i;
 
@@ -322,6 +332,152 @@ function computeDifficultyScore(puzzle, cols, rows, letterCells) {
   return clamp(score, 0, 1);
 }
 
+function computeDifficultyProfile(puzzle, cols, rows, letterCells) {
+  const totalCells = cols * rows;
+  const density = totalCells > 0 ? letterCells / totalCells : 0;
+  const paths = collectWordPaths(puzzle, cols, rows);
+  const wordLengths = paths.map(path => path.length);
+  const lexical = collectLexicalSignals(puzzle, wordLengths);
+
+  const avgWordLength = wordLengths.length > 0
+    ? wordLengths.reduce((sum, len) => sum + len, 0) / wordLengths.length
+    : 0;
+
+  if (paths.length === 0) {
+    let sparseScore = 0;
+    sparseScore += clamp((density - 0.34) / 0.16, 0, 1) * 0.6;
+    sparseScore += lexical.longWordLoad * 0.2;
+    sparseScore += lexical.properNounLoad * 0.1;
+    sparseScore += lexical.clueObscurityLoad * 0.1;
+    return {
+      score: clamp(sparseScore, 0, 1),
+      avgWordLength,
+      placedWords: paths.length,
+      longWordCount: 0,
+      veryLongWordCount: 0,
+      avgIntersectionsPerWord: 0,
+      minIntersectionsPerWord: 0,
+      longWordTwoPlusRate: 1,
+      veryLongWordThreePlusRate: 1,
+      properNounLoad: lexical.properNounLoad,
+      clueObscurityLoad: lexical.clueObscurityLoad
+    };
+  }
+
+  const occupancy = new Map();
+  for (const path of paths) {
+    for (const idx of path) {
+      occupancy.set(idx, (occupancy.get(idx) || 0) + 1);
+    }
+  }
+
+  const intersectionsPerWord = paths.map(path => {
+    let count = 0;
+    for (const idx of path) {
+      if ((occupancy.get(idx) || 0) > 1) count++;
+    }
+    return count;
+  });
+
+  const minIntersectionsPerWord = intersectionsPerWord.length > 0
+    ? Math.min(...intersectionsPerWord)
+    : 0;
+
+  const avgIntersectionsPerWord = intersectionsPerWord.length > 0
+    ? intersectionsPerWord.reduce((sum, count) => sum + count, 0) / intersectionsPerWord.length
+    : 0;
+
+  const longWordIndices = wordLengths
+    .map((len, idx) => ({ len, idx }))
+    .filter(item => item.len >= LONG_WORD_LENGTH)
+    .map(item => item.idx);
+
+  const veryLongWordIndices = wordLengths
+    .map((len, idx) => ({ len, idx }))
+    .filter(item => item.len >= VERY_LONG_WORD_LENGTH)
+    .map(item => item.idx);
+
+  const longWordsWithTwoPlusCrossings = longWordIndices
+    .filter(idx => (intersectionsPerWord[idx] || 0) >= 2)
+    .length;
+
+  const veryLongWordsWithThreePlusCrossings = veryLongWordIndices
+    .filter(idx => (intersectionsPerWord[idx] || 0) >= 3)
+    .length;
+
+  const longWordTwoPlusRate = longWordIndices.length > 0
+    ? longWordsWithTwoPlusCrossings / longWordIndices.length
+    : 1;
+
+  const veryLongWordThreePlusRate = veryLongWordIndices.length > 0
+    ? veryLongWordsWithThreePlusCrossings / veryLongWordIndices.length
+    : 1;
+
+  const adjacency = paths.map(() => new Set());
+  const indexToWords = new Map();
+  paths.forEach((path, wordIdx) => {
+    for (const idx of path) {
+      if (!indexToWords.has(idx)) indexToWords.set(idx, []);
+      indexToWords.get(idx).push(wordIdx);
+    }
+  });
+
+  for (const wordIndexes of indexToWords.values()) {
+    for (let i = 0; i < wordIndexes.length; i++) {
+      for (let j = i + 1; j < wordIndexes.length; j++) {
+        const a = wordIndexes[i];
+        const b = wordIndexes[j];
+        adjacency[a].add(b);
+        adjacency[b].add(a);
+      }
+    }
+  }
+
+  let connected = true;
+  if (paths.length > 1) {
+    const visited = new Set();
+    const stack = [0];
+    while (stack.length > 0) {
+      const node = stack.pop();
+      if (visited.has(node)) continue;
+      visited.add(node);
+      for (const next of adjacency[node]) {
+        if (!visited.has(next)) stack.push(next);
+      }
+    }
+    connected = visited.size === paths.length;
+  }
+
+  let score = 0;
+  score += clamp((density - 0.34) / 0.16, 0, 1) * 0.18;
+  score += (1 - clamp(avgIntersectionsPerWord / 2.2, 0, 1)) * 0.2;
+  score += (1 - clamp(minIntersectionsPerWord / 1.2, 0, 1)) * 0.12;
+  score += (1 - longWordTwoPlusRate) * 0.13;
+  score += (1 - veryLongWordThreePlusRate) * 0.06;
+  score += connected ? 0 : 0.03;
+  score += clamp((paths.length - 8) / 6, 0, 1) * 0.03;
+  score += lexical.longWordLoad * 0.1;
+  score += lexical.veryLongWordLoad * 0.05;
+  score += lexical.properNounLoad * 0.05;
+  score += lexical.clueObscurityLoad * 0.03;
+  score += lexical.rareLetterLoad * 0.03;
+  score += lexical.fallbackHintLoad * 0.02;
+
+  return {
+    score: clamp(score, 0, 1),
+    avgWordLength,
+    placedWords: paths.length,
+    longWordCount: longWordIndices.length,
+    veryLongWordCount: veryLongWordIndices.length,
+    avgIntersectionsPerWord,
+    minIntersectionsPerWord,
+    longWordTwoPlusRate,
+    veryLongWordThreePlusRate,
+    properNounLoad: lexical.properNounLoad,
+    clueObscurityLoad: lexical.clueObscurityLoad
+  };
+}
+
 function quantile(sortedValues, q) {
   if (!Array.isArray(sortedValues) || sortedValues.length === 0) return 0;
   const clampedQ = clamp(q, 0, 1);
@@ -340,15 +496,35 @@ function assignDifficultyById(drafts) {
     return a.id.localeCompare(b.id);
   });
 
-  const scores = byDifficulty.map(item => item.difficultyScore);
-  const easyThreshold = quantile(scores, EASY_QUANTILE);
-  const normalThreshold = quantile(scores, NORMAL_QUANTILE);
-  const hardThreshold = quantile(scores, HARD_QUANTILE);
+  const easyTargetCount = Math.max(1, Math.round(byDifficulty.length * EASY_QUANTILE));
+  const meetsEasyGates = (item) => (
+    item.placedWords >= EASY_ABSOLUTE_GATES.minPlacedWords &&
+    item.avgWordLength <= EASY_ABSOLUTE_GATES.maxAvgWordLength &&
+    item.longWordCount <= EASY_ABSOLUTE_GATES.maxLongWordCount &&
+    item.veryLongWordCount <= EASY_ABSOLUTE_GATES.maxVeryLongWordCount &&
+    item.avgIntersectionsPerWord >= EASY_ABSOLUTE_GATES.minAvgIntersectionsPerWord &&
+    item.properNounLoad <= EASY_ABSOLUTE_GATES.maxProperNounLoad &&
+    item.clueObscurityLoad <= EASY_ABSOLUTE_GATES.maxClueObscurityLoad
+  );
+
+  const easyIds = new Set(
+    byDifficulty
+      .filter(meetsEasyGates)
+      .slice(0, easyTargetCount)
+      .map(item => item.id)
+  );
+
+  const nonEasy = byDifficulty.filter(item => !easyIds.has(item.id));
+  const nonEasyScores = nonEasy.map(item => item.difficultyScore);
+  const renormalizedNormalQ = (NORMAL_QUANTILE - EASY_QUANTILE) / (1 - EASY_QUANTILE);
+  const renormalizedHardQ = (HARD_QUANTILE - EASY_QUANTILE) / (1 - EASY_QUANTILE);
+  const normalThreshold = quantile(nonEasyScores, renormalizedNormalQ);
+  const hardThreshold = quantile(nonEasyScores, renormalizedHardQ);
   const result = new Map();
 
   byDifficulty.forEach((item) => {
     let label = 'Expert';
-    if (item.difficultyScore <= easyThreshold) label = 'Easy';
+    if (easyIds.has(item.id)) label = 'Easy';
     else if (item.difficultyScore <= normalThreshold) label = 'Normal';
     else if (item.difficultyScore <= hardThreshold) label = 'Hard';
     result.set(item.id, label);
@@ -410,7 +586,8 @@ function syncIndex() {
       letterCells = cols * rows;
     }
 
-    const baseDifficultyScore = computeDifficultyScore(puzzle, cols, rows, letterCells);
+    const profile = computeDifficultyProfile(puzzle, cols, rows, letterCells);
+    const baseDifficultyScore = profile.score;
     const themeBias = THEME_DIFFICULTY_BIAS[puzzle.theme || ''] || 0;
     const difficultyScore = clamp(baseDifficultyScore + themeBias, 0, 1);
 
@@ -424,6 +601,16 @@ function syncIndex() {
       letterCells,
       theme: puzzle.theme || '',
       difficultyScore,
+      avgWordLength: profile.avgWordLength,
+      placedWords: profile.placedWords,
+      longWordCount: profile.longWordCount,
+      veryLongWordCount: profile.veryLongWordCount,
+      avgIntersectionsPerWord: profile.avgIntersectionsPerWord,
+      minIntersectionsPerWord: profile.minIntersectionsPerWord,
+      longWordTwoPlusRate: profile.longWordTwoPlusRate,
+      veryLongWordThreePlusRate: profile.veryLongWordThreePlusRate,
+      properNounLoad: profile.properNounLoad,
+      clueObscurityLoad: profile.clueObscurityLoad,
       existingDifficulty: typeof puzzle.difficulty === 'string' ? puzzle.difficulty : ''
     });
   }
