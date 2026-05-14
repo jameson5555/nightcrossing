@@ -775,6 +775,11 @@ function layoutToNightcrossing(layout, id, title, themeName) {
 export function generateThemedPuzzle(id, themeName, availableWords, options = {}) {
   const requestedProfile = options.profile === 'easy' ? 'easy' : 'default';
   const fallbackFromEasy = options._fallbackFromEasy === true;
+  const allowEasyFallbackToDefault = options.allowEasyFallbackToDefault !== false;
+  const perCallAttemptMultiplier = Number.isFinite(Number(options.attemptMultiplier))
+    ? Math.max(0.5, Math.min(4, Number(options.attemptMultiplier)))
+    : 1;
+  const attemptBudget = (baseAttempts) => scaledAttempts(Math.max(1, Math.round(baseAttempts * perCallAttemptMultiplier)));
   const pools = createThemePools(themeName, availableWords);
   let themedWords = choosePrimaryPool(pools);
 
@@ -796,7 +801,7 @@ export function generateThemedPuzzle(id, themeName, availableWords, options = {}
   let maxWordsTry = Math.min(requestedProfile === 'easy' ? EASY_PROFILE_MAX_WORDS : 14, themedWords.length);
 
   while (maxWordsTry >= MIN_WORD_TARGET) {
-    const attempts = scaledAttempts(
+    const attempts = attemptBudget(
     maxWordsTry >= 13 ? 3000 :
     maxWordsTry >= 11 ? 2300 :
     maxWordsTry >= 9 ? 1700 :
@@ -838,7 +843,7 @@ export function generateThemedPuzzle(id, themeName, availableWords, options = {}
     // Fallback: one final dense-search pass on a small target set under the 10x10 cap.
     const fallback = generateBestLayout(
       themedWords,
-      scaledAttempts(2500),
+      attemptBudget(2500),
       MIN_WORD_TARGET,
       Math.min(MIN_PLACED_WORDS, MIN_WORD_TARGET),
       { enforceLongIntersections: true, allowLongMisses: 1 }
@@ -857,7 +862,7 @@ export function generateThemedPuzzle(id, themeName, availableWords, options = {}
     // Last-resort fallback for difficult themes: allow one fewer placed word.
     const fallback = generateBestLayout(
       themedWords,
-      scaledAttempts(2200),
+      attemptBudget(2200),
       MIN_WORD_TARGET,
       Math.max(6, MIN_PLACED_WORDS - 1),
       { enforceLongIntersections: false }
@@ -876,7 +881,7 @@ export function generateThemedPuzzle(id, themeName, availableWords, options = {}
   if (layout && layout.result.length < PREFERRED_MIN_PLACED_WORDS && themedWords.length >= PREFERRED_MIN_PLACED_WORDS + 2) {
     const recovery = generateBestLayout(
       themedWords,
-      scaledAttempts(2200),
+      attemptBudget(2200),
       Math.min(requestedProfile === 'easy' ? EASY_PROFILE_MAX_WORDS : 14, themedWords.length),
       PREFERRED_MIN_PLACED_WORDS,
       { enforceLongIntersections: true, allowLongMisses: 1 }
@@ -896,7 +901,7 @@ export function generateThemedPuzzle(id, themeName, availableWords, options = {}
     const backupTarget = Math.min(requestedProfile === 'easy' ? EASY_PROFILE_MAX_WORDS + 1 : 12, availableWords.length);
     const backup = generateBestLayout(
       availableWords,
-      scaledAttempts(2200),
+      attemptBudget(2200),
       backupTarget,
       Math.max(6, MIN_PLACED_WORDS - 1),
       { enforceLongIntersections: false }
@@ -911,7 +916,7 @@ export function generateThemedPuzzle(id, themeName, availableWords, options = {}
     }
   }
 
-  if (!layout && requestedProfile === 'easy' && !fallbackFromEasy) {
+  if (!layout && requestedProfile === 'easy' && !fallbackFromEasy && allowEasyFallbackToDefault) {
     return generateThemedPuzzle(id, themeName, availableWords, {
       ...options,
       profile: 'default',
@@ -923,7 +928,7 @@ export function generateThemedPuzzle(id, themeName, availableWords, options = {}
     // Emergency fallback for sparse/intersection-poor themes.
     const emergency = generateBestLayout(
       availableWords,
-      scaledAttempts(2800),
+      attemptBudget(2800),
       Math.min(6, availableWords.length),
       Math.min(6, availableWords.length),
       { enforceLongIntersections: false }
@@ -943,7 +948,7 @@ export function generateThemedPuzzle(id, themeName, availableWords, options = {}
   
   // Return puzzle and the words that were actually placed
   const usedWords = layout.result.map(w => w.answer.toUpperCase());
-  return { puzzle, usedWords };
+  return { puzzle, usedWords, profileUsed: requestedProfile };
 }
 
 export { THEMES };
