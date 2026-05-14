@@ -6,7 +6,7 @@
     "date": "Wave 1",
     "cols": 10,
     "rows": 10,
-    "letterCells": 29,
+    "letterCells": 35,
     "theme": "Space & Astronomy",
     "difficulty": "Normal"
   },
@@ -17,7 +17,7 @@
     "date": "Wave 1",
     "cols": 10,
     "rows": 10,
-    "letterCells": 31,
+    "letterCells": 30,
     "theme": "Space & Astronomy",
     "difficulty": "Normal"
   },
@@ -28,9 +28,9 @@
     "date": "Wave 1",
     "cols": 9,
     "rows": 10,
-    "letterCells": 33,
+    "letterCells": 36,
     "theme": "Space & Astronomy",
-    "difficulty": "Normal"
+    "difficulty": "Expert"
   },
   {
     "id": "food---cooking-vol1",
@@ -39,7 +39,7 @@
     "date": "Wave 1",
     "cols": 9,
     "rows": 10,
-    "letterCells": 36,
+    "letterCells": 34,
     "theme": "Food & Cooking",
     "difficulty": "Normal"
   },
@@ -50,9 +50,9 @@
     "date": "Wave 1",
     "cols": 10,
     "rows": 10,
-    "letterCells": 39,
+    "letterCells": 42,
     "theme": "Food & Cooking",
-    "difficulty": "Normal"
+    "difficulty": "Hard"
   },
   {
     "id": "food---cooking-vol3",
@@ -60,10 +60,10 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 9,
-    "rows": 10,
-    "letterCells": 35,
+    "rows": 8,
+    "letterCells": 31,
     "theme": "Food & Cooking",
-    "difficulty": "Normal"
+    "difficulty": "Hard"
   },
   {
     "id": "ocean---marine-life-vol1",
@@ -71,10 +71,10 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 9,
-    "rows": 9,
-    "letterCells": 38,
+    "rows": 10,
+    "letterCells": 34,
     "theme": "Ocean & Marine Life",
-    "difficulty": "Hard"
+    "difficulty": "Easy"
   },
   {
     "id": "ocean---marine-life-vol2",
@@ -82,10 +82,10 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
-    "rows": 9,
-    "letterCells": 34,
+    "rows": 8,
+    "letterCells": 31,
     "theme": "Ocean & Marine Life",
-    "difficulty": "Hard"
+    "difficulty": "Normal"
   },
   {
     "id": "ocean---marine-life-vol3",
@@ -93,8 +93,8 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
-    "rows": 10,
-    "letterCells": 40,
+    "rows": 7,
+    "letterCells": 28,
     "theme": "Ocean & Marine Life",
     "difficulty": "Normal"
   },
@@ -103,22 +103,22 @@
     "title": "Music & Sound 1",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 9,
+    "cols": 10,
     "rows": 10,
-    "letterCells": 41,
+    "letterCells": 40,
     "theme": "Music & Sound",
-    "difficulty": "Hard"
+    "difficulty": "Easy"
   },
   {
     "id": "music---sound-vol2",
     "title": "Music & Sound 2",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 10,
-    "rows": 8,
-    "letterCells": 38,
+    "cols": 9,
+    "rows": 10,
+    "letterCells": 33,
     "theme": "Music & Sound",
-    "difficulty": "Expert"
+    "difficulty": "Easy"
   },
   {
     "id": "music---sound-vol3",
@@ -126,8 +126,8 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
-    "rows": 9,
-    "letterCells": 35,
+    "rows": 10,
+    "letterCells": 32,
     "theme": "Music & Sound",
     "difficulty": "Easy"
   },
@@ -136,9 +136,9 @@
     "title": "Nature & Wilderness 1",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 10,
+    "cols": 8,
     "rows": 10,
-    "letterCells": 38,
+    "letterCells": 32,
     "theme": "Nature & Wilderness",
     "difficulty": "Normal"
   },
@@ -147,22 +147,22 @@
     "title": "Nature & Wilderness 2",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 9,
-    "rows": 10,
-    "letterCells": 37,
+    "cols": 10,
+    "rows": 9,
+    "letterCells": 35,
     "theme": "Nature & Wilderness",
-    "difficulty": "Easy"
+    "difficulty": "Hard"
   },
   {
     "id": "nature---wilderness-vol3",
     "title": "Nature & Wilderness 3",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 10,
-    "rows": 10,
-    "letterCells": 40,
+    "cols": 8,
+    "rows": 8,
+    "letterCells": 27,
     "theme": "Nature & Wilderness",
-    "difficulty": "Normal"
+    "difficulty": "Hard"
   },
   {
     "id": "technology---computing-vol1",
@@ -171,7 +171,7 @@
     "date": "Wave 1",
     "cols": 10,
     "rows": 10,
-    "letterCells": 46,
+    "letterCells": 45,
     "theme": "Technology & Computing",
     "difficulty": "Hard"
   },
@@ -180,22 +180,22 @@
     "title": "Technology & Computing 2",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 10,
-    "rows": 9,
-    "letterCells": 34,
+    "cols": 8,
+    "rows": 7,
+    "letterCells": 31,
     "theme": "Technology & Computing",
-    "difficulty": "Normal"
+    "difficulty": "Hard"
   },
   {
     "id": "technology---computing-vol3",
     "title": "Technology & Computing 3",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 10,
+    "cols": 9,
     "rows": 9,
-    "letterCells": 43,
+    "letterCells": 36,
     "theme": "Technology & Computing",
-    "difficulty": "Hard"
+    "difficulty": "Normal"
   },
   {
     "id": "history---civilization-vol1",
@@ -214,8 +214,8 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
-    "rows": 9,
-    "letterCells": 35,
+    "rows": 10,
+    "letterCells": 38,
     "theme": "History & Civilization",
     "difficulty": "Expert"
   },
@@ -224,20 +224,20 @@
     "title": "History & Civilization 3",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 9,
+    "cols": 8,
     "rows": 10,
-    "letterCells": 37,
+    "letterCells": 34,
     "theme": "History & Civilization",
-    "difficulty": "Hard"
+    "difficulty": "Normal"
   },
   {
     "id": "sports---athletics-vol1",
     "title": "Sports & Athletics 1",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 7,
-    "rows": 6,
-    "letterCells": 23,
+    "cols": 8,
+    "rows": 9,
+    "letterCells": 30,
     "theme": "Sports & Athletics",
     "difficulty": "Hard"
   },
@@ -247,8 +247,8 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
-    "rows": 10,
-    "letterCells": 39,
+    "rows": 9,
+    "letterCells": 33,
     "theme": "Sports & Athletics",
     "difficulty": "Normal"
   },
@@ -259,8 +259,8 @@
     "date": "Wave 1",
     "cols": 10,
     "rows": 9,
-    "letterCells": 38,
+    "letterCells": 35,
     "theme": "Sports & Athletics",
-    "difficulty": "Easy"
+    "difficulty": "Normal"
   }
 ]

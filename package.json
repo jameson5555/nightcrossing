@@ -16,7 +16,9 @@
     "bench:layout": "node scripts/benchmark-layout.js",
     "metrics:regeneration": "node scripts/regeneration-metrics.js",
     "report:regeneration": "node scripts/regeneration-compare.js",
-    "audit:difficulty": "node scripts/audit-difficulty.js"
+    "audit:difficulty": "node scripts/audit-difficulty.js",
+    "audit:clues": "node scripts/audit-clues.js",
+    "audit:ci": "npm run audit:difficulty && npm run audit:clues"
   },
   "dependencies": {
     "@capacitor-community/admob": "^8.0.0",

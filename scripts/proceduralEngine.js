@@ -776,6 +776,7 @@ export function generateThemedPuzzle(id, themeName, availableWords, options = {}
   const requestedProfile = options.profile === 'easy' ? 'easy' : 'default';
   const fallbackFromEasy = options._fallbackFromEasy === true;
   const allowEasyFallbackToDefault = options.allowEasyFallbackToDefault !== false;
+  const allowEmergencyFallbackForEasy = options.allowEmergencyFallbackForEasy === true;
   const perCallAttemptMultiplier = Number.isFinite(Number(options.attemptMultiplier))
     ? Math.max(0.5, Math.min(4, Number(options.attemptMultiplier)))
     : 1;
@@ -924,7 +925,8 @@ export function generateThemedPuzzle(id, themeName, availableWords, options = {}
     });
   }
 
-  if (!layout && ALLOW_EMERGENCY_FALLBACK) {
+  const emergencyAllowed = requestedProfile !== 'easy' || allowEmergencyFallbackForEasy;
+  if (!layout && ALLOW_EMERGENCY_FALLBACK && emergencyAllowed) {
     // Emergency fallback for sparse/intersection-poor themes.
     const emergency = generateBestLayout(
       availableWords,

@@ -6809,6 +6809,335 @@
         "hint": "Centaur and comet-like/asteroid-like object, orbiting between Saturn and Uranus.",
         "source": "ml",
         "themeScore": 1.26
+      },
+      {
+        "answer": "GALACTIC",
+        "clue": "A galaxy.",
+        "hint": "Relating to the Milky Way galaxy.",
+        "source": "wikipedia-category",
+        "themeScore": 1.47
+      },
+      {
+        "answer": "SPATIAL",
+        "clue": "Pertaining to space.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "SELENOLOGY",
+        "clue": "Scientific study of the Moon.",
+        "hint": "The scientific study of the formation and composition of the Moon’s crust.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "URANIA",
+        "clue": "Muse of astronomy.",
+        "hint": "30 Urania, a main belt asteroid.",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "EXOSCIENCE",
+        "clue": "Science concerning exoplanets and anything on them.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "LUNATION",
+        "clue": "Irregular period from one new moon until the next.",
+        "hint": "Month of an average of approximately 29.53 days, measured from a lunar phase until the return of that same phase.",
+        "source": "ml",
+        "themeScore": 1.505
+      },
+      {
+        "answer": "DAYDREAM",
+        "clue": "Spontaneous series of thoughts while awake not connected to immediate reality.",
+        "hint": "Related concept: A spontaneous series of thoughts while",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "ORBITS",
+        "clue": "Curved path of one object around a point or another body.",
+        "hint": "An elliptical movement of an object about a celestial object or Lagrange point, especially a periodic elliptical revolution.",
+        "source": "ml",
+        "themeScore": 1.255
+      },
+      {
+        "answer": "MOONLET",
+        "clue": "Very small body orbiting a planet, often as part of a planetary ring system.",
+        "hint": "Related concept: a very small body orbiting a",
+        "source": "ml",
+        "themeScore": 1.149
+      },
+      {
+        "answer": "VENUSIAN",
+        "clue": "Inhabitant of the planet Venus.",
+        "hint": "A hypothetical language spoken on Venus.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "EARTHSHINE",
+        "clue": "Reflected earthlight visible on the Moon's night side.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "MARTIAN",
+        "clue": "Inhabitant of the planet Mars.",
+        "hint": "A person under the astrological influence of the planet Mars.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "MIMAS",
+        "clue": "Innermost of Saturn's classical satellites, marked by a giant impact crater on its surface.",
+        "hint": "A son of Gaia; one of the Gigantes.",
+        "source": "ml",
+        "themeScore": 1.486
+      },
+      {
+        "answer": "EUROPA",
+        "clue": "Moon in Jupiter.",
+        "hint": "52 Europa, a main belt asteroid; not to be confused with the Jovian moon.",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "SYCORAX",
+        "clue": "Natural satellite of the planet Uranus",
+        "hint": "Related concept: A natural satellite of the planet",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "LUCIFER",
+        "clue": "Satan, the Devil.",
+        "hint": "The King of Babylon who was compared to the planet Venus in first the Wycliffe version then the King James Version of Isaiah 14:12; it is unclear whether this verse refers to a specific king or to a representation of the entire line of kings of Babylon.",
+        "source": "ml",
+        "themeScore": 1.155
+      },
+      {
+        "answer": "LOOP",
+        "clue": "Length of thread, line or rope that is doubled over to make an opening.",
+        "hint": "Opening so formed.",
+        "source": "ml",
+        "themeScore": 1.219
+      },
+      {
+        "answer": "PALILICIUM",
+        "clue": "Star Aldebaran.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "EUNOMIA",
+        "clue": "One of the Horae.",
+        "hint": "15 Eunomia, a main belt asteroid.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "EUMENIDES",
+        "clue": "Erinyes.",
+        "hint": "Related concept: The Erinyes",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "EUTERPE",
+        "clue": "Muse of music and lyric poetry.",
+        "hint": "27 Euterpe, a main belt asteroid.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "THEMISTO",
+        "clue": "Natural satellite of Jupiter",
+        "hint": "The third and last wife of Athamas",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "ASTEROPE",
+        "clue": "One of the stars in the Pleiades cluster.",
+        "hint": "Related concept: One of the stars in the",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "SATURNALIAN",
+        "clue": "Pertaining to Saturnalia.",
+        "hint": "One celebrates or takes part in Saturnalia.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "MERCURIAN",
+        "clue": "Relating to the planet Mercury.",
+        "hint": "One who is mercurial.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "HERMIAN",
+        "clue": "Relating to the planet Mercury",
+        "hint": "Related concept: Of or relating to the planet",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "EFFIGY",
+        "clue": "Likeness of a person.",
+        "hint": "Dummy or other crude representation of a person, group or object that is hated.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "READING",
+        "clue": "Process of interpreting written language.",
+        "hint": "Something to read; reading material.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "HAVE",
+        "clue": "Possess, own.",
+        "hint": "To hold, as something at someone's disposal.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "PERIGENIA",
+        "clue": "Beautiful daughter of Sinis",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "DESPOINA",
+        "clue": "Daughter of Demeter and Poseidon",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "MESON",
+        "clue": "Elementary particle that is composed of a quark and an antiquark, such as a kaon or pion.",
+        "hint": "A member of a group of subatomic particles having a mass intermediate between electrons and protons.",
+        "source": "ml",
+        "themeScore": 1.201
+      },
+      {
+        "answer": "MARE",
+        "clue": "Adult female horse.",
+        "hint": "A foolish woman.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "MESOZONE",
+        "clue": "Intermediate zone of the lithosphere characterised by metamorphic rock",
+        "hint": "Related concept: An intermediate zone of the lithosphere",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "METHONE",
+        "clue": "Ancient city near present-day Methoni in Peloponnese, Greece.",
+        "hint": "A small satellite of Saturn.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "MOONLIGHTY",
+        "clue": "Resembling or characteristic of moonlight.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "MOONFACED",
+        "clue": "Alternative spelling of moon-faced.",
+        "hint": "Related concept: [Having round moon-shaped face.]",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "MOONLIGHTED",
+        "clue": "Illuminated by moonlight.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "MOONWASHED",
+        "clue": "Bathed in moonlight",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "LAOMEDEIA",
+        "clue": "Moon of Neptune",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "NEBULALIKE",
+        "clue": "Resembling or characteristic of a nebula.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "EXOZODIACAL",
+        "clue": "Pertaining to the extrasolar ecliptic plane of star systems beyond the Solar System",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.497
+      },
+      {
+        "answer": "EXOGALACTIC",
+        "clue": "Synonym of extragalactic",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "OUTSIDE",
+        "clue": "Space beyond some limit or boundary.",
+        "hint": "Part of something that faces out; the outer surface.",
+        "source": "ml",
+        "themeScore": 1.45
+      },
+      {
+        "answer": "SOLARIAN",
+        "clue": "Relating to the Solar System.",
+        "hint": "Of or relating to the Sun.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "PLANETED",
+        "clue": "Relating to planets.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "PLANETICAL",
+        "clue": "Pertaining to the planets and/or their motions.",
+        "hint": "The earth; terrestrial.",
+        "source": "ml",
+        "themeScore": 1.16
       }
     ]
   },
@@ -13500,6 +13829,559 @@
         "hint": null,
         "source": "ml",
         "themeScore": 1.16
+      },
+      {
+        "answer": "COOKING",
+        "clue": "Process of preparing food by using heat.",
+        "hint": "One's ability to prepare food; cookery.",
+        "source": "wikipedia-category",
+        "themeScore": 2.26
+      },
+      {
+        "answer": "TERIYAKI",
+        "clue": "Sweet soy sauce marinade.",
+        "hint": null,
+        "source": "wikipedia-category",
+        "themeScore": 1.35
+      },
+      {
+        "answer": "FEEDER",
+        "clue": "One who feeds, or gives food to another.",
+        "hint": "That which is used to feed.",
+        "source": "ml",
+        "themeScore": 1.58
+      },
+      {
+        "answer": "FRY",
+        "clue": "Cook in hot fat.",
+        "hint": "Method of cooking food.",
+        "source": "ml",
+        "themeScore": 1.91
+      },
+      {
+        "answer": "EAT",
+        "clue": "Consume by putting it into the mouth and swallowing it.",
+        "hint": "To consume a meal.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "FRYOLATOR",
+        "clue": "Kitchen appliance used for deep-frying.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "FRYPAN",
+        "clue": "Frying pan.",
+        "hint": "Related concept: A frying pan",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "FROSTER",
+        "clue": "One who applies frosting.",
+        "hint": "Kind of freezer for food.",
+        "source": "ml",
+        "themeScore": 1.4
+      },
+      {
+        "answer": "FRYINGPAN",
+        "clue": "Alternative spelling of frying pan. A long-handled, shallow pan used for frying food.]",
+        "hint": "Related concept: Alternative spelling of frying pan. [",
+        "source": "ml",
+        "themeScore": 1.717
+      },
+      {
+        "answer": "FLAVORIZER",
+        "clue": "Flavoring agent for use in food etc.",
+        "hint": "Related concept: A flavoring agent for use in",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "VOLAILLE",
+        "clue": "Flesh of a chicken used for food",
+        "hint": "Related concept: the flesh of a chicken used",
+        "source": "rel_spc",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "BROASTER",
+        "clue": "Deep-frying pressure cooker used for broasting food.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "SIMMERER",
+        "clue": "One who or that which simmers.",
+        "hint": "Small gas burner for keeping food warm.",
+        "source": "ml",
+        "themeScore": 1.28
+      },
+      {
+        "answer": "ROBATA",
+        "clue": "Restaurant featuring such a grill.",
+        "hint": "Charcoal grill used to prepare Japanese food for customers seated around the cooking area.",
+        "source": "ml",
+        "themeScore": 1.66
+      },
+      {
+        "answer": "RANGETTE",
+        "clue": "Small stove for cooking.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "BAKESTUFF",
+        "clue": "Baked goods, or ingredients and preparations for the making thereof.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "CAKEPAN",
+        "clue": "Dish or mould for baking a cake.",
+        "hint": "Related concept: A dish or mould for baking",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "BAKEBOARD",
+        "clue": "Board upon which dough is prepared while making bread.",
+        "hint": "Related concept: A board upon which dough is",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "BAKESHOP",
+        "clue": "Shop where baked goods are made and sold.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "BREADBOX",
+        "clue": "Container for storing bread or other baked goods to keep them fresh",
+        "hint": "Related concept: a container for storing bread or",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "TRAYBAKE",
+        "clue": "Meal or dessert baked in a tray.",
+        "hint": "Related concept: A meal or dessert baked in",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "MICROBAKERY",
+        "clue": "Very small commercial bakery.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "FREEZERWARE",
+        "clue": "Utensils for the storage of food in a freezer.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "COMPOTES",
+        "clue": "Dessert made of fruit cooked in sugary syrup.",
+        "hint": "Dish used for serving fruit.",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "DRESSINGS",
+        "clue": "Activity of getting dressed.",
+        "hint": "A sauce, especially a cold one for salads.",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "ESSENCES",
+        "clue": "Inherent nature of a thing or idea.",
+        "hint": "Significant feature of something.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "SEASONINGS",
+        "clue": "Seasoning",
+        "hint": "Related concept: seasoning",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "BROTHS",
+        "clue": "Water in which food has been boiled.",
+        "hint": "A soup made from broth and other ingredients such as vegetables, herbs or diced meat.",
+        "source": "ml",
+        "themeScore": 1.725
+      },
+      {
+        "answer": "MUSTARDS",
+        "clue": "Powder or paste made from seeds of the mustard plant, and used as a condiment or a spice.",
+        "hint": "Plant of certain species of the genus Brassica, or of related genera.",
+        "source": "ml",
+        "themeScore": 1.356
+      },
+      {
+        "answer": "BREADS",
+        "clue": "Foodstuff made by baking dough made from cereals.",
+        "hint": "Food; sustenance; support of life, in general.",
+        "source": "ml",
+        "themeScore": 1.28
+      },
+      {
+        "answer": "TAMARI",
+        "clue": "Type of soy sauce made without wheat, having a rich flavor.",
+        "hint": "Related concept: A type of soy sauce made",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "BRAISES",
+        "clue": "Dish prepared by braising.",
+        "hint": "Sauce used for braising.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "DESSERTWARE",
+        "clue": "Dishes used for serving dessert.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "SUPPERWARE",
+        "clue": "Dishes used for serving supper.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "LUNCHWARE",
+        "clue": "Dishes used for serving lunch.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "PLATTER",
+        "clue": "Tray for serving foods.",
+        "hint": "Main dish and side dishes served together on one plate.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "TERRINE",
+        "clue": "Pâté baked in such a dish and served cold.",
+        "hint": "Deep type of dish or pan, typically used for casseroles and made out of pottery.",
+        "source": "ml",
+        "themeScore": 1.155
+      },
+      {
+        "answer": "TUREEN",
+        "clue": "Broad, deep serving dish used for serving soup or stew.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "TABLEWARE",
+        "clue": "Cutlery, crockery and glassware used in setting a table for a meal.",
+        "hint": "Related concept: The cutlery, crockery and glassware used",
+        "source": "rel_spc",
+        "themeScore": 1.19
+      },
+      {
+        "answer": "COOKSHED",
+        "clue": "Outdoor building for cooking.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.86
+      },
+      {
+        "answer": "OUTKITCHEN",
+        "clue": "Outbuilding used as a kitchen.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "KITCHENETTE",
+        "clue": "Small kitchen or area for preparing food, often just a part of a room.",
+        "hint": "Related concept: A small kitchen or area for",
+        "source": "ml",
+        "themeScore": 1.599
+      },
+      {
+        "answer": "PAELLERA",
+        "clue": "Large shallow frying pan in which paella is cooked.",
+        "hint": "Related concept: A large shallow frying pan in",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "KAWALI",
+        "clue": "Frying pan",
+        "hint": "Related concept: frying pan",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "GRIDDLES",
+        "clue": "Stone or metal flat plate or surface on which food is fried or baked.",
+        "hint": "Related concept: A stone or metal flat plate",
+        "source": "ml",
+        "themeScore": 1.599
+      },
+      {
+        "answer": "CHARGRILL",
+        "clue": "Kind of grill that uses burning charcoal.",
+        "hint": "Related concept: A kind of grill that uses",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "DEBONED",
+        "clue": "Having had its bones removed.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "AUTOMAT",
+        "clue": "Vending machine for food.",
+        "hint": "A cafeteria consisting of vending machines.",
+        "source": "ml",
+        "themeScore": 1.58
+      },
+      {
+        "answer": "VERRINE",
+        "clue": "Any savory or sweet food served in a small glass, typically in France.",
+        "hint": "Small glass in which such food is served.",
+        "source": "ml",
+        "themeScore": 1.55
+      },
+      {
+        "answer": "RILLETTE",
+        "clue": "Dish of meat cooked in fat then shredded and served in a ramekin.",
+        "hint": "Related concept: A dish of meat cooked in",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "GRILLERY",
+        "clue": "Restaurant serving grilled food.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "FOODERY",
+        "clue": "Place that serves food.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "RIJSTAFEL",
+        "clue": "Alternative spelling of rijsttafel.",
+        "hint": "Related concept: large meal originating colonial Indonesia composed",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "BOBOTIE",
+        "clue": "Dish of curried mince with an egg custard baked on top.",
+        "hint": "Related concept: A dish of curried mince with",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "PADKOS",
+        "clue": "Food for a journey.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.58
+      },
+      {
+        "answer": "BOEREKOS",
+        "clue": "Afrikaner cuisine",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "PUTU",
+        "clue": "Form of porridge made from maize meal.",
+        "hint": "Related concept: A form of porridge made from",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "KOESISTER",
+        "clue": "Cape Malay cake made by frying dough and then rolling it in coconut.",
+        "hint": "Related concept: A Cape Malay cake made by",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "TRINCHADO",
+        "clue": "Spicy meat dish of Angolan and Mozambican origin",
+        "hint": "Related concept: a spicy meat dish of Angolan",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "KOTLOVINA",
+        "clue": "Croatian dish consisting of a kettle of various kinds of pork, such as sausages.",
+        "hint": "Related concept: A Croatian dish consisting of a",
+        "source": "ml",
+        "themeScore": 1.236
+      },
+      {
+        "answer": "MOGODU",
+        "clue": "African dish of offal.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "MEALIEPAP",
+        "clue": "Form of porridge made from mealie meal",
+        "hint": "Related concept: A form of porridge made from",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "MUKIMO",
+        "clue": "Dish similar to mashed potatoes, but also containing maize and beans.",
+        "hint": "Related concept: A dish similar to mashed potatoes,",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "AIRFRYER",
+        "clue": "Alternative spelling of air fryer.",
+        "hint": "Related concept: small countertop convection oven.]",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "RECHAUFFE",
+        "clue": "Alternative spelling of réchauffé.",
+        "hint": "Related concept: réchauffé. dish food that been reheated.]",
+        "source": "ml",
+        "themeScore": 1.46
+      },
+      {
+        "answer": "STEWP",
+        "clue": "Thick, chunky soup that is thicker than most soups but thinner than a stew.",
+        "hint": "Related concept: A thick, chunky soup that is",
+        "source": "ml",
+        "themeScore": 1.219
+      },
+      {
+        "answer": "STOVIES",
+        "clue": "Traditional Scottish dish of stewed potatoes and onions with cold meat.",
+        "hint": "Related concept: A traditional Scottish dish of stewed",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "CARBONADE",
+        "clue": "Stew of meat cooked in beer",
+        "hint": "Broiled meat or fish; carbonado",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "BOULANGERIE",
+        "clue": "French or French-style bakery",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "BAKERYFUL",
+        "clue": "Quantity that would be supplied by a bakery.",
+        "hint": "Related concept: A quantity that would be supplied",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "PIZZERIA",
+        "clue": "Restaurant that bakes and sells pizzas.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "BISCUITRY",
+        "clue": "Business of manufacturing biscuits.",
+        "hint": "A mass or collection of baked goods such as biscuits and bread.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "RAIN",
+        "clue": "Condensed water falling from a cloud.",
+        "hint": "To have rain fall from the sky.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "RAINFALL",
+        "clue": "Occurrence of liquid precipitation, the fall of rain.",
+        "hint": "The amount of rain that falls on a single occasion",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "BATTER",
+        "clue": "Hit or strike violently and repeatedly.",
+        "hint": "To coat with batter.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "GRIDDLING",
+        "clue": "Stone or metal flat plate or surface on which food is fried or baked.",
+        "hint": "To cook on a griddle.",
+        "source": "ml",
+        "themeScore": 1.599
+      },
+      {
+        "answer": "FRIZZLING",
+        "clue": "Fry noisily, sizzle.",
+        "hint": "To fry something until crisp and curled.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "KETTLE",
+        "clue": "Vessel for boiling a liquid or cooking food, usually metal and equipped with a lid.",
+        "hint": "Vessel or appliance used to boil water for the preparation of hot beverages and other foodstuffs.",
+        "source": "rel_jja",
+        "themeScore": 1.474
+      },
+      {
+        "answer": "BURNER",
+        "clue": "Element on a kitchen stove that generates localized heat for cooking.",
+        "hint": "Someone or something that burns.",
+        "source": "rel_jjb",
+        "themeScore": 1.31
       }
     ]
   },
@@ -20153,6 +21035,559 @@
         "hint": null,
         "source": "ml",
         "themeScore": 1.16
+      },
+      {
+        "answer": "SEALIFT",
+        "clue": "Transportation by sea",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "BONETTA",
+        "clue": "Atlantic bonito, Sarda sarda.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "SALMONOID",
+        "clue": "These fish.",
+        "hint": "Related concept: Any of these fish",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "SALMONINE",
+        "clue": "Any fish of the subfamily Salmoninae",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "CAVALLA",
+        "clue": "Several fishes in the families Carangidae and Scombridae.",
+        "hint": "Related concept: Any of several fishes in the",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "SARDINER",
+        "clue": "Fishing boat used for catching sardines.",
+        "hint": "Sardine fisherman.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "SCAD",
+        "clue": "Large number or quantity.",
+        "hint": "Several fish, of the family Carangidae, from the western Atlantic.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "SERRANID",
+        "clue": "Any fish of the family Serranidae.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "SALEMA",
+        "clue": "Seabream, Sarpa salpa.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "SCOMBRID",
+        "clue": "Any fish of the family Scombridae.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "TARPON",
+        "clue": "Several fishes of the family Elopidae or Megalopidae, especially a large silvery game fish.",
+        "hint": "Related concept: Any of several fishes of the",
+        "source": "ml",
+        "themeScore": 1.136
+      },
+      {
+        "answer": "SEERFISH",
+        "clue": "Scomberomorini, a tribe of ray-finned bony fishes in the mackerel family.",
+        "hint": "Related concept: Any of Scomberomorini, a tribe of",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "SCOMBROID",
+        "clue": "Form of food poisoning caused by spoiled fish.",
+        "hint": "Any fish of the family Scombridae, of which the mackerel is the type.",
+        "source": "rel_spc",
+        "themeScore": 1.19
+      },
+      {
+        "answer": "UNDERWATER",
+        "clue": "Type of lure which lies beneath the water surface.",
+        "hint": "Underlying water or body of water, for example in an aquifer or the deep ocean.",
+        "source": "ml",
+        "themeScore": 1.805
+      },
+      {
+        "answer": "ENDER",
+        "clue": "Something which ends another thing.",
+        "hint": "A maneuver in which one uses the pressure of a wave to flip one's kayak end over end.",
+        "source": "ml",
+        "themeScore": 1.225
+      },
+      {
+        "answer": "ENDOWER",
+        "clue": "One who endows.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "NAVAL",
+        "clue": "Relating to a navy.",
+        "hint": "Of or relating to ships in general.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "HEADFISH",
+        "clue": "Sunfish.",
+        "hint": "Related concept: The sunfish",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "CENTRARCHID",
+        "clue": "Any member of the Centrarchidae, the freshwater sunfishes.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "REDBREAST",
+        "clue": "European robin, Erithacus rubecula.",
+        "hint": "American robin, Turdus migratorius.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "SAILBOATS",
+        "clue": "Boat propelled by a sail.",
+        "hint": "A playing card with the rank of four.",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "FILEFISH",
+        "clue": "Any fish of the family Monacanthidae, with very slender bodies.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "CRESTFISH",
+        "clue": "The fish in the lampriform family Lophotidae.",
+        "hint": "Related concept: Any of the fish in the",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "CENTRISCID",
+        "clue": "Any fish in the family Centriscidae.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "BANDFISH",
+        "clue": "Many perciform fish of the family Cepolidae",
+        "hint": "Related concept: Any of many perciform fish of",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "SHRIMPFISH",
+        "clue": "The fish in the subfamily Centriscinae that swim with their heads pointed downward.",
+        "hint": "Related concept: Any of the fish in the",
+        "source": "ml",
+        "themeScore": 1.247
+      },
+      {
+        "answer": "PUPFISH",
+        "clue": "A group of small killifish belonging to ten genera of the family Cyprinodontidae.",
+        "hint": "Related concept: Any of a group of small",
+        "source": "ml",
+        "themeScore": 1.247
+      },
+      {
+        "answer": "JOBFISH",
+        "clue": "Various fishes of the family Lutjanidae.",
+        "hint": "Related concept: Any of various fishes of the",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "CHINAFISH",
+        "clue": "Several fish of the family Ophicephalidae or of the genus Sebastodes",
+        "hint": "Related concept: Any of several fish of the",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "SUNPERCH",
+        "clue": "Regional name for any of various North American sunfish caught as panfish.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "SPRINGFISH",
+        "clue": "The fish in the goodeid genus Crenichthys.",
+        "hint": "Related concept: Any of the fish in the",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "MEDUSAFISH",
+        "clue": "The family Centrolophidae of perciform fish, often found in association with jellyfish.",
+        "hint": "Related concept: Any of the family Centrolophidae of",
+        "source": "ml",
+        "themeScore": 1.147
+      },
+      {
+        "answer": "KILLIFISH",
+        "clue": "A number of tiny fish in the Cyprinodontiformes order of ray-finned fish.",
+        "hint": "Related concept: Any of a number of tiny",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "CYPRINID",
+        "clue": "Any fish of this family.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "SILVERFIN",
+        "clue": "Small North American freshwater cyprinoid fish.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "LIZARDFISH",
+        "clue": "Any member of the family Synodontidae of aulopiform fish.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "MINNOW",
+        "clue": "Any small fish.",
+        "hint": "Common minnow , a small freshwater fish of the carp family Cyprinidae which has a green back with black elongated blotches, commonly swimming in large shoals.",
+        "source": "ml",
+        "themeScore": 1.155
+      },
+      {
+        "answer": "WORMFISH",
+        "clue": "The family Microdesmidae of small goby-like fish which often burrow in estuarine mud.",
+        "hint": "Related concept: Any of the family Microdesmidae of",
+        "source": "ml",
+        "themeScore": 1.147
+      },
+      {
+        "answer": "PLECTOGNATH",
+        "clue": "Any fish of the order Tetraodontiformes.",
+        "hint": null,
+        "source": "rel_spc",
+        "themeScore": 1.19
+      },
+      {
+        "answer": "PERCOIDEAN",
+        "clue": "Numerous spiny-finned fishes of the order perciformes",
+        "hint": "Related concept: any of numerous spiny-finned fishes of",
+        "source": "rel_spc",
+        "themeScore": 1.19
+      },
+      {
+        "answer": "LABROID",
+        "clue": "Any fish of this kind.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "LIPARID",
+        "clue": "Any fish in the family Liparidae.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "LABEONINE",
+        "clue": "Any fish of the subfamily Labeoninae",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "LEBIASINID",
+        "clue": "Any fish in the family Lebiasinidae.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "LEPTOSCOPID",
+        "clue": "Any fish in the family Leptoscopidae.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "LINOPHRYNID",
+        "clue": "Any fish in the family Linophrynidae.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "COLUBRARIID",
+        "clue": "Any sea snail in the family Colubrariidae.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "MOLID",
+        "clue": "Any fish in the family Molidae.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "SNAILFISH",
+        "clue": "Any member of the Liparidae, a family of scorpaeniform marine fish.",
+        "hint": "Related concept: Any member of the Liparidae, a",
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "ZANCLID",
+        "clue": "The fish family Zanclidae.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "LAMPRID",
+        "clue": "Any fish in the family Lamprididae, the opahs.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "LAMPRIFORM",
+        "clue": "Related to the order Lampridiformes of ray-finned fish",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "RIVULID",
+        "clue": "Any fish in the family Rivulidae.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "FLABELLINID",
+        "clue": "The family Flabellinidae of sea slugs.",
+        "hint": "Related concept: Any of the family Flabellinidae of",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "CEPOLID",
+        "clue": "Any member of the family Cepolidae of bandfish.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "CLINID",
+        "clue": "Any fish in the family Clinidae.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "LAMNOID",
+        "clue": "Any shark of the order Lamniformes",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "LOPHOTID",
+        "clue": "Any fish in the family Lophotidae, the crestfish or unicornfish.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "BRANCHIURAN",
+        "clue": "Any fish louse of the subclass Branchiura",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "GADID",
+        "clue": "Any member of the family Gadidae of fish such as cod and pollack.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "YELLOWFISH",
+        "clue": "Certain species of the genus Labeobarbus of mid-sized ray-finned fish.",
+        "hint": "Related concept: mid-sized ray-finned",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "SCORPAENOID",
+        "clue": "Scorpionfish.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "PERCIFORM",
+        "clue": "Such a fish.",
+        "hint": "Related concept: Such a fish",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "GADOID",
+        "clue": "Any fish of the family Gadidae",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "SALMONID",
+        "clue": "Fish of the Salmonidae family.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "SUBBRACHIAN",
+        "clue": "Fish of the order Subbrachiales.",
+        "hint": "Related concept: Relating to fish of the order",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "PISCATORY",
+        "clue": "Pertaining to fishermen or fishing.",
+        "hint": "Pertaining to fish; piscine.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "PISCINAL",
+        "clue": "A fishpond.",
+        "hint": "Related concept: Relating to a fishpond",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "PISCIFORM",
+        "clue": "Having the shape of a fish.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "SCIAENOID",
+        "clue": "Relating to the Sciaenidae, a family of marine fishes.",
+        "hint": "Related concept: Of or relating to the Sciaenidae,",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "PARAGLENAL",
+        "clue": "The coracoid of a fish.",
+        "hint": "Related concept: Relating to the coracoid of a",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "SQUALOID",
+        "clue": "Any dogfish.",
+        "hint": "Related concept: Any dogfish",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "KIDSKIN",
+        "clue": "Leather made from such skins.",
+        "hint": "Skin or hide of a kid, i.e., a young goat.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "VEALSKIN",
+        "clue": "Skin of a calf.",
+        "hint": "Related concept: The skin of a calf",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "CATSKIN",
+        "clue": "Skin of a cat, or leather made therefrom",
+        "hint": "Related concept: the skin of a cat, or",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "OILSKIN",
+        "clue": "Raincoat made from cotton fabric treated with oil and pigment to make it waterproof.",
+        "hint": "Foul-weather gear worn by sailors, whether of natural or synthetic materials.",
+        "source": "ml",
+        "themeScore": 1.236
+      },
+      {
+        "answer": "SAILCLOTH",
+        "clue": "Strong, durable fabric suitable for making sails for ships or boats.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "COUNTERSEAL",
+        "clue": "Additional seal applied to the reverse of the main seal.",
+        "hint": "Related concept: An additional seal applied to the",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "TRUNKFISH",
+        "clue": "Species of genera Lactophrys and Rhinesomus.",
+        "hint": null,
+        "source": "rel_spc",
+        "themeScore": 1.19
       }
     ]
   },
@@ -26672,6 +28107,559 @@
         "hint": "Gay man; especially one who is effeminate.",
         "source": "ml",
         "themeScore": 1.51
+      },
+      {
+        "answer": "ULTRASOUND",
+        "clue": "Medical ultrasonography.",
+        "hint": "Sound with a frequency greater than the upper limit of human hearing, which is approximately 20 kilohertz.",
+        "source": "wikipedia-category",
+        "themeScore": 1.725
+      },
+      {
+        "answer": "SONIC",
+        "clue": "Relating to sound.",
+        "hint": "Having a speed approaching that of the speed of sound in air.",
+        "source": "wikipedia-category",
+        "themeScore": 1.88
+      },
+      {
+        "answer": "COMPOSER",
+        "clue": "Especially, one who composes music.",
+        "hint": "One who, or that which, quiets or calms.",
+        "source": "wikipedia-category",
+        "themeScore": 1.74
+      },
+      {
+        "answer": "BIOMUSIC",
+        "clue": "A biopsy.",
+        "hint": "Related concept: Relating to a biopsy",
+        "source": "wikipedia-category",
+        "themeScore": 1.35
+      },
+      {
+        "answer": "VOCALISTIC",
+        "clue": "Pertaining to vocalism.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "VOCOIDAL",
+        "clue": "Being or pertaining to a vocoid or vocoids.",
+        "hint": "Related concept: Being or pertaining to a vocoid",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "VORTICIST",
+        "clue": "Artist who used this style.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "VIOLINIC",
+        "clue": "Relating to a violin or its sound.",
+        "hint": "Related concept: Of or relating to a violin",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "AUDIOVOCAL",
+        "clue": "Orally produced sound.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "CLAPPING",
+        "clue": "Action by which someone or something claps.",
+        "hint": "Related concept: The action by which someone or",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "AFTERCLAP",
+        "clue": "Consequence of an action or event.",
+        "hint": "Phenomenon occurring after a similar earlier one; a later manifestation of something.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "CLOMP",
+        "clue": "Sound of feet hitting the ground loudly.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "CLAPSTICK",
+        "clue": "Clapperboard.",
+        "hint": "Kind of drumstick used by striking one against another, to maintain rhythm in Aboriginal voice chants.",
+        "source": "ml",
+        "themeScore": 1.255
+      },
+      {
+        "answer": "CLANK",
+        "clue": "Loud, hard sound of metal hitting metal.",
+        "hint": "Related concept: A loud, hard sound of metal",
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "CLOMPING",
+        "clue": "Sound of walking with heavy footfalls.",
+        "hint": "Related concept: The sound of walking with heavy",
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "HITTING",
+        "clue": "Series of hits or blows directed at a person or object.",
+        "hint": "Related concept: A series of hits or blows",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "POUNDING",
+        "clue": "Act in which something or someone is pounded.",
+        "hint": "Characterized by heavy or loud throbs.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "BEATING",
+        "clue": "Pulsation of the heart.",
+        "hint": "Action by which someone or something is beaten.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "RAPPING",
+        "clue": "Musical speech accompanied by a rhythm, most commonly as part of hip-hop music.",
+        "hint": "Sound of a rap or knock.",
+        "source": "ml",
+        "themeScore": 1.697
+      },
+      {
+        "answer": "DRUMMING",
+        "clue": "Act of beating a drum.",
+        "hint": "Noise resembling that of a drum being beaten.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "TONK",
+        "clue": "Matching card game, combining features of knock rummy and conquian.",
+        "hint": "A resounding strike of the ball; a powerful hit of the ball with the bat.",
+        "source": "ml",
+        "themeScore": 1.155
+      },
+      {
+        "answer": "RATATAT",
+        "clue": "Swiftly repeated knocking sound.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "SCRATCHING",
+        "clue": "Act or sound of something being scratched.",
+        "hint": "Record scratching, a technique of starting and stopping a vinyl record from playing to produce music in hip hop.",
+        "source": "ml",
+        "themeScore": 1.605
+      },
+      {
+        "answer": "GRUMPH",
+        "clue": "Grunting sound.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "BOINK",
+        "clue": "Sexual intercourse.",
+        "hint": "Sound of something hitting or bouncing off a surface, similar to plunk, but with more connotations of bounciness.",
+        "source": "ml",
+        "themeScore": 1.455
+      },
+      {
+        "answer": "LISTENING",
+        "clue": "Skill or ability of perceiving spoken language.",
+        "hint": "Act by which something or somebody is listened to.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "EARSHOT",
+        "clue": "Distance from which sound is still audible.",
+        "hint": "Related concept: A distance from which sound is",
+        "source": "ml",
+        "themeScore": 1.96
+      },
+      {
+        "answer": "TILT",
+        "clue": "Slope or inclination.",
+        "hint": "Inclination of part of the body, such as backbone, pelvis, head, etc.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "BOOGER",
+        "clue": "Piece of solid or semisolid mucus in or removed from a nostril.",
+        "hint": "A thing; especially a problematic or difficult thing.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "SNOT",
+        "clue": "Mucus, especially mucus from the nose.",
+        "hint": "A contemptible child.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "SNORT",
+        "clue": "Sound made by exhaling or inhaling roughly through the nose.",
+        "hint": "A dose of snuff or other drug to be snorted.",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "KLAXONING",
+        "clue": "Sounding of a klaxon.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "JAILHOUSE",
+        "clue": "Building containing a prison.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "CLICKING",
+        "clue": "Sound or action of a click.",
+        "hint": "Related concept: The sound or action of a",
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "PLINK",
+        "clue": "Short, high-pitched metallic or percussive sound.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "TCHICK",
+        "clue": "Clicking sound, such as a palatal or dental click.",
+        "hint": "Related concept: A clicking sound, such as a",
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "GLUGGING",
+        "clue": "Sound that glugs.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "SPLOSH",
+        "clue": "Heavy splashing sound.",
+        "hint": "A spilt or dropped liquid or semi-liquid substance.",
+        "source": "ml",
+        "themeScore": 1.86
+      },
+      {
+        "answer": "SPLATTING",
+        "clue": "Sound or action that splats.",
+        "hint": "A method for combining different textures by applying an alpha channel map to the higher levels, revealing the layers underneath where the map is partially or completely transparent.",
+        "source": "ml",
+        "themeScore": 1.855
+      },
+      {
+        "answer": "SPLOSHING",
+        "clue": "Synonym of wet and messy fetishism.",
+        "hint": "Splosh, or the sounds of a splosh.",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "SPLISHING",
+        "clue": "Splish, the sounds of a splosh.",
+        "hint": "Related concept: A splish, the sounds of a",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "SPLOOSH",
+        "clue": "Heavy splashing sound.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.73
+      },
+      {
+        "answer": "PLASH",
+        "clue": "Splash, or the sound made by a splash.",
+        "hint": "Sudden downpour.",
+        "source": "ml",
+        "themeScore": 1.73
+      },
+      {
+        "answer": "PLASHING",
+        "clue": "Sound that plashes, as of water.",
+        "hint": "Dashing or sprinkling of colouring matter on the walls of buildings, to imitate granite, etc.",
+        "source": "ml",
+        "themeScore": 1.725
+      },
+      {
+        "answer": "SPLASH",
+        "clue": "Sound made by an object hitting a liquid.",
+        "hint": "Small amount of liquid.",
+        "source": "ml",
+        "themeScore": 1.73
+      },
+      {
+        "answer": "SPLAT",
+        "clue": "Sharp, atonal sound of a liquid or soft solid hitting a solid surface.",
+        "hint": "Irregular shape of a viscous liquid or soft solid which has hit a solid surface.",
+        "source": "ml",
+        "themeScore": 1.605
+      },
+      {
+        "answer": "PLISH",
+        "clue": "Light splashing sound.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "SWASH",
+        "clue": "Water that washes up on shore after an incoming wave has broken.",
+        "hint": "Narrow sound or channel of water lying within a sand bank, or between a sand bank and the shore, or a bar over which the sea washes.",
+        "source": "ml",
+        "themeScore": 1.555
+      },
+      {
+        "answer": "BLORP",
+        "clue": "Sound suggesting a splash of or into a volume of semiliquid material.",
+        "hint": "Move or be deposited with a blorp.",
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "SPLISH",
+        "clue": "Light splashing sound.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "BLURP",
+        "clue": "Explosive low-pitched sound resembling a burp.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "SPLUTTER",
+        "clue": "Forceful choking or spitting sound.",
+        "hint": "A forceful emission of something, especially in small drops or particles; a spluttering or sputtering.",
+        "source": "ml",
+        "themeScore": 1.505
+      },
+      {
+        "answer": "SLURPING",
+        "clue": "Sound or motion that slurps.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "PLOOP",
+        "clue": "Instance of this sound.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "PLIP",
+        "clue": "Locking system for motor vehicles that uses a small, hand-held remote control.",
+        "hint": "Light sound or action like liquid hitting a surface.",
+        "source": "ml",
+        "themeScore": 1.46
+      },
+      {
+        "answer": "GLUB",
+        "clue": "Sound of underwater bubbles, or of water bubbling.",
+        "hint": "Related concept: The sound of underwater bubbles, or",
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "SQUUSH",
+        "clue": "Squashing or squishing sound.",
+        "hint": "To squash or squish.",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "DRIPPING",
+        "clue": "Sound or action of something that drips.",
+        "hint": "Very wet.",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "NEIGH",
+        "clue": "Cry of a horse.",
+        "hint": "Related concept: The cry of a horse",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "WHINNY",
+        "clue": "Gentle neigh.",
+        "hint": "Related concept: A gentle neigh",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "NICKAR",
+        "clue": "Synonym of nicker nut.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "NICKEL",
+        "clue": "Coin worth 5 cents.",
+        "hint": "A silvery elemental metal with an atomic number of 28 and symbol Ni.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "KNICKIES",
+        "clue": "Knickers.",
+        "hint": "Related concept: Knickers",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "LORD",
+        "clue": "Peer of the realm, particularly a temporal one",
+        "hint": "One possessing similar mastery in figurative senses",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "STEAMING",
+        "clue": "Method of cooking by immersion in steam.",
+        "hint": "Action of steam on something.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "PIPAGE",
+        "clue": "Plumbing, a system of pipes.",
+        "hint": "Charge made for piping a fluid from one place to another.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "GULL",
+        "clue": "Seabird of the genus Larus or of the subfamily Larinae.",
+        "hint": "One easily cheated; a dupe.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "WHISTLER",
+        "clue": "Someone or something that whistles, or who plays a whistle as a musical instrument.",
+        "hint": "Any bird that whistles or is noted for its whistling vocalisations.",
+        "source": "ml",
+        "themeScore": 1.236
+      },
+      {
+        "answer": "PASSAGE",
+        "clue": "Paragraph or section of text or music with particular meaning.",
+        "hint": "Part of a path or journey.",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "GAG",
+        "clue": "Joke or other mischievous prank.",
+        "hint": "Device to restrain speech, such as a rag in the mouth secured with tape or a rubber ball threaded onto a cord or strap.",
+        "source": "ml",
+        "themeScore": 1.225
+      },
+      {
+        "answer": "JAPE",
+        "clue": "Joke or quip.",
+        "hint": "Prank or trick.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "UPWHIRR",
+        "clue": "Rise with a whirring sound.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "WHOOSH",
+        "clue": "Breathy sound like that of an object passing at high speed.",
+        "hint": "A homicide by shooting.",
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "WHISH",
+        "clue": "Sibilant sound, especially that of rapid movement through the air.",
+        "hint": "Related concept: A sibilant sound, especially that of",
+        "source": "ml",
+        "themeScore": 1.71
+      },
+      {
+        "answer": "WHEETLE",
+        "clue": "Sharp high-pitched vocal sound, as made by young birds and certain animals.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "ASPIRATE",
+        "clue": "Puff of air accompanying the release of a plosive or fricative consonant.",
+        "hint": "A sound produced by such a puff of air.",
+        "source": "ml",
+        "themeScore": 1.46
+      },
+      {
+        "answer": "WHUR",
+        "clue": "Dated form of whirr.",
+        "hint": "Related concept: sibilant buzz vibration; sound something rapid",
+        "source": "ml",
+        "themeScore": 1.46
+      },
+      {
+        "answer": "CLOP",
+        "clue": "Sound of a horse's shod hoof striking the ground.",
+        "hint": "Make this sound; to walk so as to make this sound.",
+        "source": "rel_jjb",
+        "themeScore": 1.772
+      },
+      {
+        "answer": "RHYTHMIC",
+        "clue": "Relating to rhythm.",
+        "hint": "Characterized by rhythm.",
+        "source": "rel_jjb",
+        "themeScore": 1.223
       }
     ]
   },
@@ -32509,6 +34497,517 @@
         "hint": "Related concept:",
         "source": "ml",
         "themeScore": 1.38
+      },
+      {
+        "answer": "AMPUTATION",
+        "clue": "Surgical removal of all or part of a limb, etc.",
+        "hint": "Loss of a limb, etc. through trauma",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "EXCISION",
+        "clue": "Removal of something by cutting.",
+        "hint": "Removal of some text during editing.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "EXSECTION",
+        "clue": "Cutting out or away.",
+        "hint": "The removal by operation of a portion of a limb, especially the removal of a portion of a bone in the vicinity of a joint.",
+        "source": "ml",
+        "themeScore": 1.225
+      },
+      {
+        "answer": "OSTECTOMY",
+        "clue": "Excision of all or part of a bone.",
+        "hint": "Related concept: Excision of all or part of",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "BRACHIAL",
+        "clue": "Pertaining or belonging to the arm.",
+        "hint": "Of the nature of an arm.",
+        "source": "rel_jjb",
+        "themeScore": 1.522
+      },
+      {
+        "answer": "TALUS",
+        "clue": "Bone of the ankle.",
+        "hint": "A sloping heap of fragments of rock lying at the foot of a precipice.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "SCALL",
+        "clue": "Scurf or scabby disease, especially of the scalp.",
+        "hint": "Loose ground.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "SCAR",
+        "clue": "Permanent mark on the skin, sometimes caused by the healing of a wound.",
+        "hint": "A permanent negative effect on someone's mind, caused by a traumatic experience.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "SCAW",
+        "clue": "Elder tree.",
+        "hint": "A wood or forest; a shaw.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "SLEETCH",
+        "clue": "Slimy, clayey kind of mud found at the bottom of the sea or rivers",
+        "hint": "Related concept: A slimy, clayey kind of mud",
+        "source": "ml",
+        "themeScore": 1.149
+      },
+      {
+        "answer": "FORESTISH",
+        "clue": "Characteristic of a forest.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "MOWER",
+        "clue": "Lawnmower, a machine used to cut grass on lawns.",
+        "hint": "Person who cuts grass.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "CUTTER",
+        "clue": "Person or device that cuts.",
+        "hint": "A single-masted, fore-and-aft rigged, sailing vessel with at least two headsails, and a mast set further aft than that of a sloop.",
+        "source": "ml",
+        "themeScore": 1.225
+      },
+      {
+        "answer": "DECK",
+        "clue": "Pack or set of playing cards.",
+        "hint": "A set of cards owned by each individual player and from which they draw when playing.",
+        "source": "ml",
+        "themeScore": 1.225
+      },
+      {
+        "answer": "FELLING",
+        "clue": "Act by which something is felled.",
+        "hint": "Eastern suburb in the Metropolitan Borough of Gateshead, Tyne and Wear, England.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "CLEARCUT",
+        "clue": "Area of the forest cleared of trees.",
+        "hint": "Alternative spelling of clear cut. Straightforward, obvious, simple, or basic.]",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "CLEARING",
+        "clue": "Act or process of making or becoming clear.",
+        "hint": "Area of land within a wood or forest devoid of trees.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "TREESTUMP",
+        "clue": "Stump of a tree.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "STUMPERY",
+        "clue": "Garden feature similar to a rockery but made from parts of dead trees, especially stumps.",
+        "hint": "Related concept: A garden feature similar to a",
+        "source": "ml",
+        "themeScore": 1.136
+      },
+      {
+        "answer": "SAWLOG",
+        "clue": "Part of a tree stem that will be processed at a sawmill, rather than becoming pulpwood.",
+        "hint": "Related concept: The part of a tree stem",
+        "source": "ml",
+        "themeScore": 1.136
+      },
+      {
+        "answer": "WATERFRONT",
+        "clue": "Land alongside a body of water.",
+        "hint": "Dockland district of a town.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "RIVERIAN",
+        "clue": "Native or inhabitant of Rivers State in Nigeria.",
+        "hint": "Related concept: A native or inhabitant of Rivers",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "RIVERAIN",
+        "clue": "Person who lives beside a river.",
+        "hint": "Related concept: A person who lives beside a",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "POTAMIC",
+        "clue": "Relating to rivers",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "ADFLUVIAL",
+        "clue": "Towards the flowing waters of a river or stream",
+        "hint": "Related concept: Towards the flowing waters of a",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "GANGETIC",
+        "clue": "Pertaining to the river Ganges.",
+        "hint": "Related concept: Of or pertaining to the river",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "PLATINE",
+        "clue": "Pertaining to the River Plate or its basin.",
+        "hint": "Related concept: Of or pertaining to the River",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "HYDRONYMIC",
+        "clue": "Pertaining to the naming of rivers and water bodies.",
+        "hint": "Related concept: Of or pertaining to the naming",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "FLUVIATED",
+        "clue": "Deposited or formed by rivers.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "HOMININE",
+        "clue": "Any member of the subfamily Homininae.",
+        "hint": "Relating to the Homininae, a subfamily of Hominidae that includes humans, gorillas, chimpanzees, and some extinct relatives.",
+        "source": "ml",
+        "themeScore": 1.225
+      },
+      {
+        "answer": "MANMADE",
+        "clue": "Alternative spelling of man-made.",
+        "hint": "Related concept: [Created people, opposed occurring nature; artificial",
+        "source": "ml",
+        "themeScore": 1.46
+      },
+      {
+        "answer": "SADDLEBACK",
+        "clue": "Saddle-shaped ridge forming a shallow pass between two peaks.",
+        "hint": "Roof in the same shape, having a gable at each end.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "RIMAYE",
+        "clue": "Crevasse at the upper end of a mountain glacier.",
+        "hint": "Related concept: a crevasse at the upper end",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "SUBMOUNTAIN",
+        "clue": "Subsidiary peak of a mountain",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "FORESLOPE",
+        "clue": "Upward slope of a mountain, etc.",
+        "hint": "Related concept: An upward slope of a mountain,",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "SINGLETRACK",
+        "clue": "Narrow mountain biking trail that is approximately the width of the bicycle.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "PISTE",
+        "clue": "Downhill trail.",
+        "hint": "The field of play of a fencing match.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "SUBSUMMIT",
+        "clue": "Local peaked portion of a mountain etc., lower than the primary summit.",
+        "hint": "Related concept: A local peaked portion of a",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "BERGSHRUND",
+        "clue": "Large crack or crevasse in a glacier where the glacier is pulling away from the mountain.",
+        "hint": "Related concept: A large crack or crevasse in",
+        "source": "ml",
+        "themeScore": 1.136
+      },
+      {
+        "answer": "PHYLLORHINE",
+        "clue": "Having a noseleaf.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "FOLIATE",
+        "clue": "Relating to leaves.",
+        "hint": "Shaped like or otherwise resembling a leaf; leaflike.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "BIOZONE",
+        "clue": "Ecozone.",
+        "hint": "A biostratigraphic unit: an interval of geological strata defined on the basis of its characteristic fossil taxa.",
+        "source": "ml",
+        "themeScore": 1.225
+      },
+      {
+        "answer": "ECOREGION",
+        "clue": "Alternative spelling of eco-region.",
+        "hint": "Related concept: smaller than ecozone, that contains distinct",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "ECOPROVINCE",
+        "clue": "Subdivision of an ecozone that is larger than an ecoregion",
+        "hint": "Related concept: A subdivision of an ecozone that",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "BIOPROVINCE",
+        "clue": "Biozone that is a subdivision of a bioregion.",
+        "hint": "Related concept: A biozone that is a subdivision",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "TUSKY",
+        "clue": "Rhubarb, sticks from that vegetable",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "BULL",
+        "clue": "Adult male of domesticated cattle or oxen.",
+        "hint": "Specifically, one that is uncastrated.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "WARTHOG",
+        "clue": "Wild pig of the genus Phacochoerus, native to Africa.",
+        "hint": "A nickname for the A-10 Thunderbolt II air support warplane",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "SANGLIER",
+        "clue": "Full-grown wild boar.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "CARBARN",
+        "clue": "Building housing a streetcar when it is not in use.",
+        "hint": "Related concept: A building housing a streetcar when",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "TRAIN",
+        "clue": "Elongated or trailing portion.",
+        "hint": "Elongated back portion of a dress or skirt , which drags along the ground.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "CARHOUSE",
+        "clue": "Garage attached to a house.",
+        "hint": "A storage depot for streetcars.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "ARBORIFORM",
+        "clue": "Resembling a tree in shape or appearance.",
+        "hint": "Related concept: Resembling a tree in shape or",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "DENDROID",
+        "clue": "Resembling a shrub or tree.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "ARBORACEOUS",
+        "clue": "Relating to trees.",
+        "hint": "Abounding in trees.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "FORESTINE",
+        "clue": "Relating to a forest.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "LARCHEN",
+        "clue": "Pertaining to the larch tree.",
+        "hint": "Related concept: Of or pertaining to the larch",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "SYLVATIC",
+        "clue": "Wild animal",
+        "hint": "Related concept: A wild animal",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "TAXACEOUS",
+        "clue": "Relating to the yew trees of the Taxaceae family.",
+        "hint": "Related concept: Of or relating to the yew",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "BOXWOOD",
+        "clue": "Box tree, Buxus sempervirens.",
+        "hint": "Any tree of genus Buxus.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "HUAINAN",
+        "clue": "Prefecture-level city of Anhui, China.",
+        "hint": "The region of China between the Huai and Yangtze rivers generally.",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "HUANGSHI",
+        "clue": "Prefecture-level city of Hubei, China.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "ANQING",
+        "clue": "Prefecture-level city of Anhui, China.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "PEACEFULLY",
+        "clue": "In a peaceful manner.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "TAIPING",
+        "clue": "City in Perak, Malaysia.",
+        "hint": "Various districts, towns, townships, mountains, and islands in China, Taiwan, and Malaysia.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "SUBSTITUTE",
+        "clue": "Use in place of something else, with the same function.",
+        "hint": "To use X in place of Y.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "SURROGATE",
+        "clue": "Substitute.",
+        "hint": "Person or animal that acts as a substitute for the social or pastoral role of another, such as a surrogate parent.",
+        "source": "ml",
+        "themeScore": 1.225
+      },
+      {
+        "answer": "INVERSE",
+        "clue": "Opposite in effect, nature or order.",
+        "hint": "Reverse, opposite in order.",
+        "source": "ml",
+        "themeScore": 1.86
+      },
+      {
+        "answer": "WILDCATTER",
+        "clue": "Someone who drills for oil speculatively.",
+        "hint": "Worker who participates in a wildcat strike.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "BOULEVARD",
+        "clue": "Broad, well-paved and landscaped thoroughfare.",
+        "hint": "Landscaping on the sides of a boulevard or other thoroughfare.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "DRIVEWAY",
+        "clue": "Short private road that leads to a house or garage.",
+        "hint": "A road that enters or circulates through a defined area, such as an institution, compound, land area, etc., for the purpose of private access, maintenance, or security.",
+        "source": "ml",
+        "themeScore": 1.225
+      },
+      {
+        "answer": "ROADSIDE",
+        "clue": "Area on either side of a road.",
+        "hint": "Related concept: The area on either side of",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "FOLIFEROUS",
+        "clue": "Producing leaves.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
       }
     ]
   },
@@ -39727,6 +42226,594 @@
         "hint": "Dreary, gloomy, cloudy.",
         "source": "rel_jjb",
         "themeScore": 1.21
+      },
+      {
+        "answer": "OVERTINT",
+        "clue": "Tint excessively.",
+        "hint": "To apply another tint over.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "RETILT",
+        "clue": "Tilt again.",
+        "hint": "Related concept: To tilt again",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "RETIME",
+        "clue": "Act of timing again.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "REINTERN",
+        "clue": "Intern again.",
+        "hint": "Related concept: To intern again",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "REINFUSE",
+        "clue": "Infuse again.",
+        "hint": "Related concept: To infuse again",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "REDRINK",
+        "clue": "Drink again.",
+        "hint": "Related concept: To drink again",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "RESINTER",
+        "clue": "Sinter again.",
+        "hint": "Related concept: To sinter again",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "RETEMPER",
+        "clue": "Temper again.",
+        "hint": "Related concept: To temper again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "TINT",
+        "clue": "Slight coloring.",
+        "hint": "Pale or faint tinge of any color; especially, a variation of a color obtained by adding white",
+        "source": "ml",
+        "themeScore": 1.255
+      },
+      {
+        "answer": "REINTRODUCE",
+        "clue": "Introduce again.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "RETEXTURIZE",
+        "clue": "Texturize again.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "RETRACE",
+        "clue": "Go back over something, usually in an attempt at rediscovery.",
+        "hint": "To trace again.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "RETAPE",
+        "clue": "Tape again.",
+        "hint": "Related concept: To tape again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REDEBIT",
+        "clue": "Debit again.",
+        "hint": "Related concept: To debit again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REINTER",
+        "clue": "Bury again, in the same or another grave.",
+        "hint": "Related concept: To bury again, in the same",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REFRESHEN",
+        "clue": "Freshen again.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "RETASTE",
+        "clue": "Taste again.",
+        "hint": "Related concept: To taste again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "RETRAVERSE",
+        "clue": "Traverse again.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "RETINKER",
+        "clue": "Tinker again.",
+        "hint": "Related concept: To tinker again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REINTERVENE",
+        "clue": "Intervene again.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "RESILVER",
+        "clue": "Silver again.",
+        "hint": "To synchronize the mirror disk of the RAID array with the master disk.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REINTENSIFY",
+        "clue": "Intensify again.",
+        "hint": "To become intense again.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "RECATCH",
+        "clue": "Catch again.",
+        "hint": "Related concept: To catch again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "RECONDUCT",
+        "clue": "Conduct again or back.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REFIT",
+        "clue": "Process of having something fitted again, repaired or restored.",
+        "hint": "Related concept: The process of having something fitted",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REINGEST",
+        "clue": "Ingest again.",
+        "hint": "Related concept: To ingest again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "RETENDERIZE",
+        "clue": "Tenderize again.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REEVOKE",
+        "clue": "Evoke again or anew.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "REINSTIGATE",
+        "clue": "Instigate anew.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "REINVOLVE",
+        "clue": "Involve again.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "REACTUATE",
+        "clue": "Actuate again.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "REFIRE",
+        "clue": "Fire again.",
+        "hint": "Related concept: To fire again",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "REACTIVATE",
+        "clue": "Activate again.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REDECLARE",
+        "clue": "Declare again or anew.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REJUSTIFY",
+        "clue": "Justify again.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REIGNORE",
+        "clue": "Ignore again.",
+        "hint": "Related concept: To ignore again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REINVADE",
+        "clue": "Invade again.",
+        "hint": "Related concept: To invade again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REINFLUENCE",
+        "clue": "Influence again.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REINOCULATE",
+        "clue": "Inoculate again.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REPROVIDE",
+        "clue": "Provide again.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REARISE",
+        "clue": "Arise again.",
+        "hint": "Related concept: To arise again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REINCUR",
+        "clue": "Incur again.",
+        "hint": "Related concept: To incur again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REBEGIN",
+        "clue": "Begin again.",
+        "hint": "Related concept: To begin again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REBLAZE",
+        "clue": "Blaze again or anew.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REDEPLOY",
+        "clue": "Deploy again.",
+        "hint": "To rearrange.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REEXECUTE",
+        "clue": "Execute again",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REINCUBATE",
+        "clue": "Incubate again.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REREFER",
+        "clue": "Refer again or anew.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REREIGN",
+        "clue": "Reign again.",
+        "hint": "Related concept: To reign again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "AMOUR",
+        "clue": "Love affair.",
+        "hint": "Lover.",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "INVOLVEMENT",
+        "clue": "Act of involving, or the state of being involved.",
+        "hint": "Related concept: The act of involving, or the",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "LIAISON",
+        "clue": "Communication between two parties or groups.",
+        "hint": "Any person who relays information between two groups or organizations.",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "DISLOYALTY",
+        "clue": "Quality of being disloyal.",
+        "hint": "An act of being disloyal; a betrayal, faithbreach.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "LIAISE",
+        "clue": "Cooperate, consult and discuss in order to come to a common solution.",
+        "hint": "Act between parties with a view to reconciling differences.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "LINKAGE",
+        "clue": "Connection or relation between things or ideas.",
+        "hint": "Mechanical device that connects things.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REAVOW",
+        "clue": "Avow again.",
+        "hint": "Related concept: To avow again",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "REPROMISE",
+        "clue": "Promise again or anew.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "REPLEDGE",
+        "clue": "Pledge again.",
+        "hint": "To demand the presence of an offender accused before another tribunal, on the ground that the alleged offence was committed within the repledger's jurisdiction.",
+        "source": "ml",
+        "themeScore": 1.505
+      },
+      {
+        "answer": "REVOTE",
+        "clue": "Act of voting again",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "REDEVISE",
+        "clue": "Devise again.",
+        "hint": "Related concept: To devise again",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "REVOLUNTEER",
+        "clue": "Volunteer again.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "RECONFESS",
+        "clue": "Confess again or anew.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "REWIN",
+        "clue": "Win again or anew, to win back.",
+        "hint": "Related concept: To win again or anew, to",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "REBOND",
+        "clue": "Bond again or anew.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REWED",
+        "clue": "Wed again.",
+        "hint": "Related concept: To wed again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REWEAR",
+        "clue": "Wear again.",
+        "hint": "Related concept: To wear again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REBRACE",
+        "clue": "Brace again.",
+        "hint": "Related concept: To brace again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "RESEE",
+        "clue": "Occasion of seeing again or anew.",
+        "hint": "Related concept: An occasion of seeing again or",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REBEGET",
+        "clue": "Beget again.",
+        "hint": "Related concept: To beget again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "RECONTINUE",
+        "clue": "Continue again, especially after a pause.",
+        "hint": "Related concept: To continue again, especially after a",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REAIM",
+        "clue": "Aim again.",
+        "hint": "Related concept: To aim again",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "REWELD",
+        "clue": "Weld again.",
+        "hint": "Related concept: To weld again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REDEVOTE",
+        "clue": "Devote again.",
+        "hint": "Related concept: To devote again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REBREW",
+        "clue": "Brew again.",
+        "hint": "Related concept: To brew again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "RETHRONE",
+        "clue": "Throne again or anew.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REFORGIVE",
+        "clue": "Forgive again.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REWEAVE",
+        "clue": "Weave again, to weave back.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REPRONOUNCE",
+        "clue": "Pronounce again.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REENDOW",
+        "clue": "Endow again.",
+        "hint": "Related concept: To endow again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REVARNISH",
+        "clue": "Varnish again, a further time.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REWAX",
+        "clue": "Wax again.",
+        "hint": "Related concept: To wax again",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "REPRODUCE",
+        "clue": "Generate or propagate offspring or organisms sexually or asexually.",
+        "hint": "To produce again; to recreate.",
+        "source": "rel_spc",
+        "themeScore": 1.19
+      },
+      {
+        "answer": "ALIMENT",
+        "clue": "Nourishment, sustenance.",
+        "hint": "Sustain, support.",
+        "source": "rel_spc",
+        "themeScore": 1.19
+      },
+      {
+        "answer": "BRIDGE",
+        "clue": "Construction or natural feature that spans a divide.",
+        "hint": "Construction spanning a waterway, ravine, or valley from a height, allowing for the passage of vehicles, pedestrians, trains, etc.",
+        "source": "rel_spc",
+        "themeScore": 1.185
       }
     ]
   },
@@ -45611,6 +48698,531 @@
         "hint": "One of several mutually exclusive things which can be chosen.",
         "source": "rel_spc",
         "themeScore": 1.19
+      },
+      {
+        "answer": "NONMORAL",
+        "clue": "Alternative spelling of non-moral.",
+        "hint": "Related concept: unconnected with morals; having relation ethics",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "UNETHICAL",
+        "clue": "Immoral, morally wrong.",
+        "hint": "Breaching the established standards of conduct or behavior within a particular organization or profession.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "THOUGHTLESS",
+        "clue": "Marked by or showing lack of due thought or care.",
+        "hint": "Inconsiderate, inattentive.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "BRACHYSCOME",
+        "clue": "Genus of flowering plants in the family Asteraceae.",
+        "hint": "Related concept: a genus of flowering plants in",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "ECHINACEA",
+        "clue": "Herbal medicine extracted from the roots and seeds of such plants.",
+        "hint": "Any of several plants, of genus Echinacea, having pinkish-purple flowers.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "ARCTIUM",
+        "clue": "Genus of biennial plants commonly known as burdock, family Asteraceae.",
+        "hint": "Related concept: a genus of biennial plants commonly",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "GERANIUM",
+        "clue": "Any flowering plant of the genus Pelargonium, of family Geraniaceae.",
+        "hint": "Bright red color tinted with orange, like that of a scarlet geranium.",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "CRANESBILL",
+        "clue": "Any flowering plant of the genus Geranium found throughout the temperate zone.",
+        "hint": "Pair of long-beaked forceps.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "HIERONYMIAN",
+        "clue": "Relating to Saint Jerome.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "HIERONYMIC",
+        "clue": "Relating to Saint Jerome.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "JANICULAN",
+        "clue": "Relating to the Janiculum.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "JESUSIAN",
+        "clue": "Pertaining to Jesus Christ.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "BRUNERIAN",
+        "clue": "Relating to psychologist Jerome Bruner.",
+        "hint": "Related concept: Of or relating to psychologist Jerome",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "PAPIST",
+        "clue": "Roman Catholic.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "PAPISTIC",
+        "clue": "Being of or connected with the Roman Catholic faith.",
+        "hint": "Related concept: Being of or connected with the",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "PAPISTICAL",
+        "clue": "Being of or connected with the Roman Catholic faith.",
+        "hint": "Related concept: Being of or connected with the",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "QUIRITE",
+        "clue": "Citizen of early Rome.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "ROMANI",
+        "clue": "Member of the Roma, a nomadic people with origins in India.",
+        "hint": "Member of a people originating in Pakistan or Northwest India and traditionally having an itinerant way of life, living widely dispersed across Europe and North and South America and speaking a language that is related to Hindi.",
+        "source": "ml",
+        "themeScore": 1.155
+      },
+      {
+        "answer": "PRERAILWAY",
+        "clue": "Before the development of a railway, or railways in general.",
+        "hint": "Related concept: Before the development of a railway,",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "PRESLAVERY",
+        "clue": "Prior to a historical period of slavery.",
+        "hint": "Related concept: Prior to a historical period of",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "PREPUBLIC",
+        "clue": "Prior to availability to the general public.",
+        "hint": "Before becoming a public company in which anybody can buy shares.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "PRERATIONAL",
+        "clue": "Before the application of reason.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "FOMORIAN",
+        "clue": "Member of the semi-divine race that were said to have inhabited Ireland in ancient times.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.236
+      },
+      {
+        "answer": "CONSIDERATE",
+        "clue": "Consciously thoughtful and observant.",
+        "hint": "Characterised by careful and conscious thought.",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "MEDITATIVE",
+        "clue": "Pertaining to meditation.",
+        "hint": "Thoughtful; pensive.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "INTOXICATED",
+        "clue": "Stupefied by alcohol, drunk.",
+        "hint": "Stupefied by any chemical substance.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "BOOZY",
+        "clue": "Involving a large consumption of alcohol.",
+        "hint": "Inclined to consume a significant amount of alcohol.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "BIBULOUS",
+        "clue": "Given to or marked by the consumption of alcoholic drink.",
+        "hint": "Very absorbent.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "DRINKER",
+        "clue": "Someone who drinks alcoholic beverages on a regular basis.",
+        "hint": "A pub.",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "SEROSAL",
+        "clue": "Relating to the serosa.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "HYDROSERAL",
+        "clue": "A hydrosere.",
+        "hint": "Related concept: Relating to a hydrosere",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "SEROLOGICAL",
+        "clue": "Pertaining to serology.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "XEROSERAL",
+        "clue": "Pertaining to a xerosere.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "XERARCH",
+        "clue": "Growing in dry places.",
+        "hint": "Pertaining to xerosere.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "CERATAL",
+        "clue": "Relating to cerata",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "HELLADIC",
+        "clue": "Relating to the civilization that flourished in mainland Greece during the Bronze Age.",
+        "hint": "Related concept: Of or relating to the civilization",
+        "source": "ml",
+        "themeScore": 1.817
+      },
+      {
+        "answer": "GREEKLIKE",
+        "clue": "Resembling the Ancient Greek language or culture, or some aspect of it.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "ATHENIC",
+        "clue": "Pertaining to city Athens, Greece",
+        "hint": "Pertaining to Ancient Attika",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "DORIC",
+        "clue": "One of the Greek orders of architecture, distinguished by its simplicity and solidity.",
+        "hint": "Pertaining to the Ancient Greek dialect group once spoken in the north-west of Greece.",
+        "source": "ml",
+        "themeScore": 1.247
+      },
+      {
+        "answer": "ANTIQUOUS",
+        "clue": "Having the characteristics of antiquity, without necessarily being ancient.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "HIPPARCHIAN",
+        "clue": "Relating to the ancient Hipparchus.",
+        "hint": "Related concept: Of or relating to the ancient",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "AEGINETIC",
+        "clue": "Relating to the ancient Greek civilization of the island of Aegina.",
+        "hint": "Related concept: Of or relating to the ancient",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "AMBRACIAN",
+        "clue": "Native or inhabitant of Ambracia.",
+        "hint": "Relating to the ancient Greek city of Ambracia.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "GUAPILLA",
+        "clue": "American bromeliad Hechtia glomerata.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "CASSABANANA",
+        "clue": "Banana passionfruit or any of several similar plants of the family Cucurbitaceae",
+        "hint": "Related concept: The banana passionfruit or any of",
+        "source": "ml",
+        "themeScore": 1.147
+      },
+      {
+        "answer": "CAIGUA",
+        "clue": "Species Cyclanthera pedata of South American vines cultivated for its fruit.",
+        "hint": "Related concept: Any of species Cyclanthera pedata of",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "CATHAIR",
+        "clue": "Ancient Irish fortification of stone or earthwork.",
+        "hint": "The hair of a cat.",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "CAID",
+        "clue": "Modern Gaelic football.",
+        "hint": "Various ancient and traditional Irish football games.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "COMPOSITION",
+        "clue": "Work of music, literature or art.",
+        "hint": "Essay.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "LITERACY",
+        "clue": "Ability to read and write.",
+        "hint": "The ability to understand and evaluate something.",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "CHICORY",
+        "clue": "Either of two plants of the Asteraceae family.",
+        "hint": "Common chicory , source of Belgian endive, radicchio, and certain other cultivars with other names.",
+        "source": "ml",
+        "themeScore": 1.505
+      },
+      {
+        "answer": "CHAMAEROPS",
+        "clue": "Genus of flowering plants in the family Arecaceae.",
+        "hint": "Related concept: a genus of flowering plants in",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "ANTHEMIDEAE",
+        "clue": "Tribe of flowering plants in the subfamily Asteroideae, which is part of the family Asteraceae.",
+        "hint": "Related concept: a tribe of flowering plants in",
+        "source": "ml",
+        "themeScore": 1.136
+      },
+      {
+        "answer": "DOWNSLOPE",
+        "clue": "Descent or declivity.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "DOWNCURVE",
+        "clue": "Downward curve",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "VERSANT",
+        "clue": "Slope of a mountain or mountain ridge.",
+        "hint": "Overall slope of a region.",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "DOWNWARP",
+        "clue": "Segment of the crust of the Earth that bends downward",
+        "hint": "Related concept: A segment of the crust of",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "COLLECTIVE",
+        "clue": "Group dedicated to a particular cause or interest.",
+        "hint": "Farm owned by a collection of people.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "OBITUARIAL",
+        "clue": "Relating to an obituary.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "OBLATIVE",
+        "clue": "Pertaining to oblation.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "ODAL",
+        "clue": "Ownership and claim of such land.",
+        "hint": "Among the early and medieval Teutonic peoples, especially Scandinavians, the heritable land held by the various odalmen constituting a family or kindred of freeborn tribesmen.",
+        "source": "ml",
+        "themeScore": 1.155
+      },
+      {
+        "answer": "EFFECTOR",
+        "clue": "Any muscle, organ etc. that can respond to a stimulus from a nerve.",
+        "hint": "The part of a nerve that carries a stimulus to a muscle etc.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "AFFECTOR",
+        "clue": "Nerve cell that directly activates a muscle",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "POSTBELLUM",
+        "clue": "Of the period following the American Civil War, especially used in reference to the South.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.486
+      },
+      {
+        "answer": "PEACETIME",
+        "clue": "Period of time when a nation or people is at peace, not fighting a war.",
+        "hint": "Related concept: The period of time when a",
+        "source": "ml",
+        "themeScore": 1.369
+      },
+      {
+        "answer": "CEASEFIRE",
+        "clue": "In warfare, an agreed end to hostilities for a specific purpose..",
+        "hint": "Related concept: In warfare, an agreed end to",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "WARTIME",
+        "clue": "Period during which a war is in progress in a particular place.",
+        "hint": "Related concept: A period during which a war",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "INTERBELLUM",
+        "clue": "Time period between wars.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "MEDIAEVAL",
+        "clue": "Alternative spelling of medieval.",
+        "hint": "Related concept: [Someone living Middle Ages.]",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "GOTHIC",
+        "clue": "Extinct Germanic language, once spoken by the Goths.",
+        "hint": "Certain moths of the family Noctuidae.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "NONMODERN",
+        "clue": "One who is not modern.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "ROMANS",
+        "clue": "Sixth book of the New Testament of the Bible, the epistle of St Paul to the Christians in Rome.",
+        "hint": "30th sura of the Qur'an.",
+        "source": "ml",
+        "themeScore": 1.228
+      },
+      {
+        "answer": "HISTORICIST",
+        "clue": "Advocate of historicism",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "HISTORIANS",
+        "clue": "Writer of history.",
+        "hint": "One who studies or researches history.",
+        "source": "ml",
+        "themeScore": 1.33
+      },
+      {
+        "answer": "HISTORIAL",
+        "clue": "Synonym of history or record.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
       }
     ]
   },
@@ -52179,6 +55791,496 @@
         "hint": "Related concept: An athlete who competes in the",
         "source": "ml",
         "themeScore": 1.16
+      },
+      {
+        "answer": "SUPPORTER",
+        "clue": "Person who gives support to someone or something.",
+        "hint": "Person who supports, promotes, advocates or champions a cause, movement, or political party; an adherent.",
+        "source": "ml",
+        "themeScore": 1.225
+      },
+      {
+        "answer": "SPORTAHOLIC",
+        "clue": "Sportsaholic.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "SPORTCASTER",
+        "clue": "Synonym of sportscaster.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "OUTDOORSMAN",
+        "clue": "Man who spends time in outdoor pursuits or sports.",
+        "hint": "Related concept: A man who spends time in",
+        "source": "ml",
+        "themeScore": 1.73
+      },
+      {
+        "answer": "SPORTDIVER",
+        "clue": "One who takes part in diving as a sport.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "LAKER",
+        "clue": "Ship used on the Great Lakes.",
+        "hint": "One engaged in sport; a player; an actor.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "SWORDSTER",
+        "clue": "Person skilled at using swords in sport or combat.",
+        "hint": "Related concept: A person skilled at using swords",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "SLALOMS",
+        "clue": "Sport of skiing in a zigzag course through gates.",
+        "hint": "A race or competition wherein participants each perform the sport of slalom.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "MURDERER",
+        "clue": "Person who commits murder.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "TEAMKILLER",
+        "clue": "One who teamkills.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "SUBMERSED",
+        "clue": "American rock band from Stephenville, Texas.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "SPORTDIVING",
+        "clue": "Diving as a sport",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "OCTOPUSH",
+        "clue": "Sport of underwater hockey.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "SPORTSCAPE",
+        "clue": "Physical environment of a sports field or stadium.",
+        "hint": "Related concept: The physical environment of a sports",
+        "source": "ml",
+        "themeScore": 1.61
+      },
+      {
+        "answer": "ATHLETICISM",
+        "clue": "State of being an athlete, or of taking part in athletic events.",
+        "hint": "Show of athletic prowess.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "FOOTBRAWL",
+        "clue": "Sport of football when regarded as violent.",
+        "hint": "Related concept: The sport of football when regarded",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "WALLBALL",
+        "clue": "Particular ball sport in which the ball is thrown against the wall",
+        "hint": "Related concept: A particular ball sport in which",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "FLOORBALL",
+        "clue": "Indoor ball game played with a stick like hockey.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "FOOTY",
+        "clue": "Football.",
+        "hint": "The game or sport of football, usually Australian rules football or rugby league, but not soccer.",
+        "source": "ml",
+        "themeScore": 1.375
+      },
+      {
+        "answer": "FRONTENIS",
+        "clue": "Racquet sport played on a short pelota court.",
+        "hint": "Related concept: A racquet sport played on a",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "FOOTBALLESE",
+        "clue": "Jargon associated with the sport of football.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "SOCCERPLEX",
+        "clue": "Sports complex that includes soccer facilities.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "AGENDA",
+        "clue": "Temporally organized plan for matters to be attended to.",
+        "hint": "List of matters to be taken up.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "IDENTIFY",
+        "clue": "Establish the identity of someone or something.",
+        "hint": "To equate or make the same; to unite or combine into one.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "TEAMSHEET",
+        "clue": "Document that lists the current or proposed members of a team.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "ASSEMBLIES",
+        "clue": "Congregation of people in one place for a purpose.",
+        "hint": "Act or process of putting together a set of pieces, fragments, or elements.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "BARRAS",
+        "clue": "Coarse linen fabric",
+        "hint": "Galipot resin",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "CROSSTABLE",
+        "clue": "Arrangement of the results of every game in a tournament in tabular form.",
+        "hint": "Related concept: An arrangement of the results of",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "BADDERS",
+        "clue": "Sport of badminton.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "STARTLIST",
+        "clue": "List of cyclists who are to start a race",
+        "hint": "Related concept: The list of cyclists who are",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "FOOTRACER",
+        "clue": "One who runs a race on foot.",
+        "hint": "Related concept: One who runs a race on",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "FARMWORKER",
+        "clue": "Person who works on a farm, especially a hired hand.",
+        "hint": "Related concept: A person who works on a",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "FARMMAN",
+        "clue": "Man who works on a farm.",
+        "hint": "Related concept: A man who works on a",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "FARMWOMAN",
+        "clue": "Woman who works on a farm",
+        "hint": "Related concept: A woman who works on a",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "OBJECTIVES",
+        "clue": "Goal that is striven for.",
+        "hint": "The objective case.",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "PLAYMAKER",
+        "clue": "Sportsman who leads attacks for his team and creates chances to score.",
+        "hint": "A playwright.",
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "SCORESHEET",
+        "clue": "Sheet of paper on which score is kept.",
+        "hint": "A list of people who have scored.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "FRONTCOURT",
+        "clue": "Half of the court where a team's offensive basket is located.",
+        "hint": "The center and forwards of a team.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "GOALIES",
+        "clue": "Goalkeeper or goaltender.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "HURDLERS",
+        "clue": "Athlete who competes in the hurdling event.",
+        "hint": "Related concept: An athlete who competes in the",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "CLIENT",
+        "clue": "Customer, a buyer or receiver of goods or services.",
+        "hint": "Person who receives help or services from a professional such as a lawyer or accountant.",
+        "source": "ml",
+        "themeScore": 1.225
+      },
+      {
+        "answer": "RAILWAY",
+        "clue": "Transport system using rails used to move passengers or goods.",
+        "hint": "A track, consisting of parallel rails, over which wheeled vehicles such as trains may travel.",
+        "source": "ml",
+        "themeScore": 1.155
+      },
+      {
+        "answer": "ROADING",
+        "clue": "Construction of roads.",
+        "hint": "Act of running races in teams.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "LEFTY",
+        "clue": "One who is left-handed.",
+        "hint": "One who has left-wing political views.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "NORTHPAW",
+        "clue": "Right-handed person.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "RIGHTY",
+        "clue": "Right-handed person.",
+        "hint": "A right-wing person.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "SLOGGER",
+        "clue": "Cricketer who attempts to score runs fast by attacking every ball that can be hit.",
+        "hint": "One who hits hard; a slugger.",
+        "source": "ml",
+        "themeScore": 1.236
+      },
+      {
+        "answer": "ROUNDBALL",
+        "clue": "Sport of basketball.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "PLAYBALL",
+        "clue": "Ball for use in games.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "RUNSCORER",
+        "clue": "Someone who scores runs.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "GOALSCORER",
+        "clue": "Person who scores a goal, or scores goals",
+        "hint": "Related concept: A person who scores a goal,",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "MOTORBUS",
+        "clue": "Motorized bus or coach.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "AUTOBUS",
+        "clue": "Motorbus, as opposed to earlier horse-drawn buses.",
+        "hint": "A large group of cyclists who have fallen behind the peloton in a race.",
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "AUTOCAR",
+        "clue": "Road vehicle powered by steam or electricity rather than by traction.",
+        "hint": "Related concept: A road vehicle powered by steam",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "BOGIES",
+        "clue": "Score of one over par on a hole.",
+        "hint": "The notional opponent of a golfer playing alone.",
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "CARTS",
+        "clue": "Shopping cart.",
+        "hint": "Small, open, wheeled vehicle, drawn or pushed by a person or animal, often with two wheels on one axle, more often used for transporting goods than passengers.",
+        "source": "ml",
+        "themeScore": 1.255
+      },
+      {
+        "answer": "WAGONS",
+        "clue": "Heavier four-wheeled vehicle designed to carry goods.",
+        "hint": "A vehicle designed to transport goods or people on railway.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "TEAMMATES",
+        "clue": "One who is on the same team.",
+        "hint": "Related concept: One who is on the same",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "BASEBRAWL",
+        "clue": "Fight that breaks out at a baseball game.",
+        "hint": "Related concept: A fight that breaks out at",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "BASKETBRAWL",
+        "clue": "Highly physical basketball play.",
+        "hint": "A basketball game involving a brawl.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "BALLCLUB",
+        "clue": "Baseball team.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.38
+      },
+      {
+        "answer": "BASEBALLESE",
+        "clue": "Jargon associated with the sport of baseball.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.26
+      },
+      {
+        "answer": "BOOT",
+        "clue": "Heavy shoe that covers part of the leg.",
+        "hint": "A kind of sports shoe worn by players of certain games such as cricket and football.",
+        "source": "ml",
+        "themeScore": 1.455
+      },
+      {
+        "answer": "BANDY",
+        "clue": "Winter sport played on ice, from which ice hockey developed.",
+        "hint": "A club bent at the lower part for striking a ball at play; a hockey stick.",
+        "source": "ml",
+        "themeScore": 1.155
+      },
+      {
+        "answer": "FIVE",
+        "clue": "Digit/figure 5.",
+        "hint": "Banknote with a denomination of five units of currency. See also fiver.",
+        "source": "ml",
+        "themeScore": 1.23
+      },
+      {
+        "answer": "RACEPATH",
+        "clue": "Path used for racing.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.51
+      },
+      {
+        "answer": "FOOTRACING",
+        "clue": "Running of races on foot.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "EKIDEN",
+        "clue": "Japanese long-distance relay race, typically on roads.",
+        "hint": null,
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "DIGOR",
+        "clue": "Traditional sport of Bhutan, resembling shot put.",
+        "hint": "Dialect of the Ossetian language, spoken by the Digor people.",
+        "source": "ml",
+        "themeScore": 1.16
+      },
+      {
+        "answer": "BUNCO",
+        "clue": "Swindle or confidence trick.",
+        "hint": "A parlour game played in teams with three dice, originating in England but popular among suburban women in the United States at the beginning of the 21st century.",
+        "source": "ml",
+        "themeScore": 1.155
       }
     ]
   }

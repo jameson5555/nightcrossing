@@ -56,21 +56,20 @@ const MIN_HINT_COVERAGE = Number.isFinite(Number(process.env.NC_MIN_HINT_COVERAG
 const MAX_LEXICAL_OBSCURE_SIGNAL_LOAD = Number.isFinite(Number(process.env.NC_MAX_LEXICAL_OBSCURE_SIGNAL_LOAD))
   ? Math.max(0, Math.min(1, Number(process.env.NC_MAX_LEXICAL_OBSCURE_SIGNAL_LOAD)))
   : 0.24;
-const EASY_TARGET_SHARE = Number.isFinite(Number(process.env.NC_EASY_TARGET_SHARE))
-  ? Math.max(0.05, Math.min(1, Number(process.env.NC_EASY_TARGET_SHARE)))
-  : 0.4;
-const EASY_TARGET_EXTRA_RETRIES = Number.isFinite(Number(process.env.NC_EASY_TARGET_EXTRA_RETRIES))
-  ? Math.max(0, Math.min(8, Number(process.env.NC_EASY_TARGET_EXTRA_RETRIES)))
+const EASY_FIRST_PASS_VOLUMES_PER_THEME = Number.isFinite(Number(process.env.NC_EASY_FIRST_PASS_VOLUMES_PER_THEME))
+  ? Math.max(0, Math.min(3, Number(process.env.NC_EASY_FIRST_PASS_VOLUMES_PER_THEME)))
   : 3;
-const EASY_TARGET_ATTEMPT_MULTIPLIER = Number.isFinite(Number(process.env.NC_EASY_TARGET_ATTEMPT_MULTIPLIER))
-  ? Math.max(1, Math.min(4, Number(process.env.NC_EASY_TARGET_ATTEMPT_MULTIPLIER)))
+const EASY_STRICT_EXTRA_RETRIES = Number.isFinite(Number(process.env.NC_EASY_STRICT_EXTRA_RETRIES))
+  ? Math.max(0, Math.min(8, Number(process.env.NC_EASY_STRICT_EXTRA_RETRIES)))
+  : 3;
+const EASY_STRICT_ATTEMPT_MULTIPLIER = Number.isFinite(Number(process.env.NC_EASY_STRICT_ATTEMPT_MULTIPLIER))
+  ? Math.max(1, Math.min(4, Number(process.env.NC_EASY_STRICT_ATTEMPT_MULTIPLIER)))
   : 1.8;
-const EASY_TARGET_DEFAULT_FALLBACK_ATTEMPTS = Number.isFinite(Number(process.env.NC_EASY_TARGET_DEFAULT_FALLBACK_ATTEMPTS))
-  ? Math.max(0, Math.min(3, Number(process.env.NC_EASY_TARGET_DEFAULT_FALLBACK_ATTEMPTS)))
+const EASY_DEFAULT_FALLBACK_ATTEMPTS = Number.isFinite(Number(process.env.NC_EASY_DEFAULT_FALLBACK_ATTEMPTS))
+  ? Math.max(0, Math.min(3, Number(process.env.NC_EASY_DEFAULT_FALLBACK_ATTEMPTS)))
   : 1;
 
 const LEXICAL_OBSCURE_SIGNAL_REGEX = /\b(goddess|god|deity|mythological|myth|constellation|kuiper|trojan|tau\s+[a-z]+|mistress\s+of\s+zeus|one\s+of\s+the\s+moons?\s+of\s+(jupiter|saturn|uranus)|aoede|elara|amalthea|hygiea|pegasi|capricorni|ursa\s+major)\b/i;
-const THEME_PROPER_NOUN_SIGNAL_REGEX = /\b(goddess|god|deity|constellation|moon\s+of\s+|roman|greek|capital\s+city|north\s+korea)\b/i;
 
 function addPuzzleAnswersToSet(puzzleData, targetSet) {
   if (!puzzleData?.answers) return;
@@ -120,89 +119,189 @@ function computeLexicalObscureSignalLoad(puzzle) {
   };
 }
 
-function hasInnerCapitalizedToken(text) {
-  const value = String(text || '').trim();
-  if (!value) return false;
+function stripCluePrefix(entry) {
+  return String(entry || '').replace(/^\d+\.\s*/, '').trim();
+}
 
-  let firstWordSkipped = false;
-  const matches = value.match(/\b[A-Z][a-z]{2,}\b/g) || [];
-  for (const token of matches) {
-    if (!firstWordSkipped) {
-      firstWordSkipped = true;
-      continue;
-    }
-    return true;
+function likelyPluralAnswer(answer) {
+  const value = String(answer || '').trim().toUpperCase();
+  if (value.length < 4) return false;
+  if (!value.endsWith('S')) return false;
+  if (value.endsWith('SS')) return false;
+  return true;
+}
+
+function toSingularStem(answer) {
+  const value = String(answer || '').trim().toUpperCase();
+  if (!value) return value;
+
+  if (value.endsWith('IES') && value.length > 4) {
+    return `${value.slice(0, -3)}Y`;
   }
 
+  if (value.endsWith('ES') && value.length > 4) {
+    const base = value.slice(0, -2);
+    if (/(S|X|Z|CH|SH)$/.test(base)) {
+      return base;
+    }
+  }
+
+  if (value.endsWith('S') && !value.endsWith('SS')) {
+    return value.slice(0, -1);
+  }
+
+  return value;
+}
+
+function areSingularPluralPair(a, b) {
+  const aVal = String(a || '').trim().toUpperCase();
+  const bVal = String(b || '').trim().toUpperCase();
+  if (!aVal || !bVal || aVal === bVal) return false;
+
+  if (likelyPluralAnswer(aVal) && toSingularStem(aVal) === bVal) return true;
+  if (likelyPluralAnswer(bVal) && toSingularStem(bVal) === aVal) return true;
   return false;
 }
 
-function estimateThemeEase(theme) {
-  const words = Array.isArray(theme?.words) ? theme.words.slice(0, 700) : [];
-  if (words.length === 0) return 0;
-
-  let shortOrMedium = 0;
-  let longWords = 0;
-  let veryLongWords = 0;
-  let properSignals = 0;
-  let obscureSignals = 0;
-
-  for (const word of words) {
-    const answer = String(word?.answer || '');
-    const clue = String(word?.clue || '');
-    const hint = String(word?.hint || '');
-    const len = answer.length;
-    if (len <= 7) shortOrMedium++;
-    if (len >= 8) longWords++;
-    if (len >= 10) veryLongWords++;
-
-    const combined = `${clue} ${hint}`.trim();
-    if (THEME_PROPER_NOUN_SIGNAL_REGEX.test(combined) || hasInnerCapitalizedToken(combined)) properSignals++;
-    if (LEXICAL_OBSCURE_SIGNAL_REGEX.test(combined)) obscureSignals++;
-  }
-
-  const shortShare = shortOrMedium / words.length;
-  const longShare = longWords / words.length;
-  const veryLongShare = veryLongWords / words.length;
-  const properShare = properSignals / words.length;
-  const obscureShare = obscureSignals / words.length;
-
-  const score = (
-    (shortShare * 0.5) +
-    ((1 - longShare) * 0.2) +
-    ((1 - veryLongShare) * 0.12) +
-    ((1 - properShare) * 0.12) +
-    ((1 - obscureShare) * 0.06)
-  );
-
-  return Math.max(0, Math.min(1, score));
+function pluralizeWord(word) {
+  if (!word) return word;
+  if (/s$/i.test(word)) return word;
+  if (/[^aeiou]y$/i.test(word)) return `${word.slice(0, -1)}ies`;
+  if (/(s|x|z|ch|sh)$/i.test(word)) return `${word}es`;
+  return `${word}s`;
 }
 
-function selectEasyTargetThemes(themes, easyTargetCount) {
-  const ranked = [...themes]
-    .map(theme => ({ themeName: theme.name, easeScore: estimateThemeEase(theme) }))
-    .sort((a, b) => b.easeScore - a.easeScore);
+function pluralizeTrailingWord(clueText) {
+  const match = String(clueText || '').match(/^(.*\b)([A-Za-z]+)([^A-Za-z]*)$/);
+  if (!match) return clueText;
 
-  return new Set(ranked.slice(0, easyTargetCount).map(item => item.themeName));
+  const [, prefix, lastWord, suffix] = match;
+  const pluralized = pluralizeWord(lastWord);
+  if (pluralized === lastWord) return clueText;
+  return `${prefix}${pluralized}${suffix}`;
+}
+
+function collectPuzzleClueEntries(puzzle) {
+  const entries = [];
+
+  const acrossClues = Array.isArray(puzzle?.clues?.across) ? puzzle.clues.across : [];
+  const downClues = Array.isArray(puzzle?.clues?.down) ? puzzle.clues.down : [];
+  const acrossAnswers = Array.isArray(puzzle?.answers?.across) ? puzzle.answers.across : [];
+  const downAnswers = Array.isArray(puzzle?.answers?.down) ? puzzle.answers.down : [];
+
+  acrossClues.forEach((entry, idx) => {
+    entries.push({
+      direction: 'across',
+      index: idx,
+      originalEntry: entry,
+      clueText: stripCluePrefix(entry),
+      answer: String(acrossAnswers[idx] || '').trim().toUpperCase()
+    });
+  });
+
+  downClues.forEach((entry, idx) => {
+    entries.push({
+      direction: 'down',
+      index: idx,
+      originalEntry: entry,
+      clueText: stripCluePrefix(entry),
+      answer: String(downAnswers[idx] || '').trim().toUpperCase()
+    });
+  });
+
+  return entries;
+}
+
+function applyPluralizationToDuplicateClues(puzzle) {
+  const entries = collectPuzzleClueEntries(puzzle);
+  const byClueText = new Map();
+
+  for (const entry of entries) {
+    const key = entry.clueText.toLowerCase();
+    if (!byClueText.has(key)) byClueText.set(key, []);
+    byClueText.get(key).push(entry);
+  }
+
+  for (const group of byClueText.values()) {
+    if (group.length < 2) continue;
+
+    let hasSingularPluralPair = false;
+    for (let i = 0; i < group.length; i++) {
+      for (let j = i + 1; j < group.length; j++) {
+        if (areSingularPluralPair(group[i].answer, group[j].answer)) {
+          hasSingularPluralPair = true;
+          break;
+        }
+      }
+      if (hasSingularPluralPair) break;
+    }
+
+    if (!hasSingularPluralPair) continue;
+
+    for (const entry of group) {
+      if (!likelyPluralAnswer(entry.answer)) continue;
+
+      const adjustedClue = pluralizeTrailingWord(entry.clueText);
+      if (!adjustedClue || adjustedClue === entry.clueText) continue;
+
+      const prefixMatch = String(entry.originalEntry || '').match(/^(\d+\.\s*)/);
+      const prefix = prefixMatch ? prefixMatch[1] : '';
+      const patched = `${prefix}${adjustedClue}`;
+
+      if (entry.direction === 'across') {
+        puzzle.clues.across[entry.index] = patched;
+      } else {
+        puzzle.clues.down[entry.index] = patched;
+      }
+    }
+  }
+}
+
+function computeDuplicateClueSummary(puzzle) {
+  const entries = collectPuzzleClueEntries(puzzle);
+  const byClueText = new Map();
+
+  for (const entry of entries) {
+    const key = entry.clueText.toLowerCase().trim();
+    if (!key) continue;
+    if (!byClueText.has(key)) byClueText.set(key, []);
+    byClueText.get(key).push(entry);
+  }
+
+  let duplicateCount = 0;
+  for (const group of byClueText.values()) {
+    if (group.length < 2) continue;
+    const distinctAnswers = new Set(group.map(item => item.answer));
+    if (distinctAnswers.size > 1) duplicateCount++;
+  }
+
+  return { duplicateCount };
 }
 
 function passesLayoutQualityGate(metrics, puzzle) {
+  applyPluralizationToDuplicateClues(puzzle);
+
   const longWordGate = metrics.longWordCount === 0 || metrics.longWordTwoPlusRate >= MIN_LONG_TWO_PLUS_RATE;
   const veryLongWordGate =
     metrics.veryLongWordCount === 0 ||
     metrics.veryLongWordThreePlusRate >= MIN_VERY_LONG_THREE_PLUS_RATE;
   const hintCoverage = computeHintCoverage(puzzle);
   const lexicalSignals = computeLexicalObscureSignalLoad(puzzle);
+  const duplicateClues = computeDuplicateClueSummary(puzzle);
   const hintGate = hintCoverage.coverage >= MIN_HINT_COVERAGE;
   const lexicalGate = lexicalSignals.load <= MAX_LEXICAL_OBSCURE_SIGNAL_LOAD;
+  const duplicateClueGate = duplicateClues.duplicateCount === 0;
+
   return {
-    accepted: longWordGate && veryLongWordGate && hintGate && lexicalGate,
+    accepted: longWordGate && veryLongWordGate && hintGate && lexicalGate && duplicateClueGate,
     hintCoverage,
     lexicalSignals,
+    duplicateClues,
     longWordGate,
     veryLongWordGate,
     hintGate,
-    lexicalGate
+    lexicalGate,
+    duplicateClueGate
   };
 }
 
@@ -236,16 +335,13 @@ async function generateStarters() {
   }
 
   let index = [];
-  const easyTargetThemeCount = Math.max(1, Math.round(THEMES.length * EASY_TARGET_SHARE));
-  const easyTargetThemes = selectEasyTargetThemes(THEMES, Math.min(THEMES.length, easyTargetThemeCount));
 
   console.log(
-    `Easy generation profile target: ${easyTargetThemes.size} theme(s) out of ${THEMES.length} (${Math.round(EASY_TARGET_SHARE * 100)}% theme share).`
+    `Approachable generation mode: easy-first for first ${EASY_FIRST_PASS_VOLUMES_PER_THEME} volume(s) per theme in this run.`
   );
   console.log(
-    `Easy strict retries: +${EASY_TARGET_EXTRA_RETRIES}, attempt multiplier: ${EASY_TARGET_ATTEMPT_MULTIPLIER.toFixed(2)}, default fallback attempts: ${EASY_TARGET_DEFAULT_FALLBACK_ATTEMPTS}.`
+    `Easy strict retries: +${EASY_STRICT_EXTRA_RETRIES}, attempt multiplier: ${EASY_STRICT_ATTEMPT_MULTIPLIER.toFixed(2)}, default fallback attempts: ${EASY_DEFAULT_FALLBACK_ATTEMPTS}.`
   );
-  console.log(`Easy-profile themes: ${[...easyTargetThemes].join(', ')}`);
   
   if (REGENERATE) {
     if (!ALLOW_REPEAT_ANSWERS) {
@@ -344,7 +440,6 @@ async function generateStarters() {
     
     const startVol = highestVol + 1;
     const endVol = highestVol + NEW_PUZZLES_PER_THEME;
-    const easyProfileVolume = easyTargetThemes.has(theme.name) ? startVol : null;
     console.log(`\nTheme: [${theme.name}] currently has ${highestVol} volumes. Generating vol${startVol}-${endVol}...`);
 
     try {
@@ -395,12 +490,13 @@ async function generateStarters() {
             let bestFallbackMetrics = null;
             let bestFallbackQuality = null;
             let bestFallbackProfile = 'default';
-            const isEasyTargetVolume = easyProfileVolume === i;
+            const volumeOffset = i - startVol;
+            const isEasyTargetVolume = volumeOffset < EASY_FIRST_PASS_VOLUMES_PER_THEME;
             const easyStrictAttempts = isEasyTargetVolume
-              ? MAX_LAYOUT_QUALITY_RETRIES + EASY_TARGET_EXTRA_RETRIES
+              ? MAX_LAYOUT_QUALITY_RETRIES + EASY_STRICT_EXTRA_RETRIES
               : 0;
             const totalAttempts = isEasyTargetVolume
-              ? easyStrictAttempts + EASY_TARGET_DEFAULT_FALLBACK_ATTEMPTS
+              ? easyStrictAttempts + EASY_DEFAULT_FALLBACK_ATTEMPTS
               : MAX_LAYOUT_QUALITY_RETRIES;
             const requestedProfile = isEasyTargetVolume ? 'easy' : 'default';
 
@@ -411,7 +507,7 @@ async function generateStarters() {
                 ? {
                     profile: 'easy',
                     allowEasyFallbackToDefault: false,
-                    attemptMultiplier: EASY_TARGET_ATTEMPT_MULTIPLIER
+                    attemptMultiplier: EASY_STRICT_ATTEMPT_MULTIPLIER
                   }
                 : { profile: 'default' };
 
@@ -421,7 +517,7 @@ async function generateStarters() {
               } catch (err) {
                 const hasMoreAttempts = attempt < totalAttempts;
                 if (inStrictEasyPhase && hasMoreAttempts) {
-                  if (attempt === easyStrictAttempts && EASY_TARGET_DEFAULT_FALLBACK_ATTEMPTS > 0) {
+                  if (attempt === easyStrictAttempts && EASY_DEFAULT_FALLBACK_ATTEMPTS > 0) {
                     console.warn(
                       `  ⚠️ ${id} exhausted strict easy retries (${easyStrictAttempts}); trying default fallback generation.`
                     );
@@ -433,6 +529,10 @@ async function generateStarters() {
 
               const candidateMetrics = computePuzzleMetrics(candidate.puzzle);
               const quality = passesLayoutQualityGate(candidateMetrics, candidate.puzzle);
+
+              if (!quality.duplicateClueGate) {
+                continue;
+              }
 
               const fallbackScore =
                 (quality.hintCoverage.coverage * 1000) +
@@ -483,7 +583,7 @@ async function generateStarters() {
               const hintPct = ((generatedHintCoverage?.coverage || 0) * 100).toFixed(0);
               const lexicalPct = ((generatedQuality?.lexicalSignals?.load || 0) * 100).toFixed(0);
               console.warn(
-                `  ⚠️ ${id} accepted below quality gates after ${totalAttempts} attempts (hint coverage ${hintPct}%, lexical signal ${lexicalPct}%, long gate ${generatedQuality?.longWordGate ? 'ok' : 'fail'}, very long gate ${generatedQuality?.veryLongWordGate ? 'ok' : 'fail'}, lexical gate ${generatedQuality?.lexicalGate ? 'ok' : 'fail'}).`
+                `  ⚠️ ${id} accepted below quality gates after ${totalAttempts} attempts (hint coverage ${hintPct}%, lexical signal ${lexicalPct}%, long gate ${generatedQuality?.longWordGate ? 'ok' : 'fail'}, very long gate ${generatedQuality?.veryLongWordGate ? 'ok' : 'fail'}, lexical gate ${generatedQuality?.lexicalGate ? 'ok' : 'fail'}, duplicate clue gate ${generatedQuality?.duplicateClueGate ? 'ok' : 'fail'}).`
               );
             }
 
