@@ -56,8 +56,12 @@ const MIN_HINT_COVERAGE = Number.isFinite(Number(process.env.NC_MIN_HINT_COVERAG
 const MAX_LEXICAL_OBSCURE_SIGNAL_LOAD = Number.isFinite(Number(process.env.NC_MAX_LEXICAL_OBSCURE_SIGNAL_LOAD))
   ? Math.max(0, Math.min(1, Number(process.env.NC_MAX_LEXICAL_OBSCURE_SIGNAL_LOAD)))
   : 0.24;
+const EASY_TARGET_SHARE = Number.isFinite(Number(process.env.NC_EASY_TARGET_SHARE))
+  ? Math.max(0.05, Math.min(0.4, Number(process.env.NC_EASY_TARGET_SHARE)))
+  : 0.2;
 
 const LEXICAL_OBSCURE_SIGNAL_REGEX = /\b(goddess|god|deity|mythological|myth|constellation|kuiper|trojan|tau\s+[a-z]+|mistress\s+of\s+zeus|one\s+of\s+the\s+moons?\s+of\s+(jupiter|saturn|uranus)|aoede|elara|amalthea|hygiea|pegasi|capricorni|ursa\s+major)\b/i;
+const THEME_PROPER_NOUN_SIGNAL_REGEX = /\b(goddess|god|deity|constellation|moon\s+of\s+|roman|greek|capital\s+city|north\s+korea)\b/i;
 
 function addPuzzleAnswersToSet(puzzleData, targetSet) {
   if (!puzzleData?.answers) return;
@@ -105,6 +109,43 @@ function computeLexicalObscureSignalLoad(puzzle) {
     hits,
     total: texts.length
   };
+}
+
+function estimateThemeEase(theme) {
+  const words = Array.isArray(theme?.words) ? theme.words.slice(0, 700) : [];
+  if (words.length === 0) return 0;
+
+  let shortOrMedium = 0;
+  let longWords = 0;
+  let properSignals = 0;
+
+  for (const word of words) {
+    const answer = String(word?.answer || '');
+    const clue = String(word?.clue || '');
+    const hint = String(word?.hint || '');
+    const len = answer.length;
+    if (len <= 7) shortOrMedium++;
+    if (len >= 8) longWords++;
+    if (THEME_PROPER_NOUN_SIGNAL_REGEX.test(`${clue} ${hint}`)) properSignals++;
+  }
+
+  const shortShare = shortOrMedium / words.length;
+  const longShare = longWords / words.length;
+  const properShare = properSignals / words.length;
+
+  return (
+    (shortShare * 0.5) +
+    ((1 - longShare) * 0.3) +
+    ((1 - properShare) * 0.2)
+  );
+}
+
+function selectEasyTargetThemes(themes, easyTargetCount) {
+  const ranked = [...themes]
+    .map(theme => ({ themeName: theme.name, easeScore: estimateThemeEase(theme) }))
+    .sort((a, b) => b.easeScore - a.easeScore);
+
+  return new Set(ranked.slice(0, easyTargetCount).map(item => item.themeName));
 }
 
 function passesLayoutQualityGate(metrics, puzzle) {
@@ -157,6 +198,14 @@ async function generateStarters() {
   }
 
   let index = [];
+  const totalPlannedPuzzles = THEMES.length * NEW_PUZZLES_PER_THEME;
+  const easyTargetCount = Math.max(1, Math.round(totalPlannedPuzzles * EASY_TARGET_SHARE));
+  const easyTargetThemes = selectEasyTargetThemes(THEMES, Math.min(THEMES.length, easyTargetCount));
+
+  console.log(
+    `Easy generation profile target: ${easyTargetThemes.size} theme(s) out of ${THEMES.length} (${Math.round(EASY_TARGET_SHARE * 100)}% target share).`
+  );
+  console.log(`Easy-profile themes: ${[...easyTargetThemes].join(', ')}`);
   
   if (REGENERATE) {
     if (!ALLOW_REPEAT_ANSWERS) {
@@ -255,6 +304,7 @@ async function generateStarters() {
     
     const startVol = highestVol + 1;
     const endVol = highestVol + NEW_PUZZLES_PER_THEME;
+    const easyProfileVolume = easyTargetThemes.has(theme.name) ? startVol : null;
     console.log(`\nTheme: [${theme.name}] currently has ${highestVol} volumes. Generating vol${startVol}-${endVol}...`);
 
     try {
@@ -303,8 +353,9 @@ async function generateStarters() {
             let bestFallbackCandidate = null;
             let bestFallbackMetrics = null;
             let bestFallbackQuality = null;
+            const generationProfile = easyProfileVolume === i ? 'easy' : 'default';
             for (let attempt = 1; attempt <= MAX_LAYOUT_QUALITY_RETRIES; attempt++) {
-              const candidate = generateThemedPuzzle(id, theme.name, availableWords);
+              const candidate = generateThemedPuzzle(id, theme.name, availableWords, { profile: generationProfile });
               const candidateMetrics = computePuzzleMetrics(candidate.puzzle);
               const quality = passesLayoutQualityGate(candidateMetrics, candidate.puzzle);
 
@@ -382,7 +433,7 @@ async function generateStarters() {
             const longCount = generatedMetrics.longWordCount;
             const veryLongCount = generatedMetrics.veryLongWordCount;
             console.log(
-              `--> Saved ${id} (used ${placedWords.length} words, pool remaining: ${availableWords.length - placedWords.length}, long words: ${longCount}, very long: ${veryLongCount}, long 2+ cross: ${longRatePct}%, very long 3+ cross: ${veryLongRatePct}%, hint coverage: ${hintCoveragePct}% [${generatedHintCoverage?.hintCount || 0}/${generatedHintCoverage?.clueCount || 0}], lexical signal: ${lexicalSignalPct}%)`
+              `--> Saved ${id} [profile=${generationProfile}] (used ${placedWords.length} words, pool remaining: ${availableWords.length - placedWords.length}, long words: ${longCount}, very long: ${veryLongCount}, long 2+ cross: ${longRatePct}%, very long 3+ cross: ${veryLongRatePct}%, hint coverage: ${hintCoveragePct}% [${generatedHintCoverage?.hintCount || 0}/${generatedHintCoverage?.clueCount || 0}], lexical signal: ${lexicalSignalPct}%)`
             );
         }
     } catch (themeErr) {

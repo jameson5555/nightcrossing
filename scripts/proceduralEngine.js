@@ -60,6 +60,27 @@ const MAX_LAYOUT_OBSCURE_PROPER_NOUN_LOAD = Number.isFinite(Number(process.env.N
 const SPACE_LAYOUT_OBSCURE_PROPER_NOUN_LOAD = Number.isFinite(Number(process.env.NC_SPACE_LAYOUT_OBSCURE_PROPER_NOUN_LOAD))
   ? Math.max(0, Math.min(1, Number(process.env.NC_SPACE_LAYOUT_OBSCURE_PROPER_NOUN_LOAD)))
   : 0.2;
+const EASY_PROFILE_MAX_ANSWER_LENGTH = Number.isFinite(Number(process.env.NC_EASY_PROFILE_MAX_ANSWER_LENGTH))
+  ? Math.max(6, Math.min(11, Number(process.env.NC_EASY_PROFILE_MAX_ANSWER_LENGTH)))
+  : 9;
+const EASY_PROFILE_MAX_WORDS = Number.isFinite(Number(process.env.NC_EASY_PROFILE_MAX_WORDS))
+  ? Math.max(7, Math.min(10, Number(process.env.NC_EASY_PROFILE_MAX_WORDS)))
+  : 8;
+const EASY_PROFILE_MAX_LONG_WORDS = Number.isFinite(Number(process.env.NC_EASY_PROFILE_MAX_LONG_WORDS))
+  ? Math.max(0, Math.min(3, Number(process.env.NC_EASY_PROFILE_MAX_LONG_WORDS)))
+  : 1;
+const EASY_PROFILE_MAX_VERY_LONG_WORDS = Number.isFinite(Number(process.env.NC_EASY_PROFILE_MAX_VERY_LONG_WORDS))
+  ? Math.max(0, Math.min(2, Number(process.env.NC_EASY_PROFILE_MAX_VERY_LONG_WORDS)))
+  : 0;
+const EASY_PROFILE_MIN_AVG_INTERSECTIONS = Number.isFinite(Number(process.env.NC_EASY_PROFILE_MIN_AVG_INTERSECTIONS))
+  ? Math.max(1.2, Math.min(2.5, Number(process.env.NC_EASY_PROFILE_MIN_AVG_INTERSECTIONS)))
+  : 1.75;
+const EASY_PROFILE_MAX_AVG_ANSWER_LENGTH = Number.isFinite(Number(process.env.NC_EASY_PROFILE_MAX_AVG_ANSWER_LENGTH))
+  ? Math.max(4.6, Math.min(7, Number(process.env.NC_EASY_PROFILE_MAX_AVG_ANSWER_LENGTH)))
+  : 5.9;
+const EASY_PROFILE_MAX_OBSCURE_LOAD = Number.isFinite(Number(process.env.NC_EASY_PROFILE_MAX_OBSCURE_LOAD))
+  ? Math.max(0, Math.min(1, Number(process.env.NC_EASY_PROFILE_MAX_OBSCURE_LOAD)))
+  : 0.2;
 
 const LAYOUT_OBSCURE_PROPER_NOUN_REGEX = /\b(goddess|god|deity|mythological|myth|constellation|kuiper|planetoid|primordial|trojan|tau\s+[a-z]+|mistress\s+of\s+zeus|one\s+of\s+the\s+moons\s+of\s+jupiter|pegasi|uranian|salacia|aoede|elara|amalthea|ganymede|callisto)\b/i;
 
@@ -267,6 +288,86 @@ function layoutPassesLexicalGuardrails(layout, options = {}) {
 
   const obscureLoad = obscureHits / layout.result.length;
   return obscureLoad <= maxObscureProperNounLoad;
+}
+
+function buildLayoutIntersectionStats(layout) {
+  const words = Array.isArray(layout?.result) ? layout.result : [];
+  if (words.length === 0) {
+    return {
+      intersectionsPerWord: [],
+      avgIntersectionsPerWord: 0,
+      minIntersectionsPerWord: 0,
+      avgAnswerLength: 0,
+      longWordCount: 0,
+      veryLongWordCount: 0
+    };
+  }
+
+  const intersectionsPerWord = new Array(words.length).fill(0);
+
+  for (let w1 = 0; w1 < words.length; w1++) {
+    for (let w2 = w1 + 1; w2 < words.length; w2++) {
+      const wordA = words[w1];
+      const wordB = words[w2];
+      if (wordA.orientation === wordB.orientation) continue;
+
+      const hWord = wordA.orientation === 'across' ? wordA : wordB;
+      const vWord = wordA.orientation === 'down' ? wordA : wordB;
+
+      if (
+        vWord.startx >= hWord.startx &&
+        vWord.startx < hWord.startx + hWord.answer.length &&
+        hWord.starty >= vWord.starty &&
+        hWord.starty < vWord.starty + vWord.answer.length
+      ) {
+        intersectionsPerWord[w1]++;
+        intersectionsPerWord[w2]++;
+      }
+    }
+  }
+
+  const lengths = words.map(word => (word?.answer || '').length);
+  const avgIntersectionsPerWord = intersectionsPerWord.reduce((sum, n) => sum + n, 0) / intersectionsPerWord.length;
+  const minIntersectionsPerWord = Math.min(...intersectionsPerWord);
+  const avgAnswerLength = lengths.reduce((sum, len) => sum + len, 0) / lengths.length;
+  const longWordCount = lengths.filter(len => len >= LONG_WORD_LENGTH).length;
+  const veryLongWordCount = lengths.filter(len => len >= VERY_LONG_WORD_LENGTH).length;
+
+  return {
+    intersectionsPerWord,
+    avgIntersectionsPerWord,
+    minIntersectionsPerWord,
+    avgAnswerLength,
+    longWordCount,
+    veryLongWordCount
+  };
+}
+
+function layoutPassesDifficultyProfile(layout, options = {}) {
+  const profile = options.profile || 'default';
+  if (profile !== 'easy') return true;
+  if (!layout || !Array.isArray(layout.result) || layout.result.length === 0) return false;
+
+  const stats = buildLayoutIntersectionStats(layout);
+  if (layout.result.length < MIN_WORD_TARGET) return false;
+  if (layout.result.length > EASY_PROFILE_MAX_WORDS) return false;
+  if (stats.longWordCount > EASY_PROFILE_MAX_LONG_WORDS) return false;
+  if (stats.veryLongWordCount > EASY_PROFILE_MAX_VERY_LONG_WORDS) return false;
+  if (stats.avgIntersectionsPerWord < EASY_PROFILE_MIN_AVG_INTERSECTIONS) return false;
+  if (stats.avgAnswerLength > EASY_PROFILE_MAX_AVG_ANSWER_LENGTH) return false;
+
+  let obscureHits = 0;
+  for (const placed of layout.result) {
+    const clue = String(placed?.clue || '');
+    const hint = String(placed?.hint || '');
+    const joined = `${clue} ${hint}`.trim();
+    if (LAYOUT_OBSCURE_PROPER_NOUN_REGEX.test(joined)) obscureHits++;
+  }
+
+  const obscureLoad = obscureHits / layout.result.length;
+  if (obscureLoad > EASY_PROFILE_MAX_OBSCURE_LOAD) return false;
+
+  return true;
 }
 
 function choosePrimaryPool(pools) {
@@ -671,19 +772,28 @@ function layoutToNightcrossing(layout, id, title, themeName) {
   };
 }
 
-export function generateThemedPuzzle(id, themeName, availableWords) {
+export function generateThemedPuzzle(id, themeName, availableWords, options = {}) {
+  const requestedProfile = options.profile === 'easy' ? 'easy' : 'default';
+  const fallbackFromEasy = options._fallbackFromEasy === true;
   const pools = createThemePools(themeName, availableWords);
-  const themedWords = choosePrimaryPool(pools);
+  let themedWords = choosePrimaryPool(pools);
+
+  if (requestedProfile === 'easy') {
+    const easyFiltered = themedWords.filter(word => (word?.answer || '').length <= EASY_PROFILE_MAX_ANSWER_LENGTH);
+    if (easyFiltered.length >= MIN_WORD_TARGET + 1) {
+      themedWords = easyFiltered;
+    }
+  }
 
   if (VERBOSE_GENERATION) {
     console.log(
-      `Theme: ${themeName} | Available: ${availableWords.length} | Core: ${pools.coreWords.length} | Extended: ${pools.extendedWords.length} | Active: ${themedWords.length}`
+      `Theme: ${themeName} | Profile: ${requestedProfile} | Available: ${availableWords.length} | Core: ${pools.coreWords.length} | Extended: ${pools.extendedWords.length} | Active: ${themedWords.length}`
     );
   }
 
   let layout = null;
   let bestScore = -Infinity;
-  let maxWordsTry = Math.min(14, themedWords.length);
+  let maxWordsTry = Math.min(requestedProfile === 'easy' ? EASY_PROFILE_MAX_WORDS : 14, themedWords.length);
 
   while (maxWordsTry >= MIN_WORD_TARGET) {
     const attempts = scaledAttempts(
@@ -693,10 +803,9 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
     1300
     );
 
-    const requiredPlaced = Math.min(
-      maxWordsTry,
-      Math.max(PREFERRED_MIN_PLACED_WORDS, Math.floor(maxWordsTry * 0.7))
-    );
+    const requiredPlaced = requestedProfile === 'easy'
+      ? Math.min(maxWordsTry, Math.max(MIN_WORD_TARGET, Math.floor(maxWordsTry * 0.75)))
+      : Math.min(maxWordsTry, Math.max(PREFERRED_MIN_PLACED_WORDS, Math.floor(maxWordsTry * 0.7)));
     const candidate = generateBestLayout(
       themedWords,
       attempts,
@@ -707,7 +816,8 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
     if (
       candidate &&
       layoutPassesThemeGuardrails(candidate, pools.relevanceByAnswer) &&
-      layoutPassesLexicalGuardrails(candidate, { themeName })
+      layoutPassesLexicalGuardrails(candidate, { themeName }) &&
+      layoutPassesDifficultyProfile(candidate, { profile: requestedProfile })
     ) {
       const candidateScore = typeof candidate._engineScore === 'number' ? candidate._engineScore : -Infinity;
       if (candidateScore > bestScore) {
@@ -736,7 +846,8 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
     if (
       fallback &&
       layoutPassesThemeGuardrails(fallback, pools.relevanceByAnswer) &&
-      layoutPassesLexicalGuardrails(fallback, { themeName })
+      layoutPassesLexicalGuardrails(fallback, { themeName }) &&
+      layoutPassesDifficultyProfile(fallback, { profile: requestedProfile })
     ) {
       layout = fallback;
     }
@@ -754,7 +865,8 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
     if (
       fallback &&
       layoutPassesThemeGuardrails(fallback, pools.relevanceByAnswer) &&
-      layoutPassesLexicalGuardrails(fallback, { themeName })
+      layoutPassesLexicalGuardrails(fallback, { themeName }) &&
+      layoutPassesDifficultyProfile(fallback, { profile: requestedProfile })
     ) {
       layout = fallback;
     }
@@ -765,14 +877,15 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
     const recovery = generateBestLayout(
       themedWords,
       scaledAttempts(2200),
-      Math.min(14, themedWords.length),
+      Math.min(requestedProfile === 'easy' ? EASY_PROFILE_MAX_WORDS : 14, themedWords.length),
       PREFERRED_MIN_PLACED_WORDS,
       { enforceLongIntersections: true, allowLongMisses: 1 }
     );
     if (
       recovery &&
       layoutPassesThemeGuardrails(recovery, pools.relevanceByAnswer) &&
-      layoutPassesLexicalGuardrails(recovery, { themeName })
+      layoutPassesLexicalGuardrails(recovery, { themeName }) &&
+      layoutPassesDifficultyProfile(recovery, { profile: requestedProfile })
     ) {
       layout = recovery;
     }
@@ -780,7 +893,7 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
 
   if (!layout && themedWords !== availableWords) {
     // Hard-theme recovery: try once with the unfiltered pool to avoid empty theme batches.
-    const backupTarget = Math.min(12, availableWords.length);
+    const backupTarget = Math.min(requestedProfile === 'easy' ? EASY_PROFILE_MAX_WORDS + 1 : 12, availableWords.length);
     const backup = generateBestLayout(
       availableWords,
       scaledAttempts(2200),
@@ -791,10 +904,19 @@ export function generateThemedPuzzle(id, themeName, availableWords) {
     if (
       backup &&
       layoutPassesThemeGuardrails(backup, pools.relevanceByAnswer) &&
-      layoutPassesLexicalGuardrails(backup, { themeName })
+      layoutPassesLexicalGuardrails(backup, { themeName }) &&
+      layoutPassesDifficultyProfile(backup, { profile: requestedProfile })
     ) {
       layout = backup;
     }
+  }
+
+  if (!layout && requestedProfile === 'easy' && !fallbackFromEasy) {
+    return generateThemedPuzzle(id, themeName, availableWords, {
+      ...options,
+      profile: 'default',
+      _fallbackFromEasy: true
+    });
   }
 
   if (!layout && ALLOW_EMERGENCY_FALLBACK) {

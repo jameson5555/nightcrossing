@@ -124,7 +124,7 @@ html, body {
 .title-clue-id {
   font-size: clamp(0.5rem, 4cqi, 1rem);
   text-transform: uppercase;
-  color: var(--accent-primary);
+  color: var(--text-primary);
   transition: opacity 180ms ease;
   font-weight: 600;
 }

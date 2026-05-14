@@ -1,28 +1,28 @@
 # Regeneration Before/After Report
 
-- Baseline dataset version: 89ffdab155fc7392
-- Regenerated dataset version: 1a13d127428a41c8
-- Baseline captured: 2026-05-14T16:57:50.105Z
-- After captured: 2026-05-14T17:11:24.652Z
+- Baseline dataset version: 1a13d127428a41c8
+- Regenerated dataset version: 5cad4e6ac76b35bb
+- Baseline captured: 2026-05-14T18:31:24.131Z
+- After captured: 2026-05-14T18:47:37.407Z
 
 ## All Themes
-- avgProperNounLoad: 0.2443 -> 0.2411 (delta -0.0032, relative -1.31%)
-- avgClueObscurityLoad: 0.2150 -> 0.1808 (delta -0.0342, relative -15.91%)
+- avgProperNounLoad: 0.2411 -> 0.2469 (delta 0.0058, relative 2.41%)
+- avgClueObscurityLoad: 0.1808 -> 0.1816 (delta 0.0008, relative 0.44%)
 - avgFallbackHintLoad: 0.0000 -> 0.0000 (delta 0.0000, relative 0.00%)
-- properHitRate: 0.1302 -> 0.1337 (delta 0.0035, relative 2.69%)
-- obscureHitRate: 0.1183 -> 0.0988 (delta -0.0195, relative -16.48%)
+- properHitRate: 0.1337 -> 0.1327 (delta -0.0010, relative -0.75%)
+- obscureHitRate: 0.0988 -> 0.1003 (delta 0.0015, relative 1.52%)
 - keyIdeaHintRate: 0.0000 -> 0.0000 (delta 0.0000, relative 0.00%)
 
 ## Space & Astronomy Theme
-- avgProperNounLoad: 0.4257 -> 0.4632 (delta 0.0375, relative 8.81%)
-- avgClueObscurityLoad: 0.1822 -> 0.1876 (delta 0.0054, relative 2.96%)
+- avgProperNounLoad: 0.4632 -> 0.5123 (delta 0.0491, relative 10.60%)
+- avgClueObscurityLoad: 0.1876 -> 0.1443 (delta -0.0433, relative -23.08%)
 - avgFallbackHintLoad: 0.0000 -> 0.0000 (delta 0.0000, relative 0.00%)
-- properHitRate: 0.2381 -> 0.2750 (delta 0.0369, relative 15.50%)
-- obscureHitRate: 0.0952 -> 0.1000 (delta 0.0048, relative 5.04%)
+- properHitRate: 0.2750 -> 0.2895 (delta 0.0145, relative 5.27%)
+- obscureHitRate: 0.1000 -> 0.0789 (delta -0.0211, relative -21.10%)
 - keyIdeaHintRate: 0.0000 -> 0.0000 (delta 0.0000, relative 0.00%)
 
 ## Quick Read
-- Overall proper-noun signal rate moved from 13.02% to 13.37%.
-- Overall obscurity signal rate moved from 11.83% to 9.88%.
-- Astronomy proper-noun signal rate moved from 23.81% to 27.50%.
-- Astronomy obscurity signal rate moved from 9.52% to 10.00%.
+- Overall proper-noun signal rate moved from 13.37% to 13.27%.
+- Overall obscurity signal rate moved from 9.88% to 10.03%.
+- Astronomy proper-noun signal rate moved from 27.50% to 28.95%.
+- Astronomy obscurity signal rate moved from 10.00% to 7.89%.
