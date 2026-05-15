@@ -15,6 +15,16 @@ const LOW_QUALITY_REGEXES = [
   /\b(commune\s+of|county\b|capital\s+city\s+of|north\s+korea)\b/i
 ];
 
+const REPETITIVE_REENTRY_REGEXES = [
+  /\bagain\b/i,
+  /\banew\b/i,
+  /\bafresh\b/i,
+  /\bonce\s+more\b/i,
+  /\byet\s+again\b/i,
+  /\bone\s+more\s+time\b/i,
+  /\bfor\s+(?:the\s+)?(?:second|another)\s+time\b/i
+];
+
 const COMPLEX_CLUE_REGEXES = [
   /[;:]/,
   /\([^)]*\)/,
@@ -28,7 +38,8 @@ function normalized(str) {
 
 const HINT_STOPWORDS = new Set([
   'the', 'and', 'for', 'with', 'from', 'that', 'this', 'into', 'over', 'under',
-  'about', 'often', 'used', 'type', 'kind', 'form', 'term', 'word', 'idea'
+  'about', 'often', 'used', 'type', 'kind', 'form', 'term', 'word', 'words',
+  'idea', 'ideas', 'related', 'concept', 'concepts', 'similar', 'another'
 ]);
 
 function contentTokens(str) {
@@ -57,18 +68,20 @@ function hintEchoesClue(clue, hint) {
   if (!clueNorm || !hintNorm) return false;
   if (clueNorm === hintNorm) return true;
 
-  if (clueNorm.length >= 12 && hintNorm.length >= 12) {
+  if (clueNorm.length >= 8 && hintNorm.length >= 8) {
     if (clueNorm.includes(hintNorm) || hintNorm.includes(clueNorm)) {
       return true;
     }
   }
 
-  const clueTokenSet = new Set(contentTokens(clue));
+  const clueTokens = contentTokens(clue);
+  const clueTokenSet = new Set(clueTokens);
   const hintTokens = contentTokens(hint);
   if (hintTokens.length > 0) {
     const shared = hintTokens.filter(token => clueTokenSet.has(token));
     const sharedRatio = shared.length / hintTokens.length;
-    if (shared.length >= 3 && sharedRatio >= 0.7) {
+    const clueCoverage = clueTokens.length > 0 ? shared.length / clueTokens.length : 0;
+    if ((shared.length >= 3 && sharedRatio >= 0.7) || (shared.length >= 2 && (sharedRatio >= 0.6 || clueCoverage >= 0.6))) {
       return true;
     }
   }
@@ -84,6 +97,15 @@ function hintEchoesClue(clue, hint) {
   }
 
   return false;
+}
+
+function isRepetitiveReentryClue(answer, clue) {
+  const answerUpper = String(answer || '').trim().toUpperCase();
+  const clueText = String(clue || '').trim();
+  if (!answerUpper || !clueText) return false;
+  if (!answerUpper.startsWith('RE') || answerUpper.length < 5) return false;
+
+  return REPETITIVE_REENTRY_REGEXES.some(regex => regex.test(clueText));
 }
 
 export function containsBannedContent(text) {
@@ -163,6 +185,10 @@ export function isWordEntryAcceptable(entry) {
 
   if (isComplexClueText(clue)) {
     return { ok: false, reason: 'clue-complexity' };
+  }
+
+  if (isRepetitiveReentryClue(answer, clue)) {
+    return { ok: false, reason: 'repetitive-reentry-clue' };
   }
 
   if (hasAnswerLeakage(answer, clue)) {

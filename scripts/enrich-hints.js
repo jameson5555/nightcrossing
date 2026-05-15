@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { humanizeClue } from './humanizeClue.js';
+import { isWordEntryAcceptable } from './clueQuality.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,6 +17,19 @@ function isFallbackHint(value) {
     if (!hasUsableHint(value)) return false;
     const trimmed = value.trim();
     return FALLBACK_HINT_PREFIXES.some(prefix => trimmed.startsWith(prefix));
+}
+
+function clueTokens(value) {
+    return new Set(
+        String(value || '')
+            .toLowerCase()
+            .match(/[a-z0-9]+/g) || []
+    );
+}
+
+function acceptHintCandidate(answer, clue, hint) {
+    if (!hasUsableHint(hint)) return false;
+    return isWordEntryAcceptable({ answer, clue, hint }).ok;
 }
 
 async function delay(ms) {
@@ -76,10 +90,11 @@ async function enrichHints() {
                             if (cleanDef.length < 10) continue;
 
                             hint = humanizeClue(cleanDef);
-                            if (hint) {
+                            if (acceptHintCandidate(wordObj.answer, wordObj.clue, hint)) {
                                 process.stdout.write(`Found Def[${i}]`);
                                 break;
                             }
+                            hint = null;
                         }
                     }
                 }
@@ -88,14 +103,27 @@ async function enrichHints() {
                 if (!hint) {
                   const synData = await fetchWithRetry(`https://api.datamuse.com/words?ml=${encodeURIComponent(word)}&max=5`);
                   if (synData && synData.length > 0) {
+                      const existingClueTokens = clueTokens(wordObj.clue);
                       // Filter out the word itself and too long/short ones
                       const filteredSyns = synData
                         .map(s => s.word)
-                        .filter(s => s.toLowerCase() !== word.toLowerCase() && s.length > 2)
+                        .filter(s => {
+                            const token = String(s || '').toLowerCase();
+                            if (token === word.toLowerCase()) return false;
+                            if (token.length < 4) return false;
+                            if (existingClueTokens.has(token)) return false;
+                            return true;
+                        })
                         .slice(0, 3);
                       
-                      if (filteredSyns.length > 0) {
-                          hint = `Related words: ${filteredSyns.join(', ')}`;
+                      if (filteredSyns.length >= 3) {
+                          const candidateHint = `Related words: ${filteredSyns.join(', ')}`;
+                          if (acceptHintCandidate(wordObj.answer, wordObj.clue, candidateHint)) {
+                              hint = candidateHint;
+                          }
+                      }
+
+                      if (hint) {
                           process.stdout.write(`Found Synonyms`);
                       }
                   }

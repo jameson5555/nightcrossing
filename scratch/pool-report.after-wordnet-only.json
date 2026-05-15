@@ -1,0 +1,418 @@
+{
+  "generatedAt": "2026-05-15T17:16:20.596Z",
+  "targetPuzzles": 3,
+  "aggregate": {
+    "totalWords": 9880,
+    "usableWords": 9880,
+    "usableRatio": 1,
+    "bySource": {
+      "seed": 6473,
+      "ml": 3092,
+      "wikipedia-category": 105,
+      "rel_jjb": 103,
+      "rel_jja": 38,
+      "rel_spc": 34,
+      "wordnet-synonym": 19,
+      "rel_trg": 16
+    },
+    "byDefinitionSource": {
+      "unknown": 9169,
+      "datamuse-exact": 686,
+      "wordnet-exact": 19,
+      "wiktionary-exact": 6
+    },
+    "unusableByReason": {}
+  },
+  "weakThemes": [
+    {
+      "theme": "Technology & Computing",
+      "projectedPuzzles": 32,
+      "avgCoreRelevance": 1.196,
+      "hintCoverage": 0.961,
+      "weakSourceShare": 0,
+      "usableWords": 257
+    }
+  ],
+  "themes": [
+    {
+      "theme": "Space & Astronomy",
+      "totalWords": 1298,
+      "usableWords": 1298,
+      "usableRatio": 1,
+      "bySource": {
+        "seed": 908,
+        "ml": 369,
+        "wikipedia-category": 8,
+        "rel_jjb": 7,
+        "rel_jja": 3,
+        "rel_spc": 2,
+        "rel_trg": 1
+      },
+      "byDefinitionSource": {
+        "unknown": 1215,
+        "datamuse-exact": 81,
+        "wiktionary-exact": 2
+      },
+      "unusableByReason": {},
+      "readiness": {
+        "theme": "Space & Astronomy",
+        "availableWords": 1298,
+        "coreWords": 155,
+        "usableCoreWords": 155,
+        "extendedWords": 154,
+        "effectiveWords": 161,
+        "usableWords": 161,
+        "avgCoreRelevance": 1.228,
+        "avgCrossability": 64.275,
+        "hintCoverage": 0.764,
+        "invalidShare": 0,
+        "weakSourceShare": 0,
+        "stableSourceShare": 0.329,
+        "sourceDiversity": 3,
+        "lengthDistribution": {
+          "short": 13,
+          "medium": 87,
+          "long": 48,
+          "extra": 13
+        },
+        "projectedPuzzles": 19,
+        "reservePuzzles": 17,
+        "targetPuzzles": 3,
+        "isReady": true
+      }
+    },
+    {
+      "theme": "Food & Cooking",
+      "totalWords": 1306,
+      "usableWords": 1306,
+      "usableRatio": 1,
+      "bySource": {
+        "seed": 885,
+        "ml": 381,
+        "wikipedia-category": 19,
+        "rel_jja": 8,
+        "rel_jjb": 7,
+        "rel_trg": 4,
+        "rel_spc": 2
+      },
+      "byDefinitionSource": {
+        "unknown": 1226,
+        "datamuse-exact": 79,
+        "wiktionary-exact": 1
+      },
+      "unusableByReason": {},
+      "readiness": {
+        "theme": "Food & Cooking",
+        "availableWords": 1306,
+        "coreWords": 210,
+        "usableCoreWords": 210,
+        "extendedWords": 108,
+        "effectiveWords": 216,
+        "usableWords": 216,
+        "avgCoreRelevance": 1.319,
+        "avgCrossability": 76.467,
+        "hintCoverage": 0.727,
+        "invalidShare": 0,
+        "weakSourceShare": 0.014,
+        "stableSourceShare": 0.375,
+        "sourceDiversity": 5,
+        "lengthDistribution": {
+          "short": 16,
+          "medium": 123,
+          "long": 74,
+          "extra": 3
+        },
+        "projectedPuzzles": 26,
+        "reservePuzzles": 24,
+        "targetPuzzles": 3,
+        "isReady": true
+      }
+    },
+    {
+      "theme": "Ocean & Marine Life",
+      "totalWords": 1264,
+      "usableWords": 1264,
+      "usableRatio": 1,
+      "bySource": {
+        "seed": 717,
+        "ml": 522,
+        "rel_jjb": 7,
+        "rel_spc": 6,
+        "wordnet-synonym": 5,
+        "rel_jja": 3,
+        "rel_trg": 2,
+        "wikipedia-category": 2
+      },
+      "byDefinitionSource": {
+        "unknown": 1169,
+        "datamuse-exact": 90,
+        "wordnet-exact": 5
+      },
+      "unusableByReason": {},
+      "readiness": {
+        "theme": "Ocean & Marine Life",
+        "availableWords": 1264,
+        "coreWords": 304,
+        "usableCoreWords": 304,
+        "extendedWords": 232,
+        "effectiveWords": 310,
+        "usableWords": 310,
+        "avgCoreRelevance": 1.277,
+        "avgCrossability": 119.888,
+        "hintCoverage": 0.555,
+        "invalidShare": 0,
+        "weakSourceShare": 0.006,
+        "stableSourceShare": 0.323,
+        "sourceDiversity": 5,
+        "lengthDistribution": {
+          "short": 23,
+          "medium": 147,
+          "long": 125,
+          "extra": 15
+        },
+        "projectedPuzzles": 37,
+        "reservePuzzles": 35,
+        "targetPuzzles": 3,
+        "isReady": true
+      }
+    },
+    {
+      "theme": "Music & Sound",
+      "totalWords": 1263,
+      "usableWords": 1263,
+      "usableRatio": 1,
+      "bySource": {
+        "seed": 759,
+        "ml": 439,
+        "wikipedia-category": 32,
+        "rel_jjb": 9,
+        "rel_jja": 8,
+        "rel_trg": 7,
+        "wordnet-synonym": 7,
+        "rel_spc": 2
+      },
+      "byDefinitionSource": {
+        "unknown": 1160,
+        "datamuse-exact": 94,
+        "wordnet-exact": 7,
+        "wiktionary-exact": 2
+      },
+      "unusableByReason": {},
+      "readiness": {
+        "theme": "Music & Sound",
+        "availableWords": 1263,
+        "coreWords": 400,
+        "usableCoreWords": 400,
+        "extendedWords": 72,
+        "effectiveWords": 406,
+        "usableWords": 406,
+        "avgCoreRelevance": 1.345,
+        "avgCrossability": 136.372,
+        "hintCoverage": 0.773,
+        "invalidShare": 0,
+        "weakSourceShare": 0.012,
+        "stableSourceShare": 0.382,
+        "sourceDiversity": 6,
+        "lengthDistribution": {
+          "short": 53,
+          "medium": 194,
+          "long": 144,
+          "extra": 15
+        },
+        "projectedPuzzles": 49,
+        "reservePuzzles": 47,
+        "targetPuzzles": 3,
+        "isReady": true
+      }
+    },
+    {
+      "theme": "Nature & Wilderness",
+      "totalWords": 1136,
+      "usableWords": 1136,
+      "usableRatio": 1,
+      "bySource": {
+        "seed": 770,
+        "ml": 339,
+        "rel_jjb": 11,
+        "wikipedia-category": 11,
+        "rel_jja": 3,
+        "rel_trg": 1,
+        "wordnet-synonym": 1
+      },
+      "byDefinitionSource": {
+        "unknown": 1061,
+        "datamuse-exact": 74,
+        "wordnet-exact": 1
+      },
+      "unusableByReason": {},
+      "readiness": {
+        "theme": "Nature & Wilderness",
+        "availableWords": 1136,
+        "coreWords": 114,
+        "usableCoreWords": 114,
+        "extendedWords": 107,
+        "effectiveWords": 120,
+        "usableWords": 120,
+        "avgCoreRelevance": 1.216,
+        "avgCrossability": 39.612,
+        "hintCoverage": 0.858,
+        "invalidShare": 0,
+        "weakSourceShare": 0,
+        "stableSourceShare": 0.35,
+        "sourceDiversity": 4,
+        "lengthDistribution": {
+          "short": 12,
+          "medium": 77,
+          "long": 30,
+          "extra": 1
+        },
+        "projectedPuzzles": 15,
+        "reservePuzzles": 12,
+        "targetPuzzles": 3,
+        "isReady": true
+      }
+    },
+    {
+      "theme": "Technology & Computing",
+      "totalWords": 1191,
+      "usableWords": 1191,
+      "usableRatio": 1,
+      "bySource": {
+        "seed": 865,
+        "ml": 253,
+        "rel_jjb": 36,
+        "rel_spc": 16,
+        "wikipedia-category": 12,
+        "rel_jja": 6,
+        "wordnet-synonym": 3
+      },
+      "byDefinitionSource": {
+        "unknown": 1096,
+        "datamuse-exact": 91,
+        "wordnet-exact": 3,
+        "wiktionary-exact": 1
+      },
+      "unusableByReason": {},
+      "readiness": {
+        "theme": "Technology & Computing",
+        "availableWords": 1191,
+        "coreWords": 251,
+        "usableCoreWords": 251,
+        "extendedWords": 183,
+        "effectiveWords": 257,
+        "usableWords": 257,
+        "avgCoreRelevance": 1.196,
+        "avgCrossability": 88.553,
+        "hintCoverage": 0.961,
+        "invalidShare": 0,
+        "weakSourceShare": 0,
+        "stableSourceShare": 0.63,
+        "sourceDiversity": 4,
+        "lengthDistribution": {
+          "short": 32,
+          "medium": 152,
+          "long": 67,
+          "extra": 6
+        },
+        "projectedPuzzles": 32,
+        "reservePuzzles": 29,
+        "targetPuzzles": 3,
+        "isReady": false
+      }
+    },
+    {
+      "theme": "History & Civilization",
+      "totalWords": 1166,
+      "usableWords": 1166,
+      "usableRatio": 1,
+      "bySource": {
+        "seed": 736,
+        "ml": 389,
+        "rel_jjb": 24,
+        "rel_spc": 6,
+        "wikipedia-category": 5,
+        "rel_jja": 4,
+        "wordnet-synonym": 2
+      },
+      "byDefinitionSource": {
+        "unknown": 1065,
+        "datamuse-exact": 99,
+        "wordnet-exact": 2
+      },
+      "unusableByReason": {},
+      "readiness": {
+        "theme": "History & Civilization",
+        "availableWords": 1166,
+        "coreWords": 206,
+        "usableCoreWords": 206,
+        "extendedWords": 167,
+        "effectiveWords": 212,
+        "usableWords": 212,
+        "avgCoreRelevance": 1.203,
+        "avgCrossability": 78.512,
+        "hintCoverage": 0.825,
+        "invalidShare": 0,
+        "weakSourceShare": 0,
+        "stableSourceShare": 0.458,
+        "sourceDiversity": 3,
+        "lengthDistribution": {
+          "short": 21,
+          "medium": 111,
+          "long": 74,
+          "extra": 6
+        },
+        "projectedPuzzles": 25,
+        "reservePuzzles": 23,
+        "targetPuzzles": 3,
+        "isReady": true
+      }
+    },
+    {
+      "theme": "Sports & Athletics",
+      "totalWords": 1256,
+      "usableWords": 1256,
+      "usableRatio": 1,
+      "bySource": {
+        "seed": 833,
+        "ml": 400,
+        "wikipedia-category": 16,
+        "rel_jja": 3,
+        "rel_jjb": 2,
+        "rel_trg": 1,
+        "wordnet-synonym": 1
+      },
+      "byDefinitionSource": {
+        "unknown": 1177,
+        "datamuse-exact": 78,
+        "wordnet-exact": 1
+      },
+      "unusableByReason": {},
+      "readiness": {
+        "theme": "Sports & Athletics",
+        "availableWords": 1256,
+        "coreWords": 193,
+        "usableCoreWords": 193,
+        "extendedWords": 101,
+        "effectiveWords": 199,
+        "usableWords": 199,
+        "avgCoreRelevance": 1.248,
+        "avgCrossability": 72.75,
+        "hintCoverage": 0.774,
+        "invalidShare": 0,
+        "weakSourceShare": 0.005,
+        "stableSourceShare": 0.462,
+        "sourceDiversity": 5,
+        "lengthDistribution": {
+          "short": 15,
+          "medium": 96,
+          "long": 78,
+          "extra": 10
+        },
+        "projectedPuzzles": 23,
+        "reservePuzzles": 21,
+        "targetPuzzles": 3,
+        "isReady": true
+      }
+    }
+  ]
+}

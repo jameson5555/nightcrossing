@@ -81,6 +81,9 @@ const EASY_PROFILE_MAX_AVG_ANSWER_LENGTH = Number.isFinite(Number(process.env.NC
 const EASY_PROFILE_MAX_OBSCURE_LOAD = Number.isFinite(Number(process.env.NC_EASY_PROFILE_MAX_OBSCURE_LOAD))
   ? Math.max(0, Math.min(1, Number(process.env.NC_EASY_PROFILE_MAX_OBSCURE_LOAD)))
   : 0.2;
+const PRIMARY_CORE_POOL_LIMIT = Number.isFinite(Number(process.env.NC_PRIMARY_CORE_POOL_LIMIT))
+  ? Math.max(18, Math.min(120, Number(process.env.NC_PRIMARY_CORE_POOL_LIMIT)))
+  : 48;
 
 const LAYOUT_OBSCURE_PROPER_NOUN_REGEX = /\b(goddess|god|deity|mythological|myth|constellation|kuiper|planetoid|primordial|trojan|tau\s+[a-z]+|mistress\s+of\s+zeus|one\s+of\s+the\s+moons\s+of\s+jupiter|pegasi|uranian|salacia|aoede|elara|amalthea|ganymede|callisto)\b/i;
 
@@ -99,6 +102,32 @@ const SCORE_WEIGHTS = {
   density: 6,
   squareBonus: 3,
   ratioPenalty: 3.5
+};
+
+const SOURCE_RELIABILITY_ADJUSTMENTS = {
+  seed: 0.12,
+  'wikidata-search': 0.03,
+  'wikipedia-category': 0,
+  'wikipedia-subcategory': -0.03,
+  'wordnet-synonym': 0.02,
+  ml: 0,
+  rel_jjb: -0.14,
+  rel_jja: -0.14,
+  rel_spc: -0.12,
+  rel_trg: -0.1
+};
+
+const SOURCE_THEME_SCORE_CAP_BONUS = {
+  seed: 0.35,
+  'wikidata-search': 0.05,
+  'wikipedia-category': 0.06,
+  'wikipedia-subcategory': 0.03,
+  'wordnet-synonym': 0.06,
+  ml: 0.08,
+  rel_jjb: 0,
+  rel_jja: 0,
+  rel_spc: 0.02,
+  rel_trg: 0.02
 };
 
 function shuffleArray(arr) {
@@ -135,6 +164,7 @@ function wordCrossabilityScore(answer, letterFrequency) {
 }
 
 function themeRelevanceScore(word) {
+  if (typeof word?._themeRankScore === 'number') return word._themeRankScore;
   return typeof word.themeScore === 'number' ? word.themeScore : 0;
 }
 
@@ -144,6 +174,12 @@ function tokenizeForTheme(str) {
     .replace(/[^a-z0-9\s]/g, ' ')
     .split(/\s+/)
     .filter(token => token.length >= 3);
+}
+
+function normalizedThemeKey(themeName) {
+  const normalized = String(themeName || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  if (normalized === 'space sky') return 'space astronomy';
+  return normalized;
 }
 
 function calculateFallbackThemeRelevance(themeName, word) {
@@ -177,13 +213,13 @@ function calculateFallbackThemeRelevance(themeName, word) {
     'food cooking': ['cook', 'bake', 'fry', 'grill', 'dish', 'meal', 'spice', 'kitchen', 'chef', 'recipe', 'broth', 'sauce'],
     'ocean marine life': ['ocean', 'sea', 'tide', 'reef', 'fish', 'whale', 'shark', 'coral', 'marine', 'kelp', 'naut', 'sail'],
     'music sound': ['music', 'song', 'note', 'tune', 'rhythm', 'melody', 'chord', 'tempo', 'audio', 'sound', 'drum', 'piano', 'guitar'],
-    'nature wilderness': ['forest', 'river', 'mountain', 'wild', 'tree', 'leaf', 'fauna', 'flora', 'trail', 'meadow', 'canyon', 'nature'],
-    'technology computing': ['code', 'data', 'chip', 'byte', 'logic', 'cloud', 'server', 'network', 'ai', 'robot', 'device', 'software'],
-    'history civilization': ['ancient', 'empire', 'dynasty', 'historic', 'era', 'civil', 'rome', 'greek', 'medieval', 'war', 'treaty'],
+    'weather climate': ['weather', 'climate', 'storm', 'rain', 'wind', 'cloud', 'snow', 'sun', 'solar', 'sky', 'forecast', 'season', 'breeze', 'gale', 'frost', 'thunder', 'lightning', 'atmos', 'meteor'],
+    'plants gardens': ['plant', 'garden', 'leaf', 'tree', 'flower', 'bloom', 'seed', 'stem', 'root', 'fern', 'moss', 'shrub', 'vine', 'petal', 'orchid', 'cactus', 'pollen', 'flora', 'herb', 'botan'],
+    'internet software': ['internet', 'web', 'browser', 'server', 'cloud', 'code', 'coding', 'program', 'software', 'query', 'cache', 'file', 'files', 'sync', 'network', 'node', 'nodes', 'protocol', 'database', 'cyber', 'byte', 'chip', 'cpu', 'hash', 'api', 'online', 'digital'],
     'sports athletics': ['sport', 'team', 'score', 'goal', 'match', 'coach', 'league', 'athlete', 'race', 'medal', 'tournament']
   };
 
-  const themeKey = themeName.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  const themeKey = normalizedThemeKey(themeName);
   const signals = domainSignals[themeKey] || [];
   const combinedText = `${word.answer || ''} ${word.clue || ''} ${word.hint || ''}`.toLowerCase();
   const matchedSignals = signals.filter(signal => combinedText.includes(signal)).length;
@@ -202,19 +238,39 @@ function calculateFallbackThemeRelevance(themeName, word) {
 
 export function scoreWordForTheme(themeName, word) {
   const fallbackScore = calculateFallbackThemeRelevance(themeName, word);
+  const sourceKey = word?.source || 'seed';
+  const sourceAdjustment = SOURCE_RELIABILITY_ADJUSTMENTS[sourceKey] || 0;
+  const sourceThemeScoreCapBonus = SOURCE_THEME_SCORE_CAP_BONUS[sourceKey] ?? 0.1;
   if (typeof word.themeScore === 'number') {
-    const cappedScore = Math.min(word.themeScore, fallbackScore + 0.35);
+    const cappedScore = Math.min(
+      word.themeScore + sourceAdjustment,
+      fallbackScore + sourceThemeScoreCapBonus + sourceAdjustment
+    );
     return Math.max(0, Number(cappedScore.toFixed(3)));
   }
 
-  return fallbackScore;
+  return Math.max(0, Number((fallbackScore + sourceAdjustment).toFixed(3)));
 }
 
 export function createThemePools(themeName, words) {
-  const scoredWords = words.map(word => ({
-    word,
-    score: scoreWordForTheme(themeName, word)
-  })).sort((a, b) => b.score - a.score);
+  const scoredWords = words
+    .filter(word => isWordEntryAcceptable({
+      answer: word?.answer || '',
+      clue: word?.clue || '',
+      hint: word?.hint || ''
+    }).ok)
+    .map(word => ({
+      score: scoreWordForTheme(themeName, word),
+      word
+    }))
+    .map(item => ({
+      ...item,
+      word: {
+        ...item.word,
+        _themeRankScore: item.score
+      }
+    }))
+    .sort((a, b) => b.score - a.score);
 
   const coreWords = scoredWords
     .filter(item => item.score >= STRICT_THEME_MIN_RELEVANCE)
@@ -270,7 +326,7 @@ function layoutPassesThemeGuardrails(layout, relevanceByAnswer, options = {}) {
 function layoutPassesLexicalGuardrails(layout, options = {}) {
   if (!layout || !Array.isArray(layout.result) || layout.result.length === 0) return false;
 
-  const normalizedTheme = String(options.themeName || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  const normalizedTheme = normalizedThemeKey(options.themeName || '');
   const defaultMaxLoad = normalizedTheme === 'space astronomy'
     ? SPACE_LAYOUT_OBSCURE_PROPER_NOUN_LOAD
     : MAX_LAYOUT_OBSCURE_PROPER_NOUN_LOAD;
@@ -370,23 +426,39 @@ function layoutPassesDifficultyProfile(layout, options = {}) {
   return true;
 }
 
-function choosePrimaryPool(pools) {
-  if (pools.coreWords.length >= 14) {
-    return pools.coreWords;
+function choosePrimaryPool(pools, themeName = '') {
+  const focusedCoreWords = pools.coreWords.slice(0, Math.min(PRIMARY_CORE_POOL_LIMIT, pools.coreWords.length));
+  const anchoredCoreWords = focusedCoreWords.filter(word => hasLexicalThemeAnchor(themeName, word));
+  const anchoredExtendedWords = pools.extendedWords.filter(word => hasLexicalThemeAnchor(themeName, word));
+
+  if (anchoredCoreWords.length >= 14) {
+    return anchoredCoreWords;
   }
 
-  if (pools.coreWords.length >= 10) {
+  if (focusedCoreWords.length >= 14) {
+    return focusedCoreWords;
+  }
+
+  if (anchoredCoreWords.length >= 10) {
     return withLimitedExtended(
-      pools.coreWords,
+      anchoredCoreWords,
+      anchoredExtendedWords,
+      Math.max(1, Math.min(MAX_EXTENDED_WORDS_PER_PUZZLE, anchoredExtendedWords.length))
+    );
+  }
+
+  if (focusedCoreWords.length >= 10) {
+    return withLimitedExtended(
+      focusedCoreWords,
       pools.extendedWords,
       Math.max(1, Math.min(MAX_EXTENDED_WORDS_PER_PUZZLE, pools.extendedWords.length))
     );
   }
 
-  const targetCoreFill = Math.max(0, 12 - pools.coreWords.length);
-  if (pools.coreWords.length + pools.extendedWords.length >= 10) {
+  const targetCoreFill = Math.max(0, 12 - focusedCoreWords.length);
+  if (focusedCoreWords.length + pools.extendedWords.length >= 10) {
     return withLimitedExtended(
-      pools.coreWords,
+      focusedCoreWords,
       pools.extendedWords,
       Math.max(targetCoreFill, Math.min(MAX_EXTENDED_WORDS_PER_PUZZLE, pools.extendedWords.length))
     );
@@ -395,7 +467,36 @@ function choosePrimaryPool(pools) {
   return pools.rankedWords;
 }
 
-function pickCandidateSubset(words, maxWords, letterFrequency) {
+function hasLexicalThemeAnchor(themeName, word) {
+  const normalizedTheme = normalizedThemeKey(themeName || '');
+  if (!normalizedTheme) return true;
+
+  const themeTokens = tokenizeForTheme(normalizedTheme);
+  const themeTokenSet = new Set(themeTokens);
+  const answerTokens = tokenizeForTheme(word?.answer || '');
+  const clueTokens = tokenizeForTheme(word?.clue || '');
+  const combinedTokens = [...answerTokens, ...clueTokens];
+
+  if (answerTokens.some(token => themeTokenSet.has(token))) return true;
+  if (clueTokens.some(token => themeTokenSet.has(token))) return true;
+
+  const domainSignals = {
+    'space astronomy': ['orbit', 'star', 'planet', 'moon', 'solar', 'lunar', 'cosmic', 'galaxy', 'rocket', 'saturn', 'venus', 'mars', 'pluto', 'nebula', 'astro'],
+    'food cooking': ['cook', 'bake', 'fry', 'grill', 'dish', 'meal', 'spice', 'kitchen', 'chef', 'recipe', 'broth', 'sauce'],
+    'ocean marine life': ['ocean', 'sea', 'tide', 'reef', 'fish', 'whale', 'shark', 'coral', 'marine', 'kelp', 'naut', 'sail'],
+    'music sound': ['music', 'song', 'note', 'tune', 'rhythm', 'melody', 'chord', 'tempo', 'audio', 'sound', 'drum', 'piano', 'guitar'],
+    'weather climate': ['weather', 'climate', 'storm', 'rain', 'wind', 'cloud', 'snow', 'sun', 'solar', 'sky', 'forecast', 'season', 'breeze', 'gale', 'frost', 'thunder', 'lightning', 'atmos', 'meteor'],
+    'plants gardens': ['plant', 'garden', 'leaf', 'tree', 'flower', 'bloom', 'seed', 'stem', 'root', 'fern', 'moss', 'shrub', 'vine', 'petal', 'orchid', 'cactus', 'pollen', 'flora', 'herb', 'botan'],
+    'internet software': ['internet', 'web', 'browser', 'server', 'cloud', 'code', 'coding', 'program', 'software', 'query', 'cache', 'file', 'files', 'sync', 'network', 'node', 'nodes', 'protocol', 'database', 'cyber', 'byte', 'chip', 'cpu', 'hash', 'api', 'online', 'digital'],
+    'sports athletics': ['sport', 'team', 'score', 'goal', 'match', 'coach', 'league', 'athlete', 'race', 'medal', 'tournament']
+  };
+
+  return (domainSignals[normalizedTheme] || [])
+    .filter(signal => signal.length >= 3)
+    .some(signal => combinedTokens.some(token => token === signal || token.startsWith(signal)));
+}
+
+function pickCandidateSubset(words, maxWords, letterFrequency, options = {}) {
   if (words.length <= maxWords) {
     return shuffleArray(words);
   }
@@ -410,8 +511,18 @@ function pickCandidateSubset(words, maxWords, letterFrequency) {
       len <= 9 ? 0.75 :
       len <= 10 ? 0.15 :
       0;
-    const priority = (crossability * 3.1) + (themeScore * 1.4) + lenSuitability;
-    return { word, len, crossability, priority };
+
+    // Crossability is useful, but its raw scale is much larger than theme relevance.
+    // Compress it so strongly thematic entries are not crowded out by merely easy letter patterns.
+    const normalizedCrossability = Math.sqrt(Math.max(0, crossability));
+    const strongThemeFloor = STRICT_THEME_MIN_RELEVANCE + 0.12;
+    const themePenalty = themeScore < strongThemeFloor
+      ? (strongThemeFloor - themeScore) * 4.5
+      : 0;
+    const anchored = hasLexicalThemeAnchor(options.themeName, word);
+    const lexicalPenalty = anchored ? 0 : 2.8;
+    const priority = (normalizedCrossability * 2.35) + (themeScore * 5.2) + lenSuitability - themePenalty - lexicalPenalty;
+    return { word, len, crossability, normalizedCrossability, themeScore, anchored, priority };
   });
 
   const longStrong = shuffleArray(
@@ -447,7 +558,7 @@ function pickCandidateSubset(words, maxWords, letterFrequency) {
 
   const leftovers = shuffleArray([...medium, ...short, ...longWeak, ...longStrong])
     .filter(item => !selectedSet.has(item.word.answer))
-    .sort((a, b) => b.priority - a.priority);
+    .sort((a, b) => b.priority - a.priority || b.themeScore - a.themeScore);
 
   for (const item of leftovers) {
     if (selected.length >= maxWords) break;
@@ -501,7 +612,7 @@ function generateBestLayout(
   for (let i = 0; i < attempts; i++) {
     const subset = Math.random() < 0.15
       ? shuffleArray(preFiltered).slice(0, maxWords)
-      : pickCandidateSubset(preFiltered, maxWords, letterFrequency);
+      : pickCandidateSubset(preFiltered, maxWords, letterFrequency, { themeName: options.themeName });
     const input = subset.map(w => ({ 
       answer: w.answer.toLowerCase(), 
       clue: w.clue,
@@ -782,7 +893,7 @@ export function generateThemedPuzzle(id, themeName, availableWords, options = {}
     : 1;
   const attemptBudget = (baseAttempts) => scaledAttempts(Math.max(1, Math.round(baseAttempts * perCallAttemptMultiplier)));
   const pools = createThemePools(themeName, availableWords);
-  let themedWords = choosePrimaryPool(pools);
+  let themedWords = choosePrimaryPool(pools, themeName);
 
   if (requestedProfile === 'easy') {
     const easyFiltered = themedWords.filter(word => (word?.answer || '').length <= EASY_PROFILE_MAX_ANSWER_LENGTH);
@@ -817,7 +928,7 @@ export function generateThemedPuzzle(id, themeName, availableWords, options = {}
       attempts,
       maxWordsTry,
       requiredPlaced,
-      { enforceLongIntersections: true, allowLongMisses: 0 }
+      { enforceLongIntersections: true, allowLongMisses: 0, themeName }
     );
     if (
       candidate &&
@@ -847,7 +958,7 @@ export function generateThemedPuzzle(id, themeName, availableWords, options = {}
       attemptBudget(2500),
       MIN_WORD_TARGET,
       Math.min(MIN_PLACED_WORDS, MIN_WORD_TARGET),
-      { enforceLongIntersections: true, allowLongMisses: 1 }
+      { enforceLongIntersections: true, allowLongMisses: 1, themeName }
     );
     if (
       fallback &&
@@ -866,7 +977,7 @@ export function generateThemedPuzzle(id, themeName, availableWords, options = {}
       attemptBudget(2200),
       MIN_WORD_TARGET,
       Math.max(6, MIN_PLACED_WORDS - 1),
-      { enforceLongIntersections: false }
+      { enforceLongIntersections: false, themeName }
     );
     if (
       fallback &&
@@ -885,7 +996,7 @@ export function generateThemedPuzzle(id, themeName, availableWords, options = {}
       attemptBudget(2200),
       Math.min(requestedProfile === 'easy' ? EASY_PROFILE_MAX_WORDS : 14, themedWords.length),
       PREFERRED_MIN_PLACED_WORDS,
-      { enforceLongIntersections: true, allowLongMisses: 1 }
+      { enforceLongIntersections: true, allowLongMisses: 1, themeName }
     );
     if (
       recovery &&
@@ -905,7 +1016,7 @@ export function generateThemedPuzzle(id, themeName, availableWords, options = {}
       attemptBudget(2200),
       backupTarget,
       Math.max(6, MIN_PLACED_WORDS - 1),
-      { enforceLongIntersections: false }
+      { enforceLongIntersections: false, themeName }
     );
     if (
       backup &&
@@ -933,7 +1044,7 @@ export function generateThemedPuzzle(id, themeName, availableWords, options = {}
       attemptBudget(2800),
       Math.min(6, availableWords.length),
       Math.min(6, availableWords.length),
-      { enforceLongIntersections: false }
+      { enforceLongIntersections: false, themeName }
     );
     if (emergency) {
       layout = emergency;

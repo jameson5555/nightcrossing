@@ -30,7 +30,8 @@
     "crossword-layout-generator": "^0.1.1",
     "random-words": "^2.0.1",
     "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "react-dom": "^19.2.4",
+    "wordpos": "^2.1.0"
   },
   "devDependencies": {
     "@capacitor/cli": "^8.2.0",

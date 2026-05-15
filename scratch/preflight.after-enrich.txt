@@ -1,0 +1,84 @@
+Preflight target: 3 puzzle(s) per theme
+
+[OK] Space & Astronomy
+  available/core/usable-core/extended/effective/usable: 1283/144/144/154/150/150
+  avg core relevance: 1.227
+  avg crossability: 60.241
+  hint coverage: 0.753
+  invalid share: 0
+  weak/stable source share: 0/0.327 (sources 3)
+  lengths short/medium/long/extra: 10/81/46/13
+  projected puzzles: 17/3 (reserve 15)
+
+[OK] Food & Cooking
+  available/core/usable-core/extended/effective/usable: 1291/197/197/106/203/203
+  avg core relevance: 1.32
+  avg crossability: 71.7
+  hint coverage: 0.709
+  invalid share: 0
+  weak/stable source share: 0.01/0.389 (sources 5)
+  lengths short/medium/long/extra: 14/112/73/4
+  projected puzzles: 24/3 (reserve 22)
+
+[OK] Ocean & Marine Life
+  available/core/usable-core/extended/effective/usable: 1242/286/286/231/292/292
+  avg core relevance: 1.276
+  avg crossability: 112.925
+  hint coverage: 0.548
+  invalid share: 0
+  weak/stable source share: 0.007/0.312 (sources 4)
+  lengths short/medium/long/extra: 16/139/123/14
+  projected puzzles: 35/3 (reserve 33)
+
+[OK] Music & Sound
+  available/core/usable-core/extended/effective/usable: 1234/372/372/71/378/378
+  avg core relevance: 1.342
+  avg crossability: 127.843
+  hint coverage: 0.767
+  invalid share: 0
+  weak/stable source share: 0.011/0.378 (sources 5)
+  lengths short/medium/long/extra: 47/180/136/15
+  projected puzzles: 46/3 (reserve 44)
+
+[OK] Nature & Wilderness
+  available/core/usable-core/extended/effective/usable: 1120/98/98/107/104/104
+  avg core relevance: 1.211
+  avg crossability: 35.4
+  hint coverage: 0.837
+  invalid share: 0
+  weak/stable source share: 0/0.346 (sources 3)
+  lengths short/medium/long/extra: 8/65/30/1
+  projected puzzles: 13/3 (reserve 10)
+
+[WEAK] Technology & Computing
+  available/core/usable-core/extended/effective/usable: 1181/242/242/183/248/248
+  avg core relevance: 1.195
+  avg crossability: 86.343
+  hint coverage: 0.96
+  invalid share: 0
+  weak/stable source share: 0/0.633 (sources 3)
+  lengths short/medium/long/extra: 28/148/66/6
+  projected puzzles: 31/3 (reserve 28)
+
+[OK] History & Civilization
+  available/core/usable-core/extended/effective/usable: 1145/191/191/160/197/197
+  avg core relevance: 1.202
+  avg crossability: 73.758
+  hint coverage: 0.812
+  invalid share: 0
+  weak/stable source share: 0/0.477 (sources 3)
+  lengths short/medium/long/extra: 17/102/72/6
+  projected puzzles: 23/3 (reserve 21)
+
+[OK] Sports & Athletics
+  available/core/usable-core/extended/effective/usable: 1239/177/177/100/183/183
+  avg core relevance: 1.232
+  avg crossability: 67.72
+  hint coverage: 0.76
+  invalid share: 0
+  weak/stable source share: 0.005/0.437 (sources 4)
+  lengths short/medium/long/extra: 12/85/76/10
+  projected puzzles: 21/3 (reserve 19)
+
+Weak themes detected:
+  - Technology & Computing

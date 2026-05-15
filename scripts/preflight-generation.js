@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { THEMES, createThemePools, scoreWordForTheme } from './proceduralEngine.js';
+import { isWordEntryAcceptable } from './clueQuality.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -11,6 +12,25 @@ const DEFAULT_TARGET_PUZZLES = 3;
 const EXPECTED_WORDS_PER_PUZZLE = 8;
 const MAX_EXTENDED_PER_PUZZLE = 2;
 const MAX_LONG_WORD_SHARE = 0.35;
+const MIN_HINT_COVERAGE = 0.5;
+const MAX_INVALID_ENTRY_SHARE = 0.2;
+const MAX_WEAK_SOURCE_SHARE = 0.08;
+const WEAK_SOURCES = new Set(['rel_jjb', 'rel_jja', 'rel_spc', 'rel_trg']);
+const STABLE_SOURCES = new Set(['seed', 'wikidata-search', 'wikipedia-category', 'wikipedia-subcategory', 'wordnet-synonym']);
+
+function normalizedThemeKey(themeName) {
+  return String(themeName || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+const THEME_FILTER_KEYS = new Set(
+  String(process.env.NC_THEME_FILTER || '')
+    .split(',')
+    .map(themeName => normalizedThemeKey(themeName))
+    .filter(Boolean)
+);
 
 function parseArgs(argv) {
   const args = {
@@ -95,6 +115,22 @@ function summarizeLengths(words) {
   return dist;
 }
 
+function hasUsableHint(word) {
+  return Boolean(String(word?.hint || '').trim());
+}
+
+function sourceKey(word) {
+  return word?.source || 'seed';
+}
+
+function isUsableEntry(word) {
+  return isWordEntryAcceptable({
+    answer: word?.answer || '',
+    clue: word?.clue || '',
+    hint: word?.hint || ''
+  }).ok;
+}
+
 export function analyzeThemeReadiness(theme, consumedAnswers = new Set(), targetPuzzles = DEFAULT_TARGET_PUZZLES) {
   const availableWords = (theme.words || []).filter(word => !consumedAnswers.has(String(word.answer || '').toUpperCase()));
   const pools = createThemePools(theme.name, availableWords);
@@ -106,45 +142,77 @@ export function analyzeThemeReadiness(theme, consumedAnswers = new Set(), target
     ...extendedWords.slice(0, targetPuzzles * MAX_EXTENDED_PER_PUZZLE)
   ];
 
-  const lengths = summarizeLengths(effectiveWords);
-  const longShare = effectiveWords.length > 0
-    ? (lengths.long + lengths.extra) / effectiveWords.length
+  const usableCoreWords = coreWords.filter(isUsableEntry);
+  const usableWords = effectiveWords.filter(isUsableEntry);
+  const invalidShare = effectiveWords.length > 0
+    ? (effectiveWords.length - usableWords.length) / effectiveWords.length
     : 0;
-  const letterFrequency = buildLetterFrequency(effectiveWords);
-  const avgCrossability = effectiveWords.length === 0
-    ? 0
-    : effectiveWords.reduce((sum, word) => sum + wordCrossability(word.answer, letterFrequency), 0) / effectiveWords.length;
 
-  const avgCoreRelevance = coreWords.length === 0
+  const lengths = summarizeLengths(usableWords);
+  const longShare = usableWords.length > 0
+    ? (lengths.long + lengths.extra) / usableWords.length
+    : 0;
+  const letterFrequency = buildLetterFrequency(usableWords);
+  const avgCrossability = usableWords.length === 0
     ? 0
-    : coreWords.reduce((sum, word) => sum + scoreWordForTheme(theme.name, word), 0) / coreWords.length;
+    : usableWords.reduce((sum, word) => sum + wordCrossability(word.answer, letterFrequency), 0) / usableWords.length;
 
-  const projectedByWords = Math.floor(effectiveWords.length / EXPECTED_WORDS_PER_PUZZLE);
+  const avgCoreRelevance = usableCoreWords.length === 0
+    ? 0
+    : usableCoreWords.reduce((sum, word) => sum + scoreWordForTheme(theme.name, word), 0) / usableCoreWords.length;
+
+  const hintCoverage = usableWords.length === 0
+    ? 0
+    : usableWords.filter(hasUsableHint).length / usableWords.length;
+  const weakSourceShare = usableWords.length === 0
+    ? 0
+    : usableWords.filter(word => WEAK_SOURCES.has(sourceKey(word))).length / usableWords.length;
+  const stableSourceShare = usableWords.length === 0
+    ? 0
+    : usableWords.filter(word => STABLE_SOURCES.has(sourceKey(word))).length / usableWords.length;
+  const uniqueSources = new Set(usableWords.map(sourceKey));
+
+  const projectedByWords = Math.floor(usableWords.length / EXPECTED_WORDS_PER_PUZZLE);
+  const reservePuzzles = Math.max(0, projectedByWords - targetPuzzles);
 
   let penalties = 0;
   if (lengths.medium < targetPuzzles * 3) penalties++;
   if ((lengths.short + lengths.medium) < targetPuzzles * 5) penalties++;
   if (avgCrossability < 1.22) penalties++;
   if (longShare > MAX_LONG_WORD_SHARE) penalties++;
+  if (hintCoverage < MIN_HINT_COVERAGE) penalties++;
+  if (invalidShare > MAX_INVALID_ENTRY_SHARE) penalties++;
+  if (weakSourceShare > MAX_WEAK_SOURCE_SHARE) penalties++;
 
   const projectedPuzzles = Math.max(0, projectedByWords - penalties);
 
   const minimumCore = targetPuzzles * 6;
   const isReady =
     projectedPuzzles >= targetPuzzles &&
-    coreWords.length >= minimumCore &&
-    avgCoreRelevance >= 1.2;
+    usableCoreWords.length >= minimumCore &&
+    avgCoreRelevance >= 1.2 &&
+    hintCoverage >= MIN_HINT_COVERAGE &&
+    invalidShare <= MAX_INVALID_ENTRY_SHARE &&
+    weakSourceShare <= MAX_WEAK_SOURCE_SHARE;
 
   return {
     theme: theme.name,
     availableWords: availableWords.length,
     coreWords: coreWords.length,
+    usableCoreWords: usableCoreWords.length,
     extendedWords: extendedWords.length,
     effectiveWords: effectiveWords.length,
+    usableWords: usableWords.length,
     avgCoreRelevance: Number(avgCoreRelevance.toFixed(3)),
     avgCrossability: Number(avgCrossability.toFixed(3)),
+    hintCoverage: Number(hintCoverage.toFixed(3)),
+    invalidShare: Number(invalidShare.toFixed(3)),
+    weakSourceShare: Number(weakSourceShare.toFixed(3)),
+    stableSourceShare: Number(stableSourceShare.toFixed(3)),
+    sourceDiversity: uniqueSources.size,
     lengthDistribution: lengths,
     projectedPuzzles,
+    reservePuzzles,
     targetPuzzles,
     isReady
   };
@@ -152,7 +220,11 @@ export function analyzeThemeReadiness(theme, consumedAnswers = new Set(), target
 
 export function runGenerationPreflight({ targetPuzzles = DEFAULT_TARGET_PUZZLES, ignoreConsumed = false } = {}) {
   const consumedByTheme = ignoreConsumed ? new Map() : buildConsumedByTheme(PUZZLES_DIR);
-  const reports = THEMES.map(theme => {
+  const activeThemes = THEMES.filter(theme => {
+    if (THEME_FILTER_KEYS.size === 0) return true;
+    return THEME_FILTER_KEYS.has(normalizedThemeKey(theme.name));
+  });
+  const reports = activeThemes.map(theme => {
     const consumed = consumedByTheme.get(theme.name) || new Set();
     return analyzeThemeReadiness(theme, consumed, targetPuzzles);
   });
@@ -171,11 +243,14 @@ function printHumanReport(result) {
   for (const report of result.reports) {
     const badge = report.isReady ? 'OK' : 'WEAK';
     console.log(`\n[${badge}] ${report.theme}`);
-    console.log(`  available/core/extended/effective: ${report.availableWords}/${report.coreWords}/${report.extendedWords}/${report.effectiveWords}`);
+    console.log(`  available/core/usable-core/extended/effective/usable: ${report.availableWords}/${report.coreWords}/${report.usableCoreWords}/${report.extendedWords}/${report.effectiveWords}/${report.usableWords}`);
     console.log(`  avg core relevance: ${report.avgCoreRelevance}`);
     console.log(`  avg crossability: ${report.avgCrossability}`);
+    console.log(`  hint coverage: ${report.hintCoverage}`);
+    console.log(`  invalid share: ${report.invalidShare}`);
+    console.log(`  weak/stable source share: ${report.weakSourceShare}/${report.stableSourceShare} (sources ${report.sourceDiversity})`);
     console.log(`  lengths short/medium/long/extra: ${report.lengthDistribution.short}/${report.lengthDistribution.medium}/${report.lengthDistribution.long}/${report.lengthDistribution.extra}`);
-    console.log(`  projected puzzles: ${report.projectedPuzzles}/${report.targetPuzzles}`);
+    console.log(`  projected puzzles: ${report.projectedPuzzles}/${report.targetPuzzles} (reserve ${report.reservePuzzles})`);
   }
 
   if (result.weakThemes.length > 0) {

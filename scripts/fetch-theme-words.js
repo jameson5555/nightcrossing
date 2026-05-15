@@ -1,19 +1,52 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
+import WordPOS from 'wordpos';
 import { humanizeClue } from './humanizeClue.js';
 import { isWordEntryAcceptable } from './clueQuality.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const THEMES_FILE = path.join(__dirname, 'themes.json');
+const WIKIDATA_API = 'https://www.wikidata.org/w/api.php';
 const WIKIPEDIA_API = 'https://en.wikipedia.org/w/api.php';
+const WIKTIONARY_DEFINITION_API = 'https://en.wiktionary.org/api/rest_v1/page/definition/';
 
 // How many existing words to use as additional seeds per theme
 const EXTRA_SEEDS_PER_THEME = 24;
 const MAX_NEW_WORDS_PER_THEME = 160;
+const MAX_WIKIDATA_WORDS_PER_THEME = 18;
+const MAX_WIKIDATA_SEEDS_PER_THEME = 10;
+const MAX_WIKIDATA_RESULTS_PER_SEED = 10;
 const MAX_WIKIPEDIA_WORDS_PER_THEME = 48;
+const MAX_WORDNET_WORDS_PER_THEME = 20;
+const MAX_WORDNET_CANDIDATES_PER_SEED = 8;
+const MAX_WIKIPEDIA_SUBCATEGORY_DEPTH = Number.isFinite(Number(process.env.NC_MAX_WIKIPEDIA_SUBCATEGORY_DEPTH))
+  ? Math.max(0, Math.min(2, Number(process.env.NC_MAX_WIKIPEDIA_SUBCATEGORY_DEPTH)))
+  : 1;
+const MAX_WIKIPEDIA_SUBCATEGORIES_PER_THEME = Number.isFinite(Number(process.env.NC_MAX_WIKIPEDIA_SUBCATEGORIES_PER_THEME))
+  ? Math.max(4, Math.min(40, Number(process.env.NC_MAX_WIKIPEDIA_SUBCATEGORIES_PER_THEME)))
+  : 16;
+const MAX_WIKIPEDIA_PAGE_BATCHES_PER_CATEGORY = 2;
+const MAX_WIKIPEDIA_SUBCATEGORY_BATCHES = 1;
 const DATAMUSE_CLUE_CACHE = new Map();
+const WIKIDATA_SEARCH_CACHE = new Map();
+const WORDNET_DEFINITION_CACHE = new Map();
+const WORDNET_RELATED_CACHE = new Map();
+const WIKTIONARY_DEFINITION_CACHE = new Map();
+const EXACT_DEFINITION_CACHE = new Map();
+const REQUEST_HEADERS = {
+  'user-agent': 'nightcrossing-source-enrichment/1.0'
+};
+const WIKIPEDIA_MAX_RETRIES = 3;
+const WORDNET_LOOKUP_POS_PRIORITY = new Map([
+  ['n', 0],
+  ['a', 1],
+  ['s', 1],
+  ['v', 2],
+  ['r', 3]
+]);
+const wordpos = new WordPOS();
 
 // Datamuse API endpoints that return different kinds of related words
 const DATAMUSE_STRATEGIES = [
@@ -85,17 +118,42 @@ const MAX_RARE_LETTER_RATIO = Number.isFinite(Number(process.env.NC_MAX_RARE_LET
   ? Math.max(0.15, Math.min(0.8, Number(process.env.NC_MAX_RARE_LETTER_RATIO)))
   : 0.34;
 const ENABLE_MODERATE_PROPER_NOUN_FILTER = process.env.NC_ENABLE_MODERATE_PROPER_NOUN_FILTER !== '0';
+const ENABLE_WIKIDATA_SOURCE = process.env.NC_ENABLE_WIKIDATA_SOURCE === '1';
+const ENABLE_WIKIPEDIA_SOURCE = process.env.NC_ENABLE_WIKIPEDIA_SOURCE !== '0';
+const ENABLE_WORDNET_SOURCE = process.env.NC_ENABLE_WORDNET_SOURCE !== '0';
+const ENABLE_WORDNET_SYNONYMS = process.env.NC_ENABLE_WORDNET_SYNONYMS === '1';
+const ENABLE_DATAMUSE_SOURCE = process.env.NC_ENABLE_DATAMUSE_SOURCE !== '0';
+const ENABLE_DATAMUSE_EXPANSION = process.env.NC_ENABLE_DATAMUSE_EXPANSION !== '0';
+const ENABLE_WIKTIONARY_SOURCE = process.env.NC_ENABLE_WIKTIONARY_SOURCE !== '0';
+const THEME_FILTER_KEYS = new Set(
+  String(process.env.NC_THEME_FILTER || '')
+    .split(',')
+    .map(themeName => normalizedThemeKey(themeName))
+    .filter(Boolean)
+);
 
 const WIKIPEDIA_THEME_CATEGORIES = {
-  'space astronomy': ['Astronomy', 'Planets', 'Stars', 'Galaxies'],
-  'food cooking': ['Foods', 'Cooking techniques', 'Herbs and spices', 'Cooking utensils'],
-  'ocean marine life': ['Marine life', 'Oceans', 'Seas', 'Fish'],
-  'music sound': ['Musical terminology', 'Musical instruments', 'Music genres', 'Acoustics'],
-  'nature wilderness': ['Forests', 'Mountains', 'Rivers', 'Habitats'],
-  'technology computing': ['Computer science', 'Software', 'Computing', 'Technology'],
-  'history civilization': ['History', 'Ancient history', 'Civilizations', 'Empires'],
-  'sports athletics': ['Sports terminology', 'Athletics (track and field)', 'Team sports', 'Ball games']
+  'space astronomy': ['Astronomy', 'Astronomical objects', 'Planets', 'Stars', 'Galaxies', 'Spaceflight', 'Orbits', 'Telescopes'],
+  'food cooking': ['Foods', 'Cooking techniques', 'Herbs and spices', 'Cooking utensils', 'Dishes', 'Baking', 'Culinary terminology'],
+  'ocean marine life': ['Marine life', 'Oceanography', 'Oceans', 'Seas', 'Fish', 'Marine biology', 'Nautical terminology'],
+  'music sound': ['Musical terminology', 'Musical instruments', 'Music genres', 'Acoustics', 'Audio engineering', 'Music theory'],
+  'weather climate': ['Meteorology', 'Weather', 'Climate', 'Atmosphere', 'Clouds', 'Storms', 'Precipitation', 'Seasons'],
+  'plants gardens': ['Plants', 'Botany', 'Horticulture', 'Garden plants', 'Trees', 'Flowers', 'Herbs', 'Gardening'],
+  'internet software': ['Software', 'Computing', 'Internet terminology', 'Computer networking', 'Databases', 'Web browsers', 'Web applications', 'Algorithms'],
+  'sports athletics': ['Sports terminology', 'Athletics (track and field)', 'Team sports', 'Ball games', 'Sport of athletics', 'Sporting equipment']
 };
+
+const WIKIPEDIA_GENERIC_PAGE_TITLE_REGEX = /\b(award|awards|prize|prizes|medal|medals|winner|winners|list|lists|outline|outlines|timeline|timelines|glossary|glossaries|people|births|deaths|company|companies|organization|organizations|association|associations|journal|journals|magazine|magazines|website|websites|film|films|song|songs|album|albums|television|fictional|characters?)\b/i;
+const WIKIPEDIA_GENERIC_SUBCATEGORY_REGEX = /\b(award|awards|prize|prizes|medal|medals|winner|winners|people|births|deaths|company|companies|organization|organizations|association|associations|university|universities|school|schools|website|websites|journal|journals|magazine|magazines|film|films|song|songs|album|albums|television|fictional|characters?|by\s+(country|year|decade|century)|stubs?)\b/i;
+const WIKIPEDIA_CANDIDATE_BLOCKLIST = new Set([
+  'award', 'awards', 'prize', 'prizes', 'medal', 'medals', 'winner', 'winners',
+  'outline', 'outlines', 'timeline', 'timelines', 'glossary', 'glossaries',
+  'people', 'person', 'company', 'companies', 'organization', 'organizations',
+  'association', 'associations', 'journal', 'journals', 'magazine', 'magazines',
+  'website', 'websites', 'study', 'studies', 'culture', 'history', 'committee',
+  'committees', 'school', 'schools', 'university', 'universities'
+]);
+const WIKIDATA_GENERIC_DESCRIPTION_REGEX = /\b(journal|magazine|newspaper|record\s+label|television|tv\s+series|video\s+game|film|album|song|episode|season|franchise|baseball\s+team|sports\s+club|company|organization|fictional|Wikimedia|disambiguation|scientific\s+journal|american\s+magazine|reality\s+show|band|music\s+band|musical\s+group|singer|actor|actress|at\s+the\s+\d{4}\s+summer\s+olympics)\b/i;
 
 const THEME_PROPER_NOUN_ALLOWLIST = {
   'space astronomy': new Set([
@@ -123,7 +181,9 @@ function tokenize(str) {
 }
 
 function normalizedThemeKey(themeName) {
-  return (themeName || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  const normalized = (themeName || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  if (normalized === 'space sky') return 'space astronomy';
+  return normalized;
 }
 
 function getThemeSignals(themeName) {
@@ -132,13 +192,75 @@ function getThemeSignals(themeName) {
     'food cooking': ['cook', 'bake', 'fry', 'grill', 'dish', 'meal', 'spice', 'kitchen', 'chef', 'recipe', 'broth', 'sauce'],
     'ocean marine life': ['ocean', 'sea', 'tide', 'reef', 'fish', 'whale', 'shark', 'coral', 'marine', 'kelp', 'naut', 'sail'],
     'music sound': ['music', 'song', 'note', 'tune', 'rhythm', 'melody', 'chord', 'tempo', 'audio', 'sound', 'drum', 'piano', 'guitar'],
-    'nature wilderness': ['forest', 'river', 'mountain', 'wild', 'tree', 'leaf', 'fauna', 'flora', 'trail', 'meadow', 'canyon', 'nature'],
-    'technology computing': ['code', 'data', 'chip', 'byte', 'logic', 'cloud', 'server', 'network', 'ai', 'robot', 'device', 'software'],
-    'history civilization': ['ancient', 'empire', 'dynasty', 'historic', 'era', 'civil', 'rome', 'greek', 'medieval', 'war', 'treaty'],
+    'weather climate': ['weather', 'climate', 'storm', 'rain', 'wind', 'cloud', 'snow', 'sun', 'solar', 'sky', 'forecast', 'season', 'breeze', 'gale', 'frost', 'thunder', 'lightning', 'atmos', 'meteor'],
+    'plants gardens': ['plant', 'garden', 'leaf', 'tree', 'flower', 'bloom', 'seed', 'stem', 'root', 'fern', 'moss', 'shrub', 'vine', 'petal', 'orchid', 'cactus', 'pollen', 'flora', 'herb', 'botan'],
+    'internet software': ['internet', 'web', 'browser', 'server', 'cloud', 'code', 'coding', 'program', 'software', 'query', 'cache', 'file', 'files', 'sync', 'network', 'node', 'nodes', 'protocol', 'database', 'cyber', 'byte', 'chip', 'cpu', 'hash', 'api', 'online', 'digital'],
     'sports athletics': ['sport', 'team', 'score', 'goal', 'match', 'coach', 'league', 'athlete', 'race', 'medal', 'tournament']
   };
 
   return signals[normalizedThemeKey(themeName)] || [];
+}
+
+function isRelevantWikipediaSubcategory(themeName, categoryTitle) {
+  return scoreWikipediaSubcategory(themeName, categoryTitle) >= 1.05;
+}
+
+function scoreWikipediaSubcategory(themeName, categoryTitle) {
+  const title = stripCategoryPrefix(categoryTitle).toLowerCase();
+  if (!title) return 0;
+  if (WIKIPEDIA_GENERIC_SUBCATEGORY_REGEX.test(title)) return 0;
+
+  const themeTokens = tokenize(themeName);
+  const titleTokens = tokenize(title);
+  const titleCandidates = extractWordCandidatesFromTitle(title);
+  const signals = getThemeSignals(themeName);
+
+  let score = 0;
+  score += titleTokens.filter(token => themeTokens.includes(token)).length * 1.15;
+  score += signals.filter(signal => signal.length >= 3 && title.includes(signal)).length * 1.35;
+  score += titleCandidates.filter(candidate => signals.some(signal => signal.length >= 3 && (candidate.includes(signal) || signal.includes(candidate)))).length * 0.7;
+  if (/\b(terms?|terminology|concepts?|objects?|techniques?|instruments?|theory|architecture|networks?|databases?|spaceflight|orbits?|telescopes?|ecology|wildlife)\b/i.test(title)) {
+    score += 0.35;
+  }
+
+  return Number(score.toFixed(3));
+}
+
+function isRelevantWikipediaCandidateWord(themeName, candidateWord, depth = 0, pageTitle = '', categoryName = '') {
+  const normalizedCandidate = String(candidateWord || '').toLowerCase();
+  if (!normalizedCandidate) return false;
+  if (WIKIPEDIA_CANDIDATE_BLOCKLIST.has(normalizedCandidate)) return false;
+  if (normalizedCandidate.length <= 4 && !/[aeiouy]/.test(normalizedCandidate)) return false;
+  if (/^(ngc|ugc|sdss|messier|acm|api|cpu|gpu|ram|rom)$/i.test(normalizedCandidate)) return false;
+
+  const sourceBaseScore = depth === 0 ? 0.48 : 0.38;
+  const contextText = `${pageTitle || ''} ${categoryName || ''}`.trim();
+  const score = scoreThemeRelevance(themeName, candidateWord, contextText, categoryName, sourceBaseScore);
+  const combined = `${normalizedCandidate} ${contextText}`.toLowerCase();
+  const signalHits = getThemeSignals(themeName).filter(signal => signal.length >= 3 && combined.includes(signal)).length;
+  const minimumScore = signalHits > 0
+    ? (depth === 0 ? 0.56 : 0.6)
+    : (depth === 0 ? 0.72 : 0.82);
+
+  return score >= minimumScore;
+}
+
+function isRelevantWikidataCandidateWord(themeName, candidateWord, label = '', description = '', aliases = []) {
+  const normalizedCandidate = String(candidateWord || '').toLowerCase();
+  if (!normalizedCandidate) return false;
+  if (WIKIPEDIA_CANDIDATE_BLOCKLIST.has(normalizedCandidate)) return false;
+  if (normalizedCandidate.length <= 4 && !/[aeiouy]/.test(normalizedCandidate)) return false;
+  if (WIKIDATA_GENERIC_DESCRIPTION_REGEX.test(String(description || ''))) return false;
+
+  const contextText = [label, description, ...(Array.isArray(aliases) ? aliases.slice(0, 3) : [])]
+    .filter(Boolean)
+    .join(' ');
+  const score = scoreThemeRelevance(themeName, candidateWord, contextText, description, 0.72);
+  const combined = `${normalizedCandidate} ${contextText}`.toLowerCase();
+  const signalHits = getThemeSignals(themeName).filter(signal => signal.length >= 3 && combined.includes(signal)).length;
+  const minimumScore = signalHits > 0 ? 0.76 : 0.96;
+
+  return score >= minimumScore;
 }
 
 function scoreSeedStrength(themeName, wordEntry) {
@@ -165,6 +287,27 @@ function scoreSeedStrength(themeName, wordEntry) {
   if (answer.length >= 9 && answer.length <= 11) score += 0.15;
 
   return score;
+}
+
+function hasLexicalThemeAnchor(themeName, wordEntry) {
+  const answer = (wordEntry?.answer || '').toLowerCase();
+  const clue = (wordEntry?.clue || '').toLowerCase();
+  const hint = (wordEntry?.hint || '').toLowerCase();
+  const combined = `${answer} ${clue} ${hint}`.trim();
+  if (!combined) return false;
+
+  const themeTokens = tokenize(themeName);
+  const tokenSet = new Set(themeTokens);
+  const signals = getThemeSignals(themeName);
+  const tokens = [
+    ...tokenize(answer),
+    ...tokenize(clue),
+    ...tokenize(hint)
+  ];
+
+  const tokenOverlap = tokens.filter(token => tokenSet.has(token)).length;
+  const signalHits = signals.filter(signal => signal.length >= 3 && combined.includes(signal)).length;
+  return tokenOverlap > 0 || signalHits > 0;
 }
 
 function scoreThemeRelevance(themeName, candidateWord, clueText, hintText, sourceBaseScore) {
@@ -306,8 +449,10 @@ function buildDefinitionBackstopHint(definitionText, clueText = '', answer = '')
     return true;
   });
 
-  const conceptWords = (filtered.length >= 2 ? filtered : words)
-    .slice(0, Math.min(6, words.length))
+  if (filtered.length < 2) return null;
+
+  const conceptWords = filtered
+    .slice(0, Math.min(6, filtered.length))
     .join(' ');
   if (!conceptWords) return null;
 
@@ -317,26 +462,141 @@ function buildDefinitionBackstopHint(definitionText, clueText = '', answer = '')
   return hint;
 }
 
-function parseDatamuseDefinitions(defs = [], answerText = '') {
-  if (!Array.isArray(defs) || defs.length === 0) return null;
+function decodeHtmlEntities(text) {
+  return String(text || '').replace(/&(#x?[0-9a-f]+|[a-z]+);/gi, (match, entity) => {
+    const normalized = String(entity || '').toLowerCase();
+    if (normalized.startsWith('#x')) {
+      const value = Number.parseInt(normalized.slice(2), 16);
+      return Number.isFinite(value) ? String.fromCodePoint(value) : match;
+    }
+    if (normalized.startsWith('#')) {
+      const value = Number.parseInt(normalized.slice(1), 10);
+      return Number.isFinite(value) ? String.fromCodePoint(value) : match;
+    }
 
-  const rawDef = defs[0];
-  const parts = String(rawDef).split('\t');
-  let cleanDef = parts.length > 1 ? parts[1].trim() : parts[0].trim();
-  cleanDef = cleanDef.replace(/^\([^)]+\)\s*/, '');
-  if (!cleanDef) return null;
+    const namedEntities = {
+      amp: '&',
+      apos: "'",
+      nbsp: ' ',
+      quot: '"',
+      lt: '<',
+      gt: '>',
+      ndash: '-',
+      mdash: '-',
+      rsquo: "'",
+      lsquo: "'",
+      ldquo: '"',
+      rdquo: '"'
+    };
 
-  const clueText = humanizeClue(cleanDef.charAt(0).toUpperCase() + cleanDef.slice(1));
+    return namedEntities[normalized] || match;
+  });
+}
+
+  async function fetchJSONOrNull(url) {
+    try {
+      const res = await fetch(url, { headers: REQUEST_HEADERS });
+      if (!res.ok) return null;
+
+      const text = await res.text();
+      return JSON.parse(text);
+    } catch {
+      return null;
+    }
+  }
+
+async function fetchWikipediaJSONOrNull(url, retries = WIKIPEDIA_MAX_RETRIES) {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const res = await fetch(url, { headers: REQUEST_HEADERS });
+      const text = await res.text();
+
+      if (res.status === 429) {
+        if (attempt >= retries) return null;
+
+        const retryAfterHeader = Number(res.headers.get('retry-after'));
+        const retryDelay = Number.isFinite(retryAfterHeader) && retryAfterHeader > 0
+          ? retryAfterHeader * 1000
+          : 350 * (attempt + 1) * (attempt + 2);
+        await sleep(retryDelay);
+        continue;
+      }
+
+      if (!res.ok) return null;
+
+      try {
+        return JSON.parse(text);
+      } catch {
+        if (attempt >= retries) return null;
+        await sleep(220 * (attempt + 1));
+      }
+    } catch {
+      if (attempt >= retries) return null;
+      await sleep(220 * (attempt + 1));
+    }
+  }
+
+  return null;
+}
+
+function normalizeDefinitionText(rawText) {
+  const cleaned = decodeHtmlEntities(String(rawText || ''))
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\[[^\]]*\]/g, ' ')
+    .replace(/\{[^}]*\}/g, ' ')
+    .replace(/^\([^)]+\)\s*/, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/^[;:,.\-\s]+/, '')
+    .replace(/[;:,.\-\s]+$/, '');
+
+  if (!cleaned) return null;
+  if (cleaned.length < 6 || cleaned.length > 220) return null;
+  return cleaned;
+}
+
+function buildDefinitionEntryFromTexts(definitionTexts = [], answerText = '') {
+  const cleanDefinitions = [...new Set(
+    definitionTexts
+      .map(text => normalizeDefinitionText(text))
+      .filter(Boolean)
+  )];
+  if (cleanDefinitions.length === 0) return null;
+
+  const normalizedAnswer = String(answerText || '').trim().toUpperCase();
+  let cleanDef = null;
+  let clueText = null;
+
+  for (const candidateDefinition of cleanDefinitions) {
+    const candidateClue = humanizeClue(candidateDefinition.charAt(0).toUpperCase() + candidateDefinition.slice(1));
+    const clueValidation = isWordEntryAcceptable({
+      answer: normalizedAnswer,
+      clue: candidateClue,
+      hint: ''
+    });
+    if (!clueValidation.ok) continue;
+
+    cleanDef = candidateDefinition;
+    clueText = candidateClue;
+    break;
+  }
+
+  if (!cleanDef || !clueText) return null;
 
   let hint = null;
-  for (let i = 1; i < defs.length; i++) {
-    const hintParts = String(defs[i]).split('\t');
-    const cleanHint = hintParts.length > 1 ? hintParts[1].trim() : hintParts[0].trim();
-    if (!cleanHint) continue;
+  for (const candidateDefinition of cleanDefinitions) {
+    if (candidateDefinition === cleanDef) continue;
 
-    const humanizedHint = humanizeClue(cleanHint);
+    const humanizedHint = humanizeClue(candidateDefinition);
     if (!humanizedHint) continue;
     if (looksLikeClueEcho(humanizedHint, clueText)) continue;
+
+    const hintValidation = isWordEntryAcceptable({
+      answer: normalizedAnswer,
+      clue: clueText,
+      hint: humanizedHint
+    });
+    if (!hintValidation.ok) continue;
 
     hint = humanizedHint;
     break;
@@ -344,12 +604,94 @@ function parseDatamuseDefinitions(defs = [], answerText = '') {
 
   if (!hint) {
     const fallbackHint = buildDefinitionBackstopHint(cleanDef, clueText, answerText);
-    if (fallbackHint && !looksLikeClueEcho(fallbackHint, clueText)) {
+    const hintValidation = fallbackHint
+      ? isWordEntryAcceptable({
+          answer: normalizedAnswer,
+          clue: clueText,
+          hint: fallbackHint
+        })
+      : { ok: false };
+    if (fallbackHint && !looksLikeClueEcho(fallbackHint, clueText) && hintValidation.ok) {
       hint = fallbackHint;
     }
   }
 
   return { clueText, hint };
+}
+
+function parseDatamuseDefinitions(defs = [], answerText = '') {
+  if (!Array.isArray(defs) || defs.length === 0) return null;
+
+  const definitionTexts = defs
+    .map(rawDef => {
+      const parts = String(rawDef).split('\t');
+      return parts.length > 1 ? parts[1].trim() : parts[0].trim();
+    });
+
+  return buildDefinitionEntryFromTexts(definitionTexts, answerText);
+}
+
+function parseWiktionaryDefinitions(payload, answerText = '') {
+  const englishEntries = Array.isArray(payload?.en) ? payload.en : [];
+  if (englishEntries.length === 0) return null;
+
+  const preferredPartsOfSpeech = new Set(['noun', 'adjective', 'verb', 'adverb']);
+  const orderedEntries = [...englishEntries].sort((a, b) => {
+    const aPreferred = preferredPartsOfSpeech.has(String(a?.partOfSpeech || '').toLowerCase()) ? 1 : 0;
+    const bPreferred = preferredPartsOfSpeech.has(String(b?.partOfSpeech || '').toLowerCase()) ? 1 : 0;
+    return bPreferred - aPreferred;
+  });
+
+  const definitionTexts = [];
+  for (const entry of orderedEntries) {
+    const definitions = Array.isArray(entry?.definitions) ? entry.definitions : [];
+    for (const definition of definitions) {
+      const cleanDefinition = normalizeDefinitionText(definition?.definition || '');
+      if (!cleanDefinition) continue;
+      if (/\b(obsolete|archaic|alternative\s+form|alternative\s+spelling|inflection\s+of|plural\s+of)\b/i.test(cleanDefinition)) continue;
+
+      definitionTexts.push(cleanDefinition);
+      if (definitionTexts.length >= 6) break;
+    }
+    if (definitionTexts.length >= 6) break;
+  }
+
+  return buildDefinitionEntryFromTexts(definitionTexts, answerText);
+}
+
+function sortWordNetLookupResults(lookupResults = []) {
+  return [...lookupResults].sort((a, b) => {
+    const aPriority = WORDNET_LOOKUP_POS_PRIORITY.get(String(a?.pos || '').toLowerCase()) ?? 99;
+    const bPriority = WORDNET_LOOKUP_POS_PRIORITY.get(String(b?.pos || '').toLowerCase()) ?? 99;
+    if (aPriority !== bPriority) return aPriority - bPriority;
+
+    const aSynonymCount = Array.isArray(a?.synonyms) ? a.synonyms.length : 0;
+    const bSynonymCount = Array.isArray(b?.synonyms) ? b.synonyms.length : 0;
+    return bSynonymCount - aSynonymCount;
+  });
+}
+
+function parseWordNetDefinitions(lookupResults = [], answerText = '') {
+  if (!Array.isArray(lookupResults) || lookupResults.length === 0) return null;
+
+  const definitionTexts = [];
+  for (const item of sortWordNetLookupResults(lookupResults)) {
+    const cleanDefinition = normalizeDefinitionText(item?.def || '');
+    if (!cleanDefinition) continue;
+    if (/\b(obsolete|archaic|alternative\s+form|alternative\s+spelling|inflection\s+of|plural\s+of)\b/i.test(cleanDefinition)) continue;
+    definitionTexts.push(cleanDefinition);
+    if (definitionTexts.length >= 6) break;
+  }
+
+  return buildDefinitionEntryFromTexts(definitionTexts, answerText);
+}
+
+function normalizeWordNetSynonym(rawSynonym) {
+  return String(rawSynonym || '')
+    .toLowerCase()
+    .replace(/_/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 function scoreClueAccessibility(clueText, hintText) {
@@ -392,16 +734,242 @@ async function fetchDatamuseClueForWord(wordLower) {
 
   try {
     const url = `https://api.datamuse.com/words?sp=${encodeURIComponent(wordLower)}&md=d&max=8`;
-    const res = await fetch(url);
-    const data = await res.json();
+    const data = await fetchJSONOrNull(url);
+    if (!Array.isArray(data)) {
+      DATAMUSE_CLUE_CACHE.set(wordLower, null);
+      return null;
+    }
     const exact = data.find(item => String(item.word || '').toLowerCase() === wordLower) || data[0];
-    const parsed = exact ? parseDatamuseDefinitions(exact.defs || [], wordLower) : null;
+    const parsedBase = exact ? parseDatamuseDefinitions(exact.defs || [], wordLower) : null;
+    const parsed = parsedBase ? { ...parsedBase, source: 'datamuse-exact' } : null;
     DATAMUSE_CLUE_CACHE.set(wordLower, parsed);
     return parsed;
   } catch {
     DATAMUSE_CLUE_CACHE.set(wordLower, null);
     return null;
   }
+}
+
+async function fetchWordNetDefinitionForWord(wordLower) {
+  if (WORDNET_DEFINITION_CACHE.has(wordLower)) {
+    return WORDNET_DEFINITION_CACHE.get(wordLower);
+  }
+
+  try {
+    const lookupResults = await wordpos.lookup(wordLower);
+    const parsedBase = parseWordNetDefinitions(lookupResults, wordLower);
+    const parsed = parsedBase ? { ...parsedBase, source: 'wordnet-exact' } : null;
+    WORDNET_DEFINITION_CACHE.set(wordLower, parsed);
+    return parsed;
+  } catch {
+    WORDNET_DEFINITION_CACHE.set(wordLower, null);
+    return null;
+  }
+}
+
+async function fetchWordNetRelatedWords(seedWord) {
+  const lookupWord = String(seedWord || '').trim().toLowerCase();
+  if (!lookupWord) return [];
+  if (WORDNET_RELATED_CACHE.has(lookupWord)) {
+    return WORDNET_RELATED_CACHE.get(lookupWord);
+  }
+
+  try {
+    const lookupResults = await wordpos.lookup(lookupWord);
+    const preferredResults = sortWordNetLookupResults(lookupResults)
+      .filter(item => ['n', 'a', 's'].includes(String(item?.pos || '').toLowerCase()));
+    const seen = new Set([lookupWord]);
+    const relatedWords = [];
+
+    for (const item of preferredResults) {
+      const synonyms = Array.isArray(item?.synonyms) ? item.synonyms : [];
+      for (const synonym of synonyms) {
+        const normalizedSynonym = normalizeWordNetSynonym(synonym);
+        if (!isValidCrosswordWord(normalizedSynonym)) continue;
+        if (seen.has(normalizedSynonym)) continue;
+
+        seen.add(normalizedSynonym);
+        relatedWords.push({
+          word: normalizedSynonym,
+          pos: String(item?.pos || '').toLowerCase()
+        });
+        if (relatedWords.length >= MAX_WORDNET_CANDIDATES_PER_SEED) break;
+      }
+
+      if (relatedWords.length >= MAX_WORDNET_CANDIDATES_PER_SEED) break;
+    }
+
+    WORDNET_RELATED_CACHE.set(lookupWord, relatedWords);
+    return relatedWords;
+  } catch {
+    WORDNET_RELATED_CACHE.set(lookupWord, []);
+    return [];
+  }
+}
+
+async function fetchWiktionaryDefinitionForWord(wordLower) {
+  if (WIKTIONARY_DEFINITION_CACHE.has(wordLower)) {
+    return WIKTIONARY_DEFINITION_CACHE.get(wordLower);
+  }
+
+  try {
+    const data = await fetchJSONOrNull(`${WIKTIONARY_DEFINITION_API}${encodeURIComponent(wordLower)}`);
+    if (!data) {
+      WIKTIONARY_DEFINITION_CACHE.set(wordLower, null);
+      return null;
+    }
+    const parsedBase = parseWiktionaryDefinitions(data, wordLower);
+    const parsed = parsedBase ? { ...parsedBase, source: 'wiktionary-exact' } : null;
+    WIKTIONARY_DEFINITION_CACHE.set(wordLower, parsed);
+    return parsed;
+  } catch {
+    WIKTIONARY_DEFINITION_CACHE.set(wordLower, null);
+    return null;
+  }
+}
+
+export async function fetchExactDefinitionForWord(wordText) {
+  const lookupWord = String(wordText || '').trim().toLowerCase();
+  if (!lookupWord) return null;
+  if (EXACT_DEFINITION_CACHE.has(lookupWord)) {
+    return EXACT_DEFINITION_CACHE.get(lookupWord);
+  }
+
+  if (ENABLE_DATAMUSE_SOURCE) {
+    const datamuseDefinition = await fetchDatamuseClueForWord(lookupWord);
+    if (datamuseDefinition) {
+      EXACT_DEFINITION_CACHE.set(lookupWord, datamuseDefinition);
+      return datamuseDefinition;
+    }
+  }
+
+  if (ENABLE_WORDNET_SOURCE) {
+    const wordNetDefinition = await fetchWordNetDefinitionForWord(lookupWord);
+    if (wordNetDefinition) {
+      EXACT_DEFINITION_CACHE.set(lookupWord, wordNetDefinition);
+      return wordNetDefinition;
+    }
+  }
+
+  if (!ENABLE_WIKTIONARY_SOURCE) {
+    EXACT_DEFINITION_CACHE.set(lookupWord, null);
+    return null;
+  }
+
+  const wiktionaryDefinition = await fetchWiktionaryDefinitionForWord(lookupWord);
+  EXACT_DEFINITION_CACHE.set(lookupWord, wiktionaryDefinition || null);
+  return wiktionaryDefinition;
+}
+
+async function fetchWikidataSearchEntities(seedWord) {
+  const lookupWord = String(seedWord || '').trim().toLowerCase();
+  if (!lookupWord) return [];
+  if (WIKIDATA_SEARCH_CACHE.has(lookupWord)) {
+    return WIKIDATA_SEARCH_CACHE.get(lookupWord);
+  }
+
+  const params = new URLSearchParams({
+    action: 'wbsearchentities',
+    search: lookupWord,
+    language: 'en',
+    format: 'json',
+    type: 'item',
+    limit: String(MAX_WIKIDATA_RESULTS_PER_SEED)
+  });
+
+  try {
+    const json = await fetchJSONOrNull(`${WIKIDATA_API}?${params.toString()}`);
+    const entities = Array.isArray(json?.search) ? json.search : [];
+    WIKIDATA_SEARCH_CACHE.set(lookupWord, entities);
+    return entities;
+  } catch {
+    WIKIDATA_SEARCH_CACHE.set(lookupWord, []);
+    return [];
+  }
+}
+
+function accumulateWikidataCandidate(scored, word, rankIndex, label, description, aliases = [], sourceKind = 'label') {
+  const rankWeight = rankIndex < 3 ? 1.12 : rankIndex < 6 ? 0.88 : 0.64;
+  const sourceBonus = sourceKind === 'label'
+    ? 0.26
+    : sourceKind === 'alias'
+      ? 0.18
+      : 0.1;
+  const existing = scored.get(word) || {
+    occurrences: 0,
+    weight: 0,
+    source: 'wikidata-search',
+    contextText: ''
+  };
+
+  existing.occurrences += 1;
+  existing.weight += rankWeight + sourceBonus;
+  if (!existing.contextText || existing.weight <= rankWeight + sourceBonus + 0.01) {
+    existing.contextText = [label, description, ...aliases.slice(0, 2)].filter(Boolean).join(' ');
+  }
+  scored.set(word, existing);
+}
+
+export async function fetchWikidataThemeWords(themeName, seeds = []) {
+  const themeSeeds = [...new Set((Array.isArray(seeds) ? seeds : []).filter(Boolean))]
+    .slice(0, MAX_WIKIDATA_SEEDS_PER_THEME);
+  if (themeSeeds.length === 0) return [];
+
+  const themeSignals = getThemeSignals(themeName);
+  const themeTokens = new Set(tokenize(themeName));
+  const scored = new Map();
+
+  for (const seed of themeSeeds) {
+    const entities = await fetchWikidataSearchEntities(seed);
+    for (let rankIndex = 0; rankIndex < entities.length; rankIndex++) {
+      const entity = entities[rankIndex];
+      const label = String(entity?.label || '').trim();
+      const description = String(entity?.description || '').trim();
+      const aliases = Array.isArray(entity?.aliases) ? entity.aliases.map(alias => String(alias || '').trim()).filter(Boolean) : [];
+      if (!label || WIKIDATA_GENERIC_DESCRIPTION_REGEX.test(description)) continue;
+
+      const candidateWords = [];
+      const normalizedLabel = label.toLowerCase();
+      if (isValidCrosswordWord(normalizedLabel)) {
+        candidateWords.push({ word: normalizedLabel, sourceKind: 'label' });
+      }
+
+      const labelTokens = extractWordCandidatesFromTitle(label)
+        .filter(candidate => candidate !== normalizedLabel)
+        .filter(candidate => themeTokens.has(candidate) || themeSignals.some(signal => signal.includes(candidate) || candidate.includes(signal)));
+      for (const labelToken of labelTokens) {
+        candidateWords.push({ word: labelToken, sourceKind: 'label-token' });
+      }
+
+      for (const alias of aliases.slice(0, 4)) {
+        const normalizedAlias = alias.toLowerCase();
+        if (isValidCrosswordWord(normalizedAlias)) {
+          candidateWords.push({ word: normalizedAlias, sourceKind: 'alias' });
+        }
+      }
+
+      for (const candidate of candidateWords) {
+        if (!isRelevantWikidataCandidateWord(themeName, candidate.word, label, description, aliases)) continue;
+        accumulateWikidataCandidate(scored, candidate.word, rankIndex, label, description, aliases, candidate.sourceKind);
+      }
+    }
+
+    await sleep(60);
+  }
+
+  return [...scored.entries()]
+    .sort((a, b) => {
+      if (b[1].weight !== a[1].weight) return b[1].weight - a[1].weight;
+      return b[1].occurrences - a[1].occurrences;
+    })
+    .slice(0, 120)
+    .map(([word, data]) => ({
+      word,
+      occurrences: data.occurrences,
+      weight: Number(data.weight.toFixed(3)),
+      source: data.source,
+      contextText: data.contextText
+    }));
 }
 
 // Rate-limit helper: wait between API calls to be a good citizen
@@ -411,6 +979,10 @@ function sleep(ms) {
 
 function categoryToTitle(categoryName) {
   return `Category:${categoryName.replace(/\s+/g, '_')}`;
+}
+
+function stripCategoryPrefix(title) {
+  return String(title || '').replace(/^Category:/i, '').replace(/_/g, ' ').trim();
 }
 
 function extractWordCandidatesFromTitle(title) {
@@ -429,52 +1001,128 @@ function extractWordCandidatesFromTitle(title) {
     .filter(token => isValidCrosswordWord(token));
 }
 
-async function fetchWikipediaCategoryWords(themeName) {
+async function fetchWikipediaCategoryMembers(categoryName, memberType, continueToken = null) {
+  const params = new URLSearchParams({
+    action: 'query',
+    list: 'categorymembers',
+    cmtitle: categoryToTitle(categoryName),
+    cmtype: memberType,
+    cmlimit: '150',
+    format: 'json'
+  });
+
+  if (continueToken) params.set('cmcontinue', continueToken);
+
+  return fetchWikipediaJSONOrNull(`${WIKIPEDIA_API}?${params.toString()}`);
+}
+
+function accumulateWikipediaCandidate(scored, word, depth) {
+  const existing = scored.get(word) || {
+    occurrences: 0,
+    weight: 0,
+    depth,
+    source: depth === 0 ? 'wikipedia-category' : 'wikipedia-subcategory'
+  };
+
+  existing.occurrences += 1;
+  existing.weight += Math.max(0.42, 1 - (depth * 0.24));
+  existing.depth = Math.min(existing.depth, depth);
+  existing.source = existing.depth === 0 ? 'wikipedia-category' : 'wikipedia-subcategory';
+  scored.set(word, existing);
+}
+
+export async function fetchWikipediaCategoryWords(themeName) {
   const categories = WIKIPEDIA_THEME_CATEGORIES[normalizedThemeKey(themeName)] || [];
   if (categories.length === 0) return [];
 
   const scored = new Map();
+  const categoryQueue = categories.map(categoryName => ({ categoryName, depth: 0 }));
+  const queuedCategories = new Set(categories.map(categoryName => normalizedThemeKey(categoryName)));
+  const visitedCategories = new Set();
+  let discoveredSubcategories = 0;
 
-  for (const categoryName of categories) {
-    let continueToken = null;
+  while (categoryQueue.length > 0) {
+    const current = categoryQueue.shift();
+    const categoryKey = normalizedThemeKey(current.categoryName);
+    if (visitedCategories.has(categoryKey)) continue;
+    visitedCategories.add(categoryKey);
+
+    let pageContinue = null;
     let pageBatches = 0;
-
-    while (pageBatches < 2) {
-      const params = new URLSearchParams({
-        action: 'query',
-        list: 'categorymembers',
-        cmtitle: categoryToTitle(categoryName),
-        cmtype: 'page',
-        cmlimit: '150',
-        format: 'json'
-      });
-
-      if (continueToken) params.set('cmcontinue', continueToken);
-
-      const res = await fetch(`${WIKIPEDIA_API}?${params.toString()}`);
-      const json = await res.json();
+    while (pageBatches < MAX_WIKIPEDIA_PAGE_BATCHES_PER_CATEGORY) {
+      const json = await fetchWikipediaCategoryMembers(current.categoryName, 'page', pageContinue);
+      if (!json) break;
       const members = json?.query?.categorymembers || [];
 
       for (const member of members) {
+        if (WIKIPEDIA_GENERIC_PAGE_TITLE_REGEX.test(String(member?.title || ''))) continue;
         const words = extractWordCandidatesFromTitle(member?.title || '');
         for (const candidateWord of words) {
-          scored.set(candidateWord, (scored.get(candidateWord) || 0) + 1);
+          if (!isRelevantWikipediaCandidateWord(themeName, candidateWord, current.depth, member?.title || '', current.categoryName)) continue;
+          accumulateWikipediaCandidate(scored, candidateWord, current.depth);
         }
       }
 
-      continueToken = json?.continue?.cmcontinue || null;
+      pageContinue = json?.continue?.cmcontinue || null;
       pageBatches += 1;
-      if (!continueToken) break;
       await sleep(80);
+      if (!pageContinue) break;
+    }
+
+    if (current.depth >= MAX_WIKIPEDIA_SUBCATEGORY_DEPTH) continue;
+    if (discoveredSubcategories >= MAX_WIKIPEDIA_SUBCATEGORIES_PER_THEME) continue;
+
+    let subcategoryContinue = null;
+    let subcategoryBatches = 0;
+    while (subcategoryBatches < MAX_WIKIPEDIA_SUBCATEGORY_BATCHES && discoveredSubcategories < MAX_WIKIPEDIA_SUBCATEGORIES_PER_THEME) {
+      const json = await fetchWikipediaCategoryMembers(current.categoryName, 'subcat', subcategoryContinue);
+      if (!json) break;
+      const members = json?.query?.categorymembers || [];
+      const rankedSubcategories = [];
+
+      for (const member of members) {
+        const nextCategory = stripCategoryPrefix(member?.title || '');
+        const nextKey = normalizedThemeKey(nextCategory);
+        if (!nextCategory || queuedCategories.has(nextKey) || visitedCategories.has(nextKey)) continue;
+        const subcategoryScore = scoreWikipediaSubcategory(themeName, nextCategory);
+        if (subcategoryScore < 1.05) continue;
+
+        rankedSubcategories.push({
+          categoryName: nextCategory,
+          categoryKey: nextKey,
+          score: subcategoryScore
+        });
+      }
+
+      rankedSubcategories.sort((a, b) => b.score - a.score || a.categoryName.localeCompare(b.categoryName));
+
+      for (const rankedSubcategory of rankedSubcategories) {
+        categoryQueue.push({ categoryName: rankedSubcategory.categoryName, depth: current.depth + 1 });
+        queuedCategories.add(rankedSubcategory.categoryKey);
+        discoveredSubcategories++;
+        if (discoveredSubcategories >= MAX_WIKIPEDIA_SUBCATEGORIES_PER_THEME) break;
+      }
+
+      subcategoryContinue = json?.continue?.cmcontinue || null;
+      subcategoryBatches += 1;
+      await sleep(80);
+      if (!subcategoryContinue) break;
     }
   }
 
   return [...scored.entries()]
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 200)
-    .map(([word, occurrences]) => ({
+    .sort((a, b) => {
+      if (b[1].weight !== a[1].weight) return b[1].weight - a[1].weight;
+      if (a[1].depth !== b[1].depth) return a[1].depth - b[1].depth;
+      return b[1].occurrences - a[1].occurrences;
+    })
+    .slice(0, 240)
+    .map(([word, data]) => ({
       word,
-      occurrences
+      occurrences: data.occurrences,
+      weight: Number(data.weight.toFixed(3)),
+      depth: data.depth,
+      source: data.source
     }));
 }
 
@@ -517,6 +1165,32 @@ function pickSeeds(themeWords, themeName) {
   return [...nameKeywords, ...extras];
 }
 
+function pickWordNetSeeds(themeWords, themeName) {
+  const nameKeywords = themeName
+    .split(/\s*&\s*/)
+    .map(keyword => keyword.trim().toLowerCase())
+    .filter(keyword => keyword.length >= 3);
+
+  const strongThemeSeeds = themeWords
+    .map(wordEntry => ({
+      answer: (wordEntry.answer || '').toLowerCase(),
+      strength: scoreSeedStrength(themeName, wordEntry),
+      anchored: hasLexicalThemeAnchor(themeName, wordEntry)
+    }))
+    .filter(wordEntry => wordEntry.anchored)
+    .filter(wordEntry => wordEntry.answer.length >= 4 && wordEntry.answer.length <= 10)
+    .filter(wordEntry => !wordEntry.answer.includes(' ') && !wordEntry.answer.includes('-'))
+    .filter(wordEntry => wordEntry.strength >= 1.2)
+    .sort((a, b) => b.strength - a.strength || a.answer.localeCompare(b.answer));
+
+  const extras = strongThemeSeeds
+    .map(wordEntry => wordEntry.answer)
+    .filter(answer => !nameKeywords.includes(answer))
+    .slice(0, Math.min(12, EXTRA_SEEDS_PER_THEME));
+
+  return [...nameKeywords, ...extras];
+}
+
 /**
  * Validate that a word is suitable for crossword puzzles.
  */
@@ -540,154 +1214,303 @@ export async function fetchThemeWords() {
 
   for (let i = 0; i < themes.length; i++) {
     const theme = themes[i];
+    if (THEME_FILTER_KEYS.size > 0 && !THEME_FILTER_KEYS.has(normalizedThemeKey(theme.name))) {
+      continue;
+    }
+
     const existingAnswers = new Set(theme.words.map(w => w.answer.toUpperCase()));
     const seeds = pickSeeds(theme.words, theme.name);
+    const wordNetSeeds = pickWordNetSeeds(theme.words, theme.name);
+    const wikidataSeeds = wordNetSeeds.length > 0 ? wordNetSeeds : seeds;
     let added = 0;
     const addedByStrategy = new Map(DATAMUSE_STRATEGIES.map(strategy => [strategy.name, 0]));
 
     console.log(`\n━━━ ${theme.name} ━━━`);
     console.log(`  Pool: ${theme.words.length} words | Seeds: ${seeds.slice(0, 5).join(', ')}... (${seeds.length} total)`);
 
-    // Add cleaner semantic candidates from curated Wikipedia categories first.
-    try {
-      const wikiCandidates = await fetchWikipediaCategoryWords(theme.name);
-      let wikiAdded = 0;
+    if (ENABLE_WIKIDATA_SOURCE) {
+      try {
+        const wikidataCandidates = await fetchWikidataThemeWords(theme.name, wikidataSeeds);
+        let wikidataAdded = 0;
 
-      for (const candidate of wikiCandidates) {
-        if (added >= MAX_NEW_WORDS_PER_THEME) break;
-        if (wikiAdded >= MAX_WIKIPEDIA_WORDS_PER_THEME) break;
+        for (const candidate of wikidataCandidates) {
+          if (added >= MAX_NEW_WORDS_PER_THEME) break;
+          if (wikidataAdded >= MAX_WIKIDATA_WORDS_PER_THEME) break;
 
-        const word = candidate.word.toUpperCase();
-        if (word.length > MAX_ANSWER_LENGTH_FOR_EASY_POOL) continue;
-        if (hasHardLetterProfile(word)) continue;
-        if (existingAnswers.has(word)) continue;
+          const word = candidate.word.toUpperCase();
+          if (word.length > MAX_ANSWER_LENGTH_FOR_EASY_POOL) continue;
+          if (hasHardLetterProfile(word)) continue;
+          if (existingAnswers.has(word)) continue;
 
-        const clueData = await fetchDatamuseClueForWord(candidate.word);
-        if (!clueData) continue;
+          const clueData = await fetchExactDefinitionForWord(candidate.word);
+          if (!clueData) continue;
 
-        const clueText = clueData.clueText;
-        const hint = clueData.hint;
+          const clueText = clueData.clueText;
+          const hint = clueData.hint;
+          const themeScore = scoreThemeRelevance(
+            theme.name,
+            candidate.word,
+            `${clueText} ${candidate.contextText || ''}`,
+            hint,
+            1.0
+          ) + Math.min(0.18, candidate.weight * 0.05);
+          const clueAccessibility = scoreClueAccessibility(clueText, hint);
 
-        const themeScore = scoreThemeRelevance(
-          theme.name,
-          candidate.word,
-          clueText,
-          hint,
-          1.15
-        ) + Math.min(0.18, candidate.occurrences * 0.04);
-        const clueAccessibility = scoreClueAccessibility(clueText, hint);
+          if (themeScore < 1.16) continue;
+          if (clueAccessibility < MIN_CLUE_ACCESSIBILITY) continue;
 
-        if (clueAccessibility < MIN_CLUE_ACCESSIBILITY) continue;
+          const candidateEntry = {
+            answer: word,
+            clue: clueText,
+            hint
+          };
 
-        if (themeScore < MIN_THEME_RELEVANCE_WIKIPEDIA) continue;
+          if (isLikelyObscureProperNoun(theme.name, word, clueText, hint)) continue;
 
-        const candidateEntry = {
-          answer: word,
-          clue: clueText,
-          hint
-        };
+          const qualityCheck = isWordEntryAcceptable(candidateEntry);
+          if (!qualityCheck.ok) continue;
 
-        if (isLikelyObscureProperNoun(theme.name, word, clueText, hint)) continue;
-
-        const qualityCheck = isWordEntryAcceptable(candidateEntry);
-        if (!qualityCheck.ok) continue;
-
-        theme.words.push({
-          answer: word,
-          clue: clueText,
-          hint,
-          source: 'wikipedia-category',
-          themeScore: Number((themeScore + clueAccessibility * 0.08).toFixed(3))
-        });
-        existingAnswers.add(word);
-        added++;
-        wikiAdded++;
-        totalUpdated++;
-      }
-
-      if (wikiAdded > 0) {
-        console.log(`  Added ${wikiAdded} from Wikipedia categories`);
-      }
-    } catch {
-      // Continue with Datamuse if Wikipedia API is unavailable.
-    }
-
-    for (const seed of seeds) {
-      if (added >= MAX_NEW_WORDS_PER_THEME) break;
-
-      for (const strategy of DATAMUSE_STRATEGIES) {
-        if (added >= MAX_NEW_WORDS_PER_THEME) break;
-        if ((addedByStrategy.get(strategy.name) || 0) >= strategy.maxAddsPerTheme) continue;
-
-        const url = strategy.buildUrl(seed, strategy.maxCandidates);
-        try {
-          const res = await fetch(url);
-          const data = await res.json();
-          const rankedData = [...data]
-            .sort((a, b) => (b.score || 0) - (a.score || 0))
-            .slice(0, strategy.keepTop);
-
-          for (let rankIndex = 0; rankIndex < rankedData.length; rankIndex++) {
-            const d = rankedData[rankIndex];
-            const word = d.word.toUpperCase();
-
-            if (!isValidCrosswordWord(d.word)) continue;
-            if (word.length > MAX_ANSWER_LENGTH_FOR_EASY_POOL) continue;
-            if (hasHardLetterProfile(word)) continue;
-            if (existingAnswers.has(word)) continue;
-
-            if (d.defs && d.defs.length > 0) {
-              const parsedDefs = parseDatamuseDefinitions(d.defs, d.word);
-              if (!parsedDefs) continue;
-
-              const clueText = parsedDefs.clueText;
-              const hint = parsedDefs.hint;
-
-              const themeScore = scoreThemeRelevance(
-                theme.name,
-                d.word,
-                clueText,
-                hint,
-                strategy.baseScore
-              ) + rankAdjustedSourceScore(rankIndex, strategy.rankWeight);
-              const clueAccessibility = scoreClueAccessibility(clueText, hint);
-              const effectiveMinThemeScore = Math.max(MIN_THEME_RELEVANCE, strategy.minThemeScore || 0);
-
-              if (themeScore < effectiveMinThemeScore) continue;
-              if (clueAccessibility < MIN_CLUE_ACCESSIBILITY) continue;
-
-              const candidate = {
-                answer: word,
-                clue: clueText,
-                hint: hint
-              };
-
-              if (isLikelyObscureProperNoun(theme.name, word, clueText, hint)) continue;
-
-              const qualityCheck = isWordEntryAcceptable(candidate);
-              if (!qualityCheck.ok) continue;
-
-              theme.words.push({
-                answer: word,
-                clue: clueText,
-                hint: hint,
-                source: strategy.name,
-                themeScore: Number((themeScore + clueAccessibility * 0.08).toFixed(3))
-              });
-              existingAnswers.add(word);
-              added++;
-              addedByStrategy.set(strategy.name, (addedByStrategy.get(strategy.name) || 0) + 1);
-              totalUpdated++;
-
-              if (added >= MAX_NEW_WORDS_PER_THEME) break;
-            }
-          }
-        } catch {
-          // Silently continue on network errors for individual queries
+          theme.words.push({
+            answer: word,
+            clue: clueText,
+            hint,
+            source: 'wikidata-search',
+            definitionSource: clueData.source,
+            themeScore: Number((themeScore + clueAccessibility * 0.08).toFixed(3))
+          });
+          existingAnswers.add(word);
+          added++;
+          wikidataAdded++;
+          totalUpdated++;
         }
 
-        // Be polite to the API
-        await sleep(100);
+        if (wikidataAdded > 0) {
+          console.log(`  Added ${wikidataAdded} from Wikidata search`);
+        }
+      } catch {
+        // Continue with other sources if Wikidata is unavailable.
+      }
+    }
+
+    // Add cleaner semantic candidates from curated Wikipedia categories first.
+    if (ENABLE_WIKIPEDIA_SOURCE) {
+      try {
+        const wikiCandidates = await fetchWikipediaCategoryWords(theme.name);
+        let wikiAdded = 0;
+
+        for (const candidate of wikiCandidates) {
+          if (added >= MAX_NEW_WORDS_PER_THEME) break;
+          if (wikiAdded >= MAX_WIKIPEDIA_WORDS_PER_THEME) break;
+
+          const word = candidate.word.toUpperCase();
+          if (word.length > MAX_ANSWER_LENGTH_FOR_EASY_POOL) continue;
+          if (hasHardLetterProfile(word)) continue;
+          if (existingAnswers.has(word)) continue;
+
+          const clueData = await fetchExactDefinitionForWord(candidate.word);
+          if (!clueData) continue;
+
+          const clueText = clueData.clueText;
+          const hint = clueData.hint;
+          const wikipediaBaseScore = candidate.depth === 0 ? 1.15 : 1.08;
+
+          const themeScore = scoreThemeRelevance(
+            theme.name,
+            candidate.word,
+            clueText,
+            hint,
+            wikipediaBaseScore
+          ) + Math.min(0.22, candidate.weight * 0.05) - (candidate.depth * 0.04);
+          const clueAccessibility = scoreClueAccessibility(clueText, hint);
+
+          if (clueAccessibility < MIN_CLUE_ACCESSIBILITY) continue;
+          if (themeScore < MIN_THEME_RELEVANCE_WIKIPEDIA) continue;
+
+          const candidateEntry = {
+            answer: word,
+            clue: clueText,
+            hint
+          };
+
+          if (isLikelyObscureProperNoun(theme.name, word, clueText, hint)) continue;
+
+          const qualityCheck = isWordEntryAcceptable(candidateEntry);
+          if (!qualityCheck.ok) continue;
+
+          theme.words.push({
+            answer: word,
+            clue: clueText,
+            hint,
+            source: candidate.source,
+            sourceDepth: candidate.depth,
+            definitionSource: clueData.source,
+            themeScore: Number((themeScore + clueAccessibility * 0.08).toFixed(3))
+          });
+          existingAnswers.add(word);
+          added++;
+          wikiAdded++;
+          totalUpdated++;
+        }
+
+        if (wikiAdded > 0) {
+          console.log(`  Added ${wikiAdded} from deeper Wikipedia categories`);
+        }
+      } catch {
+        // Continue with other sources if Wikipedia API is unavailable.
+      }
+    }
+
+    if (ENABLE_WORDNET_SOURCE && ENABLE_WORDNET_SYNONYMS) {
+      let wordNetAdded = 0;
+      for (const seed of wordNetSeeds) {
+        if (added >= MAX_NEW_WORDS_PER_THEME) break;
+        if (wordNetAdded >= MAX_WORDNET_WORDS_PER_THEME) break;
+
+        const relatedCandidates = await fetchWordNetRelatedWords(seed);
+        for (let rankIndex = 0; rankIndex < relatedCandidates.length; rankIndex++) {
+          if (added >= MAX_NEW_WORDS_PER_THEME) break;
+          if (wordNetAdded >= MAX_WORDNET_WORDS_PER_THEME) break;
+
+          const candidate = relatedCandidates[rankIndex];
+          const word = candidate.word.toUpperCase();
+          if (word.length > MAX_ANSWER_LENGTH_FOR_EASY_POOL) continue;
+          if (hasHardLetterProfile(word)) continue;
+          if (existingAnswers.has(word)) continue;
+
+          const clueData = await fetchExactDefinitionForWord(candidate.word);
+          if (!clueData) continue;
+
+          const clueText = clueData.clueText;
+          const hint = clueData.hint;
+          const partOfSpeechBonus = candidate.pos === 'n'
+            ? 0.08
+            : (candidate.pos === 'a' || candidate.pos === 's' ? 0.05 : 0);
+          const themeScore = scoreThemeRelevance(
+            theme.name,
+            candidate.word,
+            clueText,
+            hint,
+            0.92
+          ) + rankAdjustedSourceScore(rankIndex, 0.22) + partOfSpeechBonus;
+          const clueAccessibility = scoreClueAccessibility(clueText, hint);
+
+          if (themeScore < 1.14) continue;
+          if (clueAccessibility < MIN_CLUE_ACCESSIBILITY) continue;
+
+          const candidateEntry = {
+            answer: word,
+            clue: clueText,
+            hint
+          };
+
+          if (isLikelyObscureProperNoun(theme.name, word, clueText, hint)) continue;
+
+          const qualityCheck = isWordEntryAcceptable(candidateEntry);
+          if (!qualityCheck.ok) continue;
+
+          theme.words.push({
+            answer: word,
+            clue: clueText,
+            hint,
+            source: 'wordnet-synonym',
+            sourceSeed: seed,
+            definitionSource: clueData.source,
+            themeScore: Number((themeScore + clueAccessibility * 0.08).toFixed(3))
+          });
+          existingAnswers.add(word);
+          added++;
+          wordNetAdded++;
+          totalUpdated++;
+        }
+      }
+
+      if (wordNetAdded > 0) {
+        console.log(`  Added ${wordNetAdded} from WordNet synonyms`);
+      }
+    }
+
+    if (ENABLE_DATAMUSE_EXPANSION) {
+      for (const seed of seeds) {
+        if (added >= MAX_NEW_WORDS_PER_THEME) break;
+
+        for (const strategy of DATAMUSE_STRATEGIES) {
+          if (added >= MAX_NEW_WORDS_PER_THEME) break;
+          if ((addedByStrategy.get(strategy.name) || 0) >= strategy.maxAddsPerTheme) continue;
+
+          const url = strategy.buildUrl(seed, strategy.maxCandidates);
+          try {
+            const res = await fetch(url);
+            const data = await res.json();
+            const rankedData = [...data]
+              .sort((a, b) => (b.score || 0) - (a.score || 0))
+              .slice(0, strategy.keepTop);
+
+            for (let rankIndex = 0; rankIndex < rankedData.length; rankIndex++) {
+              const d = rankedData[rankIndex];
+              const word = d.word.toUpperCase();
+
+              if (!isValidCrosswordWord(d.word)) continue;
+              if (word.length > MAX_ANSWER_LENGTH_FOR_EASY_POOL) continue;
+              if (hasHardLetterProfile(word)) continue;
+              if (existingAnswers.has(word)) continue;
+
+              if (d.defs && d.defs.length > 0) {
+                const parsedDefs = parseDatamuseDefinitions(d.defs, d.word);
+                const definitionData = parsedDefs
+                  ? { ...parsedDefs, source: 'datamuse-exact' }
+                  : await fetchWiktionaryDefinitionForWord(d.word);
+                if (!definitionData) continue;
+
+                const clueText = definitionData.clueText;
+                const hint = definitionData.hint;
+
+                const themeScore = scoreThemeRelevance(
+                  theme.name,
+                  d.word,
+                  clueText,
+                  hint,
+                  strategy.baseScore
+                ) + rankAdjustedSourceScore(rankIndex, strategy.rankWeight);
+                const clueAccessibility = scoreClueAccessibility(clueText, hint);
+                const effectiveMinThemeScore = Math.max(MIN_THEME_RELEVANCE, strategy.minThemeScore || 0);
+
+                if (themeScore < effectiveMinThemeScore) continue;
+                if (clueAccessibility < MIN_CLUE_ACCESSIBILITY) continue;
+
+                const candidate = {
+                  answer: word,
+                  clue: clueText,
+                  hint: hint
+                };
+
+                if (isLikelyObscureProperNoun(theme.name, word, clueText, hint)) continue;
+
+                const qualityCheck = isWordEntryAcceptable(candidate);
+                if (!qualityCheck.ok) continue;
+
+                theme.words.push({
+                  answer: word,
+                  clue: clueText,
+                  hint: hint,
+                  source: strategy.name,
+                  definitionSource: definitionData.source,
+                  themeScore: Number((themeScore + clueAccessibility * 0.08).toFixed(3))
+                });
+                existingAnswers.add(word);
+                added++;
+                addedByStrategy.set(strategy.name, (addedByStrategy.get(strategy.name) || 0) + 1);
+                totalUpdated++;
+
+                if (added >= MAX_NEW_WORDS_PER_THEME) break;
+              }
+            }
+          } catch {
+            // Silently continue on network errors for individual queries
+          }
+
+          // Be polite to the API
+          await sleep(100);
+        }
       }
     }
 

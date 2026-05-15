@@ -2,6 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { isWordEntryAcceptable } from './clueQuality.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,6 +19,12 @@ function stripCluePrefix(entry) {
   return entry.replace(/^\d+\.\s*/, '').trim();
 }
 
+function extractClueNumber(entry) {
+  if (typeof entry !== 'string') return null;
+  const match = entry.match(/^(\d+)\.\s*/);
+  return match ? Number(match[1]) : null;
+}
+
 function normalizeClue(clueText) {
   return String(clueText || '')
     .toLowerCase()
@@ -31,6 +38,7 @@ function likelyPluralAnswer(answer) {
   if (value.length < 4) return false;
   if (!value.endsWith('S')) return false;
   if (value.endsWith('SS')) return false;
+  if (value === 'MARS') return false;
   return true;
 }
 
@@ -93,7 +101,7 @@ function clueLooksSimpleNounPhrase(clueText) {
   const blockers = new Set([
     'who', 'which', 'that', 'when', 'where',
     'used', 'using', 'to', 'for', 'of', 'with', 'without', 'between', 'into',
-    'from', 'as', 'by', 'on', 'in', 'at'
+     'from', 'as', 'by', 'on', 'in', 'at', 'across'
   ]);
 
   return !tokens.some(token => blockers.has(token));
@@ -106,22 +114,29 @@ function collectEntries(puzzle) {
   const downClues = Array.isArray(puzzle?.clues?.down) ? puzzle.clues.down : [];
   const acrossAnswers = Array.isArray(puzzle?.answers?.across) ? puzzle.answers.across : [];
   const downAnswers = Array.isArray(puzzle?.answers?.down) ? puzzle.answers.down : [];
+  const hints = puzzle?.hints && typeof puzzle.hints === 'object' ? puzzle.hints : {};
 
   acrossClues.forEach((entry, idx) => {
+    const clueNumber = extractClueNumber(entry);
+    const clueId = `across-${clueNumber ?? idx + 1}`;
     entries.push({
-      clueId: `across-${idx + 1}`,
+      clueId,
       clueText: stripCluePrefix(entry),
       normalizedClue: normalizeClue(stripCluePrefix(entry)),
-      answer: String(acrossAnswers[idx] || '').trim().toUpperCase()
+      answer: String(acrossAnswers[idx] || '').trim().toUpperCase(),
+      hint: String(hints[clueId] || '').trim()
     });
   });
 
   downClues.forEach((entry, idx) => {
+    const clueNumber = extractClueNumber(entry);
+    const clueId = `down-${clueNumber ?? idx + 1}`;
     entries.push({
-      clueId: `down-${idx + 1}`,
+      clueId,
       clueText: stripCluePrefix(entry),
       normalizedClue: normalizeClue(stripCluePrefix(entry)),
-      answer: String(downAnswers[idx] || '').trim().toUpperCase()
+      answer: String(downAnswers[idx] || '').trim().toUpperCase(),
+      hint: String(hints[clueId] || '').trim()
     });
   });
 
@@ -192,6 +207,34 @@ function auditPuzzle(puzzleId, puzzle) {
         type: 'singular-answer-plural-clue',
         puzzleId,
         clue: entry.clueText,
+        entry: { clueId: entry.clueId, answer: entry.answer }
+      });
+    }
+  }
+
+  for (const entry of entries) {
+    if (!entry.answer || !entry.clueText) continue;
+
+    const validation = isWordEntryAcceptable({
+      answer: entry.answer,
+      clue: entry.clueText,
+      hint: entry.hint || ''
+    });
+
+    if (!validation.ok && validation.reason === 'repetitive-reentry-clue') {
+      violations.push({
+        type: 'repetitive-reentry-clue',
+        puzzleId,
+        clue: entry.clueText,
+        entry: { clueId: entry.clueId, answer: entry.answer }
+      });
+    }
+
+    if (entry.hint && !validation.ok && validation.reason === 'hint-duplicate') {
+      violations.push({
+        type: 'clue-hint-echo',
+        puzzleId,
+        clue: `${entry.clueText} || ${entry.hint}`,
         entry: { clueId: entry.clueId, answer: entry.answer }
       });
     }

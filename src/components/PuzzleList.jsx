@@ -5,6 +5,28 @@ import { getBadgeLevel, getBadgeName, getBadgeAsset } from '../utils/badges';
 import { getSolvedClueIds } from '../utils/crossword';
 
 const APPROACHABLE_DIFFICULTIES = new Set(['Easy', 'Normal']);
+const THEME_DISPLAY_ORDER = [
+  'Space & Sky',
+  'Food & Cooking',
+  'Music & Sound',
+  'Ocean & Marine Life',
+  'Sports & Athletics',
+  'Weather & Climate',
+  'Internet & Software',
+  'Space & Astronomy',
+  'Technology & Computing',
+  'Nature & Wilderness',
+  'History & Civilization'
+];
+
+function compareThemeOrder(a, b) {
+  const indexA = THEME_DISPLAY_ORDER.indexOf(a);
+  const indexB = THEME_DISPLAY_ORDER.indexOf(b);
+  const safeIndexA = indexA === -1 ? Number.MAX_SAFE_INTEGER : indexA;
+  const safeIndexB = indexB === -1 ? Number.MAX_SAFE_INTEGER : indexB;
+  if (safeIndexA !== safeIndexB) return safeIndexA - safeIndexB;
+  return String(a).localeCompare(String(b));
+}
 
 function parseVolumeFromId(id) {
   const match = String(id || '').match(/-vol(\d+)$/);
@@ -169,7 +191,9 @@ const PuzzleList = ({ onSelectPuzzle }) => {
       <section className="puzzle-section theme-section">
         <h2 className="section-title">Themes</h2>
         <div className="theme-list">
-          {Object.entries(themesMap).map(([theme, themePuzzles]) => {
+          {Object.entries(themesMap)
+            .sort(([themeA], [themeB]) => compareThemeOrder(themeA, themeB))
+            .map(([theme, themePuzzles]) => {
             const isExpanded = expandedTheme === theme;
             const allCompleted = themePuzzles.filter(p => statuses[p.id] === 'Completed');
             const allActive = themePuzzles.filter(p => statuses[p.id] !== 'Completed');

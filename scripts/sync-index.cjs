@@ -17,7 +17,8 @@ const HARD_QUANTILE = 0.88;
 const RARE_LETTERS = new Set(['J', 'K', 'Q', 'V', 'W', 'X', 'Y', 'Z']);
 const THEME_DIFFICULTY_BIAS = {
   'Ocean & Marine Life': -0.05,
-  'Technology & Computing': -0.04
+  'Internet & Software': -0.04,
+  'Space & Sky': -0.02
 };
 
 const EASY_ABSOLUTE_GATES = {

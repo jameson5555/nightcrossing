@@ -14,6 +14,13 @@ const PUZZLES_DIR = path.join(DATA_DIR, 'puzzles');
 const INDEX_FILE = path.join(DATA_DIR, 'puzzles.json');
 const PUZZLES_PER_SET = 3;
 
+function normalizedThemeKey(themeName) {
+  return String(themeName || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
 function slugifyThemeName(themeName) {
   return String(themeName || '')
     .toLowerCase()
@@ -41,6 +48,15 @@ const ALLOW_WEAK_THEMES = process.argv.includes('--allow-weak-themes');
 const SKIP_PREFLIGHT = process.argv.includes('--skip-preflight');
 const SKIP_ENRICHMENT = process.argv.includes('--skip-enrichment');
 const ALLOW_REPEAT_ANSWERS = process.argv.includes('--allow-repeat-answers');
+const NEW_PUZZLES_PER_THEME = Number.isFinite(Number(process.env.NC_NEW_PUZZLES_PER_THEME))
+  ? Math.max(1, Math.min(12, Number(process.env.NC_NEW_PUZZLES_PER_THEME)))
+  : 3;
+const THEME_FILTER_KEYS = new Set(
+  String(process.env.NC_THEME_FILTER || '')
+    .split(',')
+    .map(themeName => normalizedThemeKey(themeName))
+    .filter(Boolean)
+);
 const MAX_LAYOUT_QUALITY_RETRIES = Number.isFinite(Number(process.env.NC_MAX_LAYOUT_QUALITY_RETRIES))
   ? Math.max(1, Math.min(10, Number(process.env.NC_MAX_LAYOUT_QUALITY_RETRIES)))
   : 5;
@@ -68,6 +84,10 @@ const EASY_STRICT_ATTEMPT_MULTIPLIER = Number.isFinite(Number(process.env.NC_EAS
 const EASY_DEFAULT_FALLBACK_ATTEMPTS = Number.isFinite(Number(process.env.NC_EASY_DEFAULT_FALLBACK_ATTEMPTS))
   ? Math.max(0, Math.min(3, Number(process.env.NC_EASY_DEFAULT_FALLBACK_ATTEMPTS)))
   : 1;
+const ACTIVE_THEMES = THEMES.filter(theme => {
+  if (THEME_FILTER_KEYS.size === 0) return true;
+  return THEME_FILTER_KEYS.has(normalizedThemeKey(theme.name));
+});
 
 const LEXICAL_OBSCURE_SIGNAL_REGEX = /\b(goddess|god|deity|mythological|myth|constellation|kuiper|trojan|tau\s+[a-z]+|mistress\s+of\s+zeus|one\s+of\s+the\s+moons?\s+of\s+(jupiter|saturn|uranus)|aoede|elara|amalthea|hygiea|pegasi|capricorni|ursa\s+major)\b/i;
 
@@ -306,8 +326,12 @@ function passesLayoutQualityGate(metrics, puzzle) {
 }
 
 async function generateStarters() {
-  const NEW_PUZZLES_PER_THEME = 3;
   const historicalConsumedByTheme = new Map();
+
+  if (THEME_FILTER_KEYS.size > 0 && ACTIVE_THEMES.length === 0) {
+    console.error('❌ NC_THEME_FILTER did not match any active themes in scripts/themes.json.');
+    process.exit(2);
+  }
 
   if (!SKIP_ENRICHMENT) {
     console.log('Enrichment step: updating theme pools before generation...');
@@ -336,8 +360,13 @@ async function generateStarters() {
 
   let index = [];
 
+  console.log(`Target puzzles per theme this run: ${NEW_PUZZLES_PER_THEME}`);
+  if (THEME_FILTER_KEYS.size > 0) {
+    console.log(`Theme filter active: ${ACTIVE_THEMES.map(theme => theme.name).join(', ')}`);
+  }
+
   console.log(
-    `Approachable generation mode: easy-first for first ${EASY_FIRST_PASS_VOLUMES_PER_THEME} volume(s) per theme in this run.`
+    `Approachable generation mode: easy-first applies only to volumes 1-${EASY_FIRST_PASS_VOLUMES_PER_THEME} per theme.`
   );
   console.log(
     `Easy strict retries: +${EASY_STRICT_EXTRA_RETRIES}, attempt multiplier: ${EASY_STRICT_ATTEMPT_MULTIPLIER.toFixed(2)}, default fallback attempts: ${EASY_DEFAULT_FALLBACK_ATTEMPTS}.`
@@ -385,7 +414,7 @@ async function generateStarters() {
     }
   }
 
-  for (const theme of THEMES) {
+  for (const theme of ACTIVE_THEMES) {
     const consumedWords = new Set();
     if (REGENERATE && !ALLOW_REPEAT_ANSWERS) {
       const historical = historicalConsumedByTheme.get(theme.name);
@@ -490,8 +519,7 @@ async function generateStarters() {
             let bestFallbackMetrics = null;
             let bestFallbackQuality = null;
             let bestFallbackProfile = 'default';
-            const volumeOffset = i - startVol;
-            const isEasyTargetVolume = volumeOffset < EASY_FIRST_PASS_VOLUMES_PER_THEME;
+            const isEasyTargetVolume = i <= EASY_FIRST_PASS_VOLUMES_PER_THEME;
             const easyStrictAttempts = isEasyTargetVolume
               ? MAX_LAYOUT_QUALITY_RETRIES + EASY_STRICT_EXTRA_RETRIES
               : 0;
@@ -644,7 +672,7 @@ async function generateStarters() {
   }
 
   // Sort index by canonical theme order, then by volume number
-  const themeOrder = THEMES.map(t => t.name);
+  const themeOrder = ACTIVE_THEMES.map(t => t.name);
   index.sort((a, b) => {
     const themeIdxA = themeOrder.indexOf(a.theme);
     const themeIdxB = themeOrder.indexOf(b.theme);
