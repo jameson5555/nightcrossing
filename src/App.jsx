@@ -17,6 +17,8 @@ import {
   loadHintsEmptyTimestamp,
   saveHintsEmptyTimestamp,
   clearHintsEmptyTimestamp,
+  loadFreeHintToastSeen,
+  saveFreeHintToastSeen,
   loadFreeHintClaimed,
   saveFreeHintClaimed,
   resetPuzzleDataIfDatasetChanged
@@ -374,24 +376,28 @@ function App() {
 
   const handleUnlockHint = async () => {
     if (selectedClueId && !unlockedHints.has(selectedClueId)) {
-      const shouldUseFreeHint = !hasUsedFreeHint;
+      const isFirstFreeHintUse = !hasUsedFreeHint;
       const hasAuthoredHint = Boolean(authoredHintText);
+      const hasSeenFreeHintToast = await loadFreeHintToastSeen();
 
-      if (!shouldUseFreeHint && hintsRemaining <= 0) {
+      if (!isFirstFreeHintUse && hintsRemaining <= 0) {
         return;
       }
 
       // If no word-hint exists, spend the free hint on a letter reveal instead.
-      if (!hasAuthoredHint && shouldUseFreeHint) {
+      if (!hasAuthoredHint && isFirstFreeHintUse) {
         const revealed = await handleRevealLetter({ chargeHint: false, closeModal: true });
         if (revealed) {
           setHasUsedFreeHint(true);
           await saveFreeHintClaimed(puzzleData.id, true);
-          setToastInfo({
-            message: 'No clue hint was available, so your free hint revealed a letter.',
-            icon: '✨',
-            type: 'bonus'
-          });
+          if (!hasSeenFreeHintToast) {
+            setToastInfo({
+              message: 'Every puzzle includes one free hint. This puzzle used yours to reveal a letter.',
+              icon: '✨',
+              type: 'bonus'
+            });
+            await saveFreeHintToastSeen(true);
+          }
         }
         return;
       }
@@ -401,14 +407,17 @@ function App() {
         return;
       }
 
-      if (shouldUseFreeHint) {
+      if (isFirstFreeHintUse) {
         setHasUsedFreeHint(true);
         await saveFreeHintClaimed(puzzleData.id, true);
-        setToastInfo({
-          message: 'First hint on this puzzle is free.',
-          icon: '✨',
-          type: 'bonus'
-        });
+        if (!hasSeenFreeHintToast) {
+          setToastInfo({
+            message: 'Every puzzle includes one free hint.',
+            icon: '✨',
+            type: 'bonus'
+          });
+          await saveFreeHintToastSeen(true);
+        }
       } else {
         const newCount = hintsRemaining - 1;
         setHintsRemaining(newCount);

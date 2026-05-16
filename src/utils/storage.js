@@ -141,6 +141,18 @@ export const clearHintsEmptyTimestamp = async () => {
   await Preferences.remove({ key: 'hints_empty_timestamp' });
 };
 
+export const saveFreeHintToastSeen = async (seen) => {
+  await Preferences.set({
+    key: 'free_hint_toast_seen',
+    value: seen ? 'true' : 'false'
+  });
+};
+
+export const loadFreeHintToastSeen = async () => {
+  const { value } = await Preferences.get({ key: 'free_hint_toast_seen' });
+  return value === 'true';
+};
+
 export const saveFreeHintClaimed = async (puzzleId, claimed) => {
   await Preferences.set({
     key: `free_hint_claimed_${puzzleId}`,
