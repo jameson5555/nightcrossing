@@ -42,17 +42,17 @@ const formatApproximateWait = (remainingMs) => {
   const totalMinutes = Math.max(1, Math.ceil(remainingMs / 60000));
 
   if (totalMinutes < 60) {
-    return `about ${totalMinutes}m`;
+    return `${totalMinutes}m`;
   }
 
   const hours = Math.floor(totalMinutes / 60);
   const minutes = totalMinutes % 60;
 
   if (minutes === 0) {
-    return `about ${hours}h`;
+    return `${hours}h`;
   }
 
-  return `about ${hours}h ${minutes}m`;
+  return `${hours}h ${minutes}m`;
 };
 
 const buildOutOfHintsMessage = (emptyTimestamp, cooldownMs) => {

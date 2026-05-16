@@ -124,7 +124,7 @@ html, body {
 .title-clue-id {
   font-size: clamp(0.5rem, 4cqi, 1rem);
   text-transform: uppercase;
-  color: var(--text-primary);
+  color: var(--accent-primary);
   transition: opacity 180ms ease;
   font-weight: 600;
 }
@@ -233,7 +233,7 @@ html, body {
 .floating-clue-text {
   width: 100%;
   color: var(--text-primary);
-  font-size: clamp(0.78rem, 3.2cqi, 0.98rem);
+  font-size: clamp(0.78rem, 3.3cqi, 0.98rem);
   font-weight: 500;
   margin: 0;
   line-height: 1.3;
