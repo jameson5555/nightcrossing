@@ -62,10 +62,10 @@ const SPACE_LAYOUT_OBSCURE_PROPER_NOUN_LOAD = Number.isFinite(Number(process.env
   : 0.2;
 const EASY_PROFILE_MAX_ANSWER_LENGTH = Number.isFinite(Number(process.env.NC_EASY_PROFILE_MAX_ANSWER_LENGTH))
   ? Math.max(6, Math.min(11, Number(process.env.NC_EASY_PROFILE_MAX_ANSWER_LENGTH)))
-  : 9;
+  : 8;
 const EASY_PROFILE_MAX_WORDS = Number.isFinite(Number(process.env.NC_EASY_PROFILE_MAX_WORDS))
   ? Math.max(7, Math.min(10, Number(process.env.NC_EASY_PROFILE_MAX_WORDS)))
-  : 8;
+  : 7;
 const EASY_PROFILE_MAX_LONG_WORDS = Number.isFinite(Number(process.env.NC_EASY_PROFILE_MAX_LONG_WORDS))
   ? Math.max(0, Math.min(3, Number(process.env.NC_EASY_PROFILE_MAX_LONG_WORDS)))
   : 1;

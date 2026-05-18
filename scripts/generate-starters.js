@@ -74,7 +74,7 @@ const MAX_LEXICAL_OBSCURE_SIGNAL_LOAD = Number.isFinite(Number(process.env.NC_MA
   : 0.24;
 const EASY_FIRST_PASS_VOLUMES_PER_THEME = Number.isFinite(Number(process.env.NC_EASY_FIRST_PASS_VOLUMES_PER_THEME))
   ? Math.max(0, Math.min(3, Number(process.env.NC_EASY_FIRST_PASS_VOLUMES_PER_THEME)))
-  : 3;
+  : 1;
 const EASY_STRICT_EXTRA_RETRIES = Number.isFinite(Number(process.env.NC_EASY_STRICT_EXTRA_RETRIES))
   ? Math.max(0, Math.min(8, Number(process.env.NC_EASY_STRICT_EXTRA_RETRIES)))
   : 3;

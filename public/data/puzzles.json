@@ -4,9 +4,9 @@
     "title": "Space & Sky 1",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 10,
-    "rows": 7,
-    "letterCells": 28,
+    "cols": 8,
+    "rows": 10,
+    "letterCells": 32,
     "theme": "Space & Sky",
     "difficulty": "Normal"
   },
@@ -17,29 +17,29 @@
     "date": "Wave 1",
     "cols": 10,
     "rows": 10,
-    "letterCells": 41,
+    "letterCells": 43,
     "theme": "Space & Sky",
-    "difficulty": "Expert"
+    "difficulty": "Hard"
   },
   {
     "id": "space---sky-vol3",
     "title": "Space & Sky 3",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 8,
-    "rows": 10,
-    "letterCells": 35,
+    "cols": 9,
+    "rows": 9,
+    "letterCells": 34,
     "theme": "Space & Sky",
-    "difficulty": "Expert"
+    "difficulty": "Hard"
   },
   {
     "id": "food---cooking-vol1",
     "title": "Food & Cooking 1",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 8,
-    "rows": 10,
-    "letterCells": 35,
+    "cols": 10,
+    "rows": 7,
+    "letterCells": 34,
     "theme": "Food & Cooking",
     "difficulty": "Hard"
   },
@@ -50,7 +50,7 @@
     "date": "Wave 1",
     "cols": 10,
     "rows": 10,
-    "letterCells": 40,
+    "letterCells": 42,
     "theme": "Food & Cooking",
     "difficulty": "Normal"
   },
@@ -61,20 +61,20 @@
     "date": "Wave 1",
     "cols": 9,
     "rows": 10,
-    "letterCells": 32,
+    "letterCells": 38,
     "theme": "Food & Cooking",
-    "difficulty": "Easy"
+    "difficulty": "Hard"
   },
   {
     "id": "music---sound-vol1",
     "title": "Music & Sound 1",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 10,
-    "rows": 9,
-    "letterCells": 37,
+    "cols": 9,
+    "rows": 10,
+    "letterCells": 32,
     "theme": "Music & Sound",
-    "difficulty": "Hard"
+    "difficulty": "Normal"
   },
   {
     "id": "music---sound-vol2",
@@ -83,31 +83,31 @@
     "date": "Wave 1",
     "cols": 10,
     "rows": 10,
-    "letterCells": 34,
+    "letterCells": 42,
     "theme": "Music & Sound",
-    "difficulty": "Normal"
+    "difficulty": "Hard"
   },
   {
     "id": "music---sound-vol3",
     "title": "Music & Sound 3",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 9,
-    "rows": 9,
-    "letterCells": 31,
+    "cols": 10,
+    "rows": 10,
+    "letterCells": 37,
     "theme": "Music & Sound",
-    "difficulty": "Easy"
+    "difficulty": "Normal"
   },
   {
     "id": "ocean---marine-life-vol1",
     "title": "Ocean & Marine Life 1",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 9,
-    "rows": 10,
-    "letterCells": 33,
+    "cols": 10,
+    "rows": 7,
+    "letterCells": 30,
     "theme": "Ocean & Marine Life",
-    "difficulty": "Normal"
+    "difficulty": "Easy"
   },
   {
     "id": "ocean---marine-life-vol2",
@@ -115,7 +115,7 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
-    "rows": 8,
+    "rows": 10,
     "letterCells": 31,
     "theme": "Ocean & Marine Life",
     "difficulty": "Normal"
@@ -125,9 +125,9 @@
     "title": "Ocean & Marine Life 3",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 10,
+    "cols": 9,
     "rows": 10,
-    "letterCells": 36,
+    "letterCells": 30,
     "theme": "Ocean & Marine Life",
     "difficulty": "Normal"
   },
@@ -136,9 +136,9 @@
     "title": "Sports & Athletics 1",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 10,
-    "rows": 10,
-    "letterCells": 39,
+    "cols": 8,
+    "rows": 8,
+    "letterCells": 30,
     "theme": "Sports & Athletics",
     "difficulty": "Easy"
   },
@@ -147,11 +147,11 @@
     "title": "Sports & Athletics 2",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 10,
-    "rows": 10,
-    "letterCells": 45,
+    "cols": 9,
+    "rows": 9,
+    "letterCells": 38,
     "theme": "Sports & Athletics",
-    "difficulty": "Expert"
+    "difficulty": "Hard"
   },
   {
     "id": "sports---athletics-vol3",
@@ -159,19 +159,19 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
-    "rows": 9,
-    "letterCells": 33,
+    "rows": 10,
+    "letterCells": 42,
     "theme": "Sports & Athletics",
-    "difficulty": "Normal"
+    "difficulty": "Expert"
   },
   {
     "id": "weather---climate-vol1",
     "title": "Weather & Climate 1",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 9,
-    "rows": 10,
-    "letterCells": 34,
+    "cols": 8,
+    "rows": 9,
+    "letterCells": 30,
     "theme": "Weather & Climate",
     "difficulty": "Normal"
   },
@@ -180,22 +180,22 @@
     "title": "Weather & Climate 2",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 9,
+    "cols": 10,
     "rows": 9,
-    "letterCells": 34,
+    "letterCells": 36,
     "theme": "Weather & Climate",
-    "difficulty": "Hard"
+    "difficulty": "Normal"
   },
   {
     "id": "weather---climate-vol3",
     "title": "Weather & Climate 3",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 9,
-    "rows": 9,
+    "cols": 10,
+    "rows": 8,
     "letterCells": 33,
     "theme": "Weather & Climate",
-    "difficulty": "Easy"
+    "difficulty": "Expert"
   },
   {
     "id": "internet---software-vol1",
@@ -203,10 +203,10 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
-    "rows": 10,
-    "letterCells": 37,
+    "rows": 8,
+    "letterCells": 28,
     "theme": "Internet & Software",
-    "difficulty": "Normal"
+    "difficulty": "Easy"
   },
   {
     "id": "internet---software-vol2",
@@ -214,8 +214,8 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
-    "rows": 10,
-    "letterCells": 34,
+    "rows": 9,
+    "letterCells": 37,
     "theme": "Internet & Software",
     "difficulty": "Normal"
   },
@@ -224,10 +224,10 @@
     "title": "Internet & Software 3",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 8,
-    "rows": 9,
-    "letterCells": 32,
+    "cols": 10,
+    "rows": 10,
+    "letterCells": 30,
     "theme": "Internet & Software",
-    "difficulty": "Hard"
+    "difficulty": "Normal"
   }
 ]

@@ -22,13 +22,25 @@ const THEME_DIFFICULTY_BIAS = {
 };
 
 const EASY_ABSOLUTE_GATES = {
-  maxAvgWordLength: 5.9,
+  maxAvgWordLength: 5.5,
   maxLongWordCount: 1,
   maxVeryLongWordCount: 0,
   minAvgIntersectionsPerWord: 1.75,
   maxProperNounLoad: 0.22,
   maxClueObscurityLoad: 0.22,
-  minPlacedWords: 7
+  maxPlacedWords: 7
+};
+
+const EXPERT_ABSOLUTE_GATES = {
+  minAvgWordLength: 6.4,
+  minLongWordCount: 2
+};
+
+const AUTO_EXPERT_GATES = {
+  minAvgWordLength: 7,
+  minLongWordCount: 4,
+  minVeryLongWordCount: 1,
+  minVeryLongAvgWordLength: 6.5
 };
 
 const PROPER_NOUN_HINT_REGEX = /\b(god|goddess|deity|constellation|moon|planet|star|satellite|asteroid|myth|mythological|roman|greek)\b/i;
@@ -280,6 +292,10 @@ function computeDifficultyScore(puzzle, cols, rows, letterCells) {
     ? veryLongWordsWithThreePlusCrossings / veryLongWordIndices.length
     : 1;
 
+  const placedWordLoad = clamp((paths.length - 6) / 2, 0, 1);
+  const longWordCountLoad = clamp(longWordIndices.length / 2, 0, 1);
+  const veryLongWordCountLoad = clamp(veryLongWordIndices.length, 0, 1);
+
   const adjacency = paths.map(() => new Set());
   const indexToWords = new Map();
   paths.forEach((path, wordIdx) => {
@@ -322,9 +338,11 @@ function computeDifficultyScore(puzzle, cols, rows, letterCells) {
   score += (1 - longWordTwoPlusRate) * 0.13;
   score += (1 - veryLongWordThreePlusRate) * 0.06;
   score += connected ? 0 : 0.03;
-  score += clamp((paths.length - 8) / 6, 0, 1) * 0.03;
-  score += lexical.longWordLoad * 0.1;
-  score += lexical.veryLongWordLoad * 0.05;
+  score += placedWordLoad * 0.12;
+  score += longWordCountLoad * 0.08;
+  score += veryLongWordCountLoad * 0.05;
+  score += lexical.longWordLoad * 0.07;
+  score += lexical.veryLongWordLoad * 0.03;
   score += lexical.properNounLoad * 0.05;
   score += lexical.clueObscurityLoad * 0.03;
   score += lexical.rareLetterLoad * 0.03;
@@ -498,14 +516,27 @@ function assignDifficultyById(drafts) {
   });
 
   const easyTargetCount = Math.max(1, Math.round(byDifficulty.length * EASY_QUANTILE));
+  const expertTargetCount = Math.max(1, Math.round(byDifficulty.length * (1 - HARD_QUANTILE)));
   const meetsEasyGates = (item) => (
-    item.placedWords >= EASY_ABSOLUTE_GATES.minPlacedWords &&
+    item.placedWords <= EASY_ABSOLUTE_GATES.maxPlacedWords &&
     item.avgWordLength <= EASY_ABSOLUTE_GATES.maxAvgWordLength &&
     item.longWordCount <= EASY_ABSOLUTE_GATES.maxLongWordCount &&
     item.veryLongWordCount <= EASY_ABSOLUTE_GATES.maxVeryLongWordCount &&
     item.avgIntersectionsPerWord >= EASY_ABSOLUTE_GATES.minAvgIntersectionsPerWord &&
     item.properNounLoad <= EASY_ABSOLUTE_GATES.maxProperNounLoad &&
     item.clueObscurityLoad <= EASY_ABSOLUTE_GATES.maxClueObscurityLoad
+  );
+  const meetsExpertGates = (item) => (
+    item.avgWordLength >= EXPERT_ABSOLUTE_GATES.minAvgWordLength &&
+    item.longWordCount >= EXPERT_ABSOLUTE_GATES.minLongWordCount
+  );
+  const meetsAutoExpertGates = (item) => (
+    item.avgWordLength >= AUTO_EXPERT_GATES.minAvgWordLength ||
+    item.longWordCount >= AUTO_EXPERT_GATES.minLongWordCount ||
+    (
+      item.veryLongWordCount >= AUTO_EXPERT_GATES.minVeryLongWordCount &&
+      item.avgWordLength >= AUTO_EXPERT_GATES.minVeryLongAvgWordLength
+    )
   );
 
   const easyIds = new Set(
@@ -515,19 +546,38 @@ function assignDifficultyById(drafts) {
       .map(item => item.id)
   );
 
-  const nonEasy = byDifficulty.filter(item => !easyIds.has(item.id));
-  const nonEasyScores = nonEasy.map(item => item.difficultyScore);
-  const renormalizedNormalQ = (NORMAL_QUANTILE - EASY_QUANTILE) / (1 - EASY_QUANTILE);
-  const renormalizedHardQ = (HARD_QUANTILE - EASY_QUANTILE) / (1 - EASY_QUANTILE);
-  const normalThreshold = quantile(nonEasyScores, renormalizedNormalQ);
-  const hardThreshold = quantile(nonEasyScores, renormalizedHardQ);
+  const autoExpertIds = new Set(
+    byDifficulty
+      .filter(item => !easyIds.has(item.id) && meetsAutoExpertGates(item))
+      .map(item => item.id)
+  );
+
+  const expertIds = new Set(autoExpertIds);
+  const rankedExpertCandidates = [...byDifficulty]
+    .filter(item => !easyIds.has(item.id) && !autoExpertIds.has(item.id) && meetsExpertGates(item))
+    .sort((a, b) => {
+      if (a.difficultyScore !== b.difficultyScore) return b.difficultyScore - a.difficultyScore;
+      return a.id.localeCompare(b.id);
+    });
+
+  const remainingExpertSlots = Math.max(0, expertTargetCount - expertIds.size);
+  rankedExpertCandidates
+    .slice(0, remainingExpertSlots)
+    .forEach(item => expertIds.add(item.id));
+
+  const middleTier = byDifficulty.filter(item => !easyIds.has(item.id) && !expertIds.has(item.id));
+  const middleScores = middleTier.map(item => item.difficultyScore);
+  const renormalizedNormalQ = middleTier.length > 0
+    ? (NORMAL_QUANTILE - EASY_QUANTILE) / (HARD_QUANTILE - EASY_QUANTILE)
+    : 0;
+  const normalThreshold = quantile(middleScores, renormalizedNormalQ);
   const result = new Map();
 
   byDifficulty.forEach((item) => {
-    let label = 'Expert';
+    let label = 'Hard';
     if (easyIds.has(item.id)) label = 'Easy';
+    else if (expertIds.has(item.id)) label = 'Expert';
     else if (item.difficultyScore <= normalThreshold) label = 'Normal';
-    else if (item.difficultyScore <= hardThreshold) label = 'Hard';
     result.set(item.id, label);
   });
 

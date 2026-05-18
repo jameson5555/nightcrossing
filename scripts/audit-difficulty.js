@@ -12,13 +12,13 @@ const PUZZLES_DIR = path.join(DATA_DIR, 'puzzles');
 const INDEX_FILE = path.join(DATA_DIR, 'puzzles.json');
 
 const EASY_ABSOLUTE_GATES = {
-  maxAvgWordLength: 5.9,
+  maxAvgWordLength: 5.5,
   maxLongWordCount: 1,
   maxVeryLongWordCount: 0,
   minAvgIntersectionsPerWord: 1.75,
   maxProperNounLoad: 0.22,
   maxClueObscurityLoad: 0.22,
-  minPlacedWords: 7
+  maxPlacedWords: 7
 };
 
 const PROPER_NOUN_HINT_REGEX = /\b(god|goddess|deity|constellation|moon|planet|star|satellite|asteroid|myth|mythological|roman|greek)\b/i;
@@ -103,7 +103,7 @@ function auditEasyPuzzle(item, puzzle) {
   const avgWordLength = getAvgWordLength(puzzle);
 
   const checks = {
-    minPlacedWords: metrics.placedWords >= EASY_ABSOLUTE_GATES.minPlacedWords,
+    maxPlacedWords: metrics.placedWords <= EASY_ABSOLUTE_GATES.maxPlacedWords,
     maxAvgWordLength: avgWordLength <= EASY_ABSOLUTE_GATES.maxAvgWordLength,
     maxLongWordCount: metrics.longWordCount <= EASY_ABSOLUTE_GATES.maxLongWordCount,
     maxVeryLongWordCount: metrics.veryLongWordCount <= EASY_ABSOLUTE_GATES.maxVeryLongWordCount,
