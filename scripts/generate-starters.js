@@ -6,6 +6,8 @@ import { generateThemedPuzzle, THEMES, scoreWordForTheme } from './proceduralEng
 import { runGenerationPreflight } from './preflight-generation.js';
 import { fetchThemeWords } from './fetch-theme-words.js';
 import { computePuzzleMetrics } from './puzzleMetrics.js';
+import { computeLexicalStatsForAnswers } from './lexicalDifficulty.js';
+import difficultyRubricPkg from './difficultyRubric.cjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,6 +15,8 @@ const DATA_DIR = path.join(__dirname, '../public/data');
 const PUZZLES_DIR = path.join(DATA_DIR, 'puzzles');
 const INDEX_FILE = path.join(DATA_DIR, 'puzzles.json');
 const PUZZLES_PER_SET = 3;
+const EASY_LONG_WORD_LENGTH = 7;
+const { DIFFICULTY_RUBRIC, classifyDifficulty, meetsEasyRubric } = difficultyRubricPkg;
 
 function normalizedThemeKey(themeName) {
   return String(themeName || '')
@@ -30,6 +34,11 @@ function slugifyThemeName(themeName) {
 function buildPuzzleId(themeName, volume, legacyPrefix = false) {
   const prefix = legacyPrefix ? 'starter-' : '';
   return `${prefix}${slugifyThemeName(themeName)}-vol${volume}`;
+}
+
+function parseVolumeFromId(id) {
+  const match = String(id || '').match(/-vol(\d+)$/);
+  return match ? Number(match[1]) : null;
 }
 
 function formatWaveLabel(volume) {
@@ -72,12 +81,40 @@ const MIN_HINT_COVERAGE = Number.isFinite(Number(process.env.NC_MIN_HINT_COVERAG
 const MAX_LEXICAL_OBSCURE_SIGNAL_LOAD = Number.isFinite(Number(process.env.NC_MAX_LEXICAL_OBSCURE_SIGNAL_LOAD))
   ? Math.max(0, Math.min(1, Number(process.env.NC_MAX_LEXICAL_OBSCURE_SIGNAL_LOAD)))
   : 0.24;
+const EASY_TOP_OFF_ENABLED = process.env.NC_ENABLE_EASY_TOP_OFF !== '0';
+const EASY_TOP_OFF_ATTEMPTS_PER_SLOT = Number.isFinite(Number(process.env.NC_EASY_TOP_OFF_ATTEMPTS_PER_SLOT))
+  ? Math.max(1, Math.min(12, Number(process.env.NC_EASY_TOP_OFF_ATTEMPTS_PER_SLOT)))
+  : 6;
+const EASY_TOP_OFF_ATTEMPT_MULTIPLIER = Number.isFinite(Number(process.env.NC_EASY_TOP_OFF_ATTEMPT_MULTIPLIER))
+  ? Math.max(1, Math.min(4, Number(process.env.NC_EASY_TOP_OFF_ATTEMPT_MULTIPLIER)))
+  : 1.8;
+const EASY_TOP_OFF_MAX_REPLACEMENTS = Number.isFinite(Number(process.env.NC_EASY_TOP_OFF_MAX_REPLACEMENTS))
+  ? Math.max(0, Math.min(12, Number(process.env.NC_EASY_TOP_OFF_MAX_REPLACEMENTS)))
+  : 6;
+const EASY_TOP_OFF_MAX_CANDIDATES = Number.isFinite(Number(process.env.NC_EASY_TOP_OFF_MAX_CANDIDATES))
+  ? Math.max(0, Math.min(24, Number(process.env.NC_EASY_TOP_OFF_MAX_CANDIDATES)))
+  : Math.max(3, EASY_TOP_OFF_MAX_REPLACEMENTS * 2);
+const EASY_TOP_OFF_FOCUSED_POOL_MIN = Number.isFinite(Number(process.env.NC_EASY_TOP_OFF_FOCUSED_POOL_MIN))
+  ? Math.max(10, Math.min(80, Number(process.env.NC_EASY_TOP_OFF_FOCUSED_POOL_MIN)))
+  : 18;
 const ACTIVE_THEMES = THEMES.filter(theme => {
   if (THEME_FILTER_KEYS.size === 0) return true;
   return THEME_FILTER_KEYS.has(normalizedThemeKey(theme.name));
 });
 
 const LEXICAL_OBSCURE_SIGNAL_REGEX = /\b(goddess|god|deity|mythological|myth|constellation|kuiper|trojan|tau\s+[a-z]+|mistress\s+of\s+zeus|one\s+of\s+the\s+moons?\s+of\s+(jupiter|saturn|uranus)|aoede|elara|amalthea|hygiea|pegasi|capricorni|ursa\s+major)\b/i;
+const PROPER_NOUN_HINT_REGEX = /\b(god|goddess|deity|constellation|myth|mythological|roman|greek)\b/i;
+const COMMON_CAPITALIZED_THEME_WORDS = new Set(['earth', 'sun', 'moon']);
+const CLUE_OBSCURITY_REGEX = /[;:()]|\b(archaic|obsolete|mythological|technical|primordial|kuiper|trojan|alpha\s+[a-z]+|beta\s+[a-z]+)\b/i;
+
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function safeRatio(numerator, denominator) {
+  if (!Number.isFinite(numerator) || !Number.isFinite(denominator) || denominator <= 0) return 0;
+  return numerator / denominator;
+}
 
 function addPuzzleAnswersToSet(puzzleData, targetSet) {
   if (!puzzleData?.answers) return;
@@ -129,6 +166,335 @@ function computeLexicalObscureSignalLoad(puzzle) {
 
 function stripCluePrefix(entry) {
   return String(entry || '').replace(/^\d+\.\s*/, '').trim();
+}
+
+function collectAnswerTexts(puzzle) {
+  const acrossAnswers = Array.isArray(puzzle?.answers?.across) ? puzzle.answers.across : [];
+  const downAnswers = Array.isArray(puzzle?.answers?.down) ? puzzle.answers.down : [];
+  return [...acrossAnswers, ...downAnswers]
+    .map(answer => String(answer || '').trim())
+    .filter(Boolean);
+}
+
+function hasInnerCapitalizedToken(text) {
+  const value = String(text || '').trim();
+  if (!value) return false;
+
+  let firstWordSkipped = false;
+  const matches = value.match(/\b[A-Z][a-z]{2,}\b/g) || [];
+  for (const token of matches) {
+    if (!firstWordSkipped) {
+      firstWordSkipped = true;
+      continue;
+    }
+    if (COMMON_CAPITALIZED_THEME_WORDS.has(token.toLowerCase())) {
+      continue;
+    }
+    return true;
+  }
+
+  return false;
+}
+
+function collectEasyTextLoads(puzzle) {
+  const clueTexts = [
+    ...(Array.isArray(puzzle?.clues?.across) ? puzzle.clues.across : []),
+    ...(Array.isArray(puzzle?.clues?.down) ? puzzle.clues.down : [])
+  ].map(stripCluePrefix).filter(Boolean);
+  const hintTexts = Object.values(puzzle?.hints || {}).map(value => String(value || '').trim()).filter(Boolean);
+  const totalTextItems = clueTexts.length + hintTexts.length;
+
+  let properNounHits = 0;
+  let obscureTextHits = 0;
+
+  for (const text of [...clueTexts, ...hintTexts]) {
+    if (PROPER_NOUN_HINT_REGEX.test(text) || hasInnerCapitalizedToken(text)) {
+      properNounHits += 1;
+    }
+    if (CLUE_OBSCURITY_REGEX.test(text)) {
+      obscureTextHits += 1;
+    }
+  }
+
+  return {
+    properNounLoad: clamp(safeRatio(properNounHits, totalTextItems) / 0.55, 0, 1),
+    clueObscurityLoad: clamp(safeRatio(obscureTextHits, totalTextItems) / 0.55, 0, 1)
+  };
+}
+
+async function buildDifficultyProfile(puzzle) {
+  const answers = collectAnswerTexts(puzzle);
+  const metrics = computePuzzleMetrics(puzzle);
+  const lexicalStats = await computeLexicalStatsForAnswers(answers);
+  const avgWordLength = answers.reduce((sum, word) => sum + String(word).length, 0) / Math.max(1, answers.length);
+  const easyLongWordCount = answers.filter(word => String(word).length >= EASY_LONG_WORD_LENGTH).length;
+  const textLoads = collectEasyTextLoads(puzzle);
+
+  return {
+    placedWords: metrics.placedWords,
+    avgWordLength,
+    easyLongWordCount,
+    longWordCount: metrics.longWordCount,
+    veryLongWordCount: metrics.veryLongWordCount,
+    avgIntersectionsPerWord: metrics.avgIntersectionsPerWord,
+    properNounLoad: textLoads.properNounLoad,
+    clueObscurityLoad: textLoads.clueObscurityLoad,
+    lexicalDifficultyLoad: lexicalStats.lexicalDifficultyLoad,
+    avgZipfFrequency: lexicalStats.avgZipfFrequency,
+    rareAnswerShare: lexicalStats.rareAnswerShare,
+    difficultAnswerShare: lexicalStats.difficultAnswerShare
+  };
+}
+
+function collectEasyFailures(profile) {
+  const failures = [];
+  if (profile.placedWords > DIFFICULTY_RUBRIC.easy.maxPlacedWords) failures.push(`placed>${DIFFICULTY_RUBRIC.easy.maxPlacedWords}`);
+  if (profile.avgWordLength > DIFFICULTY_RUBRIC.easy.maxAvgWordLength) failures.push(`avgLen>${DIFFICULTY_RUBRIC.easy.maxAvgWordLength}`);
+  if (profile.easyLongWordCount > DIFFICULTY_RUBRIC.easy.maxEasyLongWordCount) failures.push(`long7>${DIFFICULTY_RUBRIC.easy.maxEasyLongWordCount}`);
+  if (profile.longWordCount > DIFFICULTY_RUBRIC.easy.maxLongWordCount) failures.push(`long8>${DIFFICULTY_RUBRIC.easy.maxLongWordCount}`);
+  if (profile.veryLongWordCount > DIFFICULTY_RUBRIC.easy.maxVeryLongWordCount) failures.push(`long10>${DIFFICULTY_RUBRIC.easy.maxVeryLongWordCount}`);
+  if (profile.avgIntersectionsPerWord < DIFFICULTY_RUBRIC.easy.minAvgIntersectionsPerWord) failures.push(`intersections<${DIFFICULTY_RUBRIC.easy.minAvgIntersectionsPerWord}`);
+  if (profile.properNounLoad > DIFFICULTY_RUBRIC.easy.maxProperNounLoad) failures.push(`proper>${DIFFICULTY_RUBRIC.easy.maxProperNounLoad}`);
+  if (profile.clueObscurityLoad > DIFFICULTY_RUBRIC.easy.maxClueObscurityLoad) failures.push(`obscure>${DIFFICULTY_RUBRIC.easy.maxClueObscurityLoad}`);
+  if (profile.lexicalDifficultyLoad > DIFFICULTY_RUBRIC.easy.maxLexicalDifficultyLoad) failures.push(`lexical>${DIFFICULTY_RUBRIC.easy.maxLexicalDifficultyLoad}`);
+  return failures;
+}
+
+function scoreEasyMismatch(profile) {
+  return (
+    Math.max(0, profile.placedWords - DIFFICULTY_RUBRIC.easy.maxPlacedWords) * 2.5 +
+    Math.max(0, profile.avgWordLength - DIFFICULTY_RUBRIC.easy.maxAvgWordLength) * 4 +
+    Math.max(0, profile.easyLongWordCount - DIFFICULTY_RUBRIC.easy.maxEasyLongWordCount) * 2.75 +
+    Math.max(0, profile.longWordCount - DIFFICULTY_RUBRIC.easy.maxLongWordCount) * 3 +
+    Math.max(0, profile.veryLongWordCount - DIFFICULTY_RUBRIC.easy.maxVeryLongWordCount) * 4 +
+    Math.max(0, DIFFICULTY_RUBRIC.easy.minAvgIntersectionsPerWord - profile.avgIntersectionsPerWord) * 4 +
+    Math.max(0, profile.properNounLoad - DIFFICULTY_RUBRIC.easy.maxProperNounLoad) * 2 +
+    Math.max(0, profile.clueObscurityLoad - DIFFICULTY_RUBRIC.easy.maxClueObscurityLoad) * 2 +
+    Math.max(0, profile.lexicalDifficultyLoad - DIFFICULTY_RUBRIC.easy.maxLexicalDifficultyLoad) * 3
+  );
+}
+
+function getThemePuzzleFiles(themeName) {
+  const themeSlug = slugifyThemeName(themeName);
+  const themePrefix = `${themeSlug}-vol`;
+  const legacyThemePrefix = `starter-${themeSlug}-vol`;
+  return fs.readdirSync(PUZZLES_DIR)
+    .filter(f => f.startsWith(themePrefix) || f.startsWith(legacyThemePrefix));
+}
+
+function buildThemeConsumedWords(themeName, historicalConsumedByTheme, excludedIds = new Set()) {
+  const consumedWords = new Set();
+
+  if (!ALLOW_REPEAT_ANSWERS) {
+    const historical = historicalConsumedByTheme.get(themeName);
+    if (historical) {
+      for (const answer of historical) consumedWords.add(answer);
+    }
+  }
+
+  for (const fileName of getThemePuzzleFiles(themeName)) {
+    const fileId = fileName.replace(/\.json$/, '');
+    if (excludedIds.has(fileId)) continue;
+    try {
+      const puzzle = JSON.parse(fs.readFileSync(path.join(PUZZLES_DIR, fileName), 'utf8'));
+      addPuzzleAnswersToSet(puzzle, consumedWords);
+    } catch {
+      // Ignore malformed puzzle files while rebuilding the consumed-word set.
+    }
+  }
+
+  return consumedWords;
+}
+
+function getWordAnswerLength(word) {
+  return String(word?.answer || '').trim().length;
+}
+
+function getWordZipfFrequency(word) {
+  const value = Number(word?.zipfFrequency);
+  return Number.isFinite(value) ? value : -5;
+}
+
+function buildEasyFocusedWordPool(themeName, availableWords) {
+  const scored = [...availableWords]
+    .map(word => {
+      const len = getWordAnswerLength(word);
+      const zipf = getWordZipfFrequency(word);
+      const themeScore = scoreWordForTheme(themeName, word);
+      const frequencyBand = String(word?.frequencyBand || '').toLowerCase();
+      const obscurityPenalty = frequencyBand === 'obscure' ? 2.4 : frequencyBand === 'rare' ? 1.2 : 0;
+      const easyScore = (themeScore * 5.2) + (Math.min(zipf, 5.5) * 1.35) - (Math.max(0, len - 5) * 1.8) - (Math.max(0, len - 7) * 2.2) - obscurityPenalty;
+      return { word, len, zipf, easyScore, themeScore };
+    })
+    .sort((a, b) => b.easyScore - a.easyScore || b.themeScore - a.themeScore || a.len - b.len || b.zipf - a.zipf);
+
+  const stagedPools = [
+    scored.filter(item => item.len <= 8 && item.zipf >= 3.4),
+    scored.filter(item => item.len <= 8 && item.zipf >= 2.8),
+    scored.filter(item => item.len <= 8),
+    scored.filter(item => item.len <= 9),
+    scored
+  ];
+
+  const minimumPoolSize = Math.min(EASY_TOP_OFF_FOCUSED_POOL_MIN, scored.length);
+  const selected = stagedPools.find(pool => pool.length >= minimumPoolSize) || scored;
+  return selected.map(item => item.word);
+}
+
+async function analyzeGeneratedBatchDifficulty(index, generatedIdsThisRun) {
+  const labelRank = { Normal: 0, Hard: 1, Expert: 2 };
+  const generatedEntries = index.filter(entry => generatedIdsThisRun.has(entry.id));
+  const labels = [];
+  const candidates = [];
+
+  for (const entry of generatedEntries) {
+    const filePath = path.join(PUZZLES_DIR, `${entry.id}.json`);
+    if (!fs.existsSync(filePath)) continue;
+
+    const puzzle = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    const profile = await buildDifficultyProfile(puzzle);
+    const label = classifyDifficulty(profile);
+    const easy = meetsEasyRubric(profile);
+
+    labels.push(label);
+
+    if (!easy) {
+      candidates.push({
+        id: entry.id,
+        theme: entry.theme,
+        volume: parseVolumeFromId(entry.id) || Number.MAX_SAFE_INTEGER,
+        label,
+        failures: collectEasyFailures(profile),
+        easyMissScore: scoreEasyMismatch(profile),
+        labelRank: labelRank[label] ?? 3
+      });
+    }
+  }
+
+  candidates.sort((a, b) =>
+    a.easyMissScore - b.easyMissScore ||
+    a.failures.length - b.failures.length ||
+    a.labelRank - b.labelRank ||
+    a.volume - b.volume ||
+    a.theme.localeCompare(b.theme)
+  );
+
+  return {
+    easyCount: labels.filter(label => label === 'Easy').length,
+    generatedCount: labels.length,
+    candidates
+  };
+}
+
+async function tryEasyTopOffReplacement(candidate, historicalConsumedByTheme) {
+  const theme = THEMES.find(item => item.name === candidate.theme);
+  if (!theme) {
+    return { replaced: false, reason: 'missing-theme' };
+  }
+
+  const volume = parseVolumeFromId(candidate.id);
+  if (!volume) {
+    return { replaced: false, reason: 'missing-volume' };
+  }
+
+  const consumedWords = buildThemeConsumedWords(theme.name, historicalConsumedByTheme, new Set([candidate.id]));
+  const availableWords = theme.words.filter(word => !consumedWords.has(String(word.answer || '').toUpperCase()));
+  const focusedWords = buildEasyFocusedWordPool(theme.name, availableWords);
+
+  if (focusedWords.length < 10) {
+    return { replaced: false, reason: 'insufficient-pool' };
+  }
+
+  let bestNearMiss = null;
+
+  for (let attempt = 1; attempt <= EASY_TOP_OFF_ATTEMPTS_PER_SLOT; attempt++) {
+    let generated;
+    try {
+      generated = generateThemedPuzzle(candidate.id, theme.name, focusedWords, { attemptMultiplier: EASY_TOP_OFF_ATTEMPT_MULTIPLIER });
+    } catch {
+      continue;
+    }
+
+    const quality = passesLayoutQualityGate(computePuzzleMetrics(generated.puzzle), generated.puzzle);
+    if (!quality.duplicateClueGate) {
+      continue;
+    }
+
+    const profile = await buildDifficultyProfile(generated.puzzle);
+    const failures = collectEasyFailures(profile);
+    const nearMiss = {
+      failures,
+      easyMissScore: scoreEasyMismatch(profile),
+      attempt,
+      qualityAccepted: quality.accepted
+    };
+
+    if (!bestNearMiss || nearMiss.easyMissScore < bestNearMiss.easyMissScore) {
+      bestNearMiss = nearMiss;
+    }
+
+    if (!quality.accepted || !meetsEasyRubric(profile)) {
+      continue;
+    }
+
+    generated.puzzle.title = `${theme.name} ${volume}`;
+    generated.puzzle.date = formatWaveLabel(volume) || `Wave ${volume}`;
+    fs.writeFileSync(path.join(PUZZLES_DIR, `${candidate.id}.json`), JSON.stringify(generated.puzzle, null, 2));
+
+    return { replaced: true, attempt, profile, quality };
+  }
+
+  return { replaced: false, reason: 'no-easy-candidate', bestNearMiss };
+}
+
+async function runEasyTopOffPass(index, generatedIdsThisRun, historicalConsumedByTheme) {
+  if (!EASY_TOP_OFF_ENABLED || THEME_FILTER_KEYS.size > 0 || generatedIdsThisRun.size === 0) {
+    return;
+  }
+
+  let analysis = await analyzeGeneratedBatchDifficulty(index, generatedIdsThisRun);
+  const minEasy = DIFFICULTY_RUBRIC.batchSpread.minEasy || 0;
+
+  if (analysis.generatedCount === 0 || analysis.easyCount >= minEasy) {
+    return;
+  }
+
+  console.log(`\nEasy top-off: ${analysis.easyCount}/${analysis.generatedCount} generated puzzle(s) currently meet the Easy rubric.`);
+
+  const attemptedIds = new Set();
+  let replacements = 0;
+  let attemptedCandidates = 0;
+
+  while (
+    analysis.easyCount < minEasy &&
+    replacements < EASY_TOP_OFF_MAX_REPLACEMENTS &&
+    attemptedCandidates < EASY_TOP_OFF_MAX_CANDIDATES
+  ) {
+    const candidate = analysis.candidates.find(item => !attemptedIds.has(item.id));
+    if (!candidate) break;
+
+    attemptedIds.add(candidate.id);
+    attemptedCandidates += 1;
+    const result = await tryEasyTopOffReplacement(candidate, historicalConsumedByTheme);
+
+    if (!result.replaced) {
+      const why = result.bestNearMiss?.failures?.length
+        ? result.bestNearMiss.failures.join(', ')
+        : result.reason;
+      console.log(`  ↷ Easy top-off kept ${candidate.id}; closest retry still failed ${why}.`);
+      continue;
+    }
+
+    replacements += 1;
+    console.log(`  ✨ Easy top-off replaced ${candidate.id} after ${result.attempt} attempt(s).`);
+    analysis = await analyzeGeneratedBatchDifficulty(index, generatedIdsThisRun);
+  }
+
+  if (analysis.easyCount >= minEasy) {
+    console.log(`  ✅ Easy top-off reached ${analysis.easyCount} Easy puzzle(s) in this generated batch.`);
+  } else {
+    console.warn(`  ⚠️ Easy top-off ended at ${analysis.easyCount}/${minEasy} Easy puzzle(s) in this generated batch after ${attemptedCandidates} candidate check(s).`);
+  }
 }
 
 function likelyPluralAnswer(answer) {
@@ -315,6 +681,7 @@ function passesLayoutQualityGate(metrics, puzzle) {
 
 async function generateStarters() {
   const historicalConsumedByTheme = new Map();
+  const generatedIdsThisRun = new Set();
 
   if (THEME_FILTER_KEYS.size > 0 && ACTIVE_THEMES.length === 0) {
     console.error('❌ NC_THEME_FILTER did not match any active themes in scripts/themes.json.');
@@ -469,6 +836,7 @@ async function generateStarters() {
                   existing.answers.down.forEach(a => consumedWords.add(a.toUpperCase()));
                 }
                 index.push({ id: existing.id, title: existing.title, author: existing.author, date: existing.date, cols: existing.size.cols, rows: existing.size.rows, theme: existing.theme });
+                generatedIdsThisRun.add(existing.id);
                 console.log(`  ⏩ ${id} already exists on disk, added to index.`);
                 continue;
               } catch(e) { /* corrupt file, regenerate */ }
@@ -586,6 +954,7 @@ async function generateStarters() {
               rows: puzzle.size.rows,
               theme: puzzle.theme
             });
+            generatedIdsThisRun.add(puzzle.id);
             
             const longRatePct = (generatedMetrics.longWordTwoPlusRate * 100).toFixed(0);
             const veryLongRatePct = (generatedMetrics.veryLongWordThreePlusRate * 100).toFixed(0);
@@ -611,10 +980,13 @@ async function generateStarters() {
       try {
         const p = JSON.parse(fs.readFileSync(path.join(PUZZLES_DIR, f), 'utf8'));
         index.push({ id: p.id, title: p.title, author: p.author, date: p.date, cols: p.size.cols, rows: p.size.rows, theme: p.theme });
+        generatedIdsThisRun.add(p.id);
         console.log(`  📎 Reconciled ${fId} into index.`);
       } catch(e) { /* skip corrupt */ }
     }
   }
+
+  await runEasyTopOffPass(index, generatedIdsThisRun, historicalConsumedByTheme);
 
   // Sort index by canonical theme order, then by volume number
   const themeOrder = ACTIVE_THEMES.map(t => t.name);
