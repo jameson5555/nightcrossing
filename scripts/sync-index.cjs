@@ -2,6 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const { classifyDifficulty, summarizeDifficultySpread } = require('./difficultyRubric.cjs');
 
 const DATA_DIR = path.join(__dirname, '../public/data');
 const PUZZLES_DIR = path.join(DATA_DIR, 'puzzles');
@@ -11,39 +12,10 @@ const THEMES_FILE = path.join(__dirname, 'themes.json');
 const PUZZLES_PER_SET = 3;
 const LONG_WORD_LENGTH = 8;
 const VERY_LONG_WORD_LENGTH = 10;
-const EASY_QUANTILE = 0.2;
-const NORMAL_QUANTILE = 0.65;
-const HARD_QUANTILE = 0.88;
 const RARE_LETTERS = new Set(['J', 'K', 'Q', 'V', 'W', 'X', 'Y', 'Z']);
-const THEME_DIFFICULTY_BIAS = {
-  'Ocean & Marine Life': -0.05,
-  'Internet & Software': -0.04,
-  'Space & Sky': -0.02
-};
 
-const EASY_ABSOLUTE_GATES = {
-  maxAvgWordLength: 5.5,
-  maxLongWordCount: 1,
-  maxVeryLongWordCount: 0,
-  minAvgIntersectionsPerWord: 1.75,
-  maxProperNounLoad: 0.22,
-  maxClueObscurityLoad: 0.22,
-  maxPlacedWords: 7
-};
-
-const EXPERT_ABSOLUTE_GATES = {
-  minAvgWordLength: 6.4,
-  minLongWordCount: 2
-};
-
-const AUTO_EXPERT_GATES = {
-  minAvgWordLength: 7,
-  minLongWordCount: 4,
-  minVeryLongWordCount: 1,
-  minVeryLongAvgWordLength: 6.5
-};
-
-const PROPER_NOUN_HINT_REGEX = /\b(god|goddess|deity|constellation|moon|planet|star|satellite|asteroid|myth|mythological|roman|greek)\b/i;
+const PROPER_NOUN_HINT_REGEX = /\b(god|goddess|deity|constellation|myth|mythological|roman|greek)\b/i;
+const COMMON_CAPITALIZED_THEME_WORDS = new Set(['earth', 'sun', 'moon']);
 const CLUE_OBSCURITY_REGEX = /[;:()]|\b(archaic|obsolete|mythological|technical|primordial|kuiper|trojan|alpha\s+[a-z]+|beta\s+[a-z]+)\b/i;
 
 function parseVolumeFromId(id) {
@@ -98,6 +70,9 @@ function hasInnerCapitalizedToken(text) {
   for (const token of matches) {
     if (!firstWordSkipped) {
       firstWordSkipped = true;
+      continue;
+    }
+    if (COMMON_CAPITALIZED_THEME_WORDS.has(token.toLowerCase())) {
       continue;
     }
     return true;
@@ -497,110 +472,11 @@ function computeDifficultyProfile(puzzle, cols, rows, letterCells) {
   };
 }
 
-function quantile(sortedValues, q) {
-  if (!Array.isArray(sortedValues) || sortedValues.length === 0) return 0;
-  const clampedQ = clamp(q, 0, 1);
-  const position = (sortedValues.length - 1) * clampedQ;
-  const lower = Math.floor(position);
-  const upper = Math.ceil(position);
-  if (lower === upper) return sortedValues[lower];
-
-  const weight = position - lower;
-  return (sortedValues[lower] * (1 - weight)) + (sortedValues[upper] * weight);
-}
-
 function assignDifficultyById(drafts) {
-  const byDifficulty = [...drafts].sort((a, b) => {
-    if (a.difficultyScore !== b.difficultyScore) return a.difficultyScore - b.difficultyScore;
-    return a.id.localeCompare(b.id);
-  });
-
-  const easyTargetCount = Math.max(1, Math.round(byDifficulty.length * EASY_QUANTILE));
-  const expertTargetCount = Math.max(1, Math.round(byDifficulty.length * (1 - HARD_QUANTILE)));
-  const meetsEasyGates = (item) => (
-    item.placedWords <= EASY_ABSOLUTE_GATES.maxPlacedWords &&
-    item.avgWordLength <= EASY_ABSOLUTE_GATES.maxAvgWordLength &&
-    item.longWordCount <= EASY_ABSOLUTE_GATES.maxLongWordCount &&
-    item.veryLongWordCount <= EASY_ABSOLUTE_GATES.maxVeryLongWordCount &&
-    item.avgIntersectionsPerWord >= EASY_ABSOLUTE_GATES.minAvgIntersectionsPerWord &&
-    item.properNounLoad <= EASY_ABSOLUTE_GATES.maxProperNounLoad &&
-    item.clueObscurityLoad <= EASY_ABSOLUTE_GATES.maxClueObscurityLoad
-  );
-  const meetsExpertGates = (item) => (
-    item.avgWordLength >= EXPERT_ABSOLUTE_GATES.minAvgWordLength &&
-    item.longWordCount >= EXPERT_ABSOLUTE_GATES.minLongWordCount
-  );
-  const meetsAutoExpertGates = (item) => (
-    item.avgWordLength >= AUTO_EXPERT_GATES.minAvgWordLength ||
-    item.longWordCount >= AUTO_EXPERT_GATES.minLongWordCount ||
-    (
-      item.veryLongWordCount >= AUTO_EXPERT_GATES.minVeryLongWordCount &&
-      item.avgWordLength >= AUTO_EXPERT_GATES.minVeryLongAvgWordLength
-    )
-  );
-
-  const easyIds = new Set(
-    byDifficulty
-      .filter(meetsEasyGates)
-      .slice(0, easyTargetCount)
-      .map(item => item.id)
-  );
-
-  const autoExpertIds = new Set(
-    byDifficulty
-      .filter(item => !easyIds.has(item.id) && meetsAutoExpertGates(item))
-      .map(item => item.id)
-  );
-
-  const expertIds = new Set(autoExpertIds);
-  const rankedExpertCandidates = [...byDifficulty]
-    .filter(item => !easyIds.has(item.id) && !autoExpertIds.has(item.id) && meetsExpertGates(item))
-    .sort((a, b) => {
-      if (a.difficultyScore !== b.difficultyScore) return b.difficultyScore - a.difficultyScore;
-      return a.id.localeCompare(b.id);
-    });
-
-  const remainingExpertSlots = Math.max(0, expertTargetCount - expertIds.size);
-  rankedExpertCandidates
-    .slice(0, remainingExpertSlots)
-    .forEach(item => expertIds.add(item.id));
-
-  const middleTier = byDifficulty.filter(item => !easyIds.has(item.id) && !expertIds.has(item.id));
-  const middleScores = middleTier.map(item => item.difficultyScore);
-  const renormalizedNormalQ = middleTier.length > 0
-    ? (NORMAL_QUANTILE - EASY_QUANTILE) / (HARD_QUANTILE - EASY_QUANTILE)
-    : 0;
-  const normalThreshold = quantile(middleScores, renormalizedNormalQ);
   const result = new Map();
-
-  byDifficulty.forEach((item) => {
-    let label = 'Hard';
-    if (easyIds.has(item.id)) label = 'Easy';
-    else if (expertIds.has(item.id)) label = 'Expert';
-    else if (item.difficultyScore <= normalThreshold) label = 'Normal';
-    result.set(item.id, label);
+  drafts.forEach((item) => {
+    result.set(item.id, classifyDifficulty(item));
   });
-
-  // Onboarding guardrail: keep the first volume per theme below Expert.
-  const byTheme = new Map();
-  for (const item of byDifficulty) {
-    if (!byTheme.has(item.theme)) byTheme.set(item.theme, []);
-    byTheme.get(item.theme).push(item);
-  }
-
-  for (const items of byTheme.values()) {
-    const ordered = [...items].sort((a, b) => {
-      const volA = parseVolumeFromId(a.id) ?? Number.MAX_SAFE_INTEGER;
-      const volB = parseVolumeFromId(b.id) ?? Number.MAX_SAFE_INTEGER;
-      return volA - volB;
-    });
-    if (ordered.length === 0) continue;
-
-    const first = ordered[0];
-    if (result.get(first.id) === 'Expert') {
-      result.set(first.id, 'Hard');
-    }
-  }
 
   return result;
 }
@@ -638,9 +514,7 @@ function syncIndex() {
     }
 
     const profile = computeDifficultyProfile(puzzle, cols, rows, letterCells);
-    const baseDifficultyScore = profile.score;
-    const themeBias = THEME_DIFFICULTY_BIAS[puzzle.theme || ''] || 0;
-    const difficultyScore = clamp(baseDifficultyScore + themeBias, 0, 1);
+    const difficultyScore = profile.score;
 
     entryDrafts.push({
       id,
@@ -679,6 +553,8 @@ function syncIndex() {
     difficulty: difficultyById.get(draft.id) || draft.existingDifficulty || 'Normal'
   }));
 
+  const spread = summarizeDifficultySpread(entries.map(entry => entry.difficulty));
+
   const themeOrder = loadThemeOrder();
   const themeOrderMap = new Map(themeOrder.map((name, idx) => [name, idx]));
 
@@ -705,6 +581,10 @@ function syncIndex() {
   fs.writeFileSync(META_FILE, JSON.stringify(meta, null, 2));
   console.log(`Wrote ${entries.length} entries to ${INDEX_FILE}`);
   console.log(`Wrote dataset version ${version} to ${META_FILE}`);
+  console.log(`Difficulty spread: Easy ${spread.counts.Easy || 0}, Normal ${spread.counts.Normal || 0}, Hard ${spread.counts.Hard || 0}, Expert ${spread.counts.Expert || 0}`);
+  if (!spread.meetsMinimumSpread) {
+    console.warn('Difficulty spread is below the target minimum of 2 Easy and 2 Expert puzzles.');
+  }
 }
 
 syncIndex();

@@ -72,18 +72,6 @@ const MIN_HINT_COVERAGE = Number.isFinite(Number(process.env.NC_MIN_HINT_COVERAG
 const MAX_LEXICAL_OBSCURE_SIGNAL_LOAD = Number.isFinite(Number(process.env.NC_MAX_LEXICAL_OBSCURE_SIGNAL_LOAD))
   ? Math.max(0, Math.min(1, Number(process.env.NC_MAX_LEXICAL_OBSCURE_SIGNAL_LOAD)))
   : 0.24;
-const EASY_FIRST_PASS_VOLUMES_PER_THEME = Number.isFinite(Number(process.env.NC_EASY_FIRST_PASS_VOLUMES_PER_THEME))
-  ? Math.max(0, Math.min(3, Number(process.env.NC_EASY_FIRST_PASS_VOLUMES_PER_THEME)))
-  : 1;
-const EASY_STRICT_EXTRA_RETRIES = Number.isFinite(Number(process.env.NC_EASY_STRICT_EXTRA_RETRIES))
-  ? Math.max(0, Math.min(8, Number(process.env.NC_EASY_STRICT_EXTRA_RETRIES)))
-  : 3;
-const EASY_STRICT_ATTEMPT_MULTIPLIER = Number.isFinite(Number(process.env.NC_EASY_STRICT_ATTEMPT_MULTIPLIER))
-  ? Math.max(1, Math.min(4, Number(process.env.NC_EASY_STRICT_ATTEMPT_MULTIPLIER)))
-  : 1.8;
-const EASY_DEFAULT_FALLBACK_ATTEMPTS = Number.isFinite(Number(process.env.NC_EASY_DEFAULT_FALLBACK_ATTEMPTS))
-  ? Math.max(0, Math.min(3, Number(process.env.NC_EASY_DEFAULT_FALLBACK_ATTEMPTS)))
-  : 1;
 const ACTIVE_THEMES = THEMES.filter(theme => {
   if (THEME_FILTER_KEYS.size === 0) return true;
   return THEME_FILTER_KEYS.has(normalizedThemeKey(theme.name));
@@ -364,13 +352,6 @@ async function generateStarters() {
   if (THEME_FILTER_KEYS.size > 0) {
     console.log(`Theme filter active: ${ACTIVE_THEMES.map(theme => theme.name).join(', ')}`);
   }
-
-  console.log(
-    `Approachable generation mode: easy-first applies only to volumes 1-${EASY_FIRST_PASS_VOLUMES_PER_THEME} per theme.`
-  );
-  console.log(
-    `Easy strict retries: +${EASY_STRICT_EXTRA_RETRIES}, attempt multiplier: ${EASY_STRICT_ATTEMPT_MULTIPLIER.toFixed(2)}, default fallback attempts: ${EASY_DEFAULT_FALLBACK_ATTEMPTS}.`
-  );
   
   if (REGENERATE) {
     if (!ALLOW_REPEAT_ANSWERS) {
@@ -514,44 +495,17 @@ async function generateStarters() {
             let generatedMetrics = null;
             let generatedHintCoverage = null;
             let generatedQuality = null;
-            let generatedProfileUsed = 'default';
             let bestFallbackCandidate = null;
             let bestFallbackMetrics = null;
             let bestFallbackQuality = null;
-            let bestFallbackProfile = 'default';
-            const isEasyTargetVolume = i <= EASY_FIRST_PASS_VOLUMES_PER_THEME;
-            const easyStrictAttempts = isEasyTargetVolume
-              ? MAX_LAYOUT_QUALITY_RETRIES + EASY_STRICT_EXTRA_RETRIES
-              : 0;
-            const totalAttempts = isEasyTargetVolume
-              ? easyStrictAttempts + EASY_DEFAULT_FALLBACK_ATTEMPTS
-              : MAX_LAYOUT_QUALITY_RETRIES;
-            const requestedProfile = isEasyTargetVolume ? 'easy' : 'default';
+            const totalAttempts = MAX_LAYOUT_QUALITY_RETRIES;
 
             for (let attempt = 1; attempt <= totalAttempts; attempt++) {
-              const inStrictEasyPhase = isEasyTargetVolume && attempt <= easyStrictAttempts;
-              const candidateProfile = inStrictEasyPhase ? 'easy' : 'default';
-              const candidateOptions = inStrictEasyPhase
-                ? {
-                    profile: 'easy',
-                    allowEasyFallbackToDefault: false,
-                    attemptMultiplier: EASY_STRICT_ATTEMPT_MULTIPLIER
-                  }
-                : { profile: 'default' };
-
               let candidate;
               try {
-                candidate = generateThemedPuzzle(id, theme.name, availableWords, candidateOptions);
+                candidate = generateThemedPuzzle(id, theme.name, availableWords);
               } catch (err) {
-                const hasMoreAttempts = attempt < totalAttempts;
-                if (inStrictEasyPhase && hasMoreAttempts) {
-                  if (attempt === easyStrictAttempts && EASY_DEFAULT_FALLBACK_ATTEMPTS > 0) {
-                    console.warn(
-                      `  ⚠️ ${id} exhausted strict easy retries (${easyStrictAttempts}); trying default fallback generation.`
-                    );
-                  }
-                  continue;
-                }
+                if (attempt < totalAttempts) continue;
                 throw err;
               }
 
@@ -566,21 +520,18 @@ async function generateStarters() {
                 (quality.hintCoverage.coverage * 1000) +
                 (candidateMetrics.longWordTwoPlusRate * 100) +
                 (candidateMetrics.veryLongWordThreePlusRate * 80) +
-                ((1 - quality.lexicalSignals.load) * 140) +
-                (candidateProfile === 'easy' ? 20 : 0);
+                ((1 - quality.lexicalSignals.load) * 140);
               const bestFallbackScore = bestFallbackQuality
                 ? (bestFallbackQuality.hintCoverage.coverage * 1000) +
                   (bestFallbackMetrics.longWordTwoPlusRate * 100) +
                   (bestFallbackMetrics.veryLongWordThreePlusRate * 80) +
-                  ((1 - bestFallbackQuality.lexicalSignals.load) * 140) +
-                  (bestFallbackProfile === 'easy' ? 20 : 0)
+                  ((1 - bestFallbackQuality.lexicalSignals.load) * 140)
                 : -Infinity;
 
               if (fallbackScore > bestFallbackScore) {
                 bestFallbackCandidate = candidate;
                 bestFallbackMetrics = candidateMetrics;
                 bestFallbackQuality = quality;
-                bestFallbackProfile = candidate.profileUsed || candidateProfile;
               }
 
               if (quality.accepted) {
@@ -588,7 +539,6 @@ async function generateStarters() {
                 generatedMetrics = candidateMetrics;
                 generatedHintCoverage = quality.hintCoverage;
                 generatedQuality = quality;
-                generatedProfileUsed = candidate.profileUsed || candidateProfile;
                 break;
               }
 
@@ -597,7 +547,6 @@ async function generateStarters() {
                 generatedMetrics = bestFallbackMetrics;
                 generatedHintCoverage = bestFallbackQuality.hintCoverage;
                 generatedQuality = bestFallbackQuality;
-                generatedProfileUsed = bestFallbackProfile;
               }
             }
 
@@ -615,10 +564,6 @@ async function generateStarters() {
               );
             }
 
-            if (requestedProfile === 'easy' && generatedProfileUsed !== 'easy') {
-              console.warn(`  ⚠️ ${id} used default profile after strict easy retries.`);
-            }
-            
             // Track the newly placed words so they aren't used in subsequent volumes
             placedWords.forEach(w => consumedWords.add(w));
 
@@ -649,7 +594,7 @@ async function generateStarters() {
             const longCount = generatedMetrics.longWordCount;
             const veryLongCount = generatedMetrics.veryLongWordCount;
             console.log(
-              `--> Saved ${id} [requested=${requestedProfile}, used=${generatedProfileUsed}] (used ${placedWords.length} words, pool remaining: ${availableWords.length - placedWords.length}, long words: ${longCount}, very long: ${veryLongCount}, long 2+ cross: ${longRatePct}%, very long 3+ cross: ${veryLongRatePct}%, hint coverage: ${hintCoveragePct}% [${generatedHintCoverage?.hintCount || 0}/${generatedHintCoverage?.clueCount || 0}], lexical signal: ${lexicalSignalPct}%)`
+              `--> Saved ${id} (used ${placedWords.length} words, pool remaining: ${availableWords.length - placedWords.length}, long words: ${longCount}, very long: ${veryLongCount}, long 2+ cross: ${longRatePct}%, very long 3+ cross: ${veryLongRatePct}%, hint coverage: ${hintCoveragePct}% [${generatedHintCoverage?.hintCount || 0}/${generatedHintCoverage?.clueCount || 0}], lexical signal: ${lexicalSignalPct}%)`
             );
         }
     } catch (themeErr) {

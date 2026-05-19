@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { computePuzzleMetrics } from './puzzleMetrics.js';
+import difficultyRubric from './difficultyRubric.cjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -10,18 +11,10 @@ const __dirname = path.dirname(__filename);
 const DATA_DIR = path.join(__dirname, '../public/data');
 const PUZZLES_DIR = path.join(DATA_DIR, 'puzzles');
 const INDEX_FILE = path.join(DATA_DIR, 'puzzles.json');
+const { classifyDifficulty } = difficultyRubric;
 
-const EASY_ABSOLUTE_GATES = {
-  maxAvgWordLength: 5.5,
-  maxLongWordCount: 1,
-  maxVeryLongWordCount: 0,
-  minAvgIntersectionsPerWord: 1.75,
-  maxProperNounLoad: 0.22,
-  maxClueObscurityLoad: 0.22,
-  maxPlacedWords: 7
-};
-
-const PROPER_NOUN_HINT_REGEX = /\b(god|goddess|deity|constellation|moon|planet|star|satellite|asteroid|myth|mythological|roman|greek)\b/i;
+const PROPER_NOUN_HINT_REGEX = /\b(god|goddess|deity|constellation|myth|mythological|roman|greek)\b/i;
+const COMMON_CAPITALIZED_THEME_WORDS = new Set(['earth', 'sun', 'moon']);
 const CLUE_OBSCURITY_REGEX = /[;:()]|\b(archaic|obsolete|mythological|technical|primordial|kuiper|trojan|alpha\s+[a-z]+|beta\s+[a-z]+)\b/i;
 
 function loadJSON(filePath) {
@@ -51,6 +44,9 @@ function hasInnerCapitalizedToken(text) {
   for (const token of matches) {
     if (!firstWordSkipped) {
       firstWordSkipped = true;
+      continue;
+    }
+    if (COMMON_CAPITALIZED_THEME_WORDS.has(token.toLowerCase())) {
       continue;
     }
     return true;
@@ -97,37 +93,28 @@ function getAvgWordLength(puzzle) {
   return words.reduce((sum, word) => sum + word.length, 0) / words.length;
 }
 
-function auditEasyPuzzle(item, puzzle) {
+function buildDifficultyProfile(puzzle) {
   const metrics = computePuzzleMetrics(puzzle);
   const lexical = collectLexicalLoads(puzzle);
-  const avgWordLength = getAvgWordLength(puzzle);
-
-  const checks = {
-    maxPlacedWords: metrics.placedWords <= EASY_ABSOLUTE_GATES.maxPlacedWords,
-    maxAvgWordLength: avgWordLength <= EASY_ABSOLUTE_GATES.maxAvgWordLength,
-    maxLongWordCount: metrics.longWordCount <= EASY_ABSOLUTE_GATES.maxLongWordCount,
-    maxVeryLongWordCount: metrics.veryLongWordCount <= EASY_ABSOLUTE_GATES.maxVeryLongWordCount,
-    minAvgIntersectionsPerWord: metrics.avgIntersectionsPerWord >= EASY_ABSOLUTE_GATES.minAvgIntersectionsPerWord,
-    maxProperNounLoad: lexical.properNounLoad <= EASY_ABSOLUTE_GATES.maxProperNounLoad,
-    maxClueObscurityLoad: lexical.clueObscurityLoad <= EASY_ABSOLUTE_GATES.maxClueObscurityLoad
-  };
-
-  const failedChecks = Object.entries(checks)
-    .filter(([, passes]) => !passes)
-    .map(([key]) => key);
 
   return {
+    placedWords: metrics.placedWords,
+    avgWordLength: getAvgWordLength(puzzle),
+    longWordCount: metrics.longWordCount,
+    veryLongWordCount: metrics.veryLongWordCount,
+    avgIntersectionsPerWord: metrics.avgIntersectionsPerWord,
+    properNounLoad: lexical.properNounLoad,
+    clueObscurityLoad: lexical.clueObscurityLoad
+  };
+}
+
+function auditDifficultyLabel(item, puzzle) {
+  const metrics = buildDifficultyProfile(puzzle);
+  return {
     id: item.id,
-    failedChecks,
-    metrics: {
-      placedWords: metrics.placedWords,
-      avgWordLength,
-      longWordCount: metrics.longWordCount,
-      veryLongWordCount: metrics.veryLongWordCount,
-      avgIntersectionsPerWord: metrics.avgIntersectionsPerWord,
-      properNounLoad: lexical.properNounLoad,
-      clueObscurityLoad: lexical.clueObscurityLoad
-    }
+    actualDifficulty: item.difficulty || '',
+    expectedDifficulty: classifyDifficulty(metrics),
+    metrics
   };
 }
 
@@ -138,52 +125,54 @@ function formatMetric(value) {
 
 function main() {
   const index = loadJSON(INDEX_FILE);
-  const easyItems = Array.isArray(index)
-    ? index.filter(item => item?.difficulty === 'Easy')
+  const labeledItems = Array.isArray(index)
+    ? index.filter(item => typeof item?.difficulty === 'string' && item.difficulty.trim() !== '')
     : [];
 
-  if (easyItems.length === 0) {
-    console.log('No Easy-labeled puzzles found in index. Audit passed (no gate violations).');
+  if (labeledItems.length === 0) {
+    console.log('No difficulty-labeled puzzles found in index. Audit passed.');
     return;
   }
 
   const violations = [];
 
-  for (const item of easyItems) {
+  for (const item of labeledItems) {
     const filePath = path.join(PUZZLES_DIR, `${item.id}.json`);
     if (!fs.existsSync(filePath)) {
       violations.push({
         id: item.id,
-        failedChecks: ['missingPuzzleFile'],
+        actualDifficulty: item.difficulty || '',
+        expectedDifficulty: 'missing',
         metrics: {}
       });
       continue;
     }
 
     const puzzle = loadJSON(filePath);
-    const result = auditEasyPuzzle(item, puzzle);
-    if (result.failedChecks.length > 0) {
+    const result = auditDifficultyLabel(item, puzzle);
+    if (result.actualDifficulty !== result.expectedDifficulty) {
       violations.push(result);
     }
   }
 
-  if (violations.length > 0) {
-    console.error(`Easy difficulty audit failed: ${violations.length} violation(s) across ${easyItems.length} Easy puzzle(s).`);
-    for (const violation of violations) {
-      console.error(`- ${violation.id}: failed [${violation.failedChecks.join(', ')}]`);
-      if (Object.keys(violation.metrics).length > 0) {
-        console.error(
-          `  placed=${formatMetric(violation.metrics.placedWords)}, avgLen=${formatMetric(violation.metrics.avgWordLength)}, ` +
-          `long=${formatMetric(violation.metrics.longWordCount)}, veryLong=${formatMetric(violation.metrics.veryLongWordCount)}, ` +
-          `avgX=${formatMetric(violation.metrics.avgIntersectionsPerWord)}, proper=${formatMetric(violation.metrics.properNounLoad)}, ` +
-          `obscure=${formatMetric(violation.metrics.clueObscurityLoad)}`
-        );
-      }
-    }
-    process.exit(2);
+  if (violations.length === 0) {
+    console.log(`Difficulty audit passed for ${labeledItems.length} labeled puzzles.`);
+    return;
   }
 
-  console.log(`Easy difficulty audit passed: ${easyItems.length} Easy puzzle(s) satisfy all absolute gates.`);
+  console.error(`Difficulty audit failed for ${violations.length} puzzle(s):`);
+  for (const violation of violations) {
+    console.error(
+      `- ${violation.id}: labeled ${violation.actualDifficulty || 'unlabeled'} but rubric says ${violation.expectedDifficulty} ` +
+      `(placedWords=${violation.metrics.placedWords}, avgWordLength=${formatMetric(violation.metrics.avgWordLength)}, ` +
+      `longWordCount=${violation.metrics.longWordCount}, veryLongWordCount=${violation.metrics.veryLongWordCount}, ` +
+      `avgIntersectionsPerWord=${formatMetric(violation.metrics.avgIntersectionsPerWord)}, ` +
+      `properNounLoad=${formatMetric(violation.metrics.properNounLoad)}, ` +
+      `clueObscurityLoad=${formatMetric(violation.metrics.clueObscurityLoad)})`
+    );
+  }
+
+  process.exit(2);
 }
 
 main();

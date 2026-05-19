@@ -4,17 +4,6 @@
     "title": "Space & Sky 1",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 8,
-    "rows": 10,
-    "letterCells": 32,
-    "theme": "Space & Sky",
-    "difficulty": "Normal"
-  },
-  {
-    "id": "space---sky-vol2",
-    "title": "Space & Sky 2",
-    "author": "Nightcrossing Engine",
-    "date": "Wave 1",
     "cols": 10,
     "rows": 10,
     "letterCells": 43,
@@ -22,13 +11,24 @@
     "difficulty": "Hard"
   },
   {
+    "id": "space---sky-vol2",
+    "title": "Space & Sky 2",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 1",
+    "cols": 9,
+    "rows": 7,
+    "letterCells": 33,
+    "theme": "Space & Sky",
+    "difficulty": "Normal"
+  },
+  {
     "id": "space---sky-vol3",
     "title": "Space & Sky 3",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 9,
-    "rows": 9,
-    "letterCells": 34,
+    "cols": 8,
+    "rows": 10,
+    "letterCells": 32,
     "theme": "Space & Sky",
     "difficulty": "Hard"
   },
@@ -38,8 +38,8 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
-    "rows": 7,
-    "letterCells": 34,
+    "rows": 10,
+    "letterCells": 35,
     "theme": "Food & Cooking",
     "difficulty": "Hard"
   },
@@ -48,9 +48,9 @@
     "title": "Food & Cooking 2",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 10,
+    "cols": 9,
     "rows": 10,
-    "letterCells": 42,
+    "letterCells": 38,
     "theme": "Food & Cooking",
     "difficulty": "Normal"
   },
@@ -59,9 +59,9 @@
     "title": "Food & Cooking 3",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 9,
-    "rows": 10,
-    "letterCells": 38,
+    "cols": 10,
+    "rows": 8,
+    "letterCells": 28,
     "theme": "Food & Cooking",
     "difficulty": "Hard"
   },
@@ -70,22 +70,22 @@
     "title": "Music & Sound 1",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 9,
+    "cols": 10,
     "rows": 10,
-    "letterCells": 32,
+    "letterCells": 41,
     "theme": "Music & Sound",
-    "difficulty": "Normal"
+    "difficulty": "Hard"
   },
   {
     "id": "music---sound-vol2",
     "title": "Music & Sound 2",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 10,
-    "rows": 10,
-    "letterCells": 42,
+    "cols": 9,
+    "rows": 9,
+    "letterCells": 27,
     "theme": "Music & Sound",
-    "difficulty": "Hard"
+    "difficulty": "Easy"
   },
   {
     "id": "music---sound-vol3",
@@ -96,18 +96,18 @@
     "rows": 10,
     "letterCells": 37,
     "theme": "Music & Sound",
-    "difficulty": "Normal"
+    "difficulty": "Hard"
   },
   {
     "id": "ocean---marine-life-vol1",
     "title": "Ocean & Marine Life 1",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 10,
-    "rows": 7,
+    "cols": 9,
+    "rows": 9,
     "letterCells": 30,
     "theme": "Ocean & Marine Life",
-    "difficulty": "Easy"
+    "difficulty": "Normal"
   },
   {
     "id": "ocean---marine-life-vol2",
@@ -115,32 +115,32 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
-    "rows": 10,
-    "letterCells": 31,
+    "rows": 9,
+    "letterCells": 34,
     "theme": "Ocean & Marine Life",
-    "difficulty": "Normal"
+    "difficulty": "Hard"
   },
   {
     "id": "ocean---marine-life-vol3",
     "title": "Ocean & Marine Life 3",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 9,
+    "cols": 10,
     "rows": 10,
-    "letterCells": 30,
+    "letterCells": 45,
     "theme": "Ocean & Marine Life",
-    "difficulty": "Normal"
+    "difficulty": "Expert"
   },
   {
     "id": "sports---athletics-vol1",
     "title": "Sports & Athletics 1",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 8,
-    "rows": 8,
-    "letterCells": 30,
+    "cols": 10,
+    "rows": 10,
+    "letterCells": 36,
     "theme": "Sports & Athletics",
-    "difficulty": "Easy"
+    "difficulty": "Normal"
   },
   {
     "id": "sports---athletics-vol2",
@@ -148,10 +148,10 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 9,
-    "rows": 9,
-    "letterCells": 38,
+    "rows": 10,
+    "letterCells": 30,
     "theme": "Sports & Athletics",
-    "difficulty": "Hard"
+    "difficulty": "Normal"
   },
   {
     "id": "sports---athletics-vol3",
@@ -159,10 +159,10 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
-    "rows": 10,
-    "letterCells": 42,
+    "rows": 7,
+    "letterCells": 28,
     "theme": "Sports & Athletics",
-    "difficulty": "Expert"
+    "difficulty": "Hard"
   },
   {
     "id": "weather---climate-vol1",
@@ -170,8 +170,8 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 8,
-    "rows": 9,
-    "letterCells": 30,
+    "rows": 7,
+    "letterCells": 29,
     "theme": "Weather & Climate",
     "difficulty": "Normal"
   },
@@ -181,8 +181,8 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
-    "rows": 9,
-    "letterCells": 36,
+    "rows": 8,
+    "letterCells": 35,
     "theme": "Weather & Climate",
     "difficulty": "Normal"
   },
@@ -191,11 +191,11 @@
     "title": "Weather & Climate 3",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 10,
-    "rows": 8,
-    "letterCells": 33,
+    "cols": 8,
+    "rows": 9,
+    "letterCells": 26,
     "theme": "Weather & Climate",
-    "difficulty": "Expert"
+    "difficulty": "Easy"
   },
   {
     "id": "internet---software-vol1",
@@ -203,21 +203,21 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
-    "rows": 8,
-    "letterCells": 28,
+    "rows": 10,
+    "letterCells": 46,
     "theme": "Internet & Software",
-    "difficulty": "Easy"
+    "difficulty": "Normal"
   },
   {
     "id": "internet---software-vol2",
     "title": "Internet & Software 2",
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
-    "cols": 10,
-    "rows": 9,
-    "letterCells": 37,
+    "cols": 9,
+    "rows": 10,
+    "letterCells": 39,
     "theme": "Internet & Software",
-    "difficulty": "Normal"
+    "difficulty": "Expert"
   },
   {
     "id": "internet---software-vol3",
@@ -225,9 +225,9 @@
     "author": "Nightcrossing Engine",
     "date": "Wave 1",
     "cols": 10,
-    "rows": 10,
-    "letterCells": 30,
+    "rows": 7,
+    "letterCells": 32,
     "theme": "Internet & Software",
-    "difficulty": "Normal"
+    "difficulty": "Hard"
   }
 ]
