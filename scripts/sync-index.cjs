@@ -509,6 +509,8 @@ async function syncIndex() {
     process.exit(1);
   }
 
+  const previousMeta = loadJSON(META_FILE) || {};
+
   const {
     computeLexicalStatsForAnswers,
     getDefaultLexicalStats
@@ -607,8 +609,13 @@ async function syncIndex() {
   });
 
   const version = hasher.digest('hex').slice(0, 16);
+  const shouldRotateResetVersion = process.env.NC_FORCE_PROGRESS_RESET === '1';
+  const resetVersion = shouldRotateResetVersion
+    ? version
+    : String(previousMeta.resetVersion || previousMeta.version || version);
   const meta = {
     version,
+    resetVersion,
     puzzleCount: entries.length,
     generatedAt: new Date().toISOString()
   };
@@ -617,6 +624,7 @@ async function syncIndex() {
   fs.writeFileSync(META_FILE, JSON.stringify(meta, null, 2));
   console.log(`Wrote ${entries.length} entries to ${INDEX_FILE}`);
   console.log(`Wrote dataset version ${version} to ${META_FILE}`);
+  console.log(`Wrote progress reset version ${resetVersion} to ${META_FILE}`);
   console.log(`Difficulty spread: Easy ${spread.counts.Easy || 0}, Normal ${spread.counts.Normal || 0}, Hard ${spread.counts.Hard || 0}, Expert ${spread.counts.Expert || 0}`);
   if (!spread.meetsMinimumSpread) {
     console.warn('Difficulty spread is below the target minimum of 2 Easy and 2 Expert puzzles.');

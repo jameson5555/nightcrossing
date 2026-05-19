@@ -1004,9 +1004,16 @@ async function generateStarters() {
   fs.writeFileSync(INDEX_FILE, JSON.stringify(index, null, 2));
   console.log(`\nSuccess. Total puzzles tracked in index: ${index.length}`);
 
-  // Always refresh dataset version metadata so clients can auto-reset stale progress.
+  // Always refresh dataset metadata; only full regenerate runs should rotate the
+  // client progress reset version.
   const syncIndexScript = path.join(__dirname, 'sync-index.cjs');
-  const sync = spawnSync(process.execPath, [syncIndexScript], { stdio: 'inherit' });
+  const sync = spawnSync(process.execPath, [syncIndexScript], {
+    stdio: 'inherit',
+    env: {
+      ...process.env,
+      NC_FORCE_PROGRESS_RESET: REGENERATE ? '1' : '0'
+    }
+  });
   if (sync.status !== 0) {
     console.error('❌ Failed to refresh dataset metadata via sync-index.cjs');
     process.exit(sync.status ?? 1);

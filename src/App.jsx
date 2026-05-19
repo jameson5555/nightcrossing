@@ -178,7 +178,7 @@ function App() {
           const metaRes = await fetch(`${baseUrl}data/puzzles.meta.json?t=${Date.now()}`);
           if (metaRes.ok) {
             const meta = await metaRes.json();
-            await resetPuzzleDataIfDatasetChanged(meta?.version);
+            await resetPuzzleDataIfDatasetChanged(meta?.resetVersion || meta?.version);
           }
         } catch (metaErr) {
           console.warn('Failed to check puzzle dataset version', metaErr);
