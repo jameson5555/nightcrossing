@@ -235,6 +235,8 @@
   align-items: center;
   gap: 12px;
   width: 100%;
+  opacity: 0;
+  animation: titleReveal 0.45s ease-out 0.95s forwards;
 }
 
 .badge-unlock-label {
@@ -244,47 +246,79 @@
   letter-spacing: 2px;
   color: var(--accent-secondary);
   opacity: 0;
-  animation: titleReveal 0.4s ease-out 1s forwards;
+  animation: titleReveal 0.4s ease-out 1.02s forwards;
+}
+
+.badge-level-up {
+  font-family: var(--font-family-game);
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent-primary);
+  text-shadow: 0 0 16px rgba(0, 229, 255, 0.25);
+  opacity: 0;
+  transform: translateY(10px) scale(0.94);
+  animation: levelCelebrate 0.6s cubic-bezier(0.22, 1, 0.36, 1) 1.08s forwards;
 }
 
 /* Badge unlock styling and animation */
 .badge-unlock {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: var(--spacing-sm) var(--spacing-lg);
-  background: rgba(255,255,255,0.02);
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.04);
+  width: min(100%, 360px);
+  padding: 14px 18px;
+  background: linear-gradient(135deg, rgba(0, 229, 255, 0.14), rgba(191, 0, 255, 0.08));
+  border-radius: 16px;
+  border: 1px solid rgba(0, 229, 255, 0.18);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.24);
+  overflow: hidden;
   opacity: 0;
-  animation: titleReveal 0.45s ease-out 1.2s forwards;
+  transform: translateY(14px) scale(0.96);
+  animation: badgeCardReveal 0.58s cubic-bezier(0.2, 0.9, 0.2, 1) 1.2s forwards;
+}
+
+.badge-unlock::before {
+  content: '';
+  position: absolute;
+  inset: -20% auto -20% -35%;
+  width: 55%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+  transform: rotate(18deg) translateX(-130%);
+  animation: badgeSheen 0.85s ease-out 1.45s forwards;
 }
 
 .badge-img {
-  width: 40px;
-  height: 40px;
-  transform: scale(0.85);
+  width: 52px;
+  height: 52px;
+  transform: scale(0.78) rotate(-10deg);
   opacity: 0;
-  animation: badgePop 420ms ease-out forwards;
+  animation: badgePop 520ms cubic-bezier(0.18, 0.9, 0.22, 1.2) 1.34s forwards;
 }
 
 
 
 .badge-glow {
   filter: drop-shadow(0 0 4px #00e5ff) drop-shadow(0 0 6px #bf00ff);
-  animation: badgePop 420ms ease-out forwards, glowPulse 480ms ease-out 80ms forwards;
+  animation: badgePop 520ms cubic-bezier(0.18, 0.9, 0.22, 1.2) 1.34s forwards, glowPulse 700ms ease-out 1.5s forwards;
 }
 
 .badge-text {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  opacity: 0;
+  transform: translateX(10px);
+  animation: badgeTextReveal 0.45s ease-out 1.42s forwards;
 }
 
 .badge-name {
   font-family: var(--font-family-game);
   font-weight: 800;
   color: var(--text-primary);
+  letter-spacing: 0.5px;
 }
 
 .badge-sub {
@@ -293,15 +327,66 @@
   font-size: 0.85rem;
 }
 
+@keyframes levelCelebrate {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.94);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-3px) scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes badgeCardReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 @keyframes badgePop {
-  0% { transform: scale(0.85); opacity: 0; }
-  60% { transform: scale(1.1); opacity: 1; }
-  100% { transform: scale(1.0); opacity: 1; }
+  0% { transform: scale(0.78) rotate(-10deg); opacity: 0; }
+  60% { transform: scale(1.12) rotate(4deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
 }
 
 @keyframes glowPulse {
   0% { filter: drop-shadow(0 0 4px rgba(0,229,255,0)) drop-shadow(0 0 6px rgba(191,0,255,0)); }
   50% { filter: drop-shadow(0 0 10px #00e5ff) drop-shadow(0 0 14px #bf00ff); }
   100% { filter: drop-shadow(0 0 4px #00e5ff) drop-shadow(0 0 6px #bf00ff); }
+}
+
+@keyframes badgeTextReveal {
+  0% {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes badgeSheen {
+  0% {
+    transform: rotate(18deg) translateX(-130%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(18deg) translateX(320%);
+    opacity: 0;
+  }
 }
 

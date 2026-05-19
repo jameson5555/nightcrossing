@@ -4,6 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { computePuzzleMetrics } from './puzzleMetrics.js';
 import difficultyRubric from './difficultyRubric.cjs';
+import { computeLexicalStatsForAnswers, getDefaultLexicalStats } from './lexicalDifficulty.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,6 +13,7 @@ const DATA_DIR = path.join(__dirname, '../public/data');
 const PUZZLES_DIR = path.join(DATA_DIR, 'puzzles');
 const INDEX_FILE = path.join(DATA_DIR, 'puzzles.json');
 const { classifyDifficulty } = difficultyRubric;
+const EASY_LONG_WORD_LENGTH = 7;
 
 const PROPER_NOUN_HINT_REGEX = /\b(god|goddess|deity|constellation|myth|mythological|roman|greek)\b/i;
 const COMMON_CAPITALIZED_THEME_WORDS = new Set(['earth', 'sun', 'moon']);
@@ -82,6 +84,14 @@ function collectLexicalLoads(puzzle) {
   };
 }
 
+function collectAnswerTexts(puzzle) {
+  const acrossAnswers = Array.isArray(puzzle?.answers?.across) ? puzzle.answers.across : [];
+  const downAnswers = Array.isArray(puzzle?.answers?.down) ? puzzle.answers.down : [];
+  return [...acrossAnswers, ...downAnswers]
+    .map(value => String(value || '').trim())
+    .filter(Boolean);
+}
+
 function getAvgWordLength(puzzle) {
   const acrossAnswers = Array.isArray(puzzle?.answers?.across) ? puzzle.answers.across : [];
   const downAnswers = Array.isArray(puzzle?.answers?.down) ? puzzle.answers.down : [];
@@ -93,23 +103,42 @@ function getAvgWordLength(puzzle) {
   return words.reduce((sum, word) => sum + word.length, 0) / words.length;
 }
 
-function buildDifficultyProfile(puzzle) {
+function getEasyLongWordCount(puzzle) {
+  const acrossAnswers = Array.isArray(puzzle?.answers?.across) ? puzzle.answers.across : [];
+  const downAnswers = Array.isArray(puzzle?.answers?.down) ? puzzle.answers.down : [];
+  return [...acrossAnswers, ...downAnswers]
+    .map(value => String(value || '').trim())
+    .filter(Boolean)
+    .filter(word => word.length >= EASY_LONG_WORD_LENGTH)
+    .length;
+}
+
+async function buildDifficultyProfile(puzzle) {
   const metrics = computePuzzleMetrics(puzzle);
   const lexical = collectLexicalLoads(puzzle);
+  const answers = collectAnswerTexts(puzzle);
+  const lexicalDifficulty = answers.length > 0
+    ? await computeLexicalStatsForAnswers(answers)
+    : getDefaultLexicalStats();
 
   return {
     placedWords: metrics.placedWords,
     avgWordLength: getAvgWordLength(puzzle),
+    easyLongWordCount: getEasyLongWordCount(puzzle),
     longWordCount: metrics.longWordCount,
     veryLongWordCount: metrics.veryLongWordCount,
     avgIntersectionsPerWord: metrics.avgIntersectionsPerWord,
     properNounLoad: lexical.properNounLoad,
-    clueObscurityLoad: lexical.clueObscurityLoad
+    clueObscurityLoad: lexical.clueObscurityLoad,
+    lexicalDifficultyLoad: lexicalDifficulty.lexicalDifficultyLoad,
+    avgZipfFrequency: lexicalDifficulty.avgZipfFrequency,
+    rareAnswerShare: lexicalDifficulty.rareAnswerShare,
+    difficultAnswerShare: lexicalDifficulty.difficultAnswerShare
   };
 }
 
-function auditDifficultyLabel(item, puzzle) {
-  const metrics = buildDifficultyProfile(puzzle);
+async function auditDifficultyLabel(item, puzzle) {
+  const metrics = await buildDifficultyProfile(puzzle);
   return {
     id: item.id,
     actualDifficulty: item.difficulty || '',
@@ -123,7 +152,7 @@ function formatMetric(value) {
   return value.toFixed(3);
 }
 
-function main() {
+async function main() {
   const index = loadJSON(INDEX_FILE);
   const labeledItems = Array.isArray(index)
     ? index.filter(item => typeof item?.difficulty === 'string' && item.difficulty.trim() !== '')
@@ -149,7 +178,7 @@ function main() {
     }
 
     const puzzle = loadJSON(filePath);
-    const result = auditDifficultyLabel(item, puzzle);
+    const result = await auditDifficultyLabel(item, puzzle);
     if (result.actualDifficulty !== result.expectedDifficulty) {
       violations.push(result);
     }
@@ -165,14 +194,19 @@ function main() {
     console.error(
       `- ${violation.id}: labeled ${violation.actualDifficulty || 'unlabeled'} but rubric says ${violation.expectedDifficulty} ` +
       `(placedWords=${violation.metrics.placedWords}, avgWordLength=${formatMetric(violation.metrics.avgWordLength)}, ` +
+      `easyLongWordCount=${violation.metrics.easyLongWordCount}, ` +
       `longWordCount=${violation.metrics.longWordCount}, veryLongWordCount=${violation.metrics.veryLongWordCount}, ` +
       `avgIntersectionsPerWord=${formatMetric(violation.metrics.avgIntersectionsPerWord)}, ` +
       `properNounLoad=${formatMetric(violation.metrics.properNounLoad)}, ` +
-      `clueObscurityLoad=${formatMetric(violation.metrics.clueObscurityLoad)})`
+      `clueObscurityLoad=${formatMetric(violation.metrics.clueObscurityLoad)}, ` +
+      `lexicalDifficultyLoad=${formatMetric(violation.metrics.lexicalDifficultyLoad)})`
     );
   }
 
   process.exit(2);
 }
 
-main();
+main().catch((err) => {
+  console.error('Difficulty audit failed unexpectedly.', err);
+  process.exit(1);
+});

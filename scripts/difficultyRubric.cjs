@@ -1,12 +1,14 @@
 const DIFFICULTY_RUBRIC = {
   easy: {
-    maxPlacedWords: 7,
+    maxPlacedWords: 6,
     maxAvgWordLength: 5.6,
+    maxEasyLongWordCount: 1,
     maxLongWordCount: 1,
     maxVeryLongWordCount: 0,
     minAvgIntersectionsPerWord: 1.65,
     maxProperNounLoad: 0.25,
-    maxClueObscurityLoad: 0.22
+    maxClueObscurityLoad: 0.22,
+    maxLexicalDifficultyLoad: 0.43
   },
   hard: {
     minPlacedWords: 8,
@@ -45,13 +47,22 @@ function countHardSignals(profile) {
 }
 
 function meetsEasyRubric(profile) {
+  const lexicalDifficultyLoad = Number.isFinite(profile.lexicalDifficultyLoad)
+    ? profile.lexicalDifficultyLoad
+    : 0;
+  const easyLongWordCount = Number.isFinite(profile.easyLongWordCount)
+    ? profile.easyLongWordCount
+    : profile.longWordCount;
+
   return profile.placedWords <= DIFFICULTY_RUBRIC.easy.maxPlacedWords &&
     profile.avgWordLength <= DIFFICULTY_RUBRIC.easy.maxAvgWordLength &&
+    easyLongWordCount <= DIFFICULTY_RUBRIC.easy.maxEasyLongWordCount &&
     profile.longWordCount <= DIFFICULTY_RUBRIC.easy.maxLongWordCount &&
     profile.veryLongWordCount <= DIFFICULTY_RUBRIC.easy.maxVeryLongWordCount &&
     profile.avgIntersectionsPerWord >= DIFFICULTY_RUBRIC.easy.minAvgIntersectionsPerWord &&
     profile.properNounLoad <= DIFFICULTY_RUBRIC.easy.maxProperNounLoad &&
-    profile.clueObscurityLoad <= DIFFICULTY_RUBRIC.easy.maxClueObscurityLoad;
+    profile.clueObscurityLoad <= DIFFICULTY_RUBRIC.easy.maxClueObscurityLoad &&
+    lexicalDifficultyLoad <= DIFFICULTY_RUBRIC.easy.maxLexicalDifficultyLoad;
 }
 
 function meetsExpertRubric(profile) {

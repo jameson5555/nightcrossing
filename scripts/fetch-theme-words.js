@@ -4,6 +4,7 @@ import { fileURLToPath, pathToFileURL } from 'url';
 import WordPOS from 'wordpos';
 import { humanizeClue } from './humanizeClue.js';
 import { isWordEntryAcceptable } from './clueQuality.js';
+import { annotateWordEntry } from './lexicalDifficulty.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -1270,14 +1271,14 @@ export async function fetchThemeWords() {
           const qualityCheck = isWordEntryAcceptable(candidateEntry);
           if (!qualityCheck.ok) continue;
 
-          theme.words.push({
+          theme.words.push(await annotateWordEntry({
             answer: word,
             clue: clueText,
             hint,
             source: 'wikidata-search',
             definitionSource: clueData.source,
             themeScore: Number((themeScore + clueAccessibility * 0.08).toFixed(3))
-          });
+          }));
           existingAnswers.add(word);
           added++;
           wikidataAdded++;
@@ -1337,7 +1338,7 @@ export async function fetchThemeWords() {
           const qualityCheck = isWordEntryAcceptable(candidateEntry);
           if (!qualityCheck.ok) continue;
 
-          theme.words.push({
+          theme.words.push(await annotateWordEntry({
             answer: word,
             clue: clueText,
             hint,
@@ -1345,7 +1346,7 @@ export async function fetchThemeWords() {
             sourceDepth: candidate.depth,
             definitionSource: clueData.source,
             themeScore: Number((themeScore + clueAccessibility * 0.08).toFixed(3))
-          });
+          }));
           existingAnswers.add(word);
           added++;
           wikiAdded++;
@@ -1408,7 +1409,7 @@ export async function fetchThemeWords() {
           const qualityCheck = isWordEntryAcceptable(candidateEntry);
           if (!qualityCheck.ok) continue;
 
-          theme.words.push({
+          theme.words.push(await annotateWordEntry({
             answer: word,
             clue: clueText,
             hint,
@@ -1416,7 +1417,7 @@ export async function fetchThemeWords() {
             sourceSeed: seed,
             definitionSource: clueData.source,
             themeScore: Number((themeScore + clueAccessibility * 0.08).toFixed(3))
-          });
+          }));
           existingAnswers.add(word);
           added++;
           wordNetAdded++;
@@ -1488,14 +1489,14 @@ export async function fetchThemeWords() {
                 const qualityCheck = isWordEntryAcceptable(candidate);
                 if (!qualityCheck.ok) continue;
 
-                theme.words.push({
+                theme.words.push(await annotateWordEntry({
                   answer: word,
                   clue: clueText,
                   hint: hint,
                   source: strategy.name,
                   definitionSource: definitionData.source,
                   themeScore: Number((themeScore + clueAccessibility * 0.08).toFixed(3))
-                });
+                }));
                 existingAnswers.add(word);
                 added++;
                 addedByStrategy.set(strategy.name, (addedByStrategy.get(strategy.name) || 0) + 1);

@@ -91,6 +91,7 @@ function App() {
   const [titleAnimState, setTitleAnimState] = useState('idle'); // idle | out | in
   const BONUS_HINT_COOLDOWN_MS = 12 * 60 * 60 * 1000;
   const titleFadeTimersRef = useRef({ swap: null, settle: null });
+  const bonusHintCheckInFlightRef = useRef(false);
 
   const triggerHeaderTitleMorph = (nextTitle) => {
     const target = nextTitle || 'Nightcrossing';
@@ -116,6 +117,13 @@ function App() {
 
   // Helper to handle bonus hint timeout
   const checkAndAwardBonusHint = async () => {
+    if (bonusHintCheckInFlightRef.current) {
+      return;
+    }
+
+    bonusHintCheckInFlightRef.current = true;
+
+    try {
     const emptyTs = await loadHintsEmptyTimestamp();
     if (!emptyTs) return;
     
@@ -133,6 +141,9 @@ function App() {
         icon: "💡",
         type: "bonus"
       });
+    }
+    } finally {
+      bonusHintCheckInFlightRef.current = false;
     }
   };
 
@@ -155,7 +166,7 @@ function App() {
     const initHints = async () => {
       const count = await loadHintsRemaining();
       setHintsRemaining(count);
-      checkAndAwardBonusHint();
+      await checkAndAwardBonusHint();
     };
     initHints();
 
@@ -181,9 +192,26 @@ function App() {
       }
     };
     fetchIndex();
+
+    const handleAppResume = () => {
+      checkAndAwardBonusHint();
+    };
+
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        checkAndAwardBonusHint();
+      }
+    };
+
+    window.addEventListener('focus', handleAppResume);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
     
     const interval = setInterval(checkAndAwardBonusHint, 60000);
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('focus', handleAppResume);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, []);
 
   useEffect(() => {

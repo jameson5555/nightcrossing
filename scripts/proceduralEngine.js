@@ -150,6 +150,13 @@ function themeRelevanceScore(word) {
   return typeof word.themeScore === 'number' ? word.themeScore : 0;
 }
 
+function lexicalEasePreference(word) {
+  const zipfFrequency = Number(word?.zipfFrequency);
+  if (!Number.isFinite(zipfFrequency)) return 0;
+  if (zipfFrequency <= 3.1) return 0;
+  return Math.min(0.32, (zipfFrequency - 3.1) * 0.22);
+}
+
 function tokenizeForTheme(str) {
   return (str || '')
     .toLowerCase()
@@ -460,6 +467,7 @@ function pickCandidateSubset(words, maxWords, letterFrequency, options = {}) {
     const len = word.answer.length;
     const crossability = wordCrossabilityScore(word.answer, letterFrequency);
     const themeScore = themeRelevanceScore(word);
+    const lexicalEase = lexicalEasePreference(word);
     const lenSuitability =
       len <= 4 ? 1.25 :
       len <= 7 ? 1.8 :
@@ -476,8 +484,8 @@ function pickCandidateSubset(words, maxWords, letterFrequency, options = {}) {
       : 0;
     const anchored = hasLexicalThemeAnchor(options.themeName, word);
     const lexicalPenalty = anchored ? 0 : 2.8;
-    const priority = (normalizedCrossability * 2.35) + (themeScore * 5.2) + lenSuitability - themePenalty - lexicalPenalty;
-    return { word, len, crossability, normalizedCrossability, themeScore, anchored, priority };
+    const priority = (normalizedCrossability * 2.35) + (themeScore * 5.2) + lenSuitability + lexicalEase - themePenalty - lexicalPenalty;
+    return { word, len, crossability, normalizedCrossability, themeScore, anchored, lexicalEase, priority };
   });
 
   const longStrong = shuffleArray(
@@ -513,7 +521,7 @@ function pickCandidateSubset(words, maxWords, letterFrequency, options = {}) {
 
   const leftovers = shuffleArray([...medium, ...short, ...longWeak, ...longStrong])
     .filter(item => !selectedSet.has(item.word.answer))
-    .sort((a, b) => b.priority - a.priority || b.themeScore - a.themeScore);
+    .sort((a, b) => b.priority - a.priority || b.lexicalEase - a.lexicalEase || b.themeScore - a.themeScore);
 
   for (const item of leftovers) {
     if (selected.length >= maxWords) break;

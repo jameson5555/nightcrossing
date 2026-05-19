@@ -580,6 +580,7 @@ const CrosswordGrid = ({
               {badgeUnlockInfo && (
                 <div className="badge-unlock-section">
                   <div className="badge-unlock-label">NEW BADGE UNLOCKED</div>
+                  <div className="badge-level-up">{`Level ${badgeUnlockInfo.level} Reached!`}</div>
                   <div className="badge-unlock">
                     <img
                       src={badgeUnlockInfo.asset}

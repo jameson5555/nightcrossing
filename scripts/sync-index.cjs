@@ -10,9 +10,11 @@ const INDEX_FILE = path.join(DATA_DIR, 'puzzles.json');
 const META_FILE = path.join(DATA_DIR, 'puzzles.meta.json');
 const THEMES_FILE = path.join(__dirname, 'themes.json');
 const PUZZLES_PER_SET = 3;
+const EASY_LONG_WORD_LENGTH = 7;
 const LONG_WORD_LENGTH = 8;
 const VERY_LONG_WORD_LENGTH = 10;
 const RARE_LETTERS = new Set(['J', 'K', 'Q', 'V', 'W', 'X', 'Y', 'Z']);
+const lexicalDifficultyModulePromise = import('./lexicalDifficulty.js');
 
 const PROPER_NOUN_HINT_REGEX = /\b(god|goddess|deity|constellation|myth|mythological|roman|greek)\b/i;
 const COMMON_CAPITALIZED_THEME_WORDS = new Set(['earth', 'sun', 'moon']);
@@ -84,6 +86,14 @@ function hasInnerCapitalizedToken(text) {
 function safeRatio(numerator, denominator) {
   if (!Number.isFinite(numerator) || !Number.isFinite(denominator) || denominator <= 0) return 0;
   return numerator / denominator;
+}
+
+function collectAnswerTexts(puzzle) {
+  const acrossAnswers = Array.isArray(puzzle?.answers?.across) ? puzzle.answers.across : [];
+  const downAnswers = Array.isArray(puzzle?.answers?.down) ? puzzle.answers.down : [];
+  return [...acrossAnswers, ...downAnswers]
+    .map(answer => String(answer || '').trim())
+    .filter(Boolean);
 }
 
 function answerRareLetterRatio(answer) {
@@ -326,16 +336,18 @@ function computeDifficultyScore(puzzle, cols, rows, letterCells) {
   return clamp(score, 0, 1);
 }
 
-function computeDifficultyProfile(puzzle, cols, rows, letterCells) {
+function computeDifficultyProfile(puzzle, cols, rows, letterCells, lexicalDifficultyStats) {
   const totalCells = cols * rows;
   const density = totalCells > 0 ? letterCells / totalCells : 0;
   const paths = collectWordPaths(puzzle, cols, rows);
   const wordLengths = paths.map(path => path.length);
   const lexical = collectLexicalSignals(puzzle, wordLengths);
+  const lexicalDifficulty = lexicalDifficultyStats || {};
 
   const avgWordLength = wordLengths.length > 0
     ? wordLengths.reduce((sum, len) => sum + len, 0) / wordLengths.length
     : 0;
+  const easyLongWordCount = wordLengths.filter(len => len >= EASY_LONG_WORD_LENGTH).length;
 
   if (paths.length === 0) {
     let sparseScore = 0;
@@ -346,6 +358,7 @@ function computeDifficultyProfile(puzzle, cols, rows, letterCells) {
     return {
       score: clamp(sparseScore, 0, 1),
       avgWordLength,
+      easyLongWordCount,
       placedWords: paths.length,
       longWordCount: 0,
       veryLongWordCount: 0,
@@ -354,7 +367,11 @@ function computeDifficultyProfile(puzzle, cols, rows, letterCells) {
       longWordTwoPlusRate: 1,
       veryLongWordThreePlusRate: 1,
       properNounLoad: lexical.properNounLoad,
-      clueObscurityLoad: lexical.clueObscurityLoad
+      clueObscurityLoad: lexical.clueObscurityLoad,
+      lexicalDifficultyLoad: lexicalDifficulty.lexicalDifficultyLoad || 0,
+      avgZipfFrequency: lexicalDifficulty.avgZipfFrequency || 0,
+      rareAnswerShare: lexicalDifficulty.rareAnswerShare || 0,
+      difficultAnswerShare: lexicalDifficulty.difficultAnswerShare || 0
     };
   }
 
@@ -460,6 +477,7 @@ function computeDifficultyProfile(puzzle, cols, rows, letterCells) {
   return {
     score: clamp(score, 0, 1),
     avgWordLength,
+    easyLongWordCount,
     placedWords: paths.length,
     longWordCount: longWordIndices.length,
     veryLongWordCount: veryLongWordIndices.length,
@@ -468,7 +486,11 @@ function computeDifficultyProfile(puzzle, cols, rows, letterCells) {
     longWordTwoPlusRate,
     veryLongWordThreePlusRate,
     properNounLoad: lexical.properNounLoad,
-    clueObscurityLoad: lexical.clueObscurityLoad
+    clueObscurityLoad: lexical.clueObscurityLoad,
+    lexicalDifficultyLoad: lexicalDifficulty.lexicalDifficultyLoad || 0,
+    avgZipfFrequency: lexicalDifficulty.avgZipfFrequency || 0,
+    rareAnswerShare: lexicalDifficulty.rareAnswerShare || 0,
+    difficultAnswerShare: lexicalDifficulty.difficultAnswerShare || 0
   };
 }
 
@@ -481,11 +503,16 @@ function assignDifficultyById(drafts) {
   return result;
 }
 
-function syncIndex() {
+async function syncIndex() {
   if (!fs.existsSync(PUZZLES_DIR)) {
     console.error('No puzzles directory at', PUZZLES_DIR);
     process.exit(1);
   }
+
+  const {
+    computeLexicalStatsForAnswers,
+    getDefaultLexicalStats
+  } = await lexicalDifficultyModulePromise;
 
   const files = fs.readdirSync(PUZZLES_DIR).filter(f => f.endsWith('.json')).sort();
   const entryDrafts = [];
@@ -513,7 +540,11 @@ function syncIndex() {
       letterCells = cols * rows;
     }
 
-    const profile = computeDifficultyProfile(puzzle, cols, rows, letterCells);
+    const answerTexts = collectAnswerTexts(puzzle);
+    const lexicalDifficultyStats = answerTexts.length > 0
+      ? await computeLexicalStatsForAnswers(answerTexts)
+      : getDefaultLexicalStats();
+    const profile = computeDifficultyProfile(puzzle, cols, rows, letterCells, lexicalDifficultyStats);
     const difficultyScore = profile.score;
 
     entryDrafts.push({
@@ -527,6 +558,7 @@ function syncIndex() {
       theme: puzzle.theme || '',
       difficultyScore,
       avgWordLength: profile.avgWordLength,
+      easyLongWordCount: profile.easyLongWordCount,
       placedWords: profile.placedWords,
       longWordCount: profile.longWordCount,
       veryLongWordCount: profile.veryLongWordCount,
@@ -536,6 +568,10 @@ function syncIndex() {
       veryLongWordThreePlusRate: profile.veryLongWordThreePlusRate,
       properNounLoad: profile.properNounLoad,
       clueObscurityLoad: profile.clueObscurityLoad,
+      lexicalDifficultyLoad: profile.lexicalDifficultyLoad,
+      avgZipfFrequency: profile.avgZipfFrequency,
+      rareAnswerShare: profile.rareAnswerShare,
+      difficultAnswerShare: profile.difficultAnswerShare,
       existingDifficulty: typeof puzzle.difficulty === 'string' ? puzzle.difficulty : ''
     });
   }
@@ -587,4 +623,7 @@ function syncIndex() {
   }
 }
 
-syncIndex();
+syncIndex().catch((err) => {
+  console.error('Failed to sync puzzle index', err);
+  process.exit(1);
+});
