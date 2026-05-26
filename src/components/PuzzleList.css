@@ -108,6 +108,14 @@
   flex-direction: column;
 }
 
+.theme-completion-note {
+  padding: 0 var(--spacing-md) var(--spacing-md);
+  color: var(--text-secondary);
+  font-family: var(--font-family-ui);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
 .puzzle-list-item {
   display: flex;
   justify-content: space-between;

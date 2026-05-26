@@ -39,11 +39,21 @@ function comparePuzzleOrder(a, b) {
   return String(a.id).localeCompare(String(b.id));
 }
 
+function getNextWaveDateLabel(now = new Date()) {
+  const nextWaveDate = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1));
+  return new Intl.DateTimeFormat(undefined, {
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC'
+  }).format(nextWaveDate);
+}
+
 const PuzzleList = ({ onSelectPuzzle }) => {
   const [puzzles, setPuzzles] = useState([]);
   const [statuses, setStatuses] = useState({});
   const [wordsLeftByPuzzle, setWordsLeftByPuzzle] = useState({});
   const [loading, setLoading] = useState(true);
+  const nextWaveDateLabel = getNextWaveDateLabel();
 
   useEffect(() => {
     let mounted = true;
@@ -208,6 +218,7 @@ const PuzzleList = ({ onSelectPuzzle }) => {
 
             // Keep the true completed count for badge calculations
             const completedCount = allCompleted.length;
+            const hasCompletedAllThemePuzzles = themePuzzles.length > 0 && completedCount === themePuzzles.length;
 
             return (
               <div key={theme} className={`theme-group ${isExpanded ? 'expanded' : ''}`}>
@@ -239,9 +250,16 @@ const PuzzleList = ({ onSelectPuzzle }) => {
                   </div>
                 </div>
                 {isExpanded && (
-                  <ul className="puzzle-list">
-                    {visiblePuzzles.map(p => renderPuzzleItem(p))}
-                  </ul>
+                  <>
+                    <ul className="puzzle-list">
+                      {visiblePuzzles.map(p => renderPuzzleItem(p))}
+                    </ul>
+                    {hasCompletedAllThemePuzzles && (
+                      <div className="theme-completion-note">
+                        More puzzles coming on {nextWaveDateLabel}!
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
             );
