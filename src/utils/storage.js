@@ -11,7 +11,8 @@ const RESETTABLE_KEY_PREFIXES = [
 ];
 const RESETTABLE_EXACT_KEYS = [
   'global_hints_remaining',
-  'hints_empty_timestamp'
+  'hints_empty_timestamp',
+  'bonus_hint_toast_pending'
 ];
 
 export const resetPuzzleDataIfDatasetChanged = async (datasetVersion) => {
@@ -162,6 +163,18 @@ export const saveFreeHintClaimed = async (puzzleId, claimed) => {
 
 export const loadFreeHintClaimed = async (puzzleId) => {
   const { value } = await Preferences.get({ key: `free_hint_claimed_${puzzleId}` });
+  return value === 'true';
+};
+
+export const saveBonusHintToastPending = async (pending) => {
+  await Preferences.set({
+    key: 'bonus_hint_toast_pending',
+    value: pending ? 'true' : 'false'
+  });
+};
+
+export const loadBonusHintToastPending = async () => {
+  const { value } = await Preferences.get({ key: 'bonus_hint_toast_pending' });
   return value === 'true';
 };
 

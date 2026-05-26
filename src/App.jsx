@@ -21,6 +21,8 @@ import {
   saveFreeHintToastSeen,
   loadFreeHintClaimed,
   saveFreeHintClaimed,
+  loadBonusHintToastPending,
+  saveBonusHintToastPending,
   resetPuzzleDataIfDatasetChanged
 } from './utils/storage';
 import { loadThemeProgress, saveThemeProgress } from './utils/storage';
@@ -135,11 +137,13 @@ function App() {
       await saveHintsRemaining(newCount);
       setHintsRemaining(newCount);
       await clearHintsEmptyTimestamp();
+      await saveBonusHintToastPending(true);
       
       setToastInfo({
         message: "Your bonus hint has arrived!",
         icon: "💡",
-        type: "bonus"
+        type: "bonus",
+        id: 'bonus-hint-arrived'
       });
     }
     } finally {
@@ -164,6 +168,16 @@ function App() {
   // Load initial data on mount
   useEffect(() => {
     const initHints = async () => {
+      const shouldShowPendingBonusToast = await loadBonusHintToastPending();
+      if (shouldShowPendingBonusToast) {
+        setToastInfo({
+          message: 'Your bonus hint has arrived!',
+          icon: '💡',
+          type: 'bonus',
+          id: 'bonus-hint-arrived'
+        });
+      }
+
       const count = await loadHintsRemaining();
       setHintsRemaining(count);
       await checkAndAwardBonusHint();
@@ -219,6 +233,12 @@ function App() {
       clearTitleFadeTimers(titleFadeTimersRef);
     };
   }, []);
+
+  useEffect(() => {
+    if (toastInfo?.id === 'bonus-hint-arrived') {
+      saveBonusHintToastPending(false);
+    }
+  }, [toastInfo]);
 
   const handleSelectPuzzle = async (id) => {
     try {
