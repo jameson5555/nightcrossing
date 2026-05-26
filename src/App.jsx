@@ -303,7 +303,7 @@ function App() {
     : null;
   const selectedHintText = authoredHintText;
   const canUnlockSelectedClueHint = Boolean(selectedHintText) || !hasUsedFreeHint;
-  const canShowHintButton = Boolean(activeClueText) && canUnlockSelectedClueHint;
+  const canShowHintButton = Boolean(activeClueText);
     
   const solvedClueIds = puzzleData ? getSolvedClueIds(puzzleData, answers) : new Set();
   const isPuzzleComplete = puzzleData && solvedClueIds.size === (puzzleData.answers.across.length + puzzleData.answers.down.length);
