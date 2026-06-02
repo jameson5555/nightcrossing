@@ -1,7 +1,20 @@
 {
-  "version": "bb837de6de25538c",
+  "version": "a86c8a47ec52466a",
   "resetVersion": "bb837de6de25538c",
-  "puzzleCount": 42,
-  "themeVisibility": {},
-  "generatedAt": "2026-06-02T18:45:24.854Z"
+  "puzzleCount": 65,
+  "themeVisibility": {
+    "Transportation & Vehicles": {
+      "lockedUntilThemeCompleted": "Space & Sky"
+    },
+    "Plants & Gardens": {
+      "lockedUntilThemeCompleted": "Food & Cooking"
+    },
+    "Animals & Wildlife": {
+      "lockedUntilThemeCompleted": "Music & Sound"
+    },
+    "Home & Tools": {
+      "lockedUntilThemeCompleted": "Ocean & Marine Life"
+    }
+  },
+  "generatedAt": "2026-06-02T22:07:08.985Z"
 }

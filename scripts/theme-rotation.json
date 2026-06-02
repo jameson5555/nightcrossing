@@ -2,23 +2,23 @@
   "slots": [
     {
       "currentTheme": "Space & Sky",
-      "status": "active",
-      "nextTheme": null
+      "status": "exhausted",
+      "nextTheme": "Transportation & Vehicles"
     },
     {
       "currentTheme": "Food & Cooking",
       "status": "active",
-      "nextTheme": null
+      "nextTheme": "Plants & Gardens"
     },
     {
       "currentTheme": "Music & Sound",
       "status": "active",
-      "nextTheme": null
+      "nextTheme": "Animals & Wildlife"
     },
     {
       "currentTheme": "Ocean & Marine Life",
       "status": "active",
-      "nextTheme": null
+      "nextTheme": "Home & Tools"
     },
     {
       "currentTheme": "Sports & Athletics",
@@ -36,11 +36,6 @@
       "nextTheme": null
     }
   ],
-  "candidates": [
-    "Plants & Gardens",
-    "Animals & Wildlife",
-    "Transportation & Vehicles",
-    "Home & Tools"
-  ],
+  "candidates": [],
   "retired": []
 }

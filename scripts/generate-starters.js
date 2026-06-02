@@ -102,6 +102,9 @@ const EASY_TOP_OFF_MAX_REPLACEMENTS = Number.isFinite(Number(process.env.NC_EASY
 const EASY_TOP_OFF_MAX_CANDIDATES = Number.isFinite(Number(process.env.NC_EASY_TOP_OFF_MAX_CANDIDATES))
   ? Math.max(0, Math.min(24, Number(process.env.NC_EASY_TOP_OFF_MAX_CANDIDATES)))
   : Math.max(3, EASY_TOP_OFF_MAX_REPLACEMENTS * 2);
+const EASY_TOP_OFF_MAX_BATCH_SIZE = Number.isFinite(Number(process.env.NC_EASY_TOP_OFF_MAX_BATCH_SIZE))
+  ? Math.max(0, Math.min(48, Number(process.env.NC_EASY_TOP_OFF_MAX_BATCH_SIZE)))
+  : 12;
 const EASY_TOP_OFF_FOCUSED_POOL_MIN = Number.isFinite(Number(process.env.NC_EASY_TOP_OFF_FOCUSED_POOL_MIN))
   ? Math.max(10, Math.min(80, Number(process.env.NC_EASY_TOP_OFF_FOCUSED_POOL_MIN)))
   : 18;
@@ -478,6 +481,13 @@ async function runEasyTopOffPass(index, generatedIdsThisRun, historicalConsumedB
     return;
   }
 
+  if (analysis.generatedCount > EASY_TOP_OFF_MAX_BATCH_SIZE) {
+    console.warn(
+      `\nEasy top-off skipped: ${analysis.generatedCount} generated puzzle(s) exceeds the ${EASY_TOP_OFF_MAX_BATCH_SIZE}-puzzle top-off batch limit.`
+    );
+    return;
+  }
+
   console.log(`\nEasy top-off: ${analysis.easyCount}/${analysis.generatedCount} generated puzzle(s) currently meet the Easy rubric.`);
 
   const attemptedIds = new Set();
@@ -842,7 +852,10 @@ async function generateStarters() {
       }
     }
     
-    // Calculate the current highest volume for this theme from the index
+    // Calculate the current highest committed volume for this theme from the index.
+    // Disk-only files can exist after an interrupted run; those should be
+    // reconciled within the current target batch, not make the next run jump
+    // ahead by another full batch.
     const existingThemePuzzles = index.filter(p => p.theme === theme.name);
     let highestVol = 0;
     
@@ -852,10 +865,6 @@ async function generateStarters() {
     const legacyThemePrefix = `starter-${themeSlug}-vol`;
     const diskFiles = fs.readdirSync(PUZZLES_DIR)
       .filter(f => f.startsWith(themePrefix) || f.startsWith(legacyThemePrefix));
-    for (const f of diskFiles) {
-      const m = f.match(/-vol(\d+)\.json$/);
-      if (m && parseInt(m[1]) > highestVol) highestVol = parseInt(m[1]);
-    }
     
     for (const p of existingThemePuzzles) {
       const match = p.id.match(/-vol(\d+)$/);
@@ -908,10 +917,12 @@ async function generateStarters() {
                 }
                 index.push({ id: existing.id, title: existing.title, author: existing.author, date: existing.date, cols: existing.size.cols, rows: existing.size.rows, theme: existing.theme });
                 generatedIdsThisRun.add(existing.id);
+                generatedForTheme++;
                 console.log(`  ⏩ ${id} already exists on disk, added to index.`);
                 continue;
               } catch(e) { /* corrupt file, regenerate */ }
             } else if (index.find(p => p.id === id || p.id === legacyId)) {
+              generatedForTheme++;
               console.log(`  ⏩ ${id} already in index, skipping.`);
               continue;
             }

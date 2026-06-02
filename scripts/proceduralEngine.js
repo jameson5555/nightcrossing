@@ -549,6 +549,21 @@ function scaledAttempts(baseAttempts) {
   return Math.max(400, Math.round(baseAttempts * ATTEMPT_SCALE));
 }
 
+function isLayoutWordSafe(word) {
+  if (!word?.clue || !word?.answer) return false;
+  if (word.clue.length > 80) return false;
+  if (word.answer.length > Math.max(MAX_GRID_ROWS, MAX_GRID_COLS)) return false;
+  if (!hasUsableHint(word.hint) && word.answer.length >= 6) return false;
+
+  const qualityCheck = isWordEntryAcceptable({
+    answer: word.answer,
+    clue: word.clue,
+    hint: word.hint || null
+  });
+
+  return qualityCheck.ok;
+}
+
 // ─── Puzzle Generation Engine ──────────────────────────────────────────────
 function generateBestLayout(
   words,
@@ -563,22 +578,13 @@ function generateBestLayout(
   const allowLongMisses = options.allowLongMisses ?? 0;
 
   // Pre-filter: reject weak, unsafe, or low-quality clue entries.
-  const preFiltered = words.filter(w => {
-    if (w.clue.length > 80) return false;
-    if (w.answer.length > Math.max(MAX_GRID_ROWS, MAX_GRID_COLS)) return false;
-    if (!hasUsableHint(w.hint) && w.answer.length >= 6) return false;
+  const preFiltered = words.filter(isLayoutWordSafe);
 
-    const qualityCheck = isWordEntryAcceptable({
-      answer: w.answer,
-      clue: w.clue,
-      hint: w.hint || null
-    });
-
-    return qualityCheck.ok;
-  });
-
-  if (preFiltered.length < 6) {
-    console.warn(`  Warning: Only ${preFiltered.length} words survive clue-safety filter`);
+  if (preFiltered.length < minPlacedWords) {
+    if (VERBOSE_GENERATION) {
+      console.warn(`  Warning: Only ${preFiltered.length} words survive clue-safety filter`);
+    }
+    return null;
   }
 
   const letterFrequency = buildLetterFrequency(preFiltered);
@@ -872,11 +878,16 @@ export function generateThemedPuzzle(id, themeName, availableWords, options = {}
   const attemptBudget = (baseAttempts) => scaledAttempts(Math.max(1, Math.round(baseAttempts * perCallAttemptMultiplier)));
   const pools = createThemePools(themeName, availableWords);
   const themedWords = choosePrimaryPool(pools, themeName);
+  const safeThemedWordCount = themedWords.filter(isLayoutWordSafe).length;
 
   if (VERBOSE_GENERATION) {
     console.log(
-      `Theme: ${themeName} | Available: ${availableWords.length} | Core: ${pools.coreWords.length} | Extended: ${pools.extendedWords.length} | Active: ${themedWords.length}`
+      `Theme: ${themeName} | Available: ${availableWords.length} | Core: ${pools.coreWords.length} | Extended: ${pools.extendedWords.length} | Active: ${themedWords.length} | Safe active: ${safeThemedWordCount}`
     );
+  }
+
+  if (safeThemedWordCount < MIN_WORD_TARGET) {
+    throw new Error(`Only ${safeThemedWordCount} clue-safe words remain for ${themeName}.`);
   }
 
   let layout = null;

@@ -132,6 +132,39 @@
     "difficulty": "Hard"
   },
   {
+    "id": "food---cooking-vol7",
+    "title": "Food & Cooking 7",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 3",
+    "cols": 9,
+    "rows": 10,
+    "letterCells": 37,
+    "theme": "Food & Cooking",
+    "difficulty": "Normal"
+  },
+  {
+    "id": "food---cooking-vol8",
+    "title": "Food & Cooking 8",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 3",
+    "cols": 10,
+    "rows": 10,
+    "letterCells": 40,
+    "theme": "Food & Cooking",
+    "difficulty": "Hard"
+  },
+  {
+    "id": "food---cooking-vol9",
+    "title": "Food & Cooking 9",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 3",
+    "cols": 10,
+    "rows": 7,
+    "letterCells": 29,
+    "theme": "Food & Cooking",
+    "difficulty": "Hard"
+  },
+  {
     "id": "music---sound-vol1",
     "title": "Music & Sound 1",
     "author": "Nightcrossing Engine",
@@ -198,6 +231,39 @@
     "difficulty": "Normal"
   },
   {
+    "id": "music---sound-vol7",
+    "title": "Music & Sound 7",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 3",
+    "cols": 9,
+    "rows": 10,
+    "letterCells": 30,
+    "theme": "Music & Sound",
+    "difficulty": "Normal"
+  },
+  {
+    "id": "music---sound-vol8",
+    "title": "Music & Sound 8",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 3",
+    "cols": 9,
+    "rows": 10,
+    "letterCells": 33,
+    "theme": "Music & Sound",
+    "difficulty": "Hard"
+  },
+  {
+    "id": "music---sound-vol9",
+    "title": "Music & Sound 9",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 3",
+    "cols": 10,
+    "rows": 8,
+    "letterCells": 34,
+    "theme": "Music & Sound",
+    "difficulty": "Normal"
+  },
+  {
     "id": "ocean---marine-life-vol1",
     "title": "Ocean & Marine Life 1",
     "author": "Nightcrossing Engine",
@@ -257,6 +323,17 @@
     "title": "Ocean & Marine Life 6",
     "author": "Nightcrossing Engine",
     "date": "Wave 2",
+    "cols": 10,
+    "rows": 10,
+    "letterCells": 42,
+    "theme": "Ocean & Marine Life",
+    "difficulty": "Expert"
+  },
+  {
+    "id": "ocean---marine-life-vol7",
+    "title": "Ocean & Marine Life 7",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 3",
     "cols": 10,
     "rows": 10,
     "letterCells": 42,
@@ -396,6 +473,39 @@
     "difficulty": "Hard"
   },
   {
+    "id": "weather---climate-vol7",
+    "title": "Weather & Climate 7",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 3",
+    "cols": 8,
+    "rows": 9,
+    "letterCells": 31,
+    "theme": "Weather & Climate",
+    "difficulty": "Normal"
+  },
+  {
+    "id": "weather---climate-vol8",
+    "title": "Weather & Climate 8",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 3",
+    "cols": 9,
+    "rows": 10,
+    "letterCells": 37,
+    "theme": "Weather & Climate",
+    "difficulty": "Expert"
+  },
+  {
+    "id": "weather---climate-vol9",
+    "title": "Weather & Climate 9",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 3",
+    "cols": 10,
+    "rows": 8,
+    "letterCells": 33,
+    "theme": "Weather & Climate",
+    "difficulty": "Hard"
+  },
+  {
     "id": "internet---software-vol1",
     "title": "Internet & Software 1",
     "author": "Nightcrossing Engine",
@@ -460,5 +570,148 @@
     "letterCells": 34,
     "theme": "Internet & Software",
     "difficulty": "Hard"
+  },
+  {
+    "id": "internet---software-vol7",
+    "title": "Internet & Software 7",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 3",
+    "cols": 10,
+    "rows": 10,
+    "letterCells": 40,
+    "theme": "Internet & Software",
+    "difficulty": "Expert"
+  },
+  {
+    "id": "transportation---vehicles-vol1",
+    "title": "Transportation & Vehicles 1",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 1",
+    "cols": 10,
+    "rows": 9,
+    "letterCells": 40,
+    "theme": "Transportation & Vehicles",
+    "difficulty": "Normal"
+  },
+  {
+    "id": "transportation---vehicles-vol2",
+    "title": "Transportation & Vehicles 2",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 1",
+    "cols": 9,
+    "rows": 10,
+    "letterCells": 33,
+    "theme": "Transportation & Vehicles",
+    "difficulty": "Normal"
+  },
+  {
+    "id": "transportation---vehicles-vol3",
+    "title": "Transportation & Vehicles 3",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 1",
+    "cols": 10,
+    "rows": 10,
+    "letterCells": 43,
+    "theme": "Transportation & Vehicles",
+    "difficulty": "Hard"
+  },
+  {
+    "id": "plants---gardens-vol1",
+    "title": "Plants & Gardens 1",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 1",
+    "cols": 9,
+    "rows": 9,
+    "letterCells": 37,
+    "theme": "Plants & Gardens",
+    "difficulty": "Normal"
+  },
+  {
+    "id": "plants---gardens-vol2",
+    "title": "Plants & Gardens 2",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 1",
+    "cols": 10,
+    "rows": 8,
+    "letterCells": 38,
+    "theme": "Plants & Gardens",
+    "difficulty": "Normal"
+  },
+  {
+    "id": "plants---gardens-vol3",
+    "title": "Plants & Gardens 3",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 1",
+    "cols": 9,
+    "rows": 10,
+    "letterCells": 38,
+    "theme": "Plants & Gardens",
+    "difficulty": "Normal"
+  },
+  {
+    "id": "animals---wildlife-vol1",
+    "title": "Animals & Wildlife 1",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 1",
+    "cols": 9,
+    "rows": 10,
+    "letterCells": 41,
+    "theme": "Animals & Wildlife",
+    "difficulty": "Normal"
+  },
+  {
+    "id": "animals---wildlife-vol2",
+    "title": "Animals & Wildlife 2",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 1",
+    "cols": 10,
+    "rows": 10,
+    "letterCells": 39,
+    "theme": "Animals & Wildlife",
+    "difficulty": "Hard"
+  },
+  {
+    "id": "animals---wildlife-vol3",
+    "title": "Animals & Wildlife 3",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 1",
+    "cols": 10,
+    "rows": 10,
+    "letterCells": 42,
+    "theme": "Animals & Wildlife",
+    "difficulty": "Hard"
+  },
+  {
+    "id": "home---tools-vol1",
+    "title": "Home & Tools 1",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 1",
+    "cols": 10,
+    "rows": 10,
+    "letterCells": 38,
+    "theme": "Home & Tools",
+    "difficulty": "Hard"
+  },
+  {
+    "id": "home---tools-vol2",
+    "title": "Home & Tools 2",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 1",
+    "cols": 10,
+    "rows": 9,
+    "letterCells": 31,
+    "theme": "Home & Tools",
+    "difficulty": "Normal"
+  },
+  {
+    "id": "home---tools-vol3",
+    "title": "Home & Tools 3",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 1",
+    "cols": 8,
+    "rows": 7,
+    "letterCells": 33,
+    "theme": "Home & Tools",
+    "difficulty": "Normal"
   }
 ]
