@@ -251,18 +251,9 @@ const PuzzleList = ({ onSelectPuzzle }) => {
           </div>
         </div>
         {isExpanded && (
-          <>
-            <ul className="puzzle-list">
-              {renderedPuzzles.map(p => renderPuzzleItem(p))}
-            </ul>
-            {themeState.hasCompletedAllThemePuzzles && (
-              <div className="theme-completion-note">
-                {archived
-                  ? 'Theme archived. A future release can rotate a new theme into this slot.'
-                  : 'Theme complete. This theme will move to Completed Themes.'}
-              </div>
-            )}
-          </>
+          <ul className="puzzle-list">
+            {renderedPuzzles.map(p => renderPuzzleItem(p))}
+          </ul>
         )}
       </div>
     );
@@ -289,9 +280,6 @@ const PuzzleList = ({ onSelectPuzzle }) => {
       {completedThemeEntries.length > 0 && (
         <section className="puzzle-section theme-section completed-theme-section">
           <h2 className="section-title">Completed Themes</h2>
-          <p className="completed-theme-copy">
-            Finished themes are archived here so your progress and badges stay visible.
-          </p>
           <div className="theme-list">
             {completedThemeEntries.map(([theme, themeState]) => renderThemeGroup(theme, themeState, { archived: true }))}
           </div>
