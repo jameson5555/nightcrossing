@@ -12,6 +12,10 @@ const THEME_DISPLAY_ORDER = [
   'Sports & Athletics',
   'Weather & Climate',
   'Internet & Software',
+  'Plants & Gardens',
+  'Animals & Wildlife',
+  'Transportation & Vehicles',
+  'Home & Tools',
   'Space & Astronomy',
   'Technology & Computing',
   'Nature & Wilderness',
@@ -45,6 +49,7 @@ const PuzzleList = ({ onSelectPuzzle }) => {
   const [wordsLeftByPuzzle, setWordsLeftByPuzzle] = useState({});
   const [loading, setLoading] = useState(true);
   const [expandedTheme, setExpandedTheme] = useState(null);
+  const [themeVisibility, setThemeVisibility] = useState({});
 
   useEffect(() => {
     let mounted = true;
@@ -56,6 +61,7 @@ const PuzzleList = ({ onSelectPuzzle }) => {
           const metaRes = await fetch(`${baseUrl}data/puzzles.meta.json?t=${Date.now()}`);
           if (metaRes.ok) {
             const meta = await metaRes.json();
+            if (mounted) setThemeVisibility(meta?.themeVisibility || {});
             await resetPuzzleDataIfDatasetChanged(meta?.resetVersion || meta?.version);
           }
         } catch (metaErr) {
@@ -158,11 +164,19 @@ const PuzzleList = ({ onSelectPuzzle }) => {
 
   const sortedThemeEntries = Object.entries(themesMap)
     .sort(([themeA], [themeB]) => compareThemeOrder(themeA, themeB));
+  const themeStatesByName = Object.fromEntries(
+    sortedThemeEntries.map(([theme, themePuzzles]) => [theme, getThemeGroupState(themePuzzles)])
+  );
   const activeThemeEntries = [];
   const completedThemeEntries = [];
 
-  for (const [theme, themePuzzles] of sortedThemeEntries) {
-    const themeState = getThemeGroupState(themePuzzles);
+  for (const [theme] of sortedThemeEntries) {
+    const themeState = themeStatesByName[theme];
+    const lock = themeVisibility?.[theme]?.lockedUntilThemeCompleted;
+    if (lock && !themeStatesByName[lock]?.hasCompletedAllThemePuzzles) {
+      continue;
+    }
+
     if (themeState.hasCompletedAllThemePuzzles) {
       completedThemeEntries.push([theme, themeState]);
     } else {

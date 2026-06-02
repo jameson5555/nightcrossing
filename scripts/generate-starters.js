@@ -1,9 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 import { spawnSync } from 'child_process';
+import { createRequire } from 'module';
 import { fileURLToPath } from 'url';
 import { generateThemedPuzzle, THEMES, scoreWordForTheme } from './proceduralEngine.js';
-import { runGenerationPreflight } from './preflight-generation.js';
+import { analyzeThemeReadiness, runGenerationPreflight } from './preflight-generation.js';
 import { fetchThemeWords } from './fetch-theme-words.js';
 import { computePuzzleMetrics } from './puzzleMetrics.js';
 import { computeLexicalStatsForAnswers } from './lexicalDifficulty.js';
@@ -11,6 +12,16 @@ import difficultyRubricPkg from './difficultyRubric.cjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const require = createRequire(import.meta.url);
+const {
+  loadRotation,
+  saveRotation,
+  findThemeByName,
+  getGenerationThemeNames,
+  markThemeExhausted,
+  assignNextTheme,
+  normalizedThemeKey: normalizedRotationThemeKey
+} = require('./themeRotation.cjs');
 const DATA_DIR = path.join(__dirname, '../public/data');
 const PUZZLES_DIR = path.join(DATA_DIR, 'puzzles');
 const INDEX_FILE = path.join(DATA_DIR, 'puzzles.json');
@@ -19,10 +30,7 @@ const EASY_LONG_WORD_LENGTH = 7;
 const { DIFFICULTY_RUBRIC, classifyDifficulty, meetsEasyRubric } = difficultyRubricPkg;
 
 function normalizedThemeKey(themeName) {
-  return String(themeName || '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, ' ')
-    .trim();
+  return normalizedRotationThemeKey(themeName);
 }
 
 function slugifyThemeName(themeName) {
@@ -100,10 +108,18 @@ const EASY_TOP_OFF_FOCUSED_POOL_MIN = Number.isFinite(Number(process.env.NC_EASY
 const MIN_FUTURE_RUNWAY_BATCHES = Number.isFinite(Number(process.env.NC_MIN_FUTURE_RUNWAY_BATCHES))
   ? Math.max(0, Math.min(12, Number(process.env.NC_MIN_FUTURE_RUNWAY_BATCHES)))
   : 2;
-const ACTIVE_THEMES = THEMES.filter(theme => {
-  if (THEME_FILTER_KEYS.size === 0) return true;
-  return THEME_FILTER_KEYS.has(normalizedThemeKey(theme.name));
-});
+const CANDIDATE_MIN_FUTURE_RUNWAY_BATCHES = Number.isFinite(Number(process.env.NC_CANDIDATE_MIN_FUTURE_RUNWAY_BATCHES))
+  ? Math.max(0, Math.min(12, Number(process.env.NC_CANDIDATE_MIN_FUTURE_RUNWAY_BATCHES)))
+  : 1;
+function getActiveThemesForGeneration(rotation = loadRotation()) {
+  const generationThemeKeys = new Set(getGenerationThemeNames(rotation).map(normalizedThemeKey));
+  return THEMES.filter(theme => {
+    if (THEME_FILTER_KEYS.size === 0) {
+      return generationThemeKeys.size === 0 || generationThemeKeys.has(normalizedThemeKey(theme.name));
+    }
+    return THEME_FILTER_KEYS.has(normalizedThemeKey(theme.name));
+  });
+}
 
 const LEXICAL_OBSCURE_SIGNAL_REGEX = /\b(goddess|god|deity|mythological|myth|constellation|kuiper|trojan|tau\s+[a-z]+|mistress\s+of\s+zeus|one\s+of\s+the\s+moons?\s+of\s+(jupiter|saturn|uranus)|aoede|elara|amalthea|hygiea|pegasi|capricorni|ursa\s+major)\b/i;
 const PROPER_NOUN_HINT_REGEX = /\b(god|goddess|deity|constellation|myth|mythological|roman|greek)\b/i;
@@ -682,11 +698,54 @@ function passesLayoutQualityGate(metrics, puzzle) {
   };
 }
 
+function selectReadyReplacementTheme(rotation, historicalConsumedByTheme) {
+  const assignedKeys = new Set(
+    rotation.slots
+      .map(slot => normalizedThemeKey(slot?.nextTheme))
+      .filter(Boolean)
+  );
+  const activeKeys = new Set(
+    rotation.slots
+      .flatMap(slot => [slot?.currentTheme, slot?.nextTheme])
+      .map(normalizedThemeKey)
+      .filter(Boolean)
+  );
+
+  const reports = [];
+  for (const candidateName of rotation.candidates || []) {
+    const candidateKey = normalizedThemeKey(candidateName);
+    if (assignedKeys.has(candidateKey) || activeKeys.has(candidateKey)) continue;
+
+    const theme = findThemeByName(THEMES, candidateName);
+    if (!theme) {
+      reports.push({ theme: candidateName, isReady: false, readinessFailures: ['missing theme pool'] });
+      continue;
+    }
+
+    const consumedWords = buildThemeConsumedWords(theme.name, historicalConsumedByTheme);
+    reports.push(analyzeThemeReadiness(theme, consumedWords, NEW_PUZZLES_PER_THEME, {
+      minFutureRunwayBatches: CANDIDATE_MIN_FUTURE_RUNWAY_BATCHES
+    }));
+  }
+
+  return reports
+    .filter(report => report.isReady)
+    .sort((a, b) =>
+      b.projectedPuzzles - a.projectedPuzzles ||
+      b.usableCoreWords - a.usableCoreWords ||
+      b.avgCoreRelevance - a.avgCoreRelevance ||
+      a.theme.localeCompare(b.theme)
+    )[0] || null;
+}
+
 async function generateStarters() {
   const historicalConsumedByTheme = new Map();
   const generatedIdsThisRun = new Set();
+  const rotationEnabled = THEME_FILTER_KEYS.size === 0 && !REGENERATE;
+  const rotation = loadRotation();
+  const activeThemes = getActiveThemesForGeneration(rotation);
 
-  if (THEME_FILTER_KEYS.size > 0 && ACTIVE_THEMES.length === 0) {
+  if (THEME_FILTER_KEYS.size > 0 && activeThemes.length === 0) {
     console.error('❌ NC_THEME_FILTER did not match any active themes in scripts/themes.json.');
     process.exit(2);
   }
@@ -726,7 +785,7 @@ async function generateStarters() {
 
   console.log(`Target puzzles per theme this run: ${NEW_PUZZLES_PER_THEME}`);
   if (THEME_FILTER_KEYS.size > 0) {
-    console.log(`Theme filter active: ${ACTIVE_THEMES.map(theme => theme.name).join(', ')}`);
+    console.log(`Theme filter active: ${activeThemes.map(theme => theme.name).join(', ')}`);
   }
   
   if (REGENERATE) {
@@ -771,8 +830,11 @@ async function generateStarters() {
     }
   }
 
-  for (const theme of ACTIVE_THEMES) {
+  for (let themeIndex = 0; themeIndex < activeThemes.length; themeIndex++) {
+    const theme = activeThemes[themeIndex];
     const consumedWords = new Set();
+    let generatedForTheme = 0;
+    let themeExhaustionReason = '';
     if (REGENERATE && !ALLOW_REPEAT_ANSWERS) {
       const historical = historicalConsumedByTheme.get(theme.name);
       if (historical) {
@@ -864,7 +926,8 @@ async function generateStarters() {
               });
             
             if (availableWords.length < 10) {
-               console.log(`Not enough available words pool for ${theme.name} to generate Vol ${i}. Add more words to themes.json!`);
+               console.log(`Not enough available words pool for ${theme.name} to generate Vol ${i}. Add more words to themes.json or let rotation assign a successor.`);
+               themeExhaustionReason = `insufficient available words for vol${i}`;
                break;
             }
 
@@ -964,6 +1027,7 @@ async function generateStarters() {
               theme: puzzle.theme
             });
             generatedIdsThisRun.add(puzzle.id);
+            generatedForTheme++;
             
             const longRatePct = (generatedMetrics.longWordTwoPlusRate * 100).toFixed(0);
             const veryLongRatePct = (generatedMetrics.veryLongWordThreePlusRate * 100).toFixed(0);
@@ -977,6 +1041,32 @@ async function generateStarters() {
         }
     } catch (themeErr) {
         console.error(`\n❌ Failed to generate batch for theme [${theme.name}]:`, themeErr.message);
+        themeExhaustionReason = themeErr.message;
+    }
+
+    if (rotationEnabled && generatedForTheme < NEW_PUZZLES_PER_THEME) {
+      const slot = markThemeExhausted(
+        rotation,
+        theme.name,
+        themeExhaustionReason || `generated ${generatedForTheme}/${NEW_PUZZLES_PER_THEME} puzzle(s) this run`
+      );
+
+      if (slot && !slot.nextTheme) {
+        const replacement = selectReadyReplacementTheme(rotation, historicalConsumedByTheme);
+        if (!replacement) {
+          console.error(`\n❌ Theme [${theme.name}] is exhausted, but no ready candidate replacement is available.`);
+          console.error('Add or enrich candidate themes in scripts/candidate-themes.json, then rerun generation.');
+          saveRotation(rotation);
+          process.exit(2);
+        }
+
+        assignNextTheme(rotation, theme.name, replacement.theme);
+        const replacementTheme = findThemeByName(THEMES, replacement.theme);
+        if (replacementTheme) {
+          activeThemes.push(replacementTheme);
+        }
+        console.log(`  🔁 Marked ${theme.name} exhausted and assigned hidden successor ${replacement.theme}.`);
+      }
     }
   }
 
@@ -998,7 +1088,7 @@ async function generateStarters() {
   await runEasyTopOffPass(index, generatedIdsThisRun, historicalConsumedByTheme);
 
   // Sort index by canonical theme order, then by volume number
-  const themeOrder = ACTIVE_THEMES.map(t => t.name);
+  const themeOrder = activeThemes.map(t => t.name);
   index.sort((a, b) => {
     const themeIdxA = themeOrder.indexOf(a.theme);
     const themeIdxB = themeOrder.indexOf(b.theme);
@@ -1012,6 +1102,10 @@ async function generateStarters() {
   // Write index
   fs.writeFileSync(INDEX_FILE, JSON.stringify(index, null, 2));
   console.log(`\nSuccess. Total puzzles tracked in index: ${index.length}`);
+  if (rotationEnabled) {
+    saveRotation(rotation);
+    console.log('Updated theme rotation manifest.');
+  }
 
   // Always refresh dataset metadata; only full regenerate runs should rotate the
   // client progress reset version.

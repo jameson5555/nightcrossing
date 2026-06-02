@@ -1,17 +1,27 @@
 import fs from 'fs';
 import path from 'path';
+import { createRequire } from 'module';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { THEMES, createThemePools, scoreWordForTheme } from './proceduralEngine.js';
 import { isWordEntryAcceptable } from './clueQuality.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const require = createRequire(import.meta.url);
+const {
+  loadRotation,
+  getGenerationThemeNames,
+  normalizedThemeKey: normalizedRotationThemeKey
+} = require('./themeRotation.cjs');
 const PUZZLES_DIR = path.join(__dirname, '../public/data/puzzles');
 
 const DEFAULT_TARGET_PUZZLES = 3;
 const DEFAULT_MIN_FUTURE_RUNWAY_BATCHES = Number.isFinite(Number(process.env.NC_MIN_FUTURE_RUNWAY_BATCHES))
   ? Math.max(0, Math.min(12, Number(process.env.NC_MIN_FUTURE_RUNWAY_BATCHES)))
   : 2;
+const DEFAULT_CANDIDATE_MIN_FUTURE_RUNWAY_BATCHES = Number.isFinite(Number(process.env.NC_CANDIDATE_MIN_FUTURE_RUNWAY_BATCHES))
+  ? Math.max(0, Math.min(12, Number(process.env.NC_CANDIDATE_MIN_FUTURE_RUNWAY_BATCHES)))
+  : 1;
 const EXPECTED_WORDS_PER_PUZZLE = 8;
 const MAX_EXTENDED_PER_PUZZLE = 2;
 const MAX_LONG_WORD_SHARE = 0.35;
@@ -22,10 +32,7 @@ const WEAK_SOURCES = new Set(['rel_jjb', 'rel_jja', 'rel_spc', 'rel_trg']);
 const STABLE_SOURCES = new Set(['seed', 'wikidata-search', 'wikipedia-category', 'wikipedia-subcategory', 'wordnet-synonym']);
 
 function normalizedThemeKey(themeName) {
-  return String(themeName || '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, ' ')
-    .trim();
+  return normalizedRotationThemeKey(themeName);
 }
 
 const THEME_FILTER_KEYS = new Set(
@@ -307,11 +314,16 @@ export function analyzeThemeReadiness(
 export function runGenerationPreflight({
   targetPuzzles = DEFAULT_TARGET_PUZZLES,
   ignoreConsumed = false,
-  minFutureRunwayBatches = DEFAULT_MIN_FUTURE_RUNWAY_BATCHES
+  minFutureRunwayBatches = DEFAULT_MIN_FUTURE_RUNWAY_BATCHES,
+  candidateMinFutureRunwayBatches = DEFAULT_CANDIDATE_MIN_FUTURE_RUNWAY_BATCHES
 } = {}) {
   const consumedByTheme = ignoreConsumed ? new Map() : buildConsumedByTheme(PUZZLES_DIR);
+  const rotation = loadRotation();
+  const generationThemeKeys = new Set(getGenerationThemeNames(rotation).map(normalizedThemeKey));
   const activeThemes = THEMES.filter(theme => {
-    if (THEME_FILTER_KEYS.size === 0) return true;
+    if (THEME_FILTER_KEYS.size === 0) {
+      return generationThemeKeys.size === 0 || generationThemeKeys.has(normalizedThemeKey(theme.name));
+    }
     return THEME_FILTER_KEYS.has(normalizedThemeKey(theme.name));
   });
   const reports = activeThemes.map(theme => {
@@ -320,12 +332,41 @@ export function runGenerationPreflight({
   });
 
   const weakThemes = reports.filter(report => !report.isReady);
+  const assignedNextThemeKeys = new Set(
+    rotation.slots
+      .map(slot => normalizedThemeKey(slot?.nextTheme))
+      .filter(Boolean)
+  );
+  const activeThemeKeys = new Set(
+    rotation.slots
+      .flatMap(slot => [slot?.currentTheme, slot?.nextTheme])
+      .map(normalizedThemeKey)
+      .filter(Boolean)
+  );
+  const candidateReports = (rotation.candidates || [])
+    .filter(themeName => !assignedNextThemeKeys.has(normalizedThemeKey(themeName)))
+    .filter(themeName => !activeThemeKeys.has(normalizedThemeKey(themeName)))
+    .map(themeName => THEMES.find(theme => normalizedThemeKey(theme.name) === normalizedThemeKey(themeName)))
+    .filter(Boolean)
+    .map(theme => {
+      const consumed = consumedByTheme.get(theme.name) || new Set();
+      return analyzeThemeReadiness(theme, consumed, targetPuzzles, {
+        minFutureRunwayBatches: candidateMinFutureRunwayBatches
+      });
+    });
+  const readyCandidateReports = candidateReports.filter(report => report.isReady);
+  const blockedReplacementCount = Math.max(0, weakThemes.length - readyCandidateReports.length);
+
   return {
-    ok: weakThemes.length === 0,
+    ok: blockedReplacementCount === 0,
     targetPuzzles,
     minFutureRunwayBatches,
+    candidateMinFutureRunwayBatches,
     reports,
-    weakThemes
+    weakThemes,
+    candidateReports,
+    readyCandidateReports,
+    blockedReplacementCount
   };
 }
 
@@ -353,10 +394,23 @@ function printHumanReport(result) {
   }
 
   if (result.weakThemes.length > 0) {
-    console.log('\nWeak themes detected:');
+    console.log('\nThemes needing replacement runway:');
     for (const weak of result.weakThemes) {
       console.log(`  - ${weak.theme}: ${weak.readinessFailures.join('; ')}`);
     }
+  }
+  if (result.candidateReports?.length > 0) {
+    console.log(`\nCandidate replacements (minimum future runway ${result.candidateMinFutureRunwayBatches} batch(es)):`);
+    for (const report of result.candidateReports) {
+      const badge = report.isReady ? 'READY' : 'BLOCKED';
+      console.log(`  [${badge}] ${report.theme}: projected ${report.projectedPuzzles}, future runway ${report.futureRunwayBatches}`);
+      if (report.readinessFailures.length > 0) {
+        console.log(`    reasons: ${report.readinessFailures.join('; ')}`);
+      }
+    }
+  }
+  if (result.blockedReplacementCount > 0) {
+    console.log(`\nReplacement shortage: ${result.blockedReplacementCount} exhausted theme slot(s) lack a ready candidate.`);
   }
 }
 

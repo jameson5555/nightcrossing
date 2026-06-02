@@ -1,0 +1,46 @@
+{
+  "slots": [
+    {
+      "currentTheme": "Space & Sky",
+      "status": "active",
+      "nextTheme": null
+    },
+    {
+      "currentTheme": "Food & Cooking",
+      "status": "active",
+      "nextTheme": null
+    },
+    {
+      "currentTheme": "Music & Sound",
+      "status": "active",
+      "nextTheme": null
+    },
+    {
+      "currentTheme": "Ocean & Marine Life",
+      "status": "active",
+      "nextTheme": null
+    },
+    {
+      "currentTheme": "Sports & Athletics",
+      "status": "active",
+      "nextTheme": null
+    },
+    {
+      "currentTheme": "Weather & Climate",
+      "status": "active",
+      "nextTheme": null
+    },
+    {
+      "currentTheme": "Internet & Software",
+      "status": "active",
+      "nextTheme": null
+    }
+  ],
+  "candidates": [
+    "Plants & Gardens",
+    "Animals & Wildlife",
+    "Transportation & Vehicles",
+    "Home & Tools"
+  ],
+  "retired": []
+}

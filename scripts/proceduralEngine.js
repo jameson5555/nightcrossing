@@ -12,7 +12,12 @@ const INDEX_FILE = path.join(DATA_DIR, 'puzzles.json');
 
 // ─── Theme Database ────────────────────────────────────────────────────────
 const THEMES_FILE = path.join(__dirname, 'themes.json');
-const THEMES = JSON.parse(fs.readFileSync(THEMES_FILE, 'utf8'));
+const CANDIDATE_THEMES_FILE = path.join(__dirname, 'candidate-themes.json');
+const BASE_THEMES = JSON.parse(fs.readFileSync(THEMES_FILE, 'utf8'));
+const CANDIDATE_THEMES = fs.existsSync(CANDIDATE_THEMES_FILE)
+  ? JSON.parse(fs.readFileSync(CANDIDATE_THEMES_FILE, 'utf8'))
+  : [];
+const THEMES = [...BASE_THEMES, ...CANDIDATE_THEMES];
 
 const MAX_GRID_ROWS = 10;
 const MAX_GRID_COLS = 10;
@@ -204,6 +209,9 @@ function calculateFallbackThemeRelevance(themeName, word) {
     'music sound': ['music', 'song', 'note', 'tune', 'rhythm', 'melody', 'chord', 'tempo', 'audio', 'sound', 'drum', 'piano', 'guitar'],
     'weather climate': ['weather', 'climate', 'storm', 'rain', 'wind', 'cloud', 'snow', 'sun', 'solar', 'sky', 'forecast', 'season', 'breeze', 'gale', 'frost', 'thunder', 'lightning', 'atmos', 'meteor'],
     'plants gardens': ['plant', 'garden', 'leaf', 'tree', 'flower', 'bloom', 'seed', 'stem', 'root', 'fern', 'moss', 'shrub', 'vine', 'petal', 'orchid', 'cactus', 'pollen', 'flora', 'herb', 'botan'],
+    'animals wildlife': ['animal', 'wild', 'habitat', 'mammal', 'bird', 'insect', 'reptile', 'fish', 'forest', 'nest', 'den', 'burrow', 'herd', 'flock', 'track', 'predator', 'prey', 'paw', 'claw', 'feather'],
+    'transportation vehicles': ['transport', 'vehicle', 'car', 'truck', 'bus', 'train', 'plane', 'boat', 'ship', 'bike', 'road', 'rail', 'route', 'traffic', 'driver', 'passenger', 'cargo', 'airport', 'station'],
+    'home tools': ['home', 'house', 'room', 'kitchen', 'door', 'window', 'floor', 'wall', 'tool', 'hammer', 'drill', 'saw', 'wrench', 'repair', 'paint', 'clean', 'faucet', 'pipe', 'wire', 'shelf'],
     'internet software': ['internet', 'web', 'browser', 'server', 'cloud', 'code', 'coding', 'program', 'software', 'query', 'cache', 'file', 'files', 'sync', 'network', 'node', 'nodes', 'protocol', 'database', 'cyber', 'byte', 'chip', 'cpu', 'hash', 'api', 'online', 'digital'],
     'sports athletics': ['sport', 'team', 'score', 'goal', 'match', 'coach', 'league', 'athlete', 'race', 'medal', 'tournament']
   };
@@ -449,6 +457,9 @@ function hasLexicalThemeAnchor(themeName, word) {
     'music sound': ['music', 'song', 'note', 'tune', 'rhythm', 'melody', 'chord', 'tempo', 'audio', 'sound', 'drum', 'piano', 'guitar'],
     'weather climate': ['weather', 'climate', 'storm', 'rain', 'wind', 'cloud', 'snow', 'sun', 'solar', 'sky', 'forecast', 'season', 'breeze', 'gale', 'frost', 'thunder', 'lightning', 'atmos', 'meteor'],
     'plants gardens': ['plant', 'garden', 'leaf', 'tree', 'flower', 'bloom', 'seed', 'stem', 'root', 'fern', 'moss', 'shrub', 'vine', 'petal', 'orchid', 'cactus', 'pollen', 'flora', 'herb', 'botan'],
+    'animals wildlife': ['animal', 'wild', 'habitat', 'mammal', 'bird', 'insect', 'reptile', 'fish', 'forest', 'nest', 'den', 'burrow', 'herd', 'flock', 'track', 'predator', 'prey', 'paw', 'claw', 'feather'],
+    'transportation vehicles': ['transport', 'vehicle', 'car', 'truck', 'bus', 'train', 'plane', 'boat', 'ship', 'bike', 'road', 'rail', 'route', 'traffic', 'driver', 'passenger', 'cargo', 'airport', 'station'],
+    'home tools': ['home', 'house', 'room', 'kitchen', 'door', 'window', 'floor', 'wall', 'tool', 'hammer', 'drill', 'saw', 'wrench', 'repair', 'paint', 'clean', 'faucet', 'pipe', 'wire', 'shelf'],
     'internet software': ['internet', 'web', 'browser', 'server', 'cloud', 'code', 'coding', 'program', 'software', 'query', 'cache', 'file', 'files', 'sync', 'network', 'node', 'nodes', 'protocol', 'database', 'cyber', 'byte', 'chip', 'cpu', 'hash', 'api', 'online', 'digital'],
     'sports athletics': ['sport', 'team', 'score', 'goal', 'match', 'coach', 'league', 'athlete', 'race', 'medal', 'tournament']
   };

@@ -9,6 +9,8 @@ const PUZZLES_DIR = path.join(DATA_DIR, 'puzzles');
 const INDEX_FILE = path.join(DATA_DIR, 'puzzles.json');
 const META_FILE = path.join(DATA_DIR, 'puzzles.meta.json');
 const THEMES_FILE = path.join(__dirname, 'themes.json');
+const CANDIDATE_THEMES_FILE = path.join(__dirname, 'candidate-themes.json');
+const { buildThemeVisibility, loadRotation, getCurrentThemeNames, getNextThemeNames } = require('./themeRotation.cjs');
 const PUZZLES_PER_SET = 3;
 const EASY_LONG_WORD_LENGTH = 7;
 const LONG_WORD_LENGTH = 8;
@@ -41,11 +43,19 @@ function loadJSON(filePath) {
 }
 
 function loadThemeOrder() {
+  const rotation = loadRotation();
+  const rotationOrder = [...getCurrentThemeNames(rotation), ...getNextThemeNames(rotation)];
   const themes = loadJSON(THEMES_FILE);
-  if (!Array.isArray(themes)) return [];
-  return themes
+  const candidateThemes = fs.existsSync(CANDIDATE_THEMES_FILE)
+    ? loadJSON(CANDIDATE_THEMES_FILE)
+    : [];
+  const poolOrder = [
+    ...(Array.isArray(themes) ? themes : []),
+    ...(Array.isArray(candidateThemes) ? candidateThemes : [])
+  ]
     .map(theme => theme && theme.name)
     .filter(name => typeof name === 'string' && name.trim() !== '');
+  return [...new Set([...rotationOrder, ...poolOrder])];
 }
 
 function clamp(value, min, max) {
@@ -617,6 +627,7 @@ async function syncIndex() {
     version,
     resetVersion,
     puzzleCount: entries.length,
+    themeVisibility: buildThemeVisibility(loadRotation()),
     generatedAt: new Date().toISOString()
   };
 

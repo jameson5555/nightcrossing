@@ -9,6 +9,7 @@ import { annotateWordEntry } from './lexicalDifficulty.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const THEMES_FILE = path.join(__dirname, 'themes.json');
+const CANDIDATE_THEMES_FILE = path.join(__dirname, 'candidate-themes.json');
 const WIKIDATA_API = 'https://www.wikidata.org/w/api.php';
 const WIKIPEDIA_API = 'https://en.wikipedia.org/w/api.php';
 const WIKTIONARY_DEFINITION_API = 'https://en.wiktionary.org/api/rest_v1/page/definition/';
@@ -140,6 +141,9 @@ const WIKIPEDIA_THEME_CATEGORIES = {
   'music sound': ['Musical terminology', 'Musical instruments', 'Music genres', 'Acoustics', 'Audio engineering', 'Music theory'],
   'weather climate': ['Meteorology', 'Weather', 'Climate', 'Atmosphere', 'Clouds', 'Storms', 'Precipitation', 'Seasons'],
   'plants gardens': ['Plants', 'Botany', 'Horticulture', 'Garden plants', 'Trees', 'Flowers', 'Herbs', 'Gardening'],
+  'animals wildlife': ['Wildlife', 'Animals', 'Mammals', 'Birds', 'Insects', 'Reptiles', 'Animal behavior', 'Habitats'],
+  'transportation vehicles': ['Transport', 'Vehicles', 'Road transport', 'Rail transport', 'Aviation', 'Water transport', 'Public transport'],
+  'home tools': ['Home', 'Household equipment', 'Tools', 'Hand tools', 'Home appliances', 'Furniture', 'Do it yourself'],
   'internet software': ['Software', 'Computing', 'Internet terminology', 'Computer networking', 'Databases', 'Web browsers', 'Web applications', 'Algorithms'],
   'sports athletics': ['Sports terminology', 'Athletics (track and field)', 'Team sports', 'Ball games', 'Sport of athletics', 'Sporting equipment']
 };
@@ -195,6 +199,9 @@ function getThemeSignals(themeName) {
     'music sound': ['music', 'song', 'note', 'tune', 'rhythm', 'melody', 'chord', 'tempo', 'audio', 'sound', 'drum', 'piano', 'guitar'],
     'weather climate': ['weather', 'climate', 'storm', 'rain', 'wind', 'cloud', 'snow', 'sun', 'solar', 'sky', 'forecast', 'season', 'breeze', 'gale', 'frost', 'thunder', 'lightning', 'atmos', 'meteor'],
     'plants gardens': ['plant', 'garden', 'leaf', 'tree', 'flower', 'bloom', 'seed', 'stem', 'root', 'fern', 'moss', 'shrub', 'vine', 'petal', 'orchid', 'cactus', 'pollen', 'flora', 'herb', 'botan'],
+    'animals wildlife': ['animal', 'wild', 'habitat', 'mammal', 'bird', 'insect', 'reptile', 'fish', 'forest', 'nest', 'den', 'burrow', 'herd', 'flock', 'track', 'predator', 'prey', 'paw', 'claw', 'feather'],
+    'transportation vehicles': ['transport', 'vehicle', 'car', 'truck', 'bus', 'train', 'plane', 'boat', 'ship', 'bike', 'road', 'rail', 'route', 'traffic', 'driver', 'passenger', 'cargo', 'airport', 'station'],
+    'home tools': ['home', 'house', 'room', 'kitchen', 'door', 'window', 'floor', 'wall', 'tool', 'hammer', 'drill', 'saw', 'wrench', 'repair', 'paint', 'clean', 'faucet', 'pipe', 'wire', 'shelf'],
     'internet software': ['internet', 'web', 'browser', 'server', 'cloud', 'code', 'coding', 'program', 'software', 'query', 'cache', 'file', 'files', 'sync', 'network', 'node', 'nodes', 'protocol', 'database', 'cyber', 'byte', 'chip', 'cpu', 'hash', 'api', 'online', 'digital'],
     'sports athletics': ['sport', 'team', 'score', 'goal', 'match', 'coach', 'league', 'athlete', 'race', 'medal', 'tournament']
   };
@@ -1210,11 +1217,21 @@ export async function fetchThemeWords() {
     process.exit(1);
   }
 
-  const themes = JSON.parse(fs.readFileSync(THEMES_FILE, 'utf8'));
+  const themeFiles = [
+    { path: THEMES_FILE, themes: JSON.parse(fs.readFileSync(THEMES_FILE, 'utf8')), updated: false }
+  ];
+  if (fs.existsSync(CANDIDATE_THEMES_FILE)) {
+    themeFiles.push({
+      path: CANDIDATE_THEMES_FILE,
+      themes: JSON.parse(fs.readFileSync(CANDIDATE_THEMES_FILE, 'utf8')),
+      updated: false
+    });
+  }
+  const themes = themeFiles.flatMap(group => group.themes.map(theme => ({ theme, group })));
   let totalUpdated = 0;
 
   for (let i = 0; i < themes.length; i++) {
-    const theme = themes[i];
+    const { theme, group } = themes[i];
     if (THEME_FILTER_KEYS.size > 0 && !THEME_FILTER_KEYS.has(normalizedThemeKey(theme.name))) {
       continue;
     }
@@ -1283,6 +1300,7 @@ export async function fetchThemeWords() {
           added++;
           wikidataAdded++;
           totalUpdated++;
+          group.updated = true;
         }
 
         if (wikidataAdded > 0) {
@@ -1351,6 +1369,7 @@ export async function fetchThemeWords() {
           added++;
           wikiAdded++;
           totalUpdated++;
+          group.updated = true;
         }
 
         if (wikiAdded > 0) {
@@ -1422,6 +1441,7 @@ export async function fetchThemeWords() {
           added++;
           wordNetAdded++;
           totalUpdated++;
+          group.updated = true;
         }
       }
 
@@ -1501,6 +1521,7 @@ export async function fetchThemeWords() {
                 added++;
                 addedByStrategy.set(strategy.name, (addedByStrategy.get(strategy.name) || 0) + 1);
                 totalUpdated++;
+                group.updated = true;
 
                 if (added >= MAX_NEW_WORDS_PER_THEME) break;
               }
@@ -1519,7 +1540,11 @@ export async function fetchThemeWords() {
   }
 
   if (totalUpdated > 0) {
-    fs.writeFileSync(THEMES_FILE, JSON.stringify(themes, null, 2));
+    for (const group of themeFiles) {
+      if (group.updated) {
+        fs.writeFileSync(group.path, JSON.stringify(group.themes, null, 2));
+      }
+    }
     console.log(`\n✅ Success: Added ${totalUpdated} new words across all themes.`);
   } else {
     console.log('\nNo new words added.');
