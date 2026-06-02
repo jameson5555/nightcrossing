@@ -97,6 +97,9 @@ const EASY_TOP_OFF_MAX_CANDIDATES = Number.isFinite(Number(process.env.NC_EASY_T
 const EASY_TOP_OFF_FOCUSED_POOL_MIN = Number.isFinite(Number(process.env.NC_EASY_TOP_OFF_FOCUSED_POOL_MIN))
   ? Math.max(10, Math.min(80, Number(process.env.NC_EASY_TOP_OFF_FOCUSED_POOL_MIN)))
   : 18;
+const MIN_FUTURE_RUNWAY_BATCHES = Number.isFinite(Number(process.env.NC_MIN_FUTURE_RUNWAY_BATCHES))
+  ? Math.max(0, Math.min(12, Number(process.env.NC_MIN_FUTURE_RUNWAY_BATCHES)))
+  : 2;
 const ACTIVE_THEMES = THEMES.filter(theme => {
   if (THEME_FILTER_KEYS.size === 0) return true;
   return THEME_FILTER_KEYS.has(normalizedThemeKey(theme.name));
@@ -701,12 +704,18 @@ async function generateStarters() {
   if (!SKIP_PREFLIGHT) {
     const preflight = runGenerationPreflight({
       targetPuzzles: NEW_PUZZLES_PER_THEME,
-      ignoreConsumed: REGENERATE
+      ignoreConsumed: REGENERATE,
+      minFutureRunwayBatches: MIN_FUTURE_RUNWAY_BATCHES
     });
     if (!preflight.ok && !ALLOW_WEAK_THEMES) {
       console.error('❌ Generation preflight failed. Weak themes detected:');
       for (const weak of preflight.weakThemes) {
-        console.error(`  - ${weak.theme} (projected ${weak.projectedPuzzles}/${weak.targetPuzzles}, core ${weak.coreWords})`);
+        console.error(
+          `  - ${weak.theme} (projected ${weak.projectedPuzzles}/${weak.targetPuzzles}, future runway ${weak.futureRunwayBatches}/${weak.minFutureRunwayBatches}, usable core ${weak.usableCoreWords})`
+        );
+        if (weak.readinessFailures?.length) {
+          console.error(`    reasons: ${weak.readinessFailures.join('; ')}`);
+        }
       }
       console.error('Use --allow-weak-themes to override, or strengthen theme pools first.');
       process.exit(2);

@@ -345,6 +345,7 @@ function App() {
           const prevProgress = await loadThemeProgress(themeId);
           const prevLevel = prevProgress?.badgeLevel || 1;
           const newLevel = getBadgeLevel(newCompleted);
+          const completedTheme = themePuzzles.length > 0 && newCompleted === themePuzzles.length;
 
           await saveThemeProgress(themeId, { themeId, puzzlesCompleted: newCompleted, badgeLevel: newLevel });
 
@@ -357,6 +358,15 @@ function App() {
             });
           } else {
             setBadgeUnlockInfo(null);
+          }
+
+          if (completedTheme) {
+            setToastInfo({
+              message: `${themeId} complete. This theme is now archived in Completed Themes.`,
+              icon: '🏁',
+              type: 'bonus',
+              id: `theme-complete-${themeId}`
+            });
           }
         } catch (err) {
           console.warn('Failed to update theme progress', err);

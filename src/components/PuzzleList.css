@@ -43,6 +43,16 @@
   background: rgba(255, 255, 255, 0.05);
 }
 
+.theme-group-archived {
+  border-color: rgba(0, 255, 136, 0.18);
+  background: rgba(0, 255, 136, 0.04);
+}
+
+.theme-group-archived.expanded {
+  border-color: rgba(0, 255, 136, 0.35);
+  background: rgba(0, 255, 136, 0.08);
+}
+
 .theme-header {
   display: flex;
   justify-content: space-between;
@@ -114,6 +124,18 @@
   font-family: var(--font-family-ui);
   font-size: 0.9rem;
   text-align: center;
+}
+
+.completed-theme-section {
+  margin-top: var(--spacing-md);
+}
+
+.completed-theme-copy {
+  margin-bottom: var(--spacing-md);
+  color: var(--text-secondary);
+  font-family: var(--font-family-ui);
+  font-size: 0.9rem;
+  line-height: 1.4;
 }
 
 .puzzle-list-item {

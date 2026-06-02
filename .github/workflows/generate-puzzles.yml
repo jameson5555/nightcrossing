@@ -12,6 +12,7 @@ permissions:
 jobs:
   generate:
     runs-on: ubuntu-latest
+    timeout-minutes: 90
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -24,14 +25,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Fetch new theme words
-        run: node scripts/fetch-theme-words.js
-
-      - name: Enrich clues and hints
-        run: node scripts/enrich-hints.js
-
       - name: Generate new puzzles
+        env:
+          NC_MIN_FUTURE_RUNWAY_BATCHES: '2'
+          NC_ENABLE_EASY_TOP_OFF: '0'
         run: node scripts/generate-starters.js
+
+      - name: Audit generated dataset
+        run: npm run audit:ci
 
       - name: Commit and Push Changes
         run: |

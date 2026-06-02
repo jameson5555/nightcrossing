@@ -9,6 +9,9 @@ const __dirname = path.dirname(__filename);
 const PUZZLES_DIR = path.join(__dirname, '../public/data/puzzles');
 
 const DEFAULT_TARGET_PUZZLES = 3;
+const DEFAULT_MIN_FUTURE_RUNWAY_BATCHES = Number.isFinite(Number(process.env.NC_MIN_FUTURE_RUNWAY_BATCHES))
+  ? Math.max(0, Math.min(12, Number(process.env.NC_MIN_FUTURE_RUNWAY_BATCHES)))
+  : 2;
 const EXPECTED_WORDS_PER_PUZZLE = 8;
 const MAX_EXTENDED_PER_PUZZLE = 2;
 const MAX_LONG_WORD_SHARE = 0.35;
@@ -35,6 +38,7 @@ const THEME_FILTER_KEYS = new Set(
 function parseArgs(argv) {
   const args = {
     targetPuzzles: DEFAULT_TARGET_PUZZLES,
+    minFutureRunwayBatches: DEFAULT_MIN_FUTURE_RUNWAY_BATCHES,
     allowWeakThemes: false,
     json: false,
     ignoreConsumed: false
@@ -44,6 +48,9 @@ function parseArgs(argv) {
     const token = argv[i];
     if (token === '--target' && argv[i + 1]) {
       args.targetPuzzles = Number(argv[i + 1]);
+      i++;
+    } else if (token === '--min-future-runway' && argv[i + 1]) {
+      args.minFutureRunwayBatches = Math.max(0, Number(argv[i + 1]));
       i++;
     } else if (token === '--allow-weak-themes') {
       args.allowWeakThemes = true;
@@ -131,7 +138,66 @@ function isUsableEntry(word) {
   }).ok;
 }
 
-export function analyzeThemeReadiness(theme, consumedAnswers = new Set(), targetPuzzles = DEFAULT_TARGET_PUZZLES) {
+function buildReadinessFailures({
+  projectedPuzzles,
+  targetPuzzles,
+  futureRunwayBatches,
+  minFutureRunwayBatches,
+  usableCoreWords,
+  minimumCore,
+  avgCoreRelevance,
+  hintCoverage,
+  invalidShare,
+  weakSourceShare,
+  avgCrossability,
+  longShare
+}) {
+  const failures = [];
+
+  if (projectedPuzzles < targetPuzzles) {
+    failures.push(`projected ${projectedPuzzles}/${targetPuzzles} puzzle(s)`);
+  }
+  if (futureRunwayBatches < minFutureRunwayBatches) {
+    failures.push(`future runway ${futureRunwayBatches}/${minFutureRunwayBatches} batch(es)`);
+  }
+  if (usableCoreWords < minimumCore) {
+    failures.push(`usable core ${usableCoreWords}/${minimumCore}`);
+  }
+  if (hintCoverage < MIN_HINT_COVERAGE) {
+    failures.push(`hint coverage ${hintCoverage.toFixed(2)} < ${MIN_HINT_COVERAGE}`);
+  }
+  if (invalidShare > MAX_INVALID_ENTRY_SHARE) {
+    failures.push(`invalid share ${invalidShare.toFixed(2)} > ${MAX_INVALID_ENTRY_SHARE}`);
+  }
+  if (weakSourceShare > MAX_WEAK_SOURCE_SHARE) {
+    failures.push(`weak source share ${weakSourceShare.toFixed(2)} > ${MAX_WEAK_SOURCE_SHARE}`);
+  }
+
+  return failures;
+}
+
+function buildReadinessAdvisories({ avgCoreRelevance, avgCrossability, longShare }) {
+  const advisories = [];
+
+  if (avgCrossability < 1.22) {
+    advisories.push(`crossability ${avgCrossability.toFixed(2)} < 1.22`);
+  }
+  if (longShare > MAX_LONG_WORD_SHARE) {
+    advisories.push(`long-word share ${longShare.toFixed(2)} > ${MAX_LONG_WORD_SHARE}`);
+  }
+  if (avgCoreRelevance < 1.2) {
+    advisories.push(`avg relevance ${avgCoreRelevance.toFixed(2)} < 1.20`);
+  }
+
+  return advisories;
+}
+
+export function analyzeThemeReadiness(
+  theme,
+  consumedAnswers = new Set(),
+  targetPuzzles = DEFAULT_TARGET_PUZZLES,
+  { minFutureRunwayBatches = DEFAULT_MIN_FUTURE_RUNWAY_BATCHES } = {}
+) {
   const availableWords = (theme.words || []).filter(word => !consumedAnswers.has(String(word.answer || '').toUpperCase()));
   const pools = createThemePools(theme.name, availableWords);
 
@@ -185,15 +251,30 @@ export function analyzeThemeReadiness(theme, consumedAnswers = new Set(), target
   if (weakSourceShare > MAX_WEAK_SOURCE_SHARE) penalties++;
 
   const projectedPuzzles = Math.max(0, projectedByWords - penalties);
+  const projectedRunwayBatches = targetPuzzles > 0 ? Math.floor(projectedPuzzles / targetPuzzles) : 0;
+  const futureRunwayBatches = Math.max(0, projectedRunwayBatches - 1);
 
   const minimumCore = targetPuzzles * 6;
-  const isReady =
-    projectedPuzzles >= targetPuzzles &&
-    usableCoreWords.length >= minimumCore &&
-    avgCoreRelevance >= 1.2 &&
-    hintCoverage >= MIN_HINT_COVERAGE &&
-    invalidShare <= MAX_INVALID_ENTRY_SHARE &&
-    weakSourceShare <= MAX_WEAK_SOURCE_SHARE;
+  const readinessFailures = buildReadinessFailures({
+    projectedPuzzles,
+    targetPuzzles,
+    futureRunwayBatches,
+    minFutureRunwayBatches,
+    usableCoreWords: usableCoreWords.length,
+    minimumCore,
+    avgCoreRelevance,
+    hintCoverage,
+    invalidShare,
+    weakSourceShare,
+    avgCrossability,
+    longShare
+  });
+  const readinessAdvisories = buildReadinessAdvisories({
+    avgCoreRelevance,
+    avgCrossability,
+    longShare
+  });
+  const isReady = readinessFailures.length === 0;
 
   return {
     theme: theme.name,
@@ -212,13 +293,22 @@ export function analyzeThemeReadiness(theme, consumedAnswers = new Set(), target
     sourceDiversity: uniqueSources.size,
     lengthDistribution: lengths,
     projectedPuzzles,
+    projectedRunwayBatches,
+    futureRunwayBatches,
+    minFutureRunwayBatches,
     reservePuzzles,
     targetPuzzles,
+    readinessFailures,
+    readinessAdvisories,
     isReady
   };
 }
 
-export function runGenerationPreflight({ targetPuzzles = DEFAULT_TARGET_PUZZLES, ignoreConsumed = false } = {}) {
+export function runGenerationPreflight({
+  targetPuzzles = DEFAULT_TARGET_PUZZLES,
+  ignoreConsumed = false,
+  minFutureRunwayBatches = DEFAULT_MIN_FUTURE_RUNWAY_BATCHES
+} = {}) {
   const consumedByTheme = ignoreConsumed ? new Map() : buildConsumedByTheme(PUZZLES_DIR);
   const activeThemes = THEMES.filter(theme => {
     if (THEME_FILTER_KEYS.size === 0) return true;
@@ -226,13 +316,14 @@ export function runGenerationPreflight({ targetPuzzles = DEFAULT_TARGET_PUZZLES,
   });
   const reports = activeThemes.map(theme => {
     const consumed = consumedByTheme.get(theme.name) || new Set();
-    return analyzeThemeReadiness(theme, consumed, targetPuzzles);
+    return analyzeThemeReadiness(theme, consumed, targetPuzzles, { minFutureRunwayBatches });
   });
 
   const weakThemes = reports.filter(report => !report.isReady);
   return {
     ok: weakThemes.length === 0,
     targetPuzzles,
+    minFutureRunwayBatches,
     reports,
     weakThemes
   };
@@ -240,6 +331,7 @@ export function runGenerationPreflight({ targetPuzzles = DEFAULT_TARGET_PUZZLES,
 
 function printHumanReport(result) {
   console.log(`Preflight target: ${result.targetPuzzles} puzzle(s) per theme`);
+  console.log(`Minimum future runway after this run: ${result.minFutureRunwayBatches} batch(es)`);
   for (const report of result.reports) {
     const badge = report.isReady ? 'OK' : 'WEAK';
     console.log(`\n[${badge}] ${report.theme}`);
@@ -251,12 +343,19 @@ function printHumanReport(result) {
     console.log(`  weak/stable source share: ${report.weakSourceShare}/${report.stableSourceShare} (sources ${report.sourceDiversity})`);
     console.log(`  lengths short/medium/long/extra: ${report.lengthDistribution.short}/${report.lengthDistribution.medium}/${report.lengthDistribution.long}/${report.lengthDistribution.extra}`);
     console.log(`  projected puzzles: ${report.projectedPuzzles}/${report.targetPuzzles} (reserve ${report.reservePuzzles})`);
+    console.log(`  runway batches total/future: ${report.projectedRunwayBatches}/${report.futureRunwayBatches}`);
+    if (report.readinessFailures.length > 0) {
+      console.log(`  failures: ${report.readinessFailures.join('; ')}`);
+    }
+    if (report.readinessAdvisories.length > 0) {
+      console.log(`  advisories: ${report.readinessAdvisories.join('; ')}`);
+    }
   }
 
   if (result.weakThemes.length > 0) {
     console.log('\nWeak themes detected:');
     for (const weak of result.weakThemes) {
-      console.log(`  - ${weak.theme}`);
+      console.log(`  - ${weak.theme}: ${weak.readinessFailures.join('; ')}`);
     }
   }
 }
@@ -265,7 +364,8 @@ function main() {
   const args = parseArgs(process.argv.slice(2));
   const result = runGenerationPreflight({
     targetPuzzles: args.targetPuzzles,
-    ignoreConsumed: args.ignoreConsumed
+    ignoreConsumed: args.ignoreConsumed,
+    minFutureRunwayBatches: args.minFutureRunwayBatches
   });
 
   if (args.json) {
