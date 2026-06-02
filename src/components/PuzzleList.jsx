@@ -290,4 +290,3 @@ const PuzzleList = ({ onSelectPuzzle }) => {
 };
 
 export default PuzzleList;
-
