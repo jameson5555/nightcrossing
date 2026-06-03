@@ -574,7 +574,7 @@ const CrosswordGrid = ({
               
               <div className="puzzle-complete-reward">
                 <span className="reward-icon">💡</span>
-                <span className="reward-text">You&rsquo;ve earned 4 hints!</span>
+                <span className="reward-text">You&rsquo;ve earned 5 hints!</span>
               </div>
 
               {badgeUnlockInfo && (

@@ -23,6 +23,8 @@ import {
   saveFreeHintClaimed,
   loadBonusHintToastPending,
   saveBonusHintToastPending,
+  loadBonusHintsAwardedSinceEmpty,
+  saveBonusHintsAwardedSinceEmpty,
   resetPuzzleDataIfDatasetChanged
 } from './utils/storage';
 import { loadThemeProgress, saveThemeProgress } from './utils/storage';
@@ -59,18 +61,43 @@ const formatApproximateWait = (remainingMs) => {
   return `${hours}h ${minutes}m`;
 };
 
-const buildOutOfHintsMessage = (emptyTimestamp, cooldownMs) => {
+const buildOutOfHintsMessage = (
+  emptyTimestamp,
+  awardedCount,
+  firstCooldownMs,
+  incrementMs,
+  maxBonusHints
+) => {
   if (!emptyTimestamp) {
     return 'Free bonus hint coming soon.';
   }
 
-  const remainingMs = emptyTimestamp + cooldownMs - Date.now();
-
-  if (remainingMs <= 0) {
-    return 'Free bonus hint arriving now.';
+  if (awardedCount >= maxBonusHints) {
+    return 'Bonus hint cap reached. Complete a puzzle or spend hints to restart the bonus timer.';
   }
 
-  return `Free bonus hint in ${formatApproximateWait(remainingMs)}.`;
+  const nextHintAt = awardedCount === 0
+    ? emptyTimestamp + firstCooldownMs
+    : emptyTimestamp + firstCooldownMs + (awardedCount * incrementMs);
+
+  const remainingMs = nextHintAt - Date.now();
+
+  if (remainingMs <= 0) {
+    return awardedCount === 0 ? 'Free bonus hint arriving now.' : 'Bonus hint arriving now.';
+  }
+
+  return awardedCount === 0
+    ? `Free bonus hint in ${formatApproximateWait(remainingMs)}.`
+    : `Next bonus hint in ${formatApproximateWait(remainingMs)}.`;
+};
+
+const getEligibleBonusHintsSinceEmpty = (elapsedMs, firstCooldownMs, incrementMs, maxBonusHints) => {
+  if (elapsedMs < firstCooldownMs) {
+    return 0;
+  }
+
+  const additional = Math.floor((elapsedMs - firstCooldownMs) / incrementMs);
+  return Math.min(maxBonusHints, 1 + additional);
 };
 
 function App() {
@@ -79,7 +106,7 @@ function App() {
   const [direction, setDirection] = useState('across');
   const [selectedCell, setSelectedCell] = useState(null);
   const [answers, setAnswers] = useState([]);
-  const [hintsRemaining, setHintsRemaining] = useState(4);
+  const [hintsRemaining, setHintsRemaining] = useState(5);
   const [unlockedHints, setUnlockedHints] = useState(new Set());
   const [revealedIndices, setRevealedIndices] = useState(new Set());
   const [isHintModalOpen, setIsHintModalOpen] = useState(false);
@@ -91,7 +118,9 @@ function App() {
   const [outOfHintsMessage, setOutOfHintsMessage] = useState('Free bonus hint coming soon.');
   const [headerTitle, setHeaderTitle] = useState('Nightcrossing');
   const [titleAnimState, setTitleAnimState] = useState('idle'); // idle | out | in
-  const BONUS_HINT_COOLDOWN_MS = 12 * 60 * 60 * 1000;
+  const BONUS_HINT_FIRST_COOLDOWN_MS = 12 * 60 * 60 * 1000;
+  const BONUS_HINT_INCREMENT_MS = 6 * 60 * 60 * 1000;
+  const MAX_BONUS_HINTS_PER_EMPTY = 5;
   const titleFadeTimersRef = useRef({ swap: null, settle: null });
   const bonusHintCheckInFlightRef = useRef(false);
 
@@ -126,26 +155,40 @@ function App() {
     bonusHintCheckInFlightRef.current = true;
 
     try {
-    const emptyTs = await loadHintsEmptyTimestamp();
-    if (!emptyTs) return;
-    
-    const now = Date.now();
+      const emptyTs = await loadHintsEmptyTimestamp();
+      if (!emptyTs) return;
 
-    if (now - emptyTs >= BONUS_HINT_COOLDOWN_MS) {
+      const now = Date.now();
+      const elapsedMs = now - emptyTs;
+      const eligibleHints = getEligibleBonusHintsSinceEmpty(
+        elapsedMs,
+        BONUS_HINT_FIRST_COOLDOWN_MS,
+        BONUS_HINT_INCREMENT_MS,
+        MAX_BONUS_HINTS_PER_EMPTY
+      );
+
+      const alreadyAwardedHints = await loadBonusHintsAwardedSinceEmpty();
+      if (eligibleHints <= alreadyAwardedHints) {
+        return;
+      }
+
+      const newlyEarnedHints = eligibleHints - alreadyAwardedHints;
       const currentCount = await loadHintsRemaining();
-      const newCount = currentCount + 1;
+      const newCount = currentCount + newlyEarnedHints;
+
       await saveHintsRemaining(newCount);
-      setHintsRemaining(newCount);
-      await clearHintsEmptyTimestamp();
+      await saveBonusHintsAwardedSinceEmpty(eligibleHints);
       await saveBonusHintToastPending(true);
-      
+
+      setHintsRemaining(newCount);
       setToastInfo({
-        message: "Your bonus hint has arrived!",
-        icon: "💡",
-        type: "bonus",
+        message: newlyEarnedHints === 1
+          ? 'Your bonus hint has arrived!'
+          : `${newlyEarnedHints} bonus hints have arrived!`,
+        icon: '💡',
+        type: 'bonus',
         id: 'bonus-hint-arrived'
       });
-    }
     } finally {
       bonusHintCheckInFlightRef.current = false;
     }
@@ -159,7 +202,16 @@ function App() {
 
     if (latestHints <= 0 && hasUsedFreeHint) {
       const emptyTs = await loadHintsEmptyTimestamp();
-      setOutOfHintsMessage(buildOutOfHintsMessage(emptyTs, BONUS_HINT_COOLDOWN_MS));
+      const awardedCount = await loadBonusHintsAwardedSinceEmpty();
+      setOutOfHintsMessage(
+        buildOutOfHintsMessage(
+          emptyTs,
+          awardedCount,
+          BONUS_HINT_FIRST_COOLDOWN_MS,
+          BONUS_HINT_INCREMENT_MS,
+          MAX_BONUS_HINTS_PER_EMPTY
+        )
+      );
     }
 
     setIsHintModalOpen(true);
@@ -316,7 +368,7 @@ function App() {
         if (alreadyClaimed) return;
 
         setHintsRemaining(prev => {
-          const newCount = prev + 4;
+          const newCount = prev + 5;
           saveHintsRemaining(newCount); // Side effect inside state update is usually avoided, but here we need the exact new value
           return newCount;
         });
@@ -496,6 +548,7 @@ function App() {
   const handleHintsDepleted = async () => {
     const now = Date.now();
     await saveHintsEmptyTimestamp(now);
+    await saveBonusHintsAwardedSinceEmpty(0);
 
     if (!Capacitor.isNativePlatform()) {
       return;
@@ -513,7 +566,7 @@ function App() {
             title: "Bonus Hint Available!",
             body: "A bonus hint is ready for your next Nightcrossing clue.",
             id: 1,
-            schedule: { at: new Date(now + BONUS_HINT_COOLDOWN_MS) },
+            schedule: { at: new Date(now + BONUS_HINT_FIRST_COOLDOWN_MS) },
             sound: null,
             attachments: null,
             actionTypeId: "",

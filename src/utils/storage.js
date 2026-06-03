@@ -12,7 +12,8 @@ const RESETTABLE_KEY_PREFIXES = [
 const RESETTABLE_EXACT_KEYS = [
   'global_hints_remaining',
   'hints_empty_timestamp',
-  'bonus_hint_toast_pending'
+  'bonus_hint_toast_pending',
+  'bonus_hints_awarded_since_empty'
 ];
 
 export const resetPuzzleDataIfDatasetChanged = async (datasetVersion) => {
@@ -86,8 +87,8 @@ export const saveHintsRemaining = async (count) => {
 
 export const loadHintsRemaining = async () => {
   const { value } = await Preferences.get({ key: 'global_hints_remaining' });
-  // Default to 4 hints if never set.
-  return value !== null ? parseInt(value, 10) : 4;
+  // Default to 5 hints if never set.
+  return value !== null ? parseInt(value, 10) : 5;
 };
 
 export const saveUnlockedHints = async (puzzleId, hintIdsSet) => {
@@ -139,7 +140,22 @@ export const loadHintsEmptyTimestamp = async () => {
 };
 
 export const clearHintsEmptyTimestamp = async () => {
-  await Preferences.remove({ key: 'hints_empty_timestamp' });
+  await Promise.all([
+    Preferences.remove({ key: 'hints_empty_timestamp' }),
+    Preferences.remove({ key: 'bonus_hints_awarded_since_empty' })
+  ]);
+};
+
+export const saveBonusHintsAwardedSinceEmpty = async (count) => {
+  await Preferences.set({
+    key: 'bonus_hints_awarded_since_empty',
+    value: String(count)
+  });
+};
+
+export const loadBonusHintsAwardedSinceEmpty = async () => {
+  const { value } = await Preferences.get({ key: 'bonus_hints_awarded_since_empty' });
+  return value !== null ? parseInt(value, 10) : 0;
 };
 
 export const saveFreeHintToastSeen = async (seen) => {
