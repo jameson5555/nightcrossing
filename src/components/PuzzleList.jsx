@@ -21,6 +21,7 @@ const THEME_DISPLAY_ORDER = [
   'Nature & Wilderness',
   'History & Civilization'
 ];
+const MIN_ACTIVE_THEME_COUNT = 6;
 
 function compareThemeOrder(a, b) {
   const indexA = THEME_DISPLAY_ORDER.indexOf(a);
@@ -169,11 +170,15 @@ const PuzzleList = ({ onSelectPuzzle }) => {
   );
   const activeThemeEntries = [];
   const completedThemeEntries = [];
+  const lockedBackfillEntries = [];
 
   for (const [theme] of sortedThemeEntries) {
     const themeState = themeStatesByName[theme];
     const lock = themeVisibility?.[theme]?.lockedUntilThemeCompleted;
     if (lock && !themeStatesByName[lock]?.hasCompletedAllThemePuzzles) {
+      if (!themeState.hasCompletedAllThemePuzzles) {
+        lockedBackfillEntries.push([theme, themeState]);
+      }
       continue;
     }
 
@@ -183,6 +188,12 @@ const PuzzleList = ({ onSelectPuzzle }) => {
       activeThemeEntries.push([theme, themeState]);
     }
   }
+
+  // Some completed themes do not have a one-to-one successor. Reveal generated
+  // successor themes as needed so each user still has a full active selection.
+  const backfillCount = Math.max(0, MIN_ACTIVE_THEME_COUNT - activeThemeEntries.length);
+  activeThemeEntries.push(...lockedBackfillEntries.slice(0, backfillCount));
+  activeThemeEntries.sort(([themeA], [themeB]) => compareThemeOrder(themeA, themeB));
 
   const renderPuzzleItem = (puzzle, options = {}) => {
     const hideStatus = !!options.hideStatus;
