@@ -23,7 +23,7 @@
     {
       "currentTheme": "Sports & Athletics",
       "status": "active",
-      "nextTheme": null
+      "nextTheme": "Nature & Wilderness"
     },
     {
       "currentTheme": "Weather & Climate",
@@ -33,7 +33,7 @@
     {
       "currentTheme": "Internet & Software",
       "status": "active",
-      "nextTheme": null
+      "nextTheme": "History & Civilization"
     }
   ],
   "candidates": [],

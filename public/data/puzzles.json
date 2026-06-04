@@ -713,5 +713,71 @@
     "letterCells": 33,
     "theme": "Home & Tools",
     "difficulty": "Normal"
+  },
+  {
+    "id": "nature---wilderness-vol1",
+    "title": "Nature & Wilderness 1",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 1",
+    "cols": 8,
+    "rows": 10,
+    "letterCells": 32,
+    "theme": "Nature & Wilderness",
+    "difficulty": "Normal"
+  },
+  {
+    "id": "nature---wilderness-vol2",
+    "title": "Nature & Wilderness 2",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 1",
+    "cols": 10,
+    "rows": 9,
+    "letterCells": 35,
+    "theme": "Nature & Wilderness",
+    "difficulty": "Hard"
+  },
+  {
+    "id": "nature---wilderness-vol3",
+    "title": "Nature & Wilderness 3",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 1",
+    "cols": 8,
+    "rows": 8,
+    "letterCells": 27,
+    "theme": "Nature & Wilderness",
+    "difficulty": "Normal"
+  },
+  {
+    "id": "history---civilization-vol1",
+    "title": "History & Civilization 1",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 1",
+    "cols": 10,
+    "rows": 10,
+    "letterCells": 38,
+    "theme": "History & Civilization",
+    "difficulty": "Hard"
+  },
+  {
+    "id": "history---civilization-vol2",
+    "title": "History & Civilization 2",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 1",
+    "cols": 10,
+    "rows": 10,
+    "letterCells": 38,
+    "theme": "History & Civilization",
+    "difficulty": "Hard"
+  },
+  {
+    "id": "history---civilization-vol3",
+    "title": "History & Civilization 3",
+    "author": "Nightcrossing Engine",
+    "date": "Wave 1",
+    "cols": 8,
+    "rows": 10,
+    "letterCells": 34,
+    "theme": "History & Civilization",
+    "difficulty": "Normal"
   }
 ]

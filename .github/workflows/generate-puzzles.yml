@@ -38,5 +38,5 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add scripts/themes.json public/data/puzzles.json public/data/puzzles/
+          git add scripts/themes.json scripts/candidate-themes.json scripts/theme-rotation.json public/data/puzzles.json public/data/puzzles.meta.json public/data/puzzles/
           git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-generate new monthly puzzles" && git push)

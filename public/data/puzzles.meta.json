@@ -1,7 +1,7 @@
 {
-  "version": "a86c8a47ec52466a",
+  "version": "1772d36eb01a9172",
   "resetVersion": "bb837de6de25538c",
-  "puzzleCount": 65,
+  "puzzleCount": 71,
   "themeVisibility": {
     "Transportation & Vehicles": {
       "lockedUntilThemeCompleted": "Space & Sky"
@@ -14,7 +14,13 @@
     },
     "Home & Tools": {
       "lockedUntilThemeCompleted": "Ocean & Marine Life"
+    },
+    "Nature & Wilderness": {
+      "lockedUntilThemeCompleted": "Sports & Athletics"
+    },
+    "History & Civilization": {
+      "lockedUntilThemeCompleted": "Internet & Software"
     }
   },
-  "generatedAt": "2026-06-02T22:07:08.985Z"
+  "generatedAt": "2026-06-04T18:09:53.128Z"
 }
