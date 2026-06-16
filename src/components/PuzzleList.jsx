@@ -135,16 +135,16 @@ const PuzzleList = ({ onSelectPuzzle }) => {
     setExpandedTheme(expandedTheme === theme ? null : theme);
   };
 
-  const getThemeSeal = (themeState) => {
-    if (themeState.hasCompletedAllThemePuzzles) {
-      return { label: 'Complete', className: 'complete' };
-    }
+  const getThemeProgressRatio = (themeState) => {
+    const total = Number(themeState.totalCount) || 0;
+    if (total <= 0) return 0;
+    return Math.min(1, Math.max(0, themeState.completedCount / total));
+  };
 
-    if (themeState.completedCount > 0) {
-      return { label: 'In Progress', className: 'progress' };
-    }
-
-    return { label: 'Unstarted', className: 'new' };
+  const getThemeMoonClass = (themeState, archived) => {
+    if (archived || themeState.hasCompletedAllThemePuzzles) return 'complete';
+    if (themeState.completedCount > 0) return 'partial';
+    return 'empty';
   };
 
   const getThemeGroupState = (themePuzzles) => {
@@ -244,14 +244,19 @@ const PuzzleList = ({ onSelectPuzzle }) => {
   const renderThemeGroup = (theme, themeState, { archived = false } = {}) => {
     const isExpanded = expandedTheme === theme;
     const renderedPuzzles = archived ? themeState.allCompleted : themeState.visiblePuzzles;
-    const themeSeal = getThemeSeal(themeState);
+    const progressRatio = getThemeProgressRatio(themeState);
+    const moonClass = getThemeMoonClass(themeState, archived);
     const progressLabel = `${themeState.completedCount} of ${themeState.totalCount} complete`;
 
     return (
       <div key={theme} className={`theme-group ${isExpanded ? 'expanded' : ''} ${archived ? 'theme-group-archived' : ''}`}>
         <div className="theme-header" onClick={() => toggleTheme(theme)}>
           <div className="theme-header-info">
-            <span className={`theme-seal theme-seal-${themeSeal.className}`}>{themeSeal.label}</span>
+            <span
+              className={`theme-moon theme-moon-${moonClass}`}
+              style={{ '--theme-progress': `${progressRatio * 100}%` }}
+              aria-hidden="true"
+            ></span>
             <div className="theme-header-text">
               <span className="theme-name">{theme}</span>
               <span className="theme-progress">
@@ -291,20 +296,6 @@ const PuzzleList = ({ onSelectPuzzle }) => {
 
   return (
     <div className="puzzle-list-wrapper animate-fade-in">
-      <section className="journey-section">
-        <div className="journey-rank">
-          <img src={journey.current.asset} alt={journey.current.name} className="journey-badge" />
-          <div className="journey-copy">
-            <span className="journey-eyebrow">Journey Rank</span>
-            <span className="journey-title">{journey.current.name}</span>
-            <span className="journey-progress-copy">{`${completedPuzzleCount} of ${puzzles.length} puzzles complete • ${nextRankCopy}`}</span>
-          </div>
-        </div>
-        <div className="journey-meter" aria-hidden="true">
-          <span style={{ width: journeyPercent }}></span>
-        </div>
-      </section>
-
       {inProgressPuzzles.length > 0 && (
         <section className="puzzle-section">
           <h2 className="section-title">In Progress</h2>
@@ -318,6 +309,20 @@ const PuzzleList = ({ onSelectPuzzle }) => {
         <h2 className="section-title">Themes</h2>
         <div className="theme-list">
           {activeThemeEntries.map(([theme, themeState]) => renderThemeGroup(theme, themeState))}
+        </div>
+      </section>
+
+      <section className="journey-section">
+        <div className="journey-rank">
+          <img src={journey.current.asset} alt={journey.current.name} className="journey-badge" />
+          <div className="journey-copy">
+            <span className="journey-eyebrow">Journey Rank</span>
+            <span className="journey-title">{journey.current.name}</span>
+            <span className="journey-progress-copy">{`${completedPuzzleCount} of ${puzzles.length} puzzles complete • ${nextRankCopy}`}</span>
+          </div>
+        </div>
+        <div className="journey-meter" aria-hidden="true">
+          <span style={{ width: journeyPercent }}></span>
         </div>
       </section>
 

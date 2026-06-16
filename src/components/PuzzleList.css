@@ -146,40 +146,58 @@
   gap: 4px;
 }
 
-.theme-seal {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 86px;
-  min-height: 30px;
-  flex: 0 0 86px;
-  padding: 4px 8px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  font-family: var(--font-family-ui);
-  font-size: 0.68rem;
-  font-weight: 800;
-  text-align: center;
-  text-transform: uppercase;
-  line-height: 1.1;
+.theme-moon {
+  --theme-progress: 0%;
+  --moon-fill: rgba(0, 229, 255, 0.78);
+  --moon-track: rgba(255, 255, 255, 0.08);
+  --moon-core: rgba(6, 9, 24, 0.9);
+  position: relative;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  border-radius: 50%;
+  background:
+    conic-gradient(var(--moon-fill) var(--theme-progress), var(--moon-track) 0),
+    radial-gradient(circle at 38% 34%, rgba(255, 255, 255, 0.18), transparent 38%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
-.theme-seal-new {
-  color: var(--accent-primary);
-  background: rgba(0, 229, 255, 0.08);
-  border-color: rgba(0, 229, 255, 0.28);
+.theme-moon::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 38% 32%, rgba(255, 255, 255, 0.12), transparent 34%),
+    var(--moon-core);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
-.theme-seal-progress {
-  color: var(--accent-secondary);
-  background: rgba(191, 0, 255, 0.09);
-  border-color: rgba(191, 0, 255, 0.32);
+.theme-moon::after {
+  content: "";
+  position: absolute;
+  inset: 11px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  opacity: 0.24;
 }
 
-.theme-seal-complete {
-  color: var(--accent-success);
-  background: rgba(0, 255, 136, 0.1);
-  border-color: rgba(0, 255, 136, 0.34);
+.theme-moon-empty {
+  --moon-fill: rgba(0, 229, 255, 0.32);
+  --moon-track: rgba(255, 255, 255, 0.08);
+  opacity: 0.72;
+}
+
+.theme-moon-partial {
+  --moon-fill: rgba(0, 229, 255, 0.85);
+  --moon-track: rgba(191, 0, 255, 0.14);
+  filter: drop-shadow(0 0 5px rgba(0, 229, 255, 0.22));
+}
+
+.theme-moon-complete {
+  --moon-fill: rgba(0, 255, 136, 0.86);
+  --moon-track: rgba(0, 255, 136, 0.2);
+  filter: drop-shadow(0 0 5px rgba(0, 255, 136, 0.32));
 }
 
 .theme-name {
