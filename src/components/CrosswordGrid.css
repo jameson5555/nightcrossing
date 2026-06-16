@@ -327,6 +327,43 @@
   font-size: 0.85rem;
 }
 
+.kudos-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(100%, 340px);
+  margin: 16px auto 0;
+  opacity: 0;
+  animation: titleReveal 0.4s ease-out 1.25s forwards;
+}
+
+.kudos-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid rgba(0, 229, 255, 0.22);
+  border-radius: 8px;
+  background: rgba(0, 229, 255, 0.08);
+}
+
+.kudos-label {
+  font-family: var(--font-family-ui);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--accent-primary);
+}
+
+.kudos-value {
+  font-family: var(--font-family-ui);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: right;
+}
+
 @keyframes levelCelebrate {
   0% {
     opacity: 0;
@@ -389,4 +426,3 @@
     opacity: 0;
   }
 }
-

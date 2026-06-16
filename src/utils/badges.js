@@ -1,4 +1,4 @@
-// Badge utilities: level calculation, names, assets, and thresholds
+// Badge utilities: journey rank calculation, names, assets, and thresholds
 import level1_dark_horizon from '../assets/badges/level1_dark_horizon.svg';
 import level2_dusk from '../assets/badges/level2_dusk.svg';
 import level3_twilight from '../assets/badges/level3_twilight.svg';
@@ -34,9 +34,29 @@ const ASSET_MAP = {
   9: level9_nightsage
 };
 
-export function getBadgeLevel(puzzlesCompleted) {
-  const level = Math.floor((Number(puzzlesCompleted) || 0) / 3) + 1;
-  return Math.min(Math.max(1, level), 9);
+const JOURNEY_THRESHOLDS = [
+  { level: 1, required: 1 },
+  { level: 2, required: 3 },
+  { level: 3, required: 6 },
+  { level: 4, required: 10 },
+  { level: 5, required: 15 },
+  { level: 6, required: 21 },
+  { level: 7, required: 28 },
+  { level: 8, required: 36 },
+  { level: 9, required: 45 }
+];
+
+export function getJourneyRankLevel(puzzlesCompleted) {
+  const completed = Math.max(0, Number(puzzlesCompleted) || 0);
+  let level = 1;
+
+  for (const threshold of JOURNEY_THRESHOLDS) {
+    if (completed >= threshold.required) {
+      level = threshold.level;
+    }
+  }
+
+  return level;
 }
 
 export function getBadgeName(level) {
@@ -49,15 +69,54 @@ export function getBadgeAsset(level) {
   return ASSET_MAP[l] || level1_dark_horizon;
 }
 
-export function getNextLevelThreshold(level) {
-  const l = Math.max(1, Number(level) || 1);
-  // Total puzzles required to reach the NEXT level: level * 3
-  return l * 3;
+export function getJourneyRank(puzzlesCompleted) {
+  const level = getJourneyRankLevel(puzzlesCompleted);
+  return {
+    level,
+    name: getBadgeName(level),
+    asset: getBadgeAsset(level),
+    completed: Math.max(0, Number(puzzlesCompleted) || 0)
+  };
+}
+
+export function getNextJourneyThreshold(puzzlesCompleted) {
+  const completed = Math.max(0, Number(puzzlesCompleted) || 0);
+  return JOURNEY_THRESHOLDS.find(threshold => threshold.required > completed) || null;
+}
+
+export function getJourneyProgress(puzzlesCompleted) {
+  const completed = Math.max(0, Number(puzzlesCompleted) || 0);
+  const current = getJourneyRank(completed);
+  const next = getNextJourneyThreshold(completed);
+  const currentThreshold = JOURNEY_THRESHOLDS.find(threshold => threshold.level === current.level)?.required || 0;
+  const nextThreshold = next?.required || currentThreshold;
+  const span = Math.max(1, nextThreshold - currentThreshold);
+  const progress = next ? Math.min(1, Math.max(0, (completed - currentThreshold) / span)) : 1;
+
+  return {
+    current,
+    next,
+    progress
+  };
+}
+
+// Backward-compatible names for older imports.
+export function getBadgeLevel(puzzlesCompleted) {
+  return getJourneyRankLevel(puzzlesCompleted);
+}
+
+export function getNextLevelThreshold(puzzlesCompleted) {
+  const next = getNextJourneyThreshold(puzzlesCompleted);
+  return next ? next.required : null;
 }
 
 export default {
   getBadgeLevel,
+  getJourneyRankLevel,
+  getJourneyRank,
   getBadgeName,
   getBadgeAsset,
-  getNextLevelThreshold
+  getNextLevelThreshold,
+  getNextJourneyThreshold,
+  getJourneyProgress
 };

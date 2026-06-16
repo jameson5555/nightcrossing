@@ -27,8 +27,8 @@ import {
   saveBonusHintsAwardedSinceEmpty,
   resetPuzzleDataIfDatasetChanged
 } from './utils/storage';
-import { loadThemeProgress, saveThemeProgress } from './utils/storage';
-import { getBadgeLevel, getBadgeName, getBadgeAsset } from './utils/badges';
+import { saveThemeProgress } from './utils/storage';
+import { getJourneyRankLevel, getBadgeName, getBadgeAsset } from './utils/badges';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { Capacitor } from '@capacitor/core';
 import HintModal from './components/HintModal';
@@ -113,7 +113,8 @@ function App() {
   const [toastInfo, setToastInfo] = useState(null);
   const [isPuzzleAlreadyCompleted, setIsPuzzleAlreadyCompleted] = useState(false);
   const [puzzlesIndex, setPuzzlesIndex] = useState([]);
-  const [badgeUnlockInfo, setBadgeUnlockInfo] = useState(null);
+  const [puzzleMeta, setPuzzleMeta] = useState({});
+  const [completionRewardInfo, setCompletionRewardInfo] = useState(null);
   const [hasUsedFreeHint, setHasUsedFreeHint] = useState(false);
   const [outOfHintsMessage, setOutOfHintsMessage] = useState('Free bonus hint coming soon.');
   const [headerTitle, setHeaderTitle] = useState('Nightcrossing');
@@ -244,6 +245,7 @@ function App() {
           const metaRes = await fetch(`${baseUrl}data/puzzles.meta.json?t=${Date.now()}`);
           if (metaRes.ok) {
             const meta = await metaRes.json();
+            setPuzzleMeta(meta || {});
             await resetPuzzleDataIfDatasetChanged(meta?.resetVersion || meta?.version);
           }
         } catch (metaErr) {
@@ -335,7 +337,7 @@ function App() {
     triggerHeaderTitleMorph('Nightcrossing');
     setCurrentView('menu');
     setPuzzleData(null);
-    setBadgeUnlockInfo(null);
+    setCompletionRewardInfo(null);
     setHasUsedFreeHint(false);
   };
 
@@ -382,10 +384,18 @@ function App() {
           }
         }
         
-        // Update theme progress and detect badge unlocks using global index for robustness
+        // Update journey/theme progress and detect unlocks using global index for robustness.
         try {
           const themeId = puzzleData.theme || 'Other';
           const themePuzzles = puzzlesIndex.filter(p => (p.theme || 'Other') === themeId);
+          const previousCompletedStatuses = await Promise.all(puzzlesIndex.map(async p => {
+            if (p.id === puzzleData.id) return false;
+            return await loadRewardClaimed(p.id);
+          }));
+          const previousTotalCompleted = previousCompletedStatuses.filter(Boolean).length;
+          const newTotalCompleted = previousTotalCompleted + 1;
+          const previousJourneyLevel = getJourneyRankLevel(previousTotalCompleted);
+          const newJourneyLevel = getJourneyRankLevel(newTotalCompleted);
           
           // Calculate true completed count by checking storage for all puzzles in this theme
           const completedStatuses = await Promise.all(themePuzzles.map(async p => {
@@ -394,27 +404,41 @@ function App() {
           }));
           
           const newCompleted = completedStatuses.filter(Boolean).length;
-          const prevProgress = await loadThemeProgress(themeId);
-          const prevLevel = prevProgress?.badgeLevel || 1;
-          const newLevel = getBadgeLevel(newCompleted);
           const completedTheme = themePuzzles.length > 0 && newCompleted === themePuzzles.length;
+          const unlockedThemes = completedTheme
+            ? Object.entries(puzzleMeta?.themeVisibility || {})
+                .filter(([, visibility]) => visibility?.lockedUntilThemeCompleted === themeId)
+                .map(([theme]) => theme)
+                .filter(theme => puzzlesIndex.some(p => (p.theme || 'Other') === theme))
+            : [];
+          const rankUnlockInfo = newJourneyLevel > previousJourneyLevel
+            ? {
+                level: newJourneyLevel,
+                name: getBadgeName(newJourneyLevel),
+                asset: getBadgeAsset(newJourneyLevel),
+                puzzlesCompleted: newTotalCompleted
+              }
+            : null;
 
-          await saveThemeProgress(themeId, { themeId, puzzlesCompleted: newCompleted, badgeLevel: newLevel });
+          await saveThemeProgress(themeId, {
+            themeId,
+            puzzlesCompleted: newCompleted,
+            completed: completedTheme
+          });
 
-          if (newLevel > prevLevel) {
-            setBadgeUnlockInfo({
-              level: newLevel,
-              name: getBadgeName(newLevel),
-              asset: getBadgeAsset(newLevel),
-              puzzlesCompleted: newCompleted
-            });
-          } else {
-            setBadgeUnlockInfo(null);
-          }
+          setCompletionRewardInfo({
+            rankUnlock: rankUnlockInfo,
+            totalCompleted: newTotalCompleted,
+            themeComplete: completedTheme ? themeId : null,
+            unlockedThemes
+          });
 
           if (completedTheme) {
+            const unlockCopy = unlockedThemes.length > 0
+              ? ` New theme unlocked: ${unlockedThemes.join(', ')}.`
+              : '';
             setToastInfo({
-              message: `${themeId} complete. This theme is now archived in Completed Themes.`,
+              message: `${themeId} complete. This theme is now archived in Completed Themes.${unlockCopy}`,
               icon: '🏁',
               type: 'bonus',
               id: `theme-complete-${themeId}`
@@ -428,7 +452,7 @@ function App() {
       };
       checkAndReward();
     }
-  }, [isPuzzleComplete, puzzleData, puzzlesIndex]); // Removed hintsRemaining
+  }, [isPuzzleComplete, puzzleData, puzzleMeta, puzzlesIndex]); // Removed hintsRemaining
 
   // Displayed clue state used to control cross-fade when switching clues
   const [displayedClue, setDisplayedClue] = useState({ num: null, text: null, dir: null });
@@ -700,7 +724,7 @@ function App() {
                 activeWordIndices={activeWord ? activeWord.indices : []}
                 revealedIndices={revealedIndices}
                 onCompleteDismiss={handleBackToMenu}
-                badgeUnlockInfo={badgeUnlockInfo}
+                completionRewardInfo={completionRewardInfo}
                 isAlreadyCompleted={isPuzzleAlreadyCompleted}
               />
             ) : (

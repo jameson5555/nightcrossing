@@ -204,9 +204,8 @@ export const saveThemeProgress = async (themeId, progress) => {
 };
 
 export const loadThemeProgress = async (themeId) => {
-  if (!themeId) return { themeId: String(themeId), puzzlesCompleted: 0, badgeLevel: 1 };
+  if (!themeId) return { themeId: String(themeId), puzzlesCompleted: 0, completed: false };
   const { value } = await Preferences.get({ key: `theme_progress_${themeId}` });
-  return value ? JSON.parse(value) : { themeId: String(themeId), puzzlesCompleted: 0, badgeLevel: 1 };
+  return value ? JSON.parse(value) : { themeId: String(themeId), puzzlesCompleted: 0, completed: false };
 };
-
 

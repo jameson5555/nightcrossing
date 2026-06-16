@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './PuzzleList.css';
 import { checkPuzzleStatus, loadPuzzleProgress, resetPuzzleDataIfDatasetChanged } from '../utils/storage';
-import { getBadgeLevel, getBadgeName, getBadgeAsset } from '../utils/badges';
+import { getJourneyProgress } from '../utils/badges';
 import { getSolvedClueIds } from '../utils/crossword';
 
 const THEME_DISPLAY_ORDER = [
@@ -135,6 +135,18 @@ const PuzzleList = ({ onSelectPuzzle }) => {
     setExpandedTheme(expandedTheme === theme ? null : theme);
   };
 
+  const getThemeSeal = (themeState) => {
+    if (themeState.hasCompletedAllThemePuzzles) {
+      return { label: 'Complete', className: 'complete' };
+    }
+
+    if (themeState.completedCount > 0) {
+      return { label: 'In Progress', className: 'progress' };
+    }
+
+    return { label: 'Unstarted', className: 'new' };
+  };
+
   const getThemeGroupState = (themePuzzles) => {
     const allCompleted = themePuzzles
       .filter(p => statuses[p.id] === 'Completed')
@@ -159,6 +171,7 @@ const PuzzleList = ({ onSelectPuzzle }) => {
       allCompleted,
       completedCount,
       hasCompletedAllThemePuzzles,
+      totalCount: themePuzzles.length,
       visiblePuzzles
     };
   };
@@ -230,22 +243,21 @@ const PuzzleList = ({ onSelectPuzzle }) => {
 
   const renderThemeGroup = (theme, themeState, { archived = false } = {}) => {
     const isExpanded = expandedTheme === theme;
-    const badgeLevel = getBadgeLevel(themeState.completedCount);
-    const badgeName = getBadgeName(badgeLevel);
-    const badgeAsset = getBadgeAsset(badgeLevel);
     const renderedPuzzles = archived ? themeState.allCompleted : themeState.visiblePuzzles;
+    const themeSeal = getThemeSeal(themeState);
+    const progressLabel = `${themeState.completedCount} of ${themeState.totalCount} complete`;
 
     return (
       <div key={theme} className={`theme-group ${isExpanded ? 'expanded' : ''} ${archived ? 'theme-group-archived' : ''}`}>
         <div className="theme-header" onClick={() => toggleTheme(theme)}>
           <div className="theme-header-info">
-            <img src={badgeAsset} alt={badgeName} className={`theme-badge ${archived ? 'glow' : ''}`} />
+            <span className={`theme-seal theme-seal-${themeSeal.className}`}>{themeSeal.label}</span>
             <div className="theme-header-text">
               <span className="theme-name">{theme}</span>
               <span className="theme-progress">
                 {archived
-                  ? `Archived • Level ${badgeLevel}: ${badgeName} (${themeState.completedCount} completed)`
-                  : `Level ${badgeLevel}: ${badgeName} (${themeState.completedCount} completed)`}
+                  ? `Archived • ${progressLabel}`
+                  : progressLabel}
               </span>
             </div>
           </div>
@@ -270,8 +282,29 @@ const PuzzleList = ({ onSelectPuzzle }) => {
     );
   };
 
+  const completedPuzzleCount = puzzles.filter(p => statuses[p.id] === 'Completed').length;
+  const journey = getJourneyProgress(completedPuzzleCount);
+  const journeyPercent = `${Math.round(journey.progress * 100)}%`;
+  const nextRankCopy = journey.next
+    ? `${Math.max(0, journey.next.required - completedPuzzleCount)} to ${journey.next.level === 9 ? 'Night Sage' : `Rank ${journey.next.level}`}`
+    : 'Top rank reached';
+
   return (
     <div className="puzzle-list-wrapper animate-fade-in">
+      <section className="journey-section">
+        <div className="journey-rank">
+          <img src={journey.current.asset} alt={journey.current.name} className="journey-badge" />
+          <div className="journey-copy">
+            <span className="journey-eyebrow">Journey Rank</span>
+            <span className="journey-title">{journey.current.name}</span>
+            <span className="journey-progress-copy">{`${completedPuzzleCount} of ${puzzles.length} puzzles complete • ${nextRankCopy}`}</span>
+          </div>
+        </div>
+        <div className="journey-meter" aria-hidden="true">
+          <span style={{ width: journeyPercent }}></span>
+        </div>
+      </section>
+
       {inProgressPuzzles.length > 0 && (
         <section className="puzzle-section">
           <h2 className="section-title">In Progress</h2>

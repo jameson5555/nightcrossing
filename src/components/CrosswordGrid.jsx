@@ -14,7 +14,7 @@ const CrosswordGrid = ({
   activeWordIndices,
   revealedIndices = new Set(),
   onCompleteDismiss,
-  badgeUnlockInfo,
+  completionRewardInfo,
   isAlreadyCompleted
 }) => {
   const { id, size, grid, gridnums } = puzzleData;
@@ -577,21 +577,38 @@ const CrosswordGrid = ({
                 <span className="reward-text">You&rsquo;ve earned 5 hints!</span>
               </div>
 
-              {badgeUnlockInfo && (
+              {completionRewardInfo?.rankUnlock && (
                 <div className="badge-unlock-section">
-                  <div className="badge-unlock-label">NEW BADGE UNLOCKED</div>
-                  <div className="badge-level-up">{`Level ${badgeUnlockInfo.level} Reached!`}</div>
+                  <div className="badge-unlock-label">JOURNEY RANK UP</div>
+                  <div className="badge-level-up">{`Rank ${completionRewardInfo.rankUnlock.level} Reached!`}</div>
                   <div className="badge-unlock">
                     <img
-                      src={badgeUnlockInfo.asset}
-                      alt={badgeUnlockInfo.name}
+                      src={completionRewardInfo.rankUnlock.asset}
+                      alt={completionRewardInfo.rankUnlock.name}
                       className="badge-img badge-glow"
                     />
                     <div className="badge-text">
-                      <div className="badge-name">{badgeUnlockInfo.name}</div>
-                      <div className="badge-sub">{`Level ${badgeUnlockInfo.level} (${badgeUnlockInfo.puzzlesCompleted} completed)`}</div>
+                      <div className="badge-name">{completionRewardInfo.rankUnlock.name}</div>
+                      <div className="badge-sub">{`${completionRewardInfo.rankUnlock.puzzlesCompleted} total completed`}</div>
                     </div>
                   </div>
+                </div>
+              )}
+
+              {(completionRewardInfo?.themeComplete || completionRewardInfo?.unlockedThemes?.length > 0) && (
+                <div className="kudos-list">
+                  {completionRewardInfo.themeComplete && (
+                    <div className="kudos-item">
+                      <span className="kudos-label">Theme Complete</span>
+                      <span className="kudos-value">{completionRewardInfo.themeComplete}</span>
+                    </div>
+                  )}
+                  {completionRewardInfo.unlockedThemes?.map(theme => (
+                    <div className="kudos-item" key={theme}>
+                      <span className="kudos-label">New Theme Unlocked</span>
+                      <span className="kudos-value">{theme}</span>
+                    </div>
+                  ))}
                 </div>
               )}
 
