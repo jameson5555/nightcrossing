@@ -147,57 +147,74 @@
 }
 
 .theme-moon {
-  --theme-progress: 0%;
-  --moon-fill: rgba(0, 229, 255, 0.78);
-  --moon-track: rgba(255, 255, 255, 0.08);
-  --moon-core: rgba(6, 9, 24, 0.9);
+  --moon-lit: #d6f8ff;
+  --moon-shadow: #060918;
   position: relative;
   width: 36px;
   height: 36px;
   flex: 0 0 36px;
   border-radius: 50%;
+  overflow: hidden;
   background:
-    conic-gradient(var(--moon-fill) var(--theme-progress), var(--moon-track) 0),
-    radial-gradient(circle at 38% 34%, rgba(255, 255, 255, 0.18), transparent 38%);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    radial-gradient(circle at 36% 30%, rgba(255, 255, 255, 0.48), transparent 30%),
+    var(--moon-lit);
+  box-shadow:
+    inset -4px -5px 9px rgba(0, 0, 0, 0.22),
+    0 0 8px rgba(0, 229, 255, 0.18);
 }
 
 .theme-moon::before {
   content: "";
   position: absolute;
-  inset: 6px;
+  inset: -1px;
   border-radius: 50%;
-  background:
-    radial-gradient(circle at 38% 32%, rgba(255, 255, 255, 0.12), transparent 34%),
-    var(--moon-core);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  background: var(--moon-shadow);
+  box-shadow:
+    inset 3px 0 5px rgba(255, 255, 255, 0.06),
+    -1px 0 3px rgba(0, 229, 255, 0.14);
 }
 
 .theme-moon::after {
   content: "";
   position: absolute;
-  inset: 11px;
+  inset: 0;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.16);
-  opacity: 0.24;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.22);
+  pointer-events: none;
 }
 
-.theme-moon-empty {
-  --moon-fill: rgba(0, 229, 255, 0.32);
-  --moon-track: rgba(255, 255, 255, 0.08);
-  opacity: 0.72;
+.theme-moon-thin-crescent::before {
+  transform: translateX(4px);
 }
 
-.theme-moon-partial {
-  --moon-fill: rgba(0, 229, 255, 0.85);
-  --moon-track: rgba(191, 0, 255, 0.14);
-  filter: drop-shadow(0 0 5px rgba(0, 229, 255, 0.22));
+.theme-moon-crescent::before {
+  transform: translateX(10px);
 }
 
-.theme-moon-complete {
-  --moon-fill: rgba(0, 255, 136, 0.86);
-  --moon-track: rgba(0, 255, 136, 0.2);
-  filter: drop-shadow(0 0 5px rgba(0, 255, 136, 0.32));
+.theme-moon-half::before {
+  inset: 0 0 0 50%;
+  border-radius: 0 50% 50% 0;
+}
+
+.theme-moon-gibbous::before {
+  transform: translateX(24px);
+}
+
+.theme-moon-full::before {
+  opacity: 0;
+}
+
+.theme-moon-full {
+  --moon-lit: #dffdf0;
+  box-shadow:
+    inset -4px -5px 9px rgba(0, 0, 0, 0.18),
+    0 0 9px rgba(0, 255, 136, 0.3);
+}
+
+.theme-moon-archived {
+  --moon-lit: #bfffe0;
+  filter: drop-shadow(0 0 5px rgba(0, 255, 136, 0.28));
 }
 
 .theme-name {

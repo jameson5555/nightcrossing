@@ -141,10 +141,15 @@ const PuzzleList = ({ onSelectPuzzle }) => {
     return Math.min(1, Math.max(0, themeState.completedCount / total));
   };
 
-  const getThemeMoonClass = (themeState, archived) => {
-    if (archived || themeState.hasCompletedAllThemePuzzles) return 'complete';
-    if (themeState.completedCount > 0) return 'partial';
-    return 'empty';
+  const getThemeMoonPhase = (themeState, archived) => {
+    if (archived || themeState.hasCompletedAllThemePuzzles) return 'full';
+
+    const progressRatio = getThemeProgressRatio(themeState);
+    if (progressRatio <= 0) return 'thin-crescent';
+    if (progressRatio < 0.34) return 'crescent';
+    if (progressRatio < 0.67) return 'half';
+    if (progressRatio < 1) return 'gibbous';
+    return 'full';
   };
 
   const getThemeGroupState = (themePuzzles) => {
@@ -244,8 +249,7 @@ const PuzzleList = ({ onSelectPuzzle }) => {
   const renderThemeGroup = (theme, themeState, { archived = false } = {}) => {
     const isExpanded = expandedTheme === theme;
     const renderedPuzzles = archived ? themeState.allCompleted : themeState.visiblePuzzles;
-    const progressRatio = getThemeProgressRatio(themeState);
-    const moonClass = getThemeMoonClass(themeState, archived);
+    const moonPhase = getThemeMoonPhase(themeState, archived);
     const progressLabel = `${themeState.completedCount} of ${themeState.totalCount} complete`;
 
     return (
@@ -253,8 +257,7 @@ const PuzzleList = ({ onSelectPuzzle }) => {
         <div className="theme-header" onClick={() => toggleTheme(theme)}>
           <div className="theme-header-info">
             <span
-              className={`theme-moon theme-moon-${moonClass}`}
-              style={{ '--theme-progress': `${progressRatio * 100}%` }}
+              className={`theme-moon theme-moon-${moonPhase} ${archived ? 'theme-moon-archived' : ''}`}
               aria-hidden="true"
             ></span>
             <div className="theme-header-text">
