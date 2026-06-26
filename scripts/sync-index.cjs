@@ -10,7 +10,13 @@ const INDEX_FILE = path.join(DATA_DIR, 'puzzles.json');
 const META_FILE = path.join(DATA_DIR, 'puzzles.meta.json');
 const THEMES_FILE = path.join(__dirname, 'themes.json');
 const CANDIDATE_THEMES_FILE = path.join(__dirname, 'candidate-themes.json');
-const { buildThemeVisibility, loadRotation, getCurrentThemeNames, getNextThemeNames } = require('./themeRotation.cjs');
+const {
+  buildThemeAvailability,
+  buildThemeVisibility,
+  loadRotation,
+  getCurrentThemeNames,
+  getNextThemeNames
+} = require('./themeRotation.cjs');
 const PUZZLES_PER_SET = 3;
 const EASY_LONG_WORD_LENGTH = 7;
 const LONG_WORD_LENGTH = 8;
@@ -31,6 +37,10 @@ function formatWaveLabel(volume) {
   if (!Number.isInteger(volume) || volume < 1) return '';
   const waveNumber = Math.floor((volume - 1) / PUZZLES_PER_SET) + 1;
   return `Wave ${waveNumber}`;
+}
+
+function getNextMonthlyReleaseAt(now = new Date()) {
+  return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1)).toISOString();
 }
 
 function loadJSON(filePath) {
@@ -623,12 +633,16 @@ async function syncIndex() {
   const resetVersion = shouldRotateResetVersion
     ? version
     : String(previousMeta.resetVersion || previousMeta.version || version);
+  const generatedAt = new Date();
+  const rotation = loadRotation();
   const meta = {
     version,
     resetVersion,
     puzzleCount: entries.length,
-    themeVisibility: buildThemeVisibility(loadRotation()),
-    generatedAt: new Date().toISOString()
+    themeVisibility: buildThemeVisibility(rotation),
+    themeAvailability: buildThemeAvailability(rotation),
+    nextReleaseAt: getNextMonthlyReleaseAt(generatedAt),
+    generatedAt: generatedAt.toISOString()
   };
 
   fs.writeFileSync(INDEX_FILE, JSON.stringify(entries, null, 2));

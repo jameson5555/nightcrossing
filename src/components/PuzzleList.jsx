@@ -3,6 +3,7 @@ import './PuzzleList.css';
 import { checkPuzzleStatus, loadPuzzleProgress, resetPuzzleDataIfDatasetChanged } from '../utils/storage';
 import { getJourneyProgress } from '../utils/badges';
 import { getSolvedClueIds } from '../utils/crossword';
+import { classifyThemeEntries, formatNextReleaseDate } from '../utils/themeAvailability';
 
 const THEME_DISPLAY_ORDER = [
   'Space & Sky',
@@ -21,8 +22,6 @@ const THEME_DISPLAY_ORDER = [
   'Nature & Wilderness',
   'History & Civilization'
 ];
-const MIN_ACTIVE_THEME_COUNT = 6;
-
 function compareThemeOrder(a, b) {
   const indexA = THEME_DISPLAY_ORDER.indexOf(a);
   const indexB = THEME_DISPLAY_ORDER.indexOf(b);
@@ -51,6 +50,8 @@ const PuzzleList = ({ onSelectPuzzle }) => {
   const [loading, setLoading] = useState(true);
   const [expandedTheme, setExpandedTheme] = useState(null);
   const [themeVisibility, setThemeVisibility] = useState({});
+  const [themeAvailability, setThemeAvailability] = useState({});
+  const [nextReleaseAt, setNextReleaseAt] = useState('');
 
   useEffect(() => {
     let mounted = true;
@@ -62,7 +63,11 @@ const PuzzleList = ({ onSelectPuzzle }) => {
           const metaRes = await fetch(`${baseUrl}data/puzzles.meta.json?t=${Date.now()}`);
           if (metaRes.ok) {
             const meta = await metaRes.json();
-            if (mounted) setThemeVisibility(meta?.themeVisibility || {});
+            if (mounted) {
+              setThemeVisibility(meta?.themeVisibility || {});
+              setThemeAvailability(meta?.themeAvailability || {});
+              setNextReleaseAt(meta?.nextReleaseAt || '');
+            }
             await resetPuzzleDataIfDatasetChanged(meta?.resetVersion || meta?.version);
           }
         } catch (metaErr) {
@@ -186,32 +191,13 @@ const PuzzleList = ({ onSelectPuzzle }) => {
   const themeStatesByName = Object.fromEntries(
     sortedThemeEntries.map(([theme, themePuzzles]) => [theme, getThemeGroupState(themePuzzles)])
   );
-  const activeThemeEntries = [];
-  const completedThemeEntries = [];
-  const lockedBackfillEntries = [];
-
-  for (const [theme] of sortedThemeEntries) {
-    const themeState = themeStatesByName[theme];
-    const lock = themeVisibility?.[theme]?.lockedUntilThemeCompleted;
-    if (lock && !themeStatesByName[lock]?.hasCompletedAllThemePuzzles) {
-      if (!themeState.hasCompletedAllThemePuzzles) {
-        lockedBackfillEntries.push([theme, themeState]);
-      }
-      continue;
-    }
-
-    if (themeState.hasCompletedAllThemePuzzles) {
-      completedThemeEntries.push([theme, themeState]);
-    } else {
-      activeThemeEntries.push([theme, themeState]);
-    }
-  }
-
-  // Some completed themes do not have a one-to-one successor. Reveal generated
-  // successor themes as needed so each user still has a full active selection.
-  const backfillCount = Math.max(0, MIN_ACTIVE_THEME_COUNT - activeThemeEntries.length);
-  activeThemeEntries.push(...lockedBackfillEntries.slice(0, backfillCount));
-  activeThemeEntries.sort(([themeA], [themeB]) => compareThemeOrder(themeA, themeB));
+  const { activeThemeEntries, completedThemeEntries } = classifyThemeEntries({
+    sortedThemeEntries,
+    themeStatesByName,
+    themeVisibility,
+    themeAvailability
+  });
+  const nextReleaseDateLabel = formatNextReleaseDate(nextReleaseAt);
 
   const renderPuzzleItem = (puzzle, options = {}) => {
     const hideStatus = !!options.hideStatus;
@@ -282,9 +268,16 @@ const PuzzleList = ({ onSelectPuzzle }) => {
           </div>
         </div>
         {isExpanded && (
-          <ul className="puzzle-list">
-            {renderedPuzzles.map(p => renderPuzzleItem(p))}
-          </ul>
+          <>
+            <ul className="puzzle-list">
+              {renderedPuzzles.map(p => renderPuzzleItem(p))}
+            </ul>
+            {!archived && themeState.hasCompletedAllThemePuzzles && (
+              <div className="theme-completion-note">
+                More puzzles coming on {nextReleaseDateLabel}!
+              </div>
+            )}
+          </>
         )}
       </div>
     );

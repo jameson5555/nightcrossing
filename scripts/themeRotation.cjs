@@ -165,6 +165,37 @@ function buildThemeVisibility(rotation = loadRotation()) {
   return visibility;
 }
 
+function buildThemeAvailability(rotation = loadRotation()) {
+  const availability = {};
+
+  for (const slot of rotation.slots) {
+    if (slot?.currentTheme) {
+      const exhausted = slot.status === 'exhausted';
+      availability[slot.currentTheme] = {
+        status: exhausted ? 'exhausted' : 'scheduled',
+        receivesNextBatch: !exhausted
+      };
+    }
+
+    if (slot?.nextTheme) {
+      availability[slot.nextTheme] = {
+        status: 'scheduled',
+        receivesNextBatch: true
+      };
+    }
+  }
+
+  for (const retired of rotation.retired || []) {
+    if (!retired?.theme) continue;
+    availability[retired.theme] = {
+      status: 'exhausted',
+      receivesNextBatch: false
+    };
+  }
+
+  return availability;
+}
+
 function removeCandidate(rotation, themeName) {
   const target = normalizedThemeKey(themeName);
   rotation.candidates = (rotation.candidates || []).filter(candidate => normalizedThemeKey(candidate) !== target);
@@ -237,6 +268,7 @@ module.exports = {
   getNextThemeNames,
   getGenerationThemeNames,
   buildThemeVisibility,
+  buildThemeAvailability,
   markThemeExhausted,
   assignNextTheme,
   retireCompletedTheme,

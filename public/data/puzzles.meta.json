@@ -22,5 +22,60 @@
       "lockedUntilThemeCompleted": "Internet & Software"
     }
   },
-  "generatedAt": "2026-06-04T18:09:53.128Z"
+  "themeAvailability": {
+    "Space & Sky": {
+      "status": "exhausted",
+      "receivesNextBatch": false
+    },
+    "Transportation & Vehicles": {
+      "status": "scheduled",
+      "receivesNextBatch": true
+    },
+    "Food & Cooking": {
+      "status": "scheduled",
+      "receivesNextBatch": true
+    },
+    "Plants & Gardens": {
+      "status": "scheduled",
+      "receivesNextBatch": true
+    },
+    "Music & Sound": {
+      "status": "scheduled",
+      "receivesNextBatch": true
+    },
+    "Animals & Wildlife": {
+      "status": "scheduled",
+      "receivesNextBatch": true
+    },
+    "Ocean & Marine Life": {
+      "status": "scheduled",
+      "receivesNextBatch": true
+    },
+    "Home & Tools": {
+      "status": "scheduled",
+      "receivesNextBatch": true
+    },
+    "Sports & Athletics": {
+      "status": "scheduled",
+      "receivesNextBatch": true
+    },
+    "Nature & Wilderness": {
+      "status": "scheduled",
+      "receivesNextBatch": true
+    },
+    "Weather & Climate": {
+      "status": "scheduled",
+      "receivesNextBatch": true
+    },
+    "Internet & Software": {
+      "status": "scheduled",
+      "receivesNextBatch": true
+    },
+    "History & Civilization": {
+      "status": "scheduled",
+      "receivesNextBatch": true
+    }
+  },
+  "nextReleaseAt": "2026-07-01T00:00:00.000Z",
+  "generatedAt": "2026-06-26T21:08:29.712Z"
 }
