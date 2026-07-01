@@ -4,7 +4,8 @@
 
 The scheduled GitHub Actions workflow enriches the theme pools, generates three
 new puzzles for every scheduled theme (including hidden successors), audits the
-dataset, and commits the result only after every step succeeds.
+dataset, commits the result only after generation and audits succeed, and then
+deploys the latest `main` build directly to the web host.
 Preflight requires enough usable words for the current batch plus one complete
 future batch; enrichment replenishes that rolling reserve on every run.
 

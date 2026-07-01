@@ -53,3 +53,32 @@ jobs:
           git config --local user.name "GitHub Action"
           git add scripts/themes.json scripts/candidate-themes.json scripts/theme-rotation.json public/data/puzzles.json public/data/puzzles.meta.json public/data/puzzles/
           git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-generate new monthly puzzles" && git push)
+
+  deploy:
+    needs: generate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build web app
+        run: npm run build
+
+      - name: Deploy to cPanel via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /nightcrossing/
+          local-dir: ./dist/
