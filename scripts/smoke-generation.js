@@ -34,7 +34,7 @@ for (const themeName of HARD_THEMES) {
   assert.ok(theme, `Missing smoke-test theme: ${themeName}`);
 
   const consumed = collectConsumedAnswers(themeName);
-  const runs = themeName === 'Food & Cooking' ? 3 : 1;
+  const runs = themeName === 'Music & Sound' ? 1 : 3;
 
   for (let run = 1; run <= runs; run++) {
     const availableWords = theme.words.filter(word => !consumed.has(word.answer.toUpperCase()));

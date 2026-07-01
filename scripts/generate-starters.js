@@ -6,7 +6,11 @@ import { fileURLToPath } from 'url';
 import { generateThemedPuzzle, THEMES, scoreWordForTheme } from './proceduralEngine.js';
 import { analyzeThemeReadiness, runGenerationPreflight } from './preflight-generation.js';
 import { fetchThemeWords } from './fetch-theme-words.js';
-import { assertSuccessfulThemeBatch, decideThemeBatchOutcome } from './generationPolicy.js';
+import {
+  assertSuccessfulThemeBatch,
+  decideThemeBatchOutcome,
+  dedupeWordsByClue
+} from './generationPolicy.js';
 import { computePuzzleMetrics } from './puzzleMetrics.js';
 import { computeLexicalStatsForAnswers } from './lexicalDifficulty.js';
 import difficultyRubricPkg from './difficultyRubric.cjs';
@@ -930,14 +934,14 @@ async function generateStarters() {
               continue;
             }
             
-            const availableWords = theme.words
+            const availableWords = dedupeWordsByClue(theme.words
               .filter(w => !consumedWords.has(w.answer.toUpperCase()))
               .sort((a, b) => {
                 const aScore = scoreWordForTheme(theme.name, a);
                 const bScore = scoreWordForTheme(theme.name, b);
                 if (aScore === bScore) return Math.random() - 0.5;
                 return bScore - aScore;
-              });
+              }));
             
             if (availableWords.length < 10) {
                console.log(`Not enough available words pool for ${theme.name} to generate Vol ${i}. Add more words to themes.json or let rotation assign a successor.`);

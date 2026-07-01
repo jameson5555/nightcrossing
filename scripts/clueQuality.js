@@ -108,6 +108,42 @@ function isRepetitiveReentryClue(answer, clue) {
   return REPETITIVE_REENTRY_REGEXES.some(regex => regex.test(clueText));
 }
 
+function likelyPluralAnswer(answer) {
+  const value = String(answer || '').trim().toUpperCase();
+  if (value.length < 4 || !value.endsWith('S') || value.endsWith('SS')) return false;
+  return value !== 'MARS';
+}
+
+function likelyPluralWord(word) {
+  const token = String(word || '').toLowerCase();
+  if (!token || token.length < 3 || !token.endsWith('s') || token.endsWith('ss')) return false;
+  if (token.endsWith('wards') || token.endsWith('ics') || token.endsWith('us') || token.endsWith('is')) return false;
+  return token !== 'news';
+}
+
+function clueLooksSimpleNounPhrase(clueText) {
+  const text = String(clueText || '').trim();
+  if (!text || /[,:;()]/.test(text)) return false;
+
+  const tokens = text.toLowerCase().match(/[a-z]+/g) || [];
+  if (tokens.length < 2 || tokens.length > 4) return false;
+
+  const blockers = new Set([
+    'who', 'which', 'that', 'when', 'where',
+    'used', 'using', 'to', 'for', 'of', 'with', 'without', 'between', 'into',
+    'from', 'as', 'by', 'on', 'in', 'at', 'across'
+  ]);
+  return !tokens.some(token => blockers.has(token));
+}
+
+export function hasClueNumberMismatch(answer, clue) {
+  if (!clueLooksSimpleNounPhrase(clue)) return false;
+  const lastWordMatch = String(clue || '').match(/([A-Za-z]+)[^A-Za-z]*$/);
+  if (!lastWordMatch) return false;
+
+  return likelyPluralAnswer(answer) !== likelyPluralWord(lastWordMatch[1]);
+}
+
 export function containsBannedContent(text) {
   return BANNED_CONTENT_REGEX.test(text || '');
 }
@@ -189,6 +225,10 @@ export function isWordEntryAcceptable(entry) {
 
   if (isRepetitiveReentryClue(answer, clue)) {
     return { ok: false, reason: 'repetitive-reentry-clue' };
+  }
+
+  if (hasClueNumberMismatch(answer, clue)) {
+    return { ok: false, reason: 'clue-number-mismatch' };
   }
 
   if (hasAnswerLeakage(answer, clue)) {
