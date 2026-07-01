@@ -1,4 +1,28 @@
-# React + Vite
+# Nightcrossing
+
+## Monthly puzzle generation
+
+The scheduled GitHub Actions workflow enriches the theme pools, generates three
+new puzzles for every scheduled theme (including hidden successors), audits the
+dataset, and commits the result only after every step succeeds.
+
+Runtime controls:
+
+- `NC_NEW_PUZZLES_PER_THEME` sets the batch size. The monthly workflow pins it
+  to `3`.
+- `NC_LAYOUT_ATTEMPT_SCALE` scales each layout search budget. The workflow uses
+  `0.2` to keep the batch bounded.
+- `NC_MAX_LAYOUT_QUALITY_RETRIES` caps independent layout retries per puzzle.
+  The workflow uses `5`.
+- `NC_ENRICH_REQUEST_TIMEOUT_MS` bounds each external enrichment request. The
+  workflow uses `12000` milliseconds and skips unavailable sources.
+
+Run `npm run preflight:generation` before generation, `npm run
+generate:monthly` for the full local enrichment-and-generation flow, and `npm
+run test:generation-smoke` to exercise the three historically difficult themes
+with the workflow search budget.
+
+## Development
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

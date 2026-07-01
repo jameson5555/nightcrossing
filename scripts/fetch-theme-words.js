@@ -40,6 +40,9 @@ const EXACT_DEFINITION_CACHE = new Map();
 const REQUEST_HEADERS = {
   'user-agent': 'nightcrossing-source-enrichment/1.0'
 };
+const REQUEST_TIMEOUT_MS = Number.isFinite(Number(process.env.NC_ENRICH_REQUEST_TIMEOUT_MS))
+  ? Math.max(1000, Math.min(60000, Number(process.env.NC_ENRICH_REQUEST_TIMEOUT_MS)))
+  : 12000;
 const WIKIPEDIA_MAX_RETRIES = 3;
 const WORDNET_LOOKUP_POS_PRIORITY = new Map([
   ['n', 0],
@@ -501,22 +504,29 @@ function decodeHtmlEntities(text) {
   });
 }
 
-  async function fetchJSONOrNull(url) {
-    try {
-      const res = await fetch(url, { headers: REQUEST_HEADERS });
-      if (!res.ok) return null;
+async function fetchWithTimeout(url, options = {}) {
+  return fetch(url, {
+    ...options,
+    signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS)
+  });
+}
 
-      const text = await res.text();
-      return JSON.parse(text);
-    } catch {
-      return null;
-    }
+async function fetchJSONOrNull(url) {
+  try {
+    const res = await fetchWithTimeout(url, { headers: REQUEST_HEADERS });
+    if (!res.ok) return null;
+
+    const text = await res.text();
+    return JSON.parse(text);
+  } catch {
+    return null;
   }
+}
 
 async function fetchWikipediaJSONOrNull(url, retries = WIKIPEDIA_MAX_RETRIES) {
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
-      const res = await fetch(url, { headers: REQUEST_HEADERS });
+      const res = await fetchWithTimeout(url, { headers: REQUEST_HEADERS });
       const text = await res.text();
 
       if (res.status === 429) {
@@ -1460,7 +1470,8 @@ export async function fetchThemeWords() {
 
           const url = strategy.buildUrl(seed, strategy.maxCandidates);
           try {
-            const res = await fetch(url);
+            const res = await fetchWithTimeout(url);
+            if (!res.ok) continue;
             const data = await res.json();
             const rankedData = [...data]
               .sort((a, b) => (b.score || 0) - (a.score || 0))

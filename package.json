@@ -8,6 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "test": "node --test test/*.test.js",
+    "test:generation-smoke": "node scripts/smoke-generation.js",
     "preview": "vite preview",
     "sanitize:themes": "node scripts/sanitize-theme-pool.js",
     "annotate:lexical": "node scripts/annotate-theme-lexical.js",

@@ -37,7 +37,6 @@ const MAX_PUZZLE_LOW_RELEVANCE = Number.isFinite(Number(process.env.NC_MAX_PUZZL
 const MAX_EXTENDED_WORDS_PER_PUZZLE = Number.isFinite(Number(process.env.NC_MAX_EXTENDED_WORDS_PER_PUZZLE))
   ? Number(process.env.NC_MAX_EXTENDED_WORDS_PER_PUZZLE)
   : 2;
-const ALLOW_EMERGENCY_FALLBACK = process.env.NC_ALLOW_EMERGENCY_FALLBACK === '1';
 const ATTEMPT_SCALE = Number.isFinite(Number(process.env.NC_LAYOUT_ATTEMPT_SCALE))
   ? Math.max(0.2, Math.min(2, Number(process.env.NC_LAYOUT_ATTEMPT_SCALE)))
   : 1;
@@ -980,16 +979,21 @@ export function generateThemedPuzzle(id, themeName, availableWords, options = {}
     }
   }
 
-  if (!layout && ALLOW_EMERGENCY_FALLBACK) {
-    // Emergency fallback for sparse/intersection-poor themes.
+  if (!layout) {
+    // Final constrained fallback for sparse/intersection-poor themes. Keep the
+    // theme and lexical guardrails even though intersection requirements relax.
     const emergency = generateBestLayout(
-      availableWords,
+      themedWords,
       attemptBudget(2800),
-      Math.min(6, availableWords.length),
-      Math.min(6, availableWords.length),
+      Math.min(6, themedWords.length),
+      Math.min(6, themedWords.length),
       { enforceLongIntersections: false, themeName }
     );
-    if (emergency) {
+    if (
+      emergency &&
+      layoutPassesThemeGuardrails(emergency, pools.relevanceByAnswer) &&
+      layoutPassesLexicalGuardrails(emergency, { themeName })
+    ) {
       layout = emergency;
     }
   }

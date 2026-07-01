@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url';
 import { generateThemedPuzzle, THEMES, scoreWordForTheme } from './proceduralEngine.js';
 import { analyzeThemeReadiness, runGenerationPreflight } from './preflight-generation.js';
 import { fetchThemeWords } from './fetch-theme-words.js';
+import { assertSuccessfulThemeBatch, decideThemeBatchOutcome } from './generationPolicy.js';
 import { computePuzzleMetrics } from './puzzleMetrics.js';
 import { computeLexicalStatsForAnswers } from './lexicalDifficulty.js';
 import difficultyRubricPkg from './difficultyRubric.cjs';
@@ -845,6 +846,8 @@ async function generateStarters() {
     const consumedWords = new Set();
     let generatedForTheme = 0;
     let themeExhaustionReason = '';
+    let caughtThemeError = null;
+    let confirmedExhausted = false;
     if (REGENERATE && !ALLOW_REPEAT_ANSWERS) {
       const historical = historicalConsumedByTheme.get(theme.name);
       if (historical) {
@@ -939,6 +942,7 @@ async function generateStarters() {
             if (availableWords.length < 10) {
                console.log(`Not enough available words pool for ${theme.name} to generate Vol ${i}. Add more words to themes.json or let rotation assign a successor.`);
                themeExhaustionReason = `insufficient available words for vol${i}`;
+               confirmedExhausted = true;
                break;
             }
 
@@ -1053,22 +1057,55 @@ async function generateStarters() {
     } catch (themeErr) {
         console.error(`\n❌ Failed to generate batch for theme [${theme.name}]:`, themeErr.message);
         themeExhaustionReason = themeErr.message;
+        caughtThemeError = themeErr;
     }
 
-    if (rotationEnabled && generatedForTheme < NEW_PUZZLES_PER_THEME) {
+    if (generatedForTheme < NEW_PUZZLES_PER_THEME) {
+      const remainingCount = NEW_PUZZLES_PER_THEME - generatedForTheme;
+      const readiness = analyzeThemeReadiness(theme, consumedWords, remainingCount, {
+        minFutureRunwayBatches: 0
+      });
+      const outcome = decideThemeBatchOutcome({
+        generatedCount: generatedForTheme,
+        targetCount: NEW_PUZZLES_PER_THEME,
+        readiness
+      });
+
+      if (outcome.action === 'fail') {
+        const cause = caughtThemeError?.message || themeExhaustionReason || 'unknown generation shortfall';
+        throw new Error(
+          `Theme ${theme.name} remains generation-ready but its batch stopped at ` +
+          `${generatedForTheme}/${NEW_PUZZLES_PER_THEME}: ${cause}`
+        );
+      }
+
+      confirmedExhausted = confirmedExhausted || outcome.action === 'exhaust';
+      if (confirmedExhausted) {
+        console.warn(
+          `  Theme readiness confirms exhaustion for the remaining ${remainingCount} puzzle(s): ` +
+          `${readiness.readinessFailures.join('; ') || 'insufficient generation capacity'}.`
+        );
+      }
+    }
+
+    let exhaustionTransitionHandled = false;
+    if (rotationEnabled && confirmedExhausted && generatedForTheme < NEW_PUZZLES_PER_THEME) {
       const slot = markThemeExhausted(
         rotation,
         theme.name,
         themeExhaustionReason || `generated ${generatedForTheme}/${NEW_PUZZLES_PER_THEME} puzzle(s) this run`
       );
 
+      if (slot) {
+        exhaustionTransitionHandled = true;
+      }
+
       if (slot && !slot.nextTheme) {
         const replacement = selectReadyReplacementTheme(rotation, historicalConsumedByTheme);
         if (!replacement) {
           console.error(`\n❌ Theme [${theme.name}] is exhausted, but no ready candidate replacement is available.`);
           console.error('Add or enrich candidate themes in scripts/candidate-themes.json, then rerun generation.');
-          saveRotation(rotation);
-          process.exit(2);
+          throw new Error(`No ready replacement theme is available for ${theme.name}.`);
         }
 
         assignNextTheme(rotation, theme.name, replacement.theme);
@@ -1079,6 +1116,13 @@ async function generateStarters() {
         console.log(`  🔁 Marked ${theme.name} exhausted and assigned hidden successor ${replacement.theme}.`);
       }
     }
+
+    assertSuccessfulThemeBatch({
+      themeName: theme.name,
+      generatedCount: generatedForTheme,
+      targetCount: NEW_PUZZLES_PER_THEME,
+      exhausted: exhaustionTransitionHandled
+    });
   }
 
   // Reconcile: add any disk-only puzzle files not yet in the index
