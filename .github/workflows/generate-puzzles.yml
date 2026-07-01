@@ -19,10 +19,10 @@ jobs:
     timeout-minutes: 180
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: '20'
 
@@ -41,6 +41,7 @@ jobs:
           NC_LAYOUT_ATTEMPT_SCALE: '0.2'
           NC_MAX_LAYOUT_QUALITY_RETRIES: '5'
           NC_NEW_PUZZLES_PER_THEME: '3'
+          NC_PRIMARY_CORE_POOL_LIMIT: '120'
         run: node scripts/generate-starters.js --skip-enrichment
 
       - name: Audit generated dataset

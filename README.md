@@ -14,6 +14,8 @@ Runtime controls:
   `0.2` to keep the batch bounded.
 - `NC_MAX_LAYOUT_QUALITY_RETRIES` caps independent layout retries per puzzle.
   The workflow uses `5`.
+- `NC_PRIMARY_CORE_POOL_LIMIT` controls the high-relevance search window. The
+  workflow uses `120` so later volumes retain enough crossing combinations.
 - `NC_ENRICH_REQUEST_TIMEOUT_MS` bounds each external enrichment request. The
   workflow uses `12000` milliseconds and skips unavailable sources.
 

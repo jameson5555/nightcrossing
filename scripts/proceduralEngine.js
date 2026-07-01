@@ -982,11 +982,16 @@ export function generateThemedPuzzle(id, themeName, availableWords, options = {}
   if (!layout) {
     // Final constrained fallback for sparse/intersection-poor themes. Keep the
     // theme and lexical guardrails even though intersection requirements relax.
+    // Search the complete core pool so a weak top-ranked window cannot strand
+    // a theme that still has ample relevant, clue-safe words.
+    const recoveryWords = pools.coreWords.length >= MIN_WORD_TARGET
+      ? pools.coreWords
+      : themedWords;
     const emergency = generateBestLayout(
-      themedWords,
+      recoveryWords,
       attemptBudget(2800),
-      Math.min(6, themedWords.length),
-      Math.min(6, themedWords.length),
+      Math.min(6, recoveryWords.length),
+      Math.min(6, recoveryWords.length),
       { enforceLongIntersections: false, themeName }
     );
     if (
