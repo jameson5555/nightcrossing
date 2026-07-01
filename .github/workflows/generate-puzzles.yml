@@ -36,7 +36,7 @@ jobs:
 
       - name: Generate new puzzles
         env:
-          NC_MIN_FUTURE_RUNWAY_BATCHES: '2'
+          NC_MIN_FUTURE_RUNWAY_BATCHES: '1'
           NC_ENABLE_EASY_TOP_OFF: '0'
           NC_LAYOUT_ATTEMPT_SCALE: '0.2'
           NC_MAX_LAYOUT_QUALITY_RETRIES: '5'
