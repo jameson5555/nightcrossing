@@ -1,7 +1,7 @@
 {
-  "version": "1772d36eb01a9172",
+  "version": "aeaf73fc16578a77",
   "resetVersion": "bb837de6de25538c",
-  "puzzleCount": 71,
+  "puzzleCount": 101,
   "themeVisibility": {
     "Transportation & Vehicles": {
       "lockedUntilThemeCompleted": "Space & Sky"
@@ -76,6 +76,6 @@
       "receivesNextBatch": true
     }
   },
-  "nextReleaseAt": "2026-07-01T00:00:00.000Z",
-  "generatedAt": "2026-06-26T21:08:29.712Z"
+  "nextReleaseAt": "2026-08-01T00:00:00.000Z",
+  "generatedAt": "2026-07-01T22:08:34.033Z"
 }
