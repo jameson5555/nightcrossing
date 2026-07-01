@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import process from 'node:process';
 import { createRequire } from 'module';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { THEMES, createThemePools, scoreWordForTheme } from './proceduralEngine.js';
@@ -151,13 +152,7 @@ function buildReadinessFailures({
   futureRunwayBatches,
   minFutureRunwayBatches,
   usableCoreWords,
-  minimumCore,
-  avgCoreRelevance,
-  hintCoverage,
-  invalidShare,
-  weakSourceShare,
-  avgCrossability,
-  longShare
+  minimumCore
 }) {
   const failures = [];
 
@@ -170,22 +165,29 @@ function buildReadinessFailures({
   if (usableCoreWords < minimumCore) {
     failures.push(`usable core ${usableCoreWords}/${minimumCore}`);
   }
-  if (hintCoverage < MIN_HINT_COVERAGE) {
-    failures.push(`hint coverage ${hintCoverage.toFixed(2)} < ${MIN_HINT_COVERAGE}`);
-  }
-  if (invalidShare > MAX_INVALID_ENTRY_SHARE) {
-    failures.push(`invalid share ${invalidShare.toFixed(2)} > ${MAX_INVALID_ENTRY_SHARE}`);
-  }
-  if (weakSourceShare > MAX_WEAK_SOURCE_SHARE) {
-    failures.push(`weak source share ${weakSourceShare.toFixed(2)} > ${MAX_WEAK_SOURCE_SHARE}`);
-  }
 
   return failures;
 }
 
-function buildReadinessAdvisories({ avgCoreRelevance, avgCrossability, longShare }) {
+function buildReadinessAdvisories({
+  avgCoreRelevance,
+  avgCrossability,
+  longShare,
+  hintCoverage,
+  invalidShare,
+  weakSourceShare
+}) {
   const advisories = [];
 
+  if (hintCoverage < MIN_HINT_COVERAGE) {
+    advisories.push(`hint coverage ${hintCoverage.toFixed(3)} < ${MIN_HINT_COVERAGE}`);
+  }
+  if (invalidShare > MAX_INVALID_ENTRY_SHARE) {
+    advisories.push(`invalid share ${invalidShare.toFixed(3)} > ${MAX_INVALID_ENTRY_SHARE}`);
+  }
+  if (weakSourceShare > MAX_WEAK_SOURCE_SHARE) {
+    advisories.push(`weak source share ${weakSourceShare.toFixed(3)} > ${MAX_WEAK_SOURCE_SHARE}`);
+  }
   if (avgCrossability < 1.22) {
     advisories.push(`crossability ${avgCrossability.toFixed(2)} < 1.22`);
   }
@@ -268,18 +270,15 @@ export function analyzeThemeReadiness(
     futureRunwayBatches,
     minFutureRunwayBatches,
     usableCoreWords: usableCoreWords.length,
-    minimumCore,
-    avgCoreRelevance,
-    hintCoverage,
-    invalidShare,
-    weakSourceShare,
-    avgCrossability,
-    longShare
+    minimumCore
   });
   const readinessAdvisories = buildReadinessAdvisories({
     avgCoreRelevance,
     avgCrossability,
-    longShare
+    longShare,
+    hintCoverage,
+    invalidShare,
+    weakSourceShare
   });
   const isReady = readinessFailures.length === 0;
 
