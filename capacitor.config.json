@@ -1,5 +1,10 @@
 {
   "appId": "com.jamesonmacarthur.nightcrossing",
   "appName": "Nightcrossing",
-  "webDir": "dist"
+  "webDir": "dist",
+  "plugins": {
+    "CapacitorHttp": {
+      "enabled": true
+    }
+  }
 }

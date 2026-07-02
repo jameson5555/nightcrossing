@@ -27,6 +27,8 @@ jobs:
         run: npm ci
 
       - name: Build Web Assets
+        env:
+          VITE_PUZZLE_DATA_URL: https://jamesonmacarthur.com/nightcrossing/data/
         run: npm run build
 
       - name: Sync Capacitor

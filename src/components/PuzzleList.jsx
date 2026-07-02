@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './PuzzleList.css';
-import { checkPuzzleStatus, loadPuzzleProgress, resetPuzzleDataIfDatasetChanged } from '../utils/storage';
+import { checkPuzzleStatus, loadPuzzleProgress } from '../utils/storage';
 import { getJourneyProgress } from '../utils/badges';
 import { getSolvedClueIds } from '../utils/crossword';
 import { classifyThemeEntries, formatNextReleaseDate } from '../utils/themeAvailability';
+import { fetchPuzzleData } from '../utils/puzzleData';
 
 const THEME_DISPLAY_ORDER = [
   'Space & Sky',
@@ -43,48 +44,33 @@ function comparePuzzleOrder(a, b) {
   return String(a.id).localeCompare(String(b.id));
 }
 
-const PuzzleList = ({ onSelectPuzzle }) => {
-  const [puzzles, setPuzzles] = useState([]);
+const PuzzleList = ({ onSelectPuzzle, puzzles, puzzleMeta }) => {
   const [statuses, setStatuses] = useState({});
   const [wordsLeftByPuzzle, setWordsLeftByPuzzle] = useState({});
   const [loading, setLoading] = useState(true);
   const [expandedTheme, setExpandedTheme] = useState(null);
-  const [themeVisibility, setThemeVisibility] = useState({});
-  const [themeAvailability, setThemeAvailability] = useState({});
-  const [nextReleaseAt, setNextReleaseAt] = useState('');
+  const themeVisibility = puzzleMeta?.themeVisibility || {};
+  const themeAvailability = puzzleMeta?.themeAvailability || {};
+  const nextReleaseAt = puzzleMeta?.nextReleaseAt || '';
 
   useEffect(() => {
     let mounted = true;
-    const fetchIndex = async () => {
+    const resolveStatuses = async () => {
+      if (!Array.isArray(puzzles)) return;
+      if (puzzles.length === 0) return;
+
       try {
-        const baseUrl = import.meta.env.BASE_URL;
-
-        try {
-          const metaRes = await fetch(`${baseUrl}data/puzzles.meta.json?t=${Date.now()}`);
-          if (metaRes.ok) {
-            const meta = await metaRes.json();
-            if (mounted) {
-              setThemeVisibility(meta?.themeVisibility || {});
-              setThemeAvailability(meta?.themeAvailability || {});
-              setNextReleaseAt(meta?.nextReleaseAt || '');
-            }
-            await resetPuzzleDataIfDatasetChanged(meta?.resetVersion || meta?.version);
-          }
-        } catch (metaErr) {
-          console.warn('Failed to check puzzle dataset version', metaErr);
+        if (mounted) {
+          setStatuses({});
+          setWordsLeftByPuzzle({});
         }
-
-        const res = await fetch(`${baseUrl}data/puzzles.json?t=${Date.now()}`);
-        const data = await res.json();
-        if (!mounted) return;
-        setPuzzles(data);
         setLoading(false);
 
-        const tasks = data.map(async (p) => {
+        const tasks = puzzles.map(async (p) => {
           try {
-            const puzzleRes = await fetch(`${baseUrl}data/puzzles/${p.id}.json`);
-            if (!puzzleRes.ok) throw new Error(`HTTP ${puzzleRes.status}`);
-            const puzzleData = await puzzleRes.json();
+            const puzzleData = await fetchPuzzleData(
+              `puzzles/${encodeURIComponent(p.id)}.json`
+            );
 
             const progress = await loadPuzzleProgress(p.id);
             const currentAnswers = Array.isArray(progress) ? progress : [];
@@ -113,9 +99,9 @@ const PuzzleList = ({ onSelectPuzzle }) => {
         if (mounted) setLoading(false);
       }
     };
-    fetchIndex();
+    resolveStatuses();
     return () => { mounted = false; };
-  }, []);
+  }, [puzzles]);
 
   if (loading) {
     return (

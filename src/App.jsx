@@ -32,9 +32,11 @@ import { getJourneyRankLevel, getBadgeName, getBadgeAsset } from './utils/badges
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { Capacitor } from '@capacitor/core';
 import HintModal from './components/HintModal';
+import { fetchPuzzleData } from './utils/puzzleData';
 
 const TITLE_FADE_OUT_MS = 220;
 const TITLE_FADE_IN_MS = 280;
+const PUZZLE_REFRESH_INTERVAL_MS = 12 * 60 * 60 * 1000;
 
 const clearTitleFadeTimers = (timersRef) => {
   const { swap, settle } = timersRef.current;
@@ -124,6 +126,8 @@ function App() {
   const MAX_BONUS_HINTS_PER_EMPTY = 5;
   const titleFadeTimersRef = useRef({ swap: null, settle: null });
   const bonusHintCheckInFlightRef = useRef(false);
+  const puzzleRefreshInFlightRef = useRef(false);
+  const puzzleVersionRef = useRef(null);
 
   const triggerHeaderTitleMorph = (nextTitle) => {
     const target = nextTitle || 'Nightcrossing';
@@ -237,47 +241,55 @@ function App() {
     };
     initHints();
 
-    const fetchIndex = async () => {
+    const refreshPuzzles = async () => {
+      if (puzzleRefreshInFlightRef.current) return;
+      puzzleRefreshInFlightRef.current = true;
+
       try {
-        const baseUrl = import.meta.env.BASE_URL;
+        const meta = await fetchPuzzleData('puzzles.meta.json');
+        const nextVersion = meta?.version || meta?.generatedAt || '';
+        const datasetChanged = puzzleVersionRef.current !== nextVersion;
 
-        try {
-          const metaRes = await fetch(`${baseUrl}data/puzzles.meta.json?t=${Date.now()}`);
-          if (metaRes.ok) {
-            const meta = await metaRes.json();
-            setPuzzleMeta(meta || {});
-            await resetPuzzleDataIfDatasetChanged(meta?.resetVersion || meta?.version);
-          }
-        } catch (metaErr) {
-          console.warn('Failed to check puzzle dataset version', metaErr);
-        }
+        setPuzzleMeta(meta || {});
+        await resetPuzzleDataIfDatasetChanged(meta?.resetVersion || nextVersion);
 
-        const res = await fetch(`${baseUrl}data/puzzles.json?t=${Date.now()}`);
-        const data = await res.json();
+        if (!datasetChanged) return;
+
+        const data = await fetchPuzzleData('puzzles.json');
         setPuzzlesIndex(data);
+        puzzleVersionRef.current = nextVersion;
       } catch (e) {
-        console.error("Failed to load global puzzles index", e);
+        console.error('Failed to refresh puzzle catalog', e);
+      } finally {
+        puzzleRefreshInFlightRef.current = false;
       }
     };
-    fetchIndex();
+    refreshPuzzles();
 
     const handleAppResume = () => {
       checkAndAwardBonusHint();
+      refreshPuzzles();
     };
 
     const handleVisibilityChange = () => {
       if (!document.hidden) {
-        checkAndAwardBonusHint();
+        handleAppResume();
       }
     };
 
     window.addEventListener('focus', handleAppResume);
+    window.addEventListener('online', refreshPuzzles);
     document.addEventListener('visibilitychange', handleVisibilityChange);
     
-    const interval = setInterval(checkAndAwardBonusHint, 60000);
+    const hintInterval = setInterval(checkAndAwardBonusHint, 60000);
+    const puzzleInterval = setInterval(() => {
+      if (!document.hidden) refreshPuzzles();
+    }, PUZZLE_REFRESH_INTERVAL_MS);
     return () => {
-      clearInterval(interval);
+      clearInterval(hintInterval);
+      clearInterval(puzzleInterval);
       window.removeEventListener('focus', handleAppResume);
+      window.removeEventListener('online', refreshPuzzles);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
@@ -297,9 +309,7 @@ function App() {
   const handleSelectPuzzle = async (id) => {
     try {
       // Show loading or transition
-      const baseUrl = import.meta.env.BASE_URL;
-      const res = await fetch(`${baseUrl}data/puzzles/${id}.json?t=${Date.now()}`);
-      const data = await res.json();
+      const data = await fetchPuzzleData(`puzzles/${encodeURIComponent(id)}.json`);
       setPuzzleData(data);
 
       const cachedAnswers = await loadPuzzleProgress(id);
@@ -766,7 +776,11 @@ function App() {
         </>
       ) : (
         <div className="menu-container">
-          <PuzzleList onSelectPuzzle={handleSelectPuzzle} />
+          <PuzzleList
+            onSelectPuzzle={handleSelectPuzzle}
+            puzzles={puzzlesIndex}
+            puzzleMeta={puzzleMeta}
+          />
         </div>
       )}
 

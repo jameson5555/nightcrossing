@@ -9,6 +9,13 @@ deploys the latest `main` build directly to the web host.
 Preflight requires enough usable words for the current batch plus one complete
 future batch; enrichment replenishes that rolling reserve on every run.
 
+The app checks the small puzzle metadata file whenever it returns to the
+foreground, reconnects, and every twelve hours while visible. It downloads the
+full catalog only when the metadata version changes. Android builds set
+`VITE_PUZZLE_DATA_URL` to the deployed `/data/` directory, so installed apps
+receive newly generated puzzle batches without requiring another APK. The
+bundled dataset remains available as an offline fallback.
+
 Runtime controls:
 
 - `NC_NEW_PUZZLES_PER_THEME` sets the batch size. The monthly workflow pins it
