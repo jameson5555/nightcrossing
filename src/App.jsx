@@ -116,6 +116,8 @@ function App() {
   const [isPuzzleAlreadyCompleted, setIsPuzzleAlreadyCompleted] = useState(false);
   const [puzzlesIndex, setPuzzlesIndex] = useState([]);
   const [puzzleMeta, setPuzzleMeta] = useState({});
+  const [puzzleListState, setPuzzleListState] = useState(null);
+  const [puzzleListRefreshToken, setPuzzleListRefreshToken] = useState(0);
   const [completionRewardInfo, setCompletionRewardInfo] = useState(null);
   const [hasUsedFreeHint, setHasUsedFreeHint] = useState(false);
   const [outOfHintsMessage, setOutOfHintsMessage] = useState('Free bonus hint coming soon.');
@@ -349,6 +351,7 @@ function App() {
     setPuzzleData(null);
     setCompletionRewardInfo(null);
     setHasUsedFreeHint(false);
+    setPuzzleListRefreshToken(prev => prev + 1);
   };
 
   const activeWord = puzzleData && selectedCell !== null
@@ -780,6 +783,9 @@ function App() {
             onSelectPuzzle={handleSelectPuzzle}
             puzzles={puzzlesIndex}
             puzzleMeta={puzzleMeta}
+            listState={puzzleListState}
+            onListStateChange={setPuzzleListState}
+            refreshToken={puzzleListRefreshToken}
           />
         </div>
       )}

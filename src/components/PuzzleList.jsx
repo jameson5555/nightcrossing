@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './PuzzleList.css';
 import { checkPuzzleStatus, loadPuzzleProgress } from '../utils/storage';
 import { getJourneyProgress } from '../utils/badges';
@@ -44,56 +44,90 @@ function comparePuzzleOrder(a, b) {
   return String(a.id).localeCompare(String(b.id));
 }
 
-const PuzzleList = ({ onSelectPuzzle, puzzles, puzzleMeta }) => {
-  const [statuses, setStatuses] = useState({});
-  const [wordsLeftByPuzzle, setWordsLeftByPuzzle] = useState({});
-  const [loading, setLoading] = useState(true);
+const PuzzleList = ({
+  onSelectPuzzle,
+  puzzles,
+  puzzleMeta,
+  listState,
+  onListStateChange,
+  refreshToken
+}) => {
+  const [statuses, setStatuses] = useState(() => listState?.statuses || {});
+  const [wordsLeftByPuzzle, setWordsLeftByPuzzle] = useState(() => listState?.wordsLeftByPuzzle || {});
+  const [loading, setLoading] = useState(() => !listState?.statuses);
   const [expandedTheme, setExpandedTheme] = useState(null);
+  const statusesRef = useRef(statuses);
+  const onListStateChangeRef = useRef(onListStateChange);
   const themeVisibility = puzzleMeta?.themeVisibility || {};
   const themeAvailability = puzzleMeta?.themeAvailability || {};
   const nextReleaseAt = puzzleMeta?.nextReleaseAt || '';
 
   useEffect(() => {
+    statusesRef.current = statuses;
+  }, [statuses]);
+
+  useEffect(() => {
+    onListStateChangeRef.current = onListStateChange;
+  }, [onListStateChange]);
+
+  useEffect(() => {
     let mounted = true;
     const resolveStatuses = async () => {
       if (!Array.isArray(puzzles)) return;
-      if (puzzles.length === 0) return;
+      if (puzzles.length === 0) {
+        if (mounted) setLoading(false);
+        return;
+      }
 
       try {
-        if (mounted) {
-          setStatuses({});
-          setWordsLeftByPuzzle({});
-        }
-        setLoading(false);
+        const hasCachedStatuses = puzzles.every(p => Object.prototype.hasOwnProperty.call(statusesRef.current, p.id));
+        if (mounted) setLoading(!hasCachedStatuses);
 
-        const tasks = puzzles.map(async (p) => {
+        const results = await Promise.allSettled(puzzles.map(async (p) => {
           try {
             const puzzleData = await fetchPuzzleData(
-              `puzzles/${encodeURIComponent(p.id)}.json`
+              `puzzles/${encodeURIComponent(p.id)}.json`,
+              { fresh: false }
             );
 
             const progress = await loadPuzzleProgress(p.id);
             const currentAnswers = Array.isArray(progress) ? progress : [];
             const status = await checkPuzzleStatus(p.id, puzzleData.grid);
+            let wordsLeft = null;
 
             if (status === 'In Progress') {
               const totalClues = (puzzleData?.clues?.across?.length || 0) + (puzzleData?.clues?.down?.length || 0);
               const solvedClues = getSolvedClueIds(puzzleData, currentAnswers).size;
-              const wordsLeft = Math.max(0, totalClues - solvedClues);
-              if (!mounted) return;
-              setWordsLeftByPuzzle(prev => ({ ...prev, [p.id]: wordsLeft }));
+              wordsLeft = Math.max(0, totalClues - solvedClues);
             }
 
-            if (!mounted) return;
-            setStatuses(prev => ({ ...prev, [p.id]: status }));
+            return { id: p.id, status, wordsLeft };
           } catch (err) {
             console.error(`Failed to resolve status for puzzle ${p.id}`, err);
-            if (!mounted) return;
-            setStatuses(prev => ({ ...prev, [p.id]: 'New' }));
+            return { id: p.id, status: 'New', wordsLeft: null };
+          }
+        }));
+
+        if (!mounted) return;
+
+        const nextStatuses = {};
+        const nextWordsLeft = {};
+
+        results.forEach(result => {
+          if (result.status !== 'fulfilled' || !result.value) return;
+          nextStatuses[result.value.id] = result.value.status;
+          if (Number.isFinite(result.value.wordsLeft)) {
+            nextWordsLeft[result.value.id] = result.value.wordsLeft;
           }
         });
 
-        await Promise.allSettled(tasks);
+        setStatuses(nextStatuses);
+        setWordsLeftByPuzzle(nextWordsLeft);
+        setLoading(false);
+        onListStateChangeRef.current?.({
+          statuses: nextStatuses,
+          wordsLeftByPuzzle: nextWordsLeft
+        });
       } catch (err) {
         console.error('Failed to load puzzle list', err);
         if (mounted) setLoading(false);
@@ -101,7 +135,7 @@ const PuzzleList = ({ onSelectPuzzle, puzzles, puzzleMeta }) => {
     };
     resolveStatuses();
     return () => { mounted = false; };
-  }, [puzzles]);
+  }, [puzzles, refreshToken]);
 
   if (loading) {
     return (
@@ -222,6 +256,9 @@ const PuzzleList = ({ onSelectPuzzle, puzzles, puzzleMeta }) => {
     const isExpanded = expandedTheme === theme;
     const renderedPuzzles = archived ? themeState.allCompleted : themeState.visiblePuzzles;
     const moonPhase = getThemeMoonPhase(themeState, archived);
+    const moonProgressRatio = archived ? 1 : getThemeProgressRatio(themeState);
+    const moonShadowOffset = `${4 + (moonProgressRatio * 32)}px`;
+    const moonShadowOpacity = moonProgressRatio >= 1 ? 0 : 1;
     const progressLabel = `${themeState.completedCount} of ${themeState.totalCount} complete`;
 
     return (
@@ -230,6 +267,10 @@ const PuzzleList = ({ onSelectPuzzle, puzzles, puzzleMeta }) => {
           <div className="theme-header-info">
             <span
               className={`theme-moon theme-moon-${moonPhase} ${archived ? 'theme-moon-archived' : ''}`}
+              style={{
+                '--moon-shadow-x': moonShadowOffset,
+                '--moon-shadow-opacity': moonShadowOpacity
+              }}
               aria-hidden="true"
             ></span>
             <div className="theme-header-text">

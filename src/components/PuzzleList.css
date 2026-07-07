@@ -167,6 +167,11 @@
   border-radius: 50%;
   background: var(--moon-shadow);
   box-shadow: inset 2px 0 0 rgba(255, 255, 255, 0.05);
+  opacity: var(--moon-shadow-opacity, 1);
+  transform: translateX(var(--moon-shadow-x, 4px));
+  transition:
+    transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 360ms ease;
 }
 
 .theme-moon::after {
@@ -179,25 +184,15 @@
   pointer-events: none;
 }
 
-.theme-moon-thin-crescent::before {
-  transform: translateX(4px);
-}
-
-.theme-moon-crescent::before {
-  transform: translateX(10px);
-}
-
-.theme-moon-half::before {
-  inset: 0 0 0 50%;
-  border-radius: 0 50% 50% 0;
-}
-
-.theme-moon-gibbous::before {
-  transform: translateX(24px);
-}
-
+.theme-moon-thin-crescent::before,
+.theme-moon-crescent::before,
+.theme-moon-half::before,
+.theme-moon-gibbous::before,
 .theme-moon-full::before {
-  opacity: 0;
+  inset: -1px;
+  border-radius: 50%;
+  opacity: var(--moon-shadow-opacity, 1);
+  transform: translateX(var(--moon-shadow-x, 4px));
 }
 
 .theme-moon-full {
