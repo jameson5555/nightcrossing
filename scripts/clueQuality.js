@@ -5,6 +5,10 @@ const PROFANITY_REGEX = /\b(fuck|fucking|shit|shitty|bitch|asshole|cunt|slut|mot
 const LOW_QUALITY_REGEXES = [
   /\b(initialism|acronym|abbreviation|abbr\.)\b/i,
   /\b(alternative\s+form|obsolete\s+form|obsolete\s+spelling|dated\s+spelling|misspelling\s+of|clipping\s+of|ellipsis\s+of|plural\s+of|transliteration\s+of|diminutive\s+of)\b/i,
+  /\b(?:used|played|performed|featuring|made|eaten|cooked|adapted|scored)\s+(?:in|with|from|for|by)?\s*(?:this|such|the\s+above)\s+(?:a|an|the)?\s*(?:sport|game|style|plant|tree|shrub|grill|device|apparatus|material|sound|variety|rank|way|manner)\b/i,
+  /\b(?:this|these|those|that|such)\s+(?:a|an|the)?\s*(?:sport|game|style|plant|tree|shrub|grill|device|apparatus|condition|rank|way|manner|material|sound|variety|concept)\b/i,
+  /\b(?:above|aforementioned)\s+(?:sport|game|liquid|material|plant|tree|device|condition|rank|way|manner)\b/i,
+  /[a-z](?:lonely\s*planet|wikipedia|wiktionary|britannica|merriam\s*webster|dictionary\.com|collins)\.?$/i,
   /\bsimilar\s+to\s*:/i,
   /\bunincorporated\s+community\b/i,
   /\bbarangay\b/i,
