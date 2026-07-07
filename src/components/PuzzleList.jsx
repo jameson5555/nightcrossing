@@ -56,6 +56,7 @@ const PuzzleList = ({
   const [wordsLeftByPuzzle, setWordsLeftByPuzzle] = useState(() => listState?.wordsLeftByPuzzle || {});
   const [loading, setLoading] = useState(() => !listState?.statuses);
   const [expandedTheme, setExpandedTheme] = useState(null);
+  const [moonAnimationReady, setMoonAnimationReady] = useState(false);
   const statusesRef = useRef(statuses);
   const onListStateChangeRef = useRef(onListStateChange);
   const themeVisibility = puzzleMeta?.themeVisibility || {};
@@ -69,6 +70,16 @@ const PuzzleList = ({
   useEffect(() => {
     onListStateChangeRef.current = onListStateChange;
   }, [onListStateChange]);
+
+  useEffect(() => {
+    if (loading) return;
+
+    const timer = setTimeout(() => {
+      setMoonAnimationReady(true);
+    }, 120);
+
+    return () => clearTimeout(timer);
+  }, [loading, statuses, refreshToken]);
 
   useEffect(() => {
     let mounted = true;
@@ -256,7 +267,8 @@ const PuzzleList = ({
     const isExpanded = expandedTheme === theme;
     const renderedPuzzles = archived ? themeState.allCompleted : themeState.visiblePuzzles;
     const moonPhase = getThemeMoonPhase(themeState, archived);
-    const moonProgressRatio = archived ? 1 : getThemeProgressRatio(themeState);
+    const targetMoonProgressRatio = archived ? 1 : getThemeProgressRatio(themeState);
+    const moonProgressRatio = moonAnimationReady ? targetMoonProgressRatio : 0;
     const moonShadowOffset = `${4 + (moonProgressRatio * 32)}px`;
     const moonShadowOpacity = moonProgressRatio >= 1 ? 0 : 1;
     const progressLabel = `${themeState.completedCount} of ${themeState.totalCount} complete`;
