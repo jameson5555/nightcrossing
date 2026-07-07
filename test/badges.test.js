@@ -43,8 +43,7 @@ function getJourneyProgress(puzzlesCompleted, minimumLevel = 1) {
   const currentLevel = getJourneyRankLevel(completed, minimumLevel);
   const current = RANKS.find(rank => rank.level === currentLevel);
   const next = RANKS.find(rank => rank.level > currentLevel) || null;
-  const span = Math.max(1, (next?.required || current.required) - current.required);
-  const progress = next ? Math.min(1, Math.max(0, (completed - current.required) / span)) : 1;
+  const progress = next ? Math.min(1, Math.max(0, completed / next.required)) : 1;
 
   return { current, next, progress };
 }
@@ -95,7 +94,19 @@ test('journey progress is independent of current catalog size', () => {
   assert.deepEqual(progressAfterRelease, progressBeforeRelease);
   assert.equal(progressBeforeRelease.current.name, 'Comet Keeper');
   assert.equal(progressBeforeRelease.next.name, 'Aurora Seer');
-  assert.equal(progressBeforeRelease.progress, 2 / 24);
+  assert.equal(progressBeforeRelease.progress, 101 / 123);
+});
+
+test('journey meter shows cumulative progress toward the next rank', () => {
+  const earlyProgress = getJourneyProgress(4);
+  const thresholdProgress = getJourneyProgress(78);
+
+  assert.equal(earlyProgress.current.name, 'Dusk');
+  assert.equal(earlyProgress.next.name, 'Twilight');
+  assert.equal(earlyProgress.progress, 4 / 6);
+  assert.equal(thresholdProgress.current.name, 'Eclipse Walker');
+  assert.equal(thresholdProgress.next.name, 'Comet Keeper');
+  assert.equal(thresholdProgress.progress, 78 / 99);
 });
 
 test('journey rank high-water mark prevents downgrade', () => {
@@ -103,7 +114,7 @@ test('journey rank high-water mark prevents downgrade', () => {
 
   assert.equal(progress.current.name, 'Comet Keeper');
   assert.equal(progress.next.name, 'Aurora Seer');
-  assert.equal(progress.progress, 0);
+  assert.equal(progress.progress, 45 / 123);
 });
 
 test('all planned badge assets exist and are imported', () => {

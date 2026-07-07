@@ -92,10 +92,8 @@ export function getJourneyProgress(puzzlesCompleted, minimumLevel = MIN_LEVEL) {
   const completed = Math.max(0, Number(puzzlesCompleted) || 0);
   const current = getJourneyRank(completed, minimumLevel);
   const next = getNextJourneyThreshold(completed, minimumLevel);
-  const currentThreshold = current.required || 0;
-  const nextThreshold = next?.required || currentThreshold;
-  const span = Math.max(1, nextThreshold - currentThreshold);
-  const progress = next ? Math.min(1, Math.max(0, (completed - currentThreshold) / span)) : 1;
+  const nextThreshold = next?.required || current.required || 1;
+  const progress = next ? Math.min(1, Math.max(0, completed / nextThreshold)) : 1;
 
   return {
     current,
