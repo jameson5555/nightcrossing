@@ -224,7 +224,7 @@ const CrosswordGrid = ({
         try {
           inp.value = INITIAL_INPUT_VALUE;
           inp.focus({ preventScroll: true });
-        } catch (err) {
+        } catch {
           inp.focus();
         }
       }
@@ -241,7 +241,7 @@ const CrosswordGrid = ({
           try {
             inp.value = INITIAL_INPUT_VALUE;
             inp.focus({ preventScroll: true });
-          } catch (err) {
+          } catch {
             inp.focus();
           }
         }
@@ -252,7 +252,9 @@ const CrosswordGrid = ({
       if (cell) {
         try {
           cell.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        } catch (err) {}
+        } catch {
+          // Ignore scroll failures in browsers that cannot scroll the focused cell.
+        }
       }
     }
   }, [selectedCell]);
@@ -580,7 +582,7 @@ const CrosswordGrid = ({
               {completionRewardInfo?.rankUnlock && (
                 <div className="badge-unlock-section">
                   <div className="badge-unlock-label">JOURNEY RANK UP</div>
-                  <div className="badge-level-up">{`Rank ${completionRewardInfo.rankUnlock.level} Reached!`}</div>
+                  <div className="badge-level-up">{`${completionRewardInfo.rankUnlock.name} Reached!`}</div>
                   <div className="badge-unlock">
                     <img
                       src={completionRewardInfo.rankUnlock.asset}

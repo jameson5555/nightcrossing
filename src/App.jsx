@@ -25,7 +25,9 @@ import {
   saveBonusHintToastPending,
   loadBonusHintsAwardedSinceEmpty,
   saveBonusHintsAwardedSinceEmpty,
-  resetPuzzleDataIfDatasetChanged
+  resetPuzzleDataIfDatasetChanged,
+  loadJourneyRankHighWatermark,
+  saveJourneyRankHighWatermark
 } from './utils/storage';
 import { saveThemeProgress } from './utils/storage';
 import { getJourneyRankLevel, getBadgeName, getBadgeAsset } from './utils/badges';
@@ -407,8 +409,10 @@ function App() {
           }));
           const previousTotalCompleted = previousCompletedStatuses.filter(Boolean).length;
           const newTotalCompleted = previousTotalCompleted + 1;
-          const previousJourneyLevel = getJourneyRankLevel(previousTotalCompleted);
+          const previousJourneyHighWatermark = await loadJourneyRankHighWatermark();
+          const previousJourneyLevel = getJourneyRankLevel(previousTotalCompleted, previousJourneyHighWatermark);
           const newJourneyLevel = getJourneyRankLevel(newTotalCompleted);
+          const nextJourneyHighWatermark = await saveJourneyRankHighWatermark(newJourneyLevel);
           
           // Calculate true completed count by checking storage for all puzzles in this theme
           const completedStatuses = await Promise.all(themePuzzles.map(async p => {
@@ -424,11 +428,11 @@ function App() {
                 .map(([theme]) => theme)
                 .filter(theme => puzzlesIndex.some(p => (p.theme || 'Other') === theme))
             : [];
-          const rankUnlockInfo = newJourneyLevel > previousJourneyLevel
+          const rankUnlockInfo = nextJourneyHighWatermark > previousJourneyLevel
             ? {
-                level: newJourneyLevel,
-                name: getBadgeName(newJourneyLevel),
-                asset: getBadgeAsset(newJourneyLevel),
+                level: nextJourneyHighWatermark,
+                name: getBadgeName(nextJourneyHighWatermark),
+                asset: getBadgeAsset(nextJourneyHighWatermark),
                 puzzlesCompleted: newTotalCompleted
               }
             : null;

@@ -1,6 +1,7 @@
 import { Preferences } from '@capacitor/preferences';
 
 const PUZZLE_DATASET_VERSION_KEY = 'puzzle_dataset_version';
+const JOURNEY_RANK_HIGH_WATERMARK_KEY = 'journey_rank_high_watermark';
 const RESETTABLE_KEY_PREFIXES = [
   'puzzle_progress_',
   'unlocked_hints_',
@@ -209,3 +210,20 @@ export const loadThemeProgress = async (themeId) => {
   return value ? JSON.parse(value) : { themeId: String(themeId), puzzlesCompleted: 0, completed: false };
 };
 
+// --- JOURNEY RANK HELPERS ---
+export const loadJourneyRankHighWatermark = async () => {
+  const { value } = await Preferences.get({ key: JOURNEY_RANK_HIGH_WATERMARK_KEY });
+  const parsed = Number(value);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : 1;
+};
+
+export const saveJourneyRankHighWatermark = async (level) => {
+  const safeLevel = Math.max(1, Number(level) || 1);
+  const current = await loadJourneyRankHighWatermark();
+  const next = Math.max(current, safeLevel);
+  await Preferences.set({
+    key: JOURNEY_RANK_HIGH_WATERMARK_KEY,
+    value: String(next)
+  });
+  return next;
+};

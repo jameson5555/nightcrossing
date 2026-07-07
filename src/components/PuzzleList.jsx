@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './PuzzleList.css';
-import { checkPuzzleStatus, loadPuzzleProgress } from '../utils/storage';
+import { checkPuzzleStatus, loadJourneyRankHighWatermark, loadPuzzleProgress } from '../utils/storage';
 import { getJourneyProgress } from '../utils/badges';
 import { getSolvedClueIds } from '../utils/crossword';
 import { classifyThemeEntries, formatNextReleaseDate } from '../utils/themeAvailability';
@@ -57,6 +57,7 @@ const PuzzleList = ({
   const [loading, setLoading] = useState(() => !listState?.statuses);
   const [expandedTheme, setExpandedTheme] = useState(null);
   const [moonAnimationReady, setMoonAnimationReady] = useState(false);
+  const [journeyRankHighWatermark, setJourneyRankHighWatermark] = useState(1);
   const statusesRef = useRef(statuses);
   const onListStateChangeRef = useRef(onListStateChange);
   const themeVisibility = puzzleMeta?.themeVisibility || {};
@@ -70,6 +71,24 @@ const PuzzleList = ({
   useEffect(() => {
     onListStateChangeRef.current = onListStateChange;
   }, [onListStateChange]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadRankHighWatermark = async () => {
+      try {
+        const level = await loadJourneyRankHighWatermark();
+        if (!cancelled) setJourneyRankHighWatermark(level);
+      } catch (err) {
+        console.warn('Failed to load journey rank high watermark', err);
+      }
+    };
+
+    loadRankHighWatermark();
+    return () => {
+      cancelled = true;
+    };
+  }, [refreshToken]);
 
   useEffect(() => {
     if (loading) return;
@@ -323,11 +342,12 @@ const PuzzleList = ({
   };
 
   const completedPuzzleCount = puzzles.filter(p => statuses[p.id] === 'Completed').length;
-  const journey = getJourneyProgress(completedPuzzleCount);
+  const journey = getJourneyProgress(completedPuzzleCount, journeyRankHighWatermark);
   const journeyPercent = `${Math.round(journey.progress * 100)}%`;
   const nextRankCopy = journey.next
-    ? `${Math.max(0, journey.next.required - completedPuzzleCount)} to ${journey.next.level === 9 ? 'Night Sage' : `Rank ${journey.next.level}`}`
-    : 'Top rank reached';
+    ? `${Math.max(0, journey.next.required - completedPuzzleCount)} to ${journey.next.name}`
+    : 'Final rank reached';
+  const catalogCompletionCopy = `${completedPuzzleCount} of ${puzzles.length} available puzzles complete`;
 
   return (
     <div className="puzzle-list-wrapper animate-fade-in">
@@ -353,7 +373,8 @@ const PuzzleList = ({
           <div className="journey-copy">
             <span className="journey-eyebrow">Journey Rank</span>
             <span className="journey-title">{journey.current.name}</span>
-            <span className="journey-progress-copy">{`${completedPuzzleCount} of ${puzzles.length} puzzles complete • ${nextRankCopy}`}</span>
+            <span className="journey-progress-copy">{`${completedPuzzleCount} completed • ${nextRankCopy}`}</span>
+            <span className="journey-catalog-copy">{catalogCompletionCopy}</span>
           </div>
         </div>
         <div className="journey-meter" aria-hidden="true">
