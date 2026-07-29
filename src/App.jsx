@@ -125,8 +125,10 @@ function App() {
   const [outOfHintsMessage, setOutOfHintsMessage] = useState('Free bonus hint coming soon.');
   const [headerTitle, setHeaderTitle] = useState('Nightcrossing');
   const [titleAnimState, setTitleAnimState] = useState('idle'); // idle | out | in
-  const BONUS_HINT_FIRST_COOLDOWN_MS = 12 * 60 * 60 * 1000;
-  const BONUS_HINT_INCREMENT_MS = 6 * 60 * 60 * 1000;
+  // Award five bonus hints across the first 23 hours without paid hints:
+  // at 3h, 8h, 13h, 18h, and 23h after depletion.
+  const BONUS_HINT_FIRST_COOLDOWN_MS = 3 * 60 * 60 * 1000;
+  const BONUS_HINT_INCREMENT_MS = 5 * 60 * 60 * 1000;
   const MAX_BONUS_HINTS_PER_EMPTY = 5;
   const titleFadeTimersRef = useRef({ swap: null, settle: null });
   const bonusHintCheckInFlightRef = useRef(false);
