@@ -3,7 +3,11 @@ import './PuzzleList.css';
 import { checkPuzzleStatus, loadJourneyRankHighWatermark, loadPuzzleProgress } from '../utils/storage';
 import { getJourneyProgress } from '../utils/badges';
 import { getSolvedClueIds } from '../utils/crossword';
-import { classifyThemeEntries, formatNextReleaseDate } from '../utils/themeAvailability';
+import {
+  classifyThemeEntries,
+  formatNextReleaseDate,
+  selectVisibleThemeEntries
+} from '../utils/themeAvailability';
 import { fetchPuzzleData } from '../utils/puzzleData';
 
 const THEME_DISPLAY_ORDER = [
@@ -230,6 +234,7 @@ const PuzzleList = ({
     return {
       allCompleted,
       completedCount,
+      hasInProgressPuzzle: inProgress.length > 0,
       hasCompletedAllThemePuzzles,
       totalCount: themePuzzles.length,
       visiblePuzzles
@@ -247,6 +252,7 @@ const PuzzleList = ({
     themeVisibility,
     themeAvailability
   });
+  const visibleActiveThemeEntries = selectVisibleThemeEntries(activeThemeEntries);
   const nextReleaseDateLabel = formatNextReleaseDate(nextReleaseAt);
 
   const renderPuzzleItem = (puzzle, options = {}) => {
@@ -363,7 +369,7 @@ const PuzzleList = ({
       <section className="puzzle-section theme-section">
         <h2 className="section-title">Themes</h2>
         <div className="theme-list">
-          {activeThemeEntries.map(([theme, themeState]) => renderThemeGroup(theme, themeState))}
+          {visibleActiveThemeEntries.map(([theme, themeState]) => renderThemeGroup(theme, themeState))}
         </div>
       </section>
 

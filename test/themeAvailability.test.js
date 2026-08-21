@@ -5,7 +5,8 @@ import {
   classifyThemeEntries,
   formatNextReleaseDate,
   getThemeCompletionOutcome,
-  getNextMonthlyReleaseAt
+  getNextMonthlyReleaseAt,
+  selectVisibleThemeEntries
 } from '../src/utils/themeAvailability.js';
 
 const require = createRequire(import.meta.url);
@@ -82,6 +83,46 @@ test('a newly added puzzle returns a waiting theme to normal active status', () 
   });
 
   assert.deepEqual(result.activeThemeEntries, [['Replenished', replenished]]);
+});
+
+test('shows at most five uncompleted themes at a time', () => {
+  const entries = Array.from({ length: 7 }, (_, index) => [
+    `Theme ${index + 1}`,
+    { hasCompletedAllThemePuzzles: false, hasInProgressPuzzle: false }
+  ]);
+
+  assert.deepEqual(
+    selectVisibleThemeEntries(entries).map(([theme]) => theme),
+    ['Theme 1', 'Theme 2', 'Theme 3', 'Theme 4', 'Theme 5']
+  );
+});
+
+test('keeps an in-progress theme inside the five-theme window', () => {
+  const entries = Array.from({ length: 7 }, (_, index) => [
+    `Theme ${index + 1}`,
+    { hasCompletedAllThemePuzzles: false, hasInProgressPuzzle: index === 6 }
+  ]);
+
+  assert.deepEqual(
+    selectVisibleThemeEntries(entries).map(([theme]) => theme),
+    ['Theme 1', 'Theme 2', 'Theme 3', 'Theme 4', 'Theme 7']
+  );
+});
+
+test('does not count caught-up scheduled themes against the uncompleted theme limit', () => {
+  const caughtUp = ['Caught Up', {
+    hasCompletedAllThemePuzzles: true,
+    hasInProgressPuzzle: false
+  }];
+  const uncompleted = Array.from({ length: 6 }, (_, index) => [
+    `Theme ${index + 1}`,
+    { hasCompletedAllThemePuzzles: false, hasInProgressPuzzle: false }
+  ]);
+
+  assert.deepEqual(
+    selectVisibleThemeEntries([caughtUp, ...uncompleted]).map(([theme]) => theme),
+    ['Caught Up', 'Theme 1', 'Theme 2', 'Theme 3', 'Theme 4', 'Theme 5']
+  );
 });
 
 test('calculates and formats monthly release dates across a year boundary', () => {

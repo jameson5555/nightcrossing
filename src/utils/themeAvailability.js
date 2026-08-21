@@ -19,6 +19,28 @@ export function formatNextReleaseDate(nextReleaseAt, {
   }).format(releaseDate);
 }
 
+export const MAX_VISIBLE_UNCOMPLETED_THEMES = 5;
+
+export function selectVisibleThemeEntries(
+  activeThemeEntries,
+  maxUncompletedThemes = MAX_VISIBLE_UNCOMPLETED_THEMES
+) {
+  const limit = Math.max(0, Number(maxUncompletedThemes) || 0);
+  const uncompletedThemes = activeThemeEntries
+    .filter(([, themeState]) => !themeState.hasCompletedAllThemePuzzles);
+  const prioritizedThemes = [
+    ...uncompletedThemes.filter(([, themeState]) => themeState.hasInProgressPuzzle),
+    ...uncompletedThemes.filter(([, themeState]) => !themeState.hasInProgressPuzzle)
+  ];
+  const visibleUncompletedThemes = new Set(
+    prioritizedThemes.slice(0, limit).map(([theme]) => theme)
+  );
+
+  return activeThemeEntries.filter(([theme, themeState]) => (
+    themeState.hasCompletedAllThemePuzzles || visibleUncompletedThemes.has(theme)
+  ));
+}
+
 export function classifyThemeEntries({
   sortedThemeEntries,
   themeStatesByName,
