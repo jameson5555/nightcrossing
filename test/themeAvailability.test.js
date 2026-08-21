@@ -4,6 +4,7 @@ import { createRequire } from 'node:module';
 import {
   classifyThemeEntries,
   formatNextReleaseDate,
+  getThemeCompletionOutcome,
   getNextMonthlyReleaseAt
 } from '../src/utils/themeAvailability.js';
 
@@ -20,8 +21,11 @@ test('keeps a caught-up scheduled theme active without unrelated backfill', () =
   const result = classifyThemeEntries({
     sortedThemeEntries: [['Scheduled', []], ['Locked', []]],
     themeStatesByName: { Scheduled: scheduled, Locked: locked, Parent: themeState(false) },
-    themeVisibility: { Locked: { lockedUntilThemeCompleted: 'Parent' } },
-    themeAvailability: { Scheduled: { receivesNextBatch: true } }
+    themeVisibility: { Locked: { lockedUntilThemeCompleted: 'Scheduled' } },
+    themeAvailability: {
+      Scheduled: { receivesNextBatch: true },
+      Locked: { receivesNextBatch: true }
+    }
   });
 
   assert.deepEqual(result.activeThemeEntries, [['Scheduled', scheduled]]);
@@ -97,6 +101,47 @@ test('falls back to the next monthly release when the timestamp is missing', () 
     }),
     'January 1'
   );
+});
+
+test('falls back to the next monthly release when metadata contains a past date', () => {
+  assert.equal(
+    formatNextReleaseDate('2026-08-01T00:00:00.000Z', {
+      now: new Date('2026-08-21T12:00:00.000Z'),
+      locale: 'en-US'
+    }),
+    'September 1'
+  );
+});
+
+test('does not archive or unlock a successor when a user only catches up', () => {
+  assert.deepEqual(getThemeCompletionOutcome({
+    theme: 'Current',
+    completed: true,
+    availableThemes: ['Current', 'Successor'],
+    themeVisibility: { Successor: { lockedUntilThemeCompleted: 'Current' } },
+    themeAvailability: { Current: { receivesNextBatch: true } }
+  }), {
+    willArchive: false,
+    unlockedThemes: []
+  });
+});
+
+test('archives an exhausted theme and announces only a genuinely new successor', () => {
+  assert.deepEqual(getThemeCompletionOutcome({
+    theme: 'Current',
+    completed: true,
+    availableThemes: ['Current', 'Successor', 'Already Done'],
+    previouslyCompletedThemes: ['Already Done'],
+    themeVisibility: {
+      Successor: { lockedUntilThemeCompleted: 'Current' },
+      'Already Done': { lockedUntilThemeCompleted: 'Current' },
+      Unavailable: { lockedUntilThemeCompleted: 'Current' }
+    },
+    themeAvailability: { Current: { receivesNextBatch: false } }
+  }), {
+    willArchive: true,
+    unlockedThemes: ['Successor']
+  });
 });
 
 test('derives scheduled and exhausted availability from the rotation manifest', () => {

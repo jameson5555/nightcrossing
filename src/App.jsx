@@ -35,6 +35,7 @@ import { LocalNotifications } from '@capacitor/local-notifications';
 import { Capacitor } from '@capacitor/core';
 import HintModal from './components/HintModal';
 import { fetchPuzzleData } from './utils/puzzleData';
+import { getThemeCompletionOutcome } from './utils/themeAvailability';
 
 const TITLE_FADE_OUT_MS = 220;
 const TITLE_FADE_IN_MS = 280;
@@ -424,12 +425,33 @@ function App() {
           
           const newCompleted = completedStatuses.filter(Boolean).length;
           const completedTheme = themePuzzles.length > 0 && newCompleted === themePuzzles.length;
-          const unlockedThemes = completedTheme
-            ? Object.entries(puzzleMeta?.themeVisibility || {})
-                .filter(([, visibility]) => visibility?.lockedUntilThemeCompleted === themeId)
-                .map(([theme]) => theme)
-                .filter(theme => puzzlesIndex.some(p => (p.theme || 'Other') === theme))
-            : [];
+          const previouslyCompletedThemes = new Set();
+          const priorThemeCounts = new Map();
+          const priorThemeCompletedCounts = new Map();
+          puzzlesIndex.forEach((puzzle, index) => {
+            const puzzleTheme = puzzle.theme || 'Other';
+            priorThemeCounts.set(puzzleTheme, (priorThemeCounts.get(puzzleTheme) || 0) + 1);
+            if (previousCompletedStatuses[index]) {
+              priorThemeCompletedCounts.set(
+                puzzleTheme,
+                (priorThemeCompletedCounts.get(puzzleTheme) || 0) + 1
+              );
+            }
+          });
+          priorThemeCounts.forEach((count, puzzleTheme) => {
+            if (count > 0 && priorThemeCompletedCounts.get(puzzleTheme) === count) {
+              previouslyCompletedThemes.add(puzzleTheme);
+            }
+          });
+          const completionOutcome = getThemeCompletionOutcome({
+            theme: themeId,
+            completed: completedTheme,
+            availableThemes: [...new Set(puzzlesIndex.map(p => p.theme || 'Other'))],
+            previouslyCompletedThemes: [...previouslyCompletedThemes],
+            themeVisibility: puzzleMeta?.themeVisibility,
+            themeAvailability: puzzleMeta?.themeAvailability
+          });
+          const unlockedThemes = completionOutcome.unlockedThemes;
           const rankUnlockInfo = nextJourneyHighWatermark > previousJourneyLevel
             ? {
                 level: nextJourneyHighWatermark,
@@ -457,7 +479,9 @@ function App() {
               ? ` New theme unlocked: ${unlockedThemes.join(', ')}.`
               : '';
             setToastInfo({
-              message: `${themeId} complete. This theme is now archived in Completed Themes.${unlockCopy}`,
+              message: completionOutcome.willArchive
+                ? `${themeId} complete. This theme is now archived in Completed Themes.${unlockCopy}`
+                : `${themeId} complete. You're caught up; more puzzles are scheduled for this theme.`,
               icon: '🏁',
               type: 'bonus',
               id: `theme-complete-${themeId}`
