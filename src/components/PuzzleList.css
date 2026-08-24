@@ -31,9 +31,9 @@
 
 .journey-badge-frame {
   position: relative;
-  width: 58px;
-  height: 58px;
-  flex: 0 0 58px;
+  width: 74px;
+  height: 74px;
+  flex: 0 0 74px;
   overflow: hidden;
   border-radius: 8px;
   box-shadow: 0 0 12px rgba(0, 229, 255, 0.24), 0 8px 18px rgba(0, 0, 0, 0.28);
