@@ -584,11 +584,19 @@ const CrosswordGrid = ({
                   <div className="badge-unlock-label">JOURNEY RANK UP</div>
                   <div className="badge-level-up">{`${completionRewardInfo.rankUnlock.name} Reached!`}</div>
                   <div className="badge-unlock">
-                    <img
-                      src={completionRewardInfo.rankUnlock.asset}
-                      alt={completionRewardInfo.rankUnlock.name}
-                      className="badge-img badge-glow"
-                    />
+                    <div
+                      className="badge-image-frame badge-glow"
+                      data-rank-tier={completionRewardInfo.rankUnlock.level === 17 ? 'final' : completionRewardInfo.rankUnlock.level >= 8 ? 'advanced' : 'early'}
+                    >
+                      <img
+                        src={completionRewardInfo.rankUnlock.asset}
+                        alt={completionRewardInfo.rankUnlock.name}
+                        className="badge-img"
+                      />
+                      <span className="badge-level-chip">
+                        {String(completionRewardInfo.rankUnlock.level).padStart(2, '0')}
+                      </span>
+                    </div>
                     <div className="badge-text">
                       <div className="badge-name">{completionRewardInfo.rankUnlock.name}</div>
                       <div className="badge-sub">{`${completionRewardInfo.rankUnlock.puzzlesCompleted} total completed`}</div>

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nightcrossing — Full-bleed Journey Rank Study</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Exo:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+    :root { color-scheme: dark; --ink:#070910; --panel:#10141f; --line:rgba(168,197,214,.15); --text:#f5f7fb; --muted:#8e9bab; --cyan:#34e7f8; --violet:#b86cff; --gold:#ffd36a; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:radial-gradient(circle at 12% 8%,rgba(0,229,255,.09),transparent 28rem),radial-gradient(circle at 90% 18%,rgba(148,57,255,.10),transparent 30rem),var(--ink); color:var(--text); font-family:Inter,sans-serif; }
+    .board { width:min(1120px,calc(100% - 40px)); margin:auto; padding:52px 0 64px; }
+    .kicker { color:var(--cyan); font:800 11px/1 Exo,sans-serif; letter-spacing:.22em; text-transform:uppercase; }
+    h1 { margin:9px 0 10px; font:800 clamp(30px,4vw,48px)/1 Exo,sans-serif; letter-spacing:-.03em; }
+    .intro { max-width:720px; margin:0; color:var(--muted); font-size:14px; line-height:1.6; }
+    .progression { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:34px; }
+    .rank { min-width:0; }
+    .tile { position:relative; width:100%; aspect-ratio:1; overflow:hidden; border-radius:18px; background:#0c1018; box-shadow:0 18px 34px rgba(0,0,0,.34); isolation:isolate; }
+    .tile img { width:100%; height:100%; display:block; object-fit:cover; transition:transform .35s ease; }
+    .tile:hover img { transform:scale(1.035); }
+    .tile::after { content:""; position:absolute; inset:auto 0 0; height:34%; background:linear-gradient(transparent,rgba(3,5,10,.66)); z-index:1; }
+    .level { position:absolute; z-index:2; right:11px; bottom:11px; min-width:46px; padding:6px 8px 5px; border-radius:7px; color:#071015; background:var(--cyan); font:800 10px/1 Exo,sans-serif; letter-spacing:.05em; box-shadow:0 3px 10px rgba(0,0,0,.28); text-align:center; }
+    .rank:nth-child(2) .level,.rank:nth-child(3) .level { background:var(--violet); color:#0d0713; }
+    .rank:nth-child(4) .level { background:var(--gold); }
+    .rank-copy { padding:13px 3px 0; }
+    .name { font:700 14px/1.2 Exo,sans-serif; }
+    .meta { margin-top:5px; color:#687588; font-size:9px; letter-spacing:.11em; text-transform:uppercase; }
+
+    .notes { display:grid; grid-template-columns:1.1fr .9fr; gap:18px; margin-top:38px; }
+    .panel { border:1px solid var(--line); border-radius:14px; background:rgba(16,20,31,.84); padding:22px; }
+    h2 { margin:0 0 14px; font:700 17px/1.2 Exo,sans-serif; }
+    .rules { display:grid; grid-template-columns:repeat(2,1fr); gap:13px 18px; }
+    .rule b { display:block; color:#cdd5df; font-size:10px; letter-spacing:.08em; text-transform:uppercase; }
+    .rule p { margin:5px 0 0; color:var(--muted); font-size:11px; line-height:1.5; }
+    .context-card { display:flex; gap:14px; align-items:center; border:1px solid rgba(0,229,255,.18); border-radius:6px; background:rgba(255,255,255,.04); padding:16px; }
+    .context-tile { position:relative; flex:0 0 58px; width:58px; height:58px; overflow:hidden; border-radius:8px; box-shadow:0 0 12px rgba(184,108,255,.24); }
+    .context-tile img { width:100%; height:100%; display:block; object-fit:cover; }
+    .context-level { position:absolute; right:3px; bottom:3px; padding:3px 4px 2px; border-radius:3px; background:var(--violet); color:#0b0710; font:800 6px/1 Exo; }
+    .eyebrow { color:var(--cyan); font-size:9px; font-weight:800; text-transform:uppercase; }
+    .context-name { margin-top:3px; font:800 18px/1.1 Exo; }
+    .context-meta { margin-top:5px; color:var(--muted); font-size:10px; }
+    .meter { height:6px; margin-top:13px; overflow:hidden; border-radius:999px; background:rgba(255,255,255,.08); }
+    .meter span { display:block; width:72%; height:100%; background:linear-gradient(90deg,var(--cyan),var(--violet)); }
+    footer { margin-top:22px; color:#667386; font-size:10px; }
+    @media(max-width:760px){ .board{width:min(100% - 24px,560px);padding-top:30px}.progression{grid-template-columns:repeat(2,1fr)}.notes{grid-template-columns:1fr}.rules{grid-template-columns:1fr}.tile{border-radius:14px} }
+  </style>
+</head>
+<body>
+  <main class="board">
+    <header><div class="kicker">Nightcrossing • graphic study 02</div><h1>Full-bleed rank artwork</h1><p class="intro">Instead of placing an emblem inside a rounded square, the square becomes the artwork. A small, consistent level tab handles identification while color, scale, and visual intensity make progression feel earned.</p></header>
+    <section class="progression" aria-label="Sample rank progression">
+      <article class="rank"><div class="tile"><img src="badge-art-v2/level-01-dark-horizon.png" alt="Graphic horizon artwork"><span class="level">LV 01</span></div><div class="rank-copy"><div class="name">Dark Horizon</div><div class="meta">Early • restrained</div></div></article>
+      <article class="rank"><div class="tile"><img src="badge-art-v2/level-08-moonwalker.png" alt="Graphic crescent moon artwork"><span class="level">LV 08</span></div><div class="rank-copy"><div class="name">Moonwalker</div><div class="meta">Middle • expanding</div></div></article>
+      <article class="rank"><div class="tile"><img src="badge-art-v2/level-13-aurora-seer.png" alt="Graphic aurora artwork"><span class="level">LV 13</span></div><div class="rank-copy"><div class="name">Aurora Seer</div><div class="meta">High • luminous</div></div></article>
+      <article class="rank"><div class="tile"><img src="badge-art-v2/level-17-nightcrossing.png" alt="Graphic starburst artwork"><span class="level">LV 17</span></div><div class="rank-copy"><div class="name">Nightcrossing</div><div class="meta">Final • transcendent</div></div></article>
+    </section>
+    <section class="notes">
+      <div class="panel"><h2>How the system progresses</h2><div class="rules"><div class="rule"><b>Composition</b><p>Quiet horizon → celestial forms → layered phenomena → explosive final passage.</p></div><div class="rule"><b>Color</b><p>Cyan begins the journey, violet signals mastery, and gold appears only at the final rank.</p></div><div class="rule"><b>Identification</b><p>A fixed level tab stays legible without forcing numbers or words into the artwork.</p></div><div class="rule"><b>Texture</b><p>Shared screenprint grain gives 17 distinct images one recognizable visual family.</p></div></div></div>
+      <div class="panel"><h2>At the current UI size</h2><div class="context-card"><div class="context-tile"><img src="badge-art-v2/level-08-moonwalker.png" alt="Moonwalker rank"><span class="context-level">08</span></div><div><div class="eyebrow">Journey Rank</div><div class="context-name">Moonwalker</div><div class="context-meta">36 completed • 9 to Night Sage</div></div></div><div class="meter"><span></span></div></div>
+    </section>
+    <footer>Concept artwork generated as raster PNGs. Production badge components remain unchanged.</footer>
+  </main>
+</body>
+</html>

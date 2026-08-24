@@ -375,12 +375,17 @@ const PuzzleList = ({
 
       <section className="journey-section">
         <div className="journey-rank">
-          <img src={journey.current.asset} alt={journey.current.name} className="journey-badge" />
+          <div
+            className="journey-badge-frame"
+            data-rank-tier={journey.current.level === 17 ? 'final' : journey.current.level >= 8 ? 'advanced' : 'early'}
+          >
+            <img src={journey.current.asset} alt={journey.current.name} className="journey-badge" />
+            <span className="journey-badge-level">{String(journey.current.level).padStart(2, '0')}</span>
+          </div>
           <div className="journey-copy">
             <span className="journey-eyebrow">Journey Rank</span>
             <span className="journey-title">{journey.current.name}</span>
             <span className="journey-progress-copy">{`${completedPuzzleCount} completed • ${nextRankCopy}`}</span>
-            <span className="journey-catalog-copy">{catalogCompletionCopy}</span>
           </div>
         </div>
         <div className="journey-meter" aria-hidden="true">

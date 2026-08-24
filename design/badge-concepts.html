@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nightcrossing — Journey Rank Badge Concepts</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Exo:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+    :root {
+      color-scheme: dark;
+      --ink: #070910;
+      --panel: #10141f;
+      --line: rgba(168, 197, 214, .15);
+      --text: #f5f7fb;
+      --muted: #8e9bab;
+      --cyan: #34e7f8;
+      --violet: #b86cff;
+      --gold: #ffd36a;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      background:
+        radial-gradient(circle at 78% 5%, rgba(81, 65, 155, .16), transparent 25rem),
+        radial-gradient(circle at 12% 18%, rgba(17, 145, 171, .12), transparent 27rem),
+        var(--ink);
+      color: var(--text);
+      font-family: Inter, sans-serif;
+    }
+
+    .board { width: min(1180px, calc(100% - 48px)); margin: 0 auto; padding: 56px 0 72px; }
+    header { display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: end; margin-bottom: 34px; }
+    .kicker { color: var(--cyan); font-size: 11px; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; }
+    h1 { margin: 8px 0 9px; font: 800 clamp(28px, 4vw, 48px)/1 Exo, sans-serif; letter-spacing: -.03em; }
+    .intro { max-width: 670px; margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+    .legend { display: flex; gap: 8px; color: #aab4c2; font-size: 11px; }
+    .legend span { padding: 7px 10px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.025); }
+
+    .concepts { display: grid; gap: 18px; }
+    .concept {
+      position: relative;
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      min-height: 226px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: linear-gradient(120deg, rgba(19,24,37,.96), rgba(10,13,21,.95));
+      box-shadow: 0 18px 50px rgba(0,0,0,.16);
+    }
+    .concept::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(105deg, rgba(255,255,255,.025), transparent 42%); }
+    .concept-copy { z-index: 1; padding: 26px; border-right: 1px solid var(--line); }
+    .concept-index { color: var(--cyan); font: 800 10px/1 Exo; letter-spacing: .18em; }
+    h2 { margin: 11px 0 8px; font: 700 20px/1.15 Exo, sans-serif; }
+    .concept-copy p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.55; }
+    .trait { display: inline-block; margin-top: 18px; color: #c8d0db; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+    .specimens { z-index: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; align-items: center; padding: 23px 26px; }
+    .specimen { min-width: 0; text-align: center; }
+    .rank-label { margin-top: 10px; font: 700 11px/1.2 Exo; color: #e8edf3; white-space: nowrap; }
+    .rank-meta { margin-top: 4px; color: #69788b; font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
+
+    /* 01 — celestial seals */
+    .seal { --tone: var(--cyan); position: relative; width: 104px; height: 104px; margin: auto; filter: drop-shadow(0 9px 18px rgba(0,0,0,.4)); }
+    .seal.mid { --tone: var(--violet); }
+    .seal.high { --tone: var(--gold); }
+    .seal-ring { position: absolute; inset: 5px; border: 1px solid color-mix(in srgb, var(--tone) 65%, transparent); border-radius: 50%; box-shadow: inset 0 0 22px color-mix(in srgb, var(--tone) 11%, transparent), 0 0 18px color-mix(in srgb, var(--tone) 10%, transparent); }
+    .seal-ring::before, .seal-ring::after { content: ""; position: absolute; border-radius: 50%; }
+    .seal-ring::before { inset: 8px; border: 4px double color-mix(in srgb, var(--tone) 55%, #202738); }
+    .seal-ring::after { inset: 18px; background: radial-gradient(circle, color-mix(in srgb, var(--tone) 21%, #0b1019), #080b12 70%); border: 1px solid color-mix(in srgb, var(--tone) 75%, transparent); }
+    .seal svg { position: absolute; inset: 26px; width: 52px; height: 52px; color: var(--tone); z-index: 2; }
+    .seal-level { position: absolute; z-index: 3; bottom: 2px; left: 50%; transform: translateX(-50%); min-width: 38px; padding: 3px 6px; border-radius: 999px; color: #090b10; background: var(--tone); font: 800 9px/1 Exo; letter-spacing: .06em; box-shadow: 0 0 0 3px #10141f; }
+
+    /* 02 — waypoint crests */
+    .crest { --tone: var(--cyan); position: relative; width: 98px; height: 108px; margin: auto; }
+    .crest.mid { --tone: var(--violet); }
+    .crest.high { --tone: var(--gold); }
+    .crest-body { position: absolute; inset: 4px 8px 8px; clip-path: polygon(50% 0, 93% 15%, 88% 70%, 50% 100%, 12% 70%, 7% 15%); background: linear-gradient(145deg, color-mix(in srgb, var(--tone) 48%, #172131), #090d15 60%); }
+    .crest-body::before { content: ""; position: absolute; inset: 2px; clip-path: inherit; background: linear-gradient(160deg, #151b29, #080b12); }
+    .crest svg { position: absolute; z-index: 2; inset: 23px 25px 32px; width: 48px; height: 48px; color: var(--tone); }
+    .crest-level { position: absolute; z-index: 3; left: 50%; bottom: 18px; transform: translateX(-50%); font: 800 9px/1 Exo; letter-spacing: .13em; color: var(--tone); }
+    .crest-bars { position: absolute; z-index: 4; left: 50%; bottom: 3px; display: flex; gap: 3px; transform: translateX(-50%); }
+    .crest-bars i { width: 11px; height: 2px; border-radius: 3px; background: var(--tone); opacity: .3; }
+    .crest-bars i.on { opacity: 1; box-shadow: 0 0 6px var(--tone); }
+
+    /* 03 — mission patches */
+    .patch { --tone: var(--cyan); position: relative; width: 114px; height: 92px; margin: auto; border-radius: 17px; background: linear-gradient(145deg, color-mix(in srgb, var(--tone) 18%, #172131), #090d15 58%); border: 1px solid color-mix(in srgb, var(--tone) 52%, #242c39); box-shadow: inset 0 0 0 4px #0e131d, 0 10px 22px rgba(0,0,0,.34); }
+    .patch.mid { --tone: var(--violet); }
+    .patch.high { --tone: var(--gold); }
+    .patch::before { content: "JOURNEY"; position: absolute; top: 9px; left: 10px; font: 800 6px/1 Exo; letter-spacing: .16em; color: var(--tone); }
+    .patch-level { position: absolute; top: 8px; right: 10px; font: 800 8px/1 Exo; color: #dfe6ef; }
+    .patch svg { position: absolute; left: 14px; bottom: 14px; width: 45px; height: 45px; color: var(--tone); }
+    .patch-word { position: absolute; right: 11px; bottom: 17px; width: 38px; text-align: left; font: 800 8px/1.25 Exo; color: #f5f7fb; text-transform: uppercase; }
+
+    /* 04 — orbit markers */
+    .orbit { --tone: var(--cyan); position: relative; width: 112px; height: 104px; margin: auto; }
+    .orbit.mid { --tone: var(--violet); }
+    .orbit.high { --tone: var(--gold); }
+    .orbit-core { position: absolute; left: 50%; top: 50%; width: 61px; height: 61px; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle at 36% 30%, color-mix(in srgb, var(--tone) 30%, #172131), #090c13 68%); border: 1px solid color-mix(in srgb, var(--tone) 62%, #253044); box-shadow: 0 0 27px color-mix(in srgb, var(--tone) 12%, transparent); }
+    .orbit-core b { display: block; margin-top: 15px; color: #fff; font: 800 21px/1 Exo; }
+    .orbit-core small { display: block; margin-top: 2px; color: var(--tone); font: 800 6px/1 Exo; letter-spacing: .14em; }
+    .orbit-line { position: absolute; left: 50%; top: 50%; width: 103px; height: 37px; transform: translate(-50%, -50%) rotate(-17deg); border: 1px solid color-mix(in srgb, var(--tone) 58%, transparent); border-radius: 50%; }
+    .orbit-line::after { content: ""; position: absolute; right: 8px; top: 2px; width: 5px; height: 5px; border-radius: 50%; background: var(--tone); box-shadow: 0 0 8px var(--tone); }
+    .orbit.mid .orbit-line:nth-child(3) { transform: translate(-50%, -50%) rotate(36deg); width: 89px; height: 50px; opacity: .58; }
+    .orbit.high .orbit-line:nth-child(3) { transform: translate(-50%, -50%) rotate(65deg); width: 87px; height: 45px; opacity: .62; }
+
+    footer { margin-top: 22px; display: flex; justify-content: space-between; gap: 20px; color: #687588; font-size: 10px; line-height: 1.5; }
+
+    @media (max-width: 760px) {
+      .board { width: min(100% - 24px, 560px); padding-top: 30px; }
+      header { grid-template-columns: 1fr; }
+      .legend { display: none; }
+      .concept { grid-template-columns: 1fr; }
+      .concept-copy { border-right: 0; border-bottom: 1px solid var(--line); padding: 22px; }
+      .specimens { padding: 22px 10px; gap: 2px; }
+      .seal, .crest, .orbit { transform: scale(.86); }
+      .patch { transform: scale(.84); }
+    }
+  </style>
+</head>
+<body>
+  <main class="board">
+    <header>
+      <div>
+        <div class="kicker">Nightcrossing • design study</div>
+        <h1>Journey Rank badges</h1>
+        <p class="intro">Four badge systems built around the same promise: identify the feature, show the player’s exact level, and make advancement feel visibly more prestigious.</p>
+      </div>
+      <div class="legend" aria-label="Examples shown">
+        <span>Early • Lv 01</span><span>Mid • Lv 08</span><span>Final • Lv 17</span>
+      </div>
+    </header>
+
+    <section class="concepts">
+      <article class="concept">
+        <div class="concept-copy">
+          <div class="concept-index">DIRECTION 01</div><h2>Celestial seals</h2>
+          <p>Classic achievement medallions. The icon tells the rank’s story while the numbered tab makes progression unmistakable.</p>
+          <span class="trait">Ceremonial • collectible</span>
+        </div>
+        <div class="specimens">
+          <div class="specimen"><div class="seal"><div class="seal-ring"></div><svg viewBox="0 0 48 48" fill="none"><path d="M9 30h30M14 25h20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M24 10v8M20 14h8" stroke="currentColor" stroke-width="1.5"/></svg><span class="seal-level">LV 01</span></div><div class="rank-label">Dark Horizon</div><div class="rank-meta">1 puzzle</div></div>
+          <div class="specimen"><div class="seal mid"><div class="seal-ring"></div><svg viewBox="0 0 48 48" fill="none"><path d="M29 11a15 15 0 1 0 8 25A17 17 0 0 1 29 11Z" stroke="currentColor" stroke-width="2"/><circle cx="34" cy="14" r="1.5" fill="currentColor"/><circle cx="38" cy="20" r="1" fill="currentColor"/></svg><span class="seal-level">LV 08</span></div><div class="rank-label">Moonwalker</div><div class="rank-meta">36 puzzles</div></div>
+          <div class="specimen"><div class="seal high"><div class="seal-ring"></div><svg viewBox="0 0 48 48" fill="none"><path d="m24 8 4.3 11.7L40 24l-11.7 4.3L24 40l-4.3-11.7L8 24l11.7-4.3L24 8Z" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="24" r="4" fill="currentColor"/></svg><span class="seal-level">LV 17</span></div><div class="rank-label">Nightcrossing</div><div class="rank-meta">250 puzzles</div></div>
+        </div>
+      </article>
+
+      <article class="concept">
+        <div class="concept-copy">
+          <div class="concept-index">DIRECTION 02</div><h2>Waypoint crests</h2>
+          <p>A game-forward rank insignia. Lit bars group the 17 levels into broad tiers, so higher status reads even at a glance.</p>
+          <span class="trait">Competitive • prestigious</span>
+        </div>
+        <div class="specimens">
+          <div class="specimen"><div class="crest"><div class="crest-body"></div><svg viewBox="0 0 48 48" fill="none"><path d="M8 29h32M14 24h20M19 19h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="crest-level">RANK 01</span><div class="crest-bars"><i class="on"></i><i></i><i></i></div></div><div class="rank-label">Dark Horizon</div><div class="rank-meta">I • Pathfinder</div></div>
+          <div class="specimen"><div class="crest mid"><div class="crest-body"></div><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="14" stroke="currentColor" stroke-width="2"/><path d="m24 12 4 12-4 12-4-12 4-12Z" fill="currentColor"/><path d="M12 24h24" stroke="currentColor"/></svg><span class="crest-level">RANK 08</span><div class="crest-bars"><i class="on"></i><i class="on"></i><i></i></div></div><div class="rank-label">Moonwalker</div><div class="rank-meta">II • Voyager</div></div>
+          <div class="specimen"><div class="crest high"><div class="crest-body"></div><svg viewBox="0 0 48 48" fill="none"><path d="M24 7v34M7 24h34M12 12l24 24M36 12 12 36" stroke="currentColor" stroke-width="1.5"/><circle cx="24" cy="24" r="8" fill="currentColor" opacity=".25"/><circle cx="24" cy="24" r="3" fill="currentColor"/></svg><span class="crest-level">RANK 17</span><div class="crest-bars"><i class="on"></i><i class="on"></i><i class="on"></i></div></div><div class="rank-label">Nightcrossing</div><div class="rank-meta">III • Luminary</div></div>
+        </div>
+      </article>
+
+      <article class="concept">
+        <div class="concept-copy">
+          <div class="concept-index">DIRECTION 03</div><h2>Expedition patches</h2>
+          <p>Compact, graphic, and highly legible. The rank name lives on the badge itself, making every patch self-explanatory.</p>
+          <span class="trait">Editorial • approachable</span>
+        </div>
+        <div class="specimens">
+          <div class="specimen"><div class="patch"><span class="patch-level">01</span><svg viewBox="0 0 48 48" fill="none"><path d="M7 31h34M12 25h24" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="15" r="2" fill="currentColor"/></svg><span class="patch-word">Dark<br>Horizon</span></div><div class="rank-label">Level 01</div><div class="rank-meta">Rank earned</div></div>
+          <div class="specimen"><div class="patch mid"><span class="patch-level">08</span><svg viewBox="0 0 48 48" fill="none"><path d="M29 8a16 16 0 1 0 10 27A18 18 0 0 1 29 8Z" stroke="currentColor" stroke-width="2"/><path d="M13 35 7 40" stroke="currentColor"/></svg><span class="patch-word">Moon<br>walker</span></div><div class="rank-label">Level 08</div><div class="rank-meta">Rank earned</div></div>
+          <div class="specimen"><div class="patch high"><span class="patch-level">17</span><svg viewBox="0 0 48 48" fill="none"><path d="m24 5 5 14 14 5-14 5-5 14-5-14-14-5 14-5 5-14Z" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="24" r="4" fill="currentColor"/></svg><span class="patch-word">Night<br>crossing</span></div><div class="rank-label">Level 17</div><div class="rank-meta">Final rank</div></div>
+        </div>
+      </article>
+
+      <article class="concept">
+        <div class="concept-copy">
+          <div class="concept-index">DIRECTION 04</div><h2>Orbit markers</h2>
+          <p>A cleaner, modern system. Added orbital paths communicate increasing reach while the level stays dominant at every size.</p>
+          <span class="trait">Minimal • systematic</span>
+        </div>
+        <div class="specimens">
+          <div class="specimen"><div class="orbit"><div class="orbit-core"><b>01</b><small>LEVEL</small></div><div class="orbit-line"></div></div><div class="rank-label">Dark Horizon</div><div class="rank-meta">Journey begins</div></div>
+          <div class="specimen"><div class="orbit mid"><div class="orbit-core"><b>08</b><small>LEVEL</small></div><div class="orbit-line"></div><div class="orbit-line"></div></div><div class="rank-label">Moonwalker</div><div class="rank-meta">36 complete</div></div>
+          <div class="specimen"><div class="orbit high"><div class="orbit-core"><b>17</b><small>LEVEL</small></div><div class="orbit-line"></div><div class="orbit-line"></div></div><div class="rank-label">Nightcrossing</div><div class="rank-meta">250 complete</div></div>
+        </div>
+      </article>
+    </section>
+    <footer><span>All concepts preserve the app’s existing night / cyan / violet visual language.</span><span>Static concept board • no production components changed</span></footer>
+  </main>
+</body>
+</html>

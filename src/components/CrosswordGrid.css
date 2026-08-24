@@ -293,14 +293,51 @@
   animation: badgeSheen 0.85s ease-out 1.45s forwards;
 }
 
-.badge-img {
+.badge-image-frame {
+  position: relative;
   width: 52px;
   height: 52px;
+  flex: 0 0 52px;
+  overflow: hidden;
+  border-radius: 8px;
   transform: scale(0.78) rotate(-10deg);
   opacity: 0;
   animation: badgePop 520ms cubic-bezier(0.18, 0.9, 0.22, 1.2) 1.34s forwards;
 }
 
+.badge-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.badge-level-chip {
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  min-width: 17px;
+  padding: 3px 4px 2px;
+  border-radius: 3px;
+  background: var(--accent-primary);
+  color: #071015;
+  font-family: var(--font-family-game);
+  font-size: 0.42rem;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.32);
+}
+
+.badge-image-frame[data-rank-tier='advanced'] .badge-level-chip {
+  background: var(--accent-secondary);
+  color: #ffffff;
+}
+
+.badge-image-frame[data-rank-tier='final'] .badge-level-chip {
+  background: #ffd36a;
+  color: #181006;
+}
 
 
 .badge-glow {

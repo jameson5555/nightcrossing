@@ -124,7 +124,8 @@ test('all planned badge assets exist and are imported', () => {
     assert.ok(match, `missing import for ${rank.name}`);
 
     const assetPath = path.join(process.cwd(), 'src/utils', match[1]);
-    assert.ok(fs.existsSync(assetPath), `missing SVG for ${rank.name}`);
-    assert.match(fs.readFileSync(assetPath, 'utf8'), /<svg\b/);
+    assert.ok(fs.existsSync(assetPath), `missing badge asset for ${rank.name}`);
+    assert.equal(path.extname(assetPath), '.webp', `expected WebP artwork for ${rank.name}`);
+    assert.ok(fs.statSync(assetPath).size > 0, `empty badge asset for ${rank.name}`);
   }
 });

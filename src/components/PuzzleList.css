@@ -29,11 +29,48 @@
   gap: 14px;
 }
 
-.journey-badge {
+.journey-badge-frame {
+  position: relative;
   width: 58px;
   height: 58px;
   flex: 0 0 58px;
-  filter: drop-shadow(0 0 5px rgba(0, 229, 255, 0.42));
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.24), 0 8px 18px rgba(0, 0, 0, 0.28);
+}
+
+.journey-badge {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.journey-badge-level {
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  min-width: 17px;
+  padding: 3px 4px 2px;
+  border-radius: 3px;
+  background: var(--accent-primary);
+  color: #071015;
+  font-family: var(--font-family-game);
+  font-size: 0.42rem;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.32);
+}
+
+.journey-badge-frame[data-rank-tier='advanced'] .journey-badge-level {
+  background: var(--accent-secondary);
+  color: #ffffff;
+}
+
+.journey-badge-frame[data-rank-tier='final'] .journey-badge-level {
+  background: #ffd36a;
+  color: #181006;
 }
 
 .journey-copy {

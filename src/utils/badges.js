@@ -1,21 +1,21 @@
 // Badge utilities: journey rank calculation, names, assets, and thresholds
-import level1_dark_horizon from '../assets/badges/level1_dark_horizon.svg';
-import level2_dusk from '../assets/badges/level2_dusk.svg';
-import level3_twilight from '../assets/badges/level3_twilight.svg';
-import level4_starlight from '../assets/badges/level4_starlight.svg';
-import level5_midnight from '../assets/badges/level5_midnight.svg';
-import level6_deepnight from '../assets/badges/level6_deepnight.svg';
-import level7_dreamer from '../assets/badges/level7_dreamer.svg';
-import level8_moonwalker from '../assets/badges/level8_moonwalker.svg';
-import level9_nightsage from '../assets/badges/level9_nightsage.svg';
-import level10_star_guide from '../assets/badges/level10_star_guide.svg';
-import level11_eclipse_walker from '../assets/badges/level11_eclipse_walker.svg';
-import level12_comet_keeper from '../assets/badges/level12_comet_keeper.svg';
-import level13_aurora_seer from '../assets/badges/level13_aurora_seer.svg';
-import level14_constellation_weaver from '../assets/badges/level14_constellation_weaver.svg';
-import level15_void_cartographer from '../assets/badges/level15_void_cartographer.svg';
-import level16_dawnbringer from '../assets/badges/level16_dawnbringer.svg';
-import level17_nightcrossing from '../assets/badges/level17_nightcrossing.svg';
+import level1_dark_horizon from '../assets/badges/level1_dark_horizon.webp';
+import level2_dusk from '../assets/badges/level2_dusk.webp';
+import level3_twilight from '../assets/badges/level3_twilight.webp';
+import level4_starlight from '../assets/badges/level4_starlight.webp';
+import level5_midnight from '../assets/badges/level5_midnight.webp';
+import level6_deepnight from '../assets/badges/level6_deepnight.webp';
+import level7_dreamer from '../assets/badges/level7_dreamer.webp';
+import level8_moonwalker from '../assets/badges/level8_moonwalker.webp';
+import level9_nightsage from '../assets/badges/level9_nightsage.webp';
+import level10_star_guide from '../assets/badges/level10_star_guide.webp';
+import level11_eclipse_walker from '../assets/badges/level11_eclipse_walker.webp';
+import level12_comet_keeper from '../assets/badges/level12_comet_keeper.webp';
+import level13_aurora_seer from '../assets/badges/level13_aurora_seer.webp';
+import level14_constellation_weaver from '../assets/badges/level14_constellation_weaver.webp';
+import level15_void_cartographer from '../assets/badges/level15_void_cartographer.webp';
+import level16_dawnbringer from '../assets/badges/level16_dawnbringer.webp';
+import level17_nightcrossing from '../assets/badges/level17_nightcrossing.webp';
 
 export const JOURNEY_RANKS = [
   { level: 1, name: 'Dark Horizon', required: 1, asset: level1_dark_horizon },

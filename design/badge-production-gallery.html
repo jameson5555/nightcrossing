@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nightcrossing — Production Journey Ranks</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Exo:wght@600;700;800&family=Inter:wght@400;600&display=swap');
+    :root { color-scheme:dark; --cyan:#34e7f8; --violet:#b86cff; --gold:#ffd36a; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:radial-gradient(circle at 12% 0,rgba(0,229,255,.09),transparent 29rem),radial-gradient(circle at 90% 8%,rgba(148,57,255,.1),transparent 30rem),#070910; color:#f5f7fb; font-family:Inter,sans-serif; }
+    main { width:min(1120px,calc(100% - 40px)); margin:auto; padding:48px 0 64px; }
+    .kicker { color:var(--cyan); font:800 11px/1 Exo; letter-spacing:.22em; text-transform:uppercase; }
+    h1 { margin:9px 0 10px; font:800 clamp(30px,4vw,48px)/1 Exo; letter-spacing:-.03em; }
+    .intro { max-width:720px; margin:0 0 34px; color:#8e9bab; font-size:14px; line-height:1.55; }
+    .gallery { display:grid; grid-template-columns:repeat(6,1fr); gap:22px 14px; }
+    .rank { min-width:0; }
+    .tile { position:relative; aspect-ratio:1; overflow:hidden; border-radius:14px; background:#10141f; box-shadow:0 14px 26px rgba(0,0,0,.32); }
+    img { display:block; width:100%; height:100%; object-fit:cover; }
+    .level { position:absolute; right:7px; bottom:7px; min-width:35px; padding:5px 6px 4px; border-radius:5px; background:var(--cyan); color:#071015; font:800 8px/1 Exo; text-align:center; box-shadow:0 2px 7px rgba(0,0,0,.35); }
+    .rank.advanced .level { background:var(--violet); color:white; }
+    .rank.final .level { background:var(--gold); color:#181006; }
+    .name { margin-top:10px; font:700 11px/1.25 Exo; }
+    .meta { margin-top:4px; color:#657286; font-size:8px; letter-spacing:.1em; text-transform:uppercase; }
+    footer { margin-top:36px; color:#657286; font-size:10px; }
+    @media(max-width:850px){ .gallery{grid-template-columns:repeat(4,1fr)} }
+    @media(max-width:520px){ main{width:calc(100% - 24px);padding-top:30px}.gallery{grid-template-columns:repeat(3,1fr);gap:18px 10px}.tile{border-radius:10px}.name{font-size:10px} }
+  </style>
+</head>
+<body><main>
+  <div class="kicker">Nightcrossing • final production family</div>
+  <h1>Journey Ranks 01–17</h1>
+  <p class="intro">Full-bleed raster artwork with one large graphic idea per rank. Color and compositional intensity build across the journey; gold is reserved for the final crossing.</p>
+  <section class="gallery">
+    <article class="rank"><div class="tile"><img src="../src/assets/badges/level1_dark_horizon.webp"><span class="level">LV 01</span></div><div class="name">Dark Horizon</div><div class="meta">1 complete</div></article>
+    <article class="rank"><div class="tile"><img src="../src/assets/badges/level2_dusk.webp"><span class="level">LV 02</span></div><div class="name">Dusk</div><div class="meta">3 complete</div></article>
+    <article class="rank"><div class="tile"><img src="../src/assets/badges/level3_twilight.webp"><span class="level">LV 03</span></div><div class="name">Twilight</div><div class="meta">6 complete</div></article>
+    <article class="rank"><div class="tile"><img src="../src/assets/badges/level4_starlight.webp"><span class="level">LV 04</span></div><div class="name">Starlight</div><div class="meta">10 complete</div></article>
+    <article class="rank"><div class="tile"><img src="../src/assets/badges/level5_midnight.webp"><span class="level">LV 05</span></div><div class="name">Midnight</div><div class="meta">15 complete</div></article>
+    <article class="rank"><div class="tile"><img src="../src/assets/badges/level6_deepnight.webp"><span class="level">LV 06</span></div><div class="name">Deep Night</div><div class="meta">21 complete</div></article>
+    <article class="rank"><div class="tile"><img src="../src/assets/badges/level7_dreamer.webp"><span class="level">LV 07</span></div><div class="name">Dreamer</div><div class="meta">28 complete</div></article>
+    <article class="rank advanced"><div class="tile"><img src="../src/assets/badges/level8_moonwalker.webp"><span class="level">LV 08</span></div><div class="name">Moonwalker</div><div class="meta">36 complete</div></article>
+    <article class="rank advanced"><div class="tile"><img src="../src/assets/badges/level9_nightsage.webp"><span class="level">LV 09</span></div><div class="name">Night Sage</div><div class="meta">45 complete</div></article>
+    <article class="rank advanced"><div class="tile"><img src="../src/assets/badges/level10_star_guide.webp"><span class="level">LV 10</span></div><div class="name">Star Guide</div><div class="meta">60 complete</div></article>
+    <article class="rank advanced"><div class="tile"><img src="../src/assets/badges/level11_eclipse_walker.webp"><span class="level">LV 11</span></div><div class="name">Eclipse Walker</div><div class="meta">78 complete</div></article>
+    <article class="rank advanced"><div class="tile"><img src="../src/assets/badges/level12_comet_keeper.webp"><span class="level">LV 12</span></div><div class="name">Comet Keeper</div><div class="meta">99 complete</div></article>
+    <article class="rank advanced"><div class="tile"><img src="../src/assets/badges/level13_aurora_seer.webp"><span class="level">LV 13</span></div><div class="name">Aurora Seer</div><div class="meta">123 complete</div></article>
+    <article class="rank advanced"><div class="tile"><img src="../src/assets/badges/level14_constellation_weaver.webp"><span class="level">LV 14</span></div><div class="name">Constellation Weaver</div><div class="meta">150 complete</div></article>
+    <article class="rank advanced"><div class="tile"><img src="../src/assets/badges/level15_void_cartographer.webp"><span class="level">LV 15</span></div><div class="name">Void Cartographer</div><div class="meta">180 complete</div></article>
+    <article class="rank advanced"><div class="tile"><img src="../src/assets/badges/level16_dawnbringer.webp"><span class="level">LV 16</span></div><div class="name">Dawnbringer</div><div class="meta">215 complete</div></article>
+    <article class="rank final"><div class="tile"><img src="../src/assets/badges/level17_nightcrossing.webp"><span class="level">LV 17</span></div><div class="name">Nightcrossing</div><div class="meta">250 complete</div></article>
+  </section>
+  <footer>512 × 512 WebP production assets • 632 KB total</footer>
+</main></body>
+</html>
