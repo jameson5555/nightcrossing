@@ -380,7 +380,6 @@ const PuzzleList = ({
             data-rank-tier={journey.current.level === 17 ? 'final' : journey.current.level >= 8 ? 'advanced' : 'early'}
           >
             <img src={journey.current.asset} alt={journey.current.name} className="journey-badge" />
-            <span className="journey-badge-level">{String(journey.current.level).padStart(2, '0')}</span>
           </div>
           <div className="journey-copy">
             <span className="journey-eyebrow">Journey Rank</span>
