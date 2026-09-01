@@ -33,6 +33,12 @@ export function decideThemeBatchOutcome({
   };
 }
 
+export function isExhaustibleGenerationFailure(error) {
+  const message = String(error?.message || error || '');
+  return /^Could not generate a constrained puzzle for /.test(message) ||
+    /^Only \d+ clue-safe words remain for /.test(message);
+}
+
 export function dedupeWordsByClue(words) {
   const seenClues = new Set();
   return words.filter(word => {

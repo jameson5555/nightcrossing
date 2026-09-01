@@ -212,13 +212,18 @@ function calculateFallbackThemeRelevance(themeName, word) {
     'transportation vehicles': ['transport', 'vehicle', 'car', 'truck', 'bus', 'train', 'plane', 'boat', 'ship', 'bike', 'road', 'rail', 'route', 'traffic', 'driver', 'passenger', 'cargo', 'airport', 'station'],
     'home tools': ['home', 'house', 'room', 'kitchen', 'door', 'window', 'floor', 'wall', 'tool', 'hammer', 'drill', 'saw', 'wrench', 'repair', 'paint', 'clean', 'faucet', 'pipe', 'wire', 'shelf'],
     'internet software': ['internet', 'web', 'browser', 'server', 'cloud', 'code', 'coding', 'program', 'software', 'query', 'cache', 'file', 'files', 'sync', 'network', 'node', 'nodes', 'protocol', 'database', 'cyber', 'byte', 'chip', 'cpu', 'hash', 'api', 'online', 'digital'],
-    'sports athletics': ['sport', 'team', 'score', 'goal', 'match', 'coach', 'league', 'athlete', 'race', 'medal', 'tournament']
+    'sports athletics': ['sport', 'team', 'score', 'goal', 'match', 'coach', 'league', 'athlete', 'race', 'medal', 'tournament'],
+    'nature wilderness': ['nature', 'wild', 'wilderness', 'forest', 'wood', 'tree', 'river', 'lake', 'mountain', 'valley', 'canyon', 'meadow', 'trail', 'habitat', 'ecosystem', 'earth', 'outdoor', 'camp', 'hike'],
+    'history civilization': ['history', 'civilization', 'ancient', 'empire', 'dynasty', 'king', 'queen', 'ruler', 'war', 'battle', 'treaty', 'nation', 'culture', 'society', 'era', 'age', 'century', 'medieval', 'roman', 'greek', 'archaeolog']
   };
 
   const themeKey = normalizedThemeKey(themeName);
   const signals = domainSignals[themeKey] || [];
   const combinedText = `${word.answer || ''} ${word.clue || ''} ${word.hint || ''}`.toLowerCase();
-  const matchedSignals = signals.filter(signal => combinedText.includes(signal)).length;
+  const combinedTokens = tokenizeForTheme(combinedText);
+  const matchedSignals = signals.filter(signal => combinedTokens.some(token =>
+    token === signal || (signal.length >= 4 && token.startsWith(signal))
+  )).length;
   if (matchedSignals > 0) {
     score += 0.65;
     if (matchedSignals >= 2) score += 0.15;

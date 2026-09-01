@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import {
   assertSuccessfulThemeBatch,
   decideThemeBatchOutcome,
-  dedupeWordsByClue
+  dedupeWordsByClue,
+  isExhaustibleGenerationFailure
 } from '../scripts/generationPolicy.js';
 
 test('keeps a complete generation batch unchanged', () => {
@@ -41,6 +42,21 @@ test('exhausts a ready theme after repeated generation failures', () => {
     action: 'exhaust',
     remainingCount: 2
   });
+});
+
+test('counts constrained-layout and clue-safe depletion errors toward exhaustion', () => {
+  assert.equal(
+    isExhaustibleGenerationFailure(new Error('Could not generate a constrained puzzle for Internet & Software.')),
+    true
+  );
+  assert.equal(
+    isExhaustibleGenerationFailure(new Error('Only 4 clue-safe words remain for Internet & Software.')),
+    true
+  );
+  assert.equal(
+    isExhaustibleGenerationFailure(new TypeError('Cannot read properties of undefined')),
+    false
+  );
 });
 
 test('allows a genuinely weak theme to transition to its successor', () => {

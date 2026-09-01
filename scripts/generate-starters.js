@@ -9,7 +9,8 @@ import { fetchThemeWords } from './fetch-theme-words.js';
 import {
   assertSuccessfulThemeBatch,
   decideThemeBatchOutcome,
-  dedupeWordsByClue
+  dedupeWordsByClue,
+  isExhaustibleGenerationFailure
 } from './generationPolicy.js';
 import { computePuzzleMetrics } from './puzzleMetrics.js';
 import { computeLexicalStatsForAnswers } from './lexicalDifficulty.js';
@@ -48,10 +49,6 @@ function slugifyThemeName(themeName) {
 function buildPuzzleId(themeName, volume, legacyPrefix = false) {
   const prefix = legacyPrefix ? 'starter-' : '';
   return `${prefix}${slugifyThemeName(themeName)}-vol${volume}`;
-}
-
-function isConstrainedLayoutFailure(error) {
-  return /^Could not generate a constrained puzzle for /.test(String(error?.message || ''));
 }
 
 function parseVolumeFromId(id) {
@@ -973,7 +970,7 @@ async function generateStarters() {
               try {
                 candidate = generateThemedPuzzle(id, theme.name, availableWords);
               } catch (err) {
-                if (isConstrainedLayoutFailure(err)) generationFailureCount++;
+                if (isExhaustibleGenerationFailure(err)) generationFailureCount++;
                 if (attempt < totalAttempts) continue;
                 throw err;
               }
