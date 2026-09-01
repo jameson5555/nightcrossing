@@ -40,6 +40,7 @@ jobs:
           NC_ENABLE_EASY_TOP_OFF: '0'
           NC_LAYOUT_ATTEMPT_SCALE: '0.2'
           NC_MAX_LAYOUT_QUALITY_RETRIES: '5'
+          NC_THEME_EXHAUSTION_FAILURE_THRESHOLD: '5'
           NC_NEW_PUZZLES_PER_THEME: '3'
           NC_PRIMARY_CORE_POOL_LIMIT: '120'
         run: node scripts/generate-starters.js --skip-enrichment

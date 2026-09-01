@@ -1,7 +1,9 @@
 export function decideThemeBatchOutcome({
   generatedCount,
   targetCount,
-  readiness
+  readiness,
+  generationFailureCount = 0,
+  generationFailureThreshold = Infinity
 }) {
   if (generatedCount >= targetCount) {
     return {
@@ -14,8 +16,11 @@ export function decideThemeBatchOutcome({
   const hasCapacity = readiness &&
     readiness.projectedPuzzles >= remainingCount &&
     readiness.usableCoreWords >= remainingCount * 6;
+  const hasRepeatedGenerationFailures =
+    Number.isFinite(generationFailureThreshold) &&
+    generationFailureCount >= generationFailureThreshold;
 
-  if (readiness && !hasCapacity) {
+  if ((readiness && !hasCapacity) || hasRepeatedGenerationFailures) {
     return {
       action: 'exhaust',
       remainingCount

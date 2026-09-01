@@ -10,7 +10,10 @@ import {
 } from '../src/utils/themeAvailability.js';
 
 const require = createRequire(import.meta.url);
-const { buildThemeAvailability } = require('../scripts/themeRotation.cjs');
+const {
+  buildThemeAvailability,
+  replaceScheduledTheme
+} = require('../scripts/themeRotation.cjs');
 
 function themeState(completed) {
   return { hasCompletedAllThemePuzzles: completed };
@@ -207,4 +210,38 @@ test('derives scheduled and exhausted availability from the rotation manifest', 
     Replacement: { status: 'scheduled', receivesNextBatch: true },
     Retired: { status: 'exhausted', receivesNextBatch: false }
   });
+});
+
+test('replaces an exhausted scheduled successor without exhausting its current theme', () => {
+  const rotation = {
+    slots: [{ currentTheme: 'Current', status: 'active', nextTheme: 'Failed Next' }],
+    candidates: ['Replacement'],
+    retired: []
+  };
+
+  assert.ok(replaceScheduledTheme(
+    rotation,
+    'Failed Next',
+    'Replacement',
+    'repeated generation failures (5/5)'
+  ));
+  assert.deepEqual(rotation.slots, [{
+    currentTheme: 'Current',
+    status: 'active',
+    nextTheme: 'Replacement'
+  }]);
+  assert.deepEqual(rotation.candidates, []);
+  assert.equal(rotation.retired.length, 1);
+  assert.deepEqual(
+    {
+      theme: rotation.retired[0].theme,
+      replacedBy: rotation.retired[0].replacedBy,
+      reason: rotation.retired[0].reason
+    },
+    {
+      theme: 'Failed Next',
+      replacedBy: 'Replacement',
+      reason: 'repeated generation failures (5/5)'
+    }
+  );
 });

@@ -24,6 +24,7 @@ const {
   findThemeByName,
   getGenerationThemeNames,
   markThemeExhausted,
+  replaceScheduledTheme,
   assignNextTheme,
   normalizedThemeKey: normalizedRotationThemeKey
 } = require('./themeRotation.cjs');
@@ -47,6 +48,10 @@ function slugifyThemeName(themeName) {
 function buildPuzzleId(themeName, volume, legacyPrefix = false) {
   const prefix = legacyPrefix ? 'starter-' : '';
   return `${prefix}${slugifyThemeName(themeName)}-vol${volume}`;
+}
+
+function isConstrainedLayoutFailure(error) {
+  return /^Could not generate a constrained puzzle for /.test(String(error?.message || ''));
 }
 
 function parseVolumeFromId(id) {
@@ -82,6 +87,9 @@ const THEME_FILTER_KEYS = new Set(
 const MAX_LAYOUT_QUALITY_RETRIES = Number.isFinite(Number(process.env.NC_MAX_LAYOUT_QUALITY_RETRIES))
   ? Math.max(1, Math.min(10, Number(process.env.NC_MAX_LAYOUT_QUALITY_RETRIES)))
   : 5;
+const THEME_EXHAUSTION_FAILURE_THRESHOLD = Number.isFinite(Number(process.env.NC_THEME_EXHAUSTION_FAILURE_THRESHOLD))
+  ? Math.max(2, Math.min(50, Number(process.env.NC_THEME_EXHAUSTION_FAILURE_THRESHOLD)))
+  : MAX_LAYOUT_QUALITY_RETRIES;
 const MIN_LONG_TWO_PLUS_RATE = Number.isFinite(Number(process.env.NC_MIN_LONG_TWO_PLUS_RATE))
   ? Math.max(0, Math.min(1, Number(process.env.NC_MIN_LONG_TWO_PLUS_RATE)))
   : 0.82;
@@ -851,6 +859,7 @@ async function generateStarters() {
     let generatedForTheme = 0;
     let themeExhaustionReason = '';
     let caughtThemeError = null;
+    let generationFailureCount = 0;
     let confirmedExhausted = false;
     if (REGENERATE && !ALLOW_REPEAT_ANSWERS) {
       const historical = historicalConsumedByTheme.get(theme.name);
@@ -964,6 +973,7 @@ async function generateStarters() {
               try {
                 candidate = generateThemedPuzzle(id, theme.name, availableWords);
               } catch (err) {
+                if (isConstrainedLayoutFailure(err)) generationFailureCount++;
                 if (attempt < totalAttempts) continue;
                 throw err;
               }
@@ -972,6 +982,7 @@ async function generateStarters() {
               const quality = passesLayoutQualityGate(candidateMetrics, candidate.puzzle);
 
               if (!quality.duplicateClueGate) {
+                generationFailureCount++;
                 continue;
               }
 
@@ -1072,7 +1083,9 @@ async function generateStarters() {
       const outcome = decideThemeBatchOutcome({
         generatedCount: generatedForTheme,
         targetCount: NEW_PUZZLES_PER_THEME,
-        readiness
+        readiness,
+        generationFailureCount,
+        generationFailureThreshold: THEME_EXHAUSTION_FAILURE_THRESHOLD
       });
 
       if (outcome.action === 'fail') {
@@ -1085,10 +1098,16 @@ async function generateStarters() {
 
       confirmedExhausted = confirmedExhausted || outcome.action === 'exhaust';
       if (confirmedExhausted) {
-        console.warn(
-          `  Theme readiness confirms exhaustion for the remaining ${remainingCount} puzzle(s): ` +
-          `${readiness.readinessFailures.join('; ') || 'insufficient generation capacity'}.`
-        );
+        if (generationFailureCount >= THEME_EXHAUSTION_FAILURE_THRESHOLD) {
+          themeExhaustionReason =
+            `repeated generation failures (${generationFailureCount}/${THEME_EXHAUSTION_FAILURE_THRESHOLD})`;
+          console.warn(`  Theme marked exhausted after ${themeExhaustionReason}.`);
+        } else {
+          console.warn(
+            `  Theme readiness confirms exhaustion for the remaining ${remainingCount} puzzle(s): ` +
+            `${readiness.readinessFailures.join('; ') || 'insufficient generation capacity'}.`
+          );
+        }
       }
     }
 
@@ -1102,6 +1121,28 @@ async function generateStarters() {
 
       if (slot) {
         exhaustionTransitionHandled = true;
+      }
+
+      if (!slot) {
+        const replacement = selectReadyReplacementTheme(rotation, historicalConsumedByTheme);
+        if (!replacement) {
+          console.error(`\n❌ Scheduled theme [${theme.name}] is exhausted, but no ready candidate replacement is available.`);
+          console.error('Add or enrich candidate themes in scripts/candidate-themes.json, then rerun generation.');
+          throw new Error(`No ready replacement theme is available for ${theme.name}.`);
+        }
+
+        const replacedSlot = replaceScheduledTheme(
+          rotation,
+          theme.name,
+          replacement.theme,
+          themeExhaustionReason || `generated ${generatedForTheme}/${NEW_PUZZLES_PER_THEME} puzzle(s) this run`
+        );
+        if (replacedSlot) {
+          exhaustionTransitionHandled = true;
+          const replacementTheme = findThemeByName(THEMES, replacement.theme);
+          if (replacementTheme) activeThemes.push(replacementTheme);
+          console.log(`  🔁 Replaced exhausted scheduled theme ${theme.name} with ${replacement.theme}.`);
+        }
       }
 
       if (slot && !slot.nextTheme) {

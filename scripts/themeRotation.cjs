@@ -210,6 +210,22 @@ function markThemeExhausted(rotation, themeName, reason = 'generation-exhausted'
   return slot;
 }
 
+function replaceScheduledTheme(rotation, themeName, replacementTheme, reason = 'generation-exhausted') {
+  const slot = rotation.slots.find(item => normalizedThemeKey(item?.nextTheme) === normalizedThemeKey(themeName));
+  if (!slot || !replacementTheme) return null;
+
+  rotation.retired = Array.isArray(rotation.retired) ? rotation.retired : [];
+  rotation.retired.push({
+    theme: slot.nextTheme,
+    replacedBy: replacementTheme,
+    retiredAt: new Date().toISOString(),
+    reason
+  });
+  slot.nextTheme = replacementTheme;
+  removeCandidate(rotation, replacementTheme);
+  return slot;
+}
+
 function assignNextTheme(rotation, currentTheme, nextTheme) {
   const slot = rotation.slots.find(item => normalizedThemeKey(item?.currentTheme) === normalizedThemeKey(currentTheme));
   if (!slot) return null;
@@ -270,6 +286,7 @@ module.exports = {
   buildThemeVisibility,
   buildThemeAvailability,
   markThemeExhausted,
+  replaceScheduledTheme,
   assignNextTheme,
   retireCompletedTheme,
   syncRotationThemeNames

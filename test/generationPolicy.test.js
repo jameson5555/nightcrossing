@@ -21,9 +21,24 @@ test('does not exhaust a ready theme after a transient generation failure', () =
   assert.deepEqual(decideThemeBatchOutcome({
     generatedCount: 1,
     targetCount: 3,
-    readiness: { isReady: true, projectedPuzzles: 20, usableCoreWords: 100 }
+    readiness: { isReady: true, projectedPuzzles: 20, usableCoreWords: 100 },
+    generationFailureCount: 1,
+    generationFailureThreshold: 3
   }), {
     action: 'fail',
+    remainingCount: 2
+  });
+});
+
+test('exhausts a ready theme after repeated generation failures', () => {
+  assert.deepEqual(decideThemeBatchOutcome({
+    generatedCount: 1,
+    targetCount: 3,
+    readiness: { isReady: true, projectedPuzzles: 20, usableCoreWords: 100 },
+    generationFailureCount: 3,
+    generationFailureThreshold: 3
+  }), {
+    action: 'exhaust',
     remainingCount: 2
   });
 });
