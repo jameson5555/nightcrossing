@@ -232,7 +232,13 @@ function calculateFallbackThemeRelevance(themeName, word) {
     'internet software': ['internet', 'web', 'browser', 'server', 'cloud', 'code', 'coding', 'program', 'software', 'query', 'cache', 'file', 'files', 'sync', 'network', 'node', 'nodes', 'protocol', 'database', 'cyber', 'cyberspace', 'virtual', 'byte', 'chip', 'cpu', 'hash', 'api', 'online', 'digital'],
     'sports athletics': ['sport', 'sportive', 'cyclosportive', 'team', 'score', 'goal', 'match', 'coach', 'league', 'athlete', 'race', 'medal', 'tournament'],
     'nature wilderness': ['natural', 'organism', 'wild', 'wilderness', 'forest', 'wood', 'timber', 'tree', 'river', 'lake', 'mountain', 'valley', 'canyon', 'meadow', 'trail', 'habitat', 'ecosystem', 'earth', 'outdoor', 'camp', 'hike'],
-    'history civilization': ['history', 'civilization', 'ancient', 'empire', 'dynasty', 'king', 'kingdom', 'queen', 'ruler', 'noble', 'war', 'battle', 'treaty', 'nation', 'culture', 'society', 'era', 'age', 'century', 'medieval', 'roman', 'roma', 'nomad', 'greek', 'byzant', 'persia', 'iran', 'korea', 'archaeolog']
+    'history civilization': ['history', 'civilization', 'ancient', 'empire', 'dynasty', 'king', 'kingdom', 'queen', 'ruler', 'noble', 'war', 'battle', 'treaty', 'nation', 'culture', 'society', 'era', 'age', 'century', 'medieval', 'roman', 'roma', 'nomad', 'greek', 'byzant', 'persia', 'iran', 'korea', 'archaeolog'],
+    'arts crafts': ['art', 'artist', 'craft', 'paint', 'draw', 'sketch', 'canvas', 'color', 'clay', 'yarn', 'sew', 'stitch', 'bead', 'glue', 'paper', 'ink', 'brush', 'textile', 'sculpt', 'design'],
+    'books reading': ['book', 'read', 'page', 'author', 'story', 'novel', 'poem', 'prose', 'chapter', 'library', 'print', 'text', 'fiction', 'literary', 'manuscript', 'cover'],
+    'science discovery': ['science', 'experiment', 'lab', 'research', 'theory', 'atom', 'cell', 'energy', 'matter', 'data', 'test', 'discover', 'biology', 'chemistry', 'physics', 'measure'],
+    'games puzzles': ['game', 'puzzle', 'play', 'board', 'card', 'dice', 'token', 'score', 'turn', 'clue', 'grid', 'solve', 'chess', 'maze', 'riddle'],
+    'theater film': ['theater', 'theatre', 'film', 'movie', 'stage', 'actor', 'scene', 'script', 'camera', 'screen', 'cinema', 'director', 'costume', 'prop', 'drama', 'audience'],
+    'clothing fashion': ['cloth', 'clothing', 'fashion', 'garment', 'wear', 'shirt', 'dress', 'shoe', 'fabric', 'sleeve', 'collar', 'button', 'seam', 'style', 'outfit', 'textile']
   };
 
   const themeKey = normalizedThemeKey(themeName);
@@ -490,7 +496,13 @@ function hasLexicalThemeAnchor(themeName, word) {
     'transportation vehicles': ['transport', 'vehicle', 'car', 'truck', 'bus', 'train', 'plane', 'boat', 'ship', 'bike', 'road', 'rail', 'route', 'traffic', 'driver', 'passenger', 'cargo', 'airport', 'station'],
     'home tools': ['home', 'house', 'room', 'kitchen', 'door', 'window', 'floor', 'wall', 'tool', 'hammer', 'drill', 'saw', 'wrench', 'repair', 'paint', 'clean', 'faucet', 'pipe', 'wire', 'shelf'],
     'internet software': ['internet', 'web', 'browser', 'server', 'cloud', 'code', 'coding', 'program', 'software', 'query', 'cache', 'file', 'files', 'sync', 'network', 'node', 'nodes', 'protocol', 'database', 'cyber', 'byte', 'chip', 'cpu', 'hash', 'api', 'online', 'digital'],
-    'sports athletics': ['sport', 'team', 'score', 'goal', 'match', 'coach', 'league', 'athlete', 'race', 'medal', 'tournament']
+    'sports athletics': ['sport', 'team', 'score', 'goal', 'match', 'coach', 'league', 'athlete', 'race', 'medal', 'tournament'],
+    'arts crafts': ['art', 'artist', 'craft', 'paint', 'draw', 'sketch', 'canvas', 'color', 'clay', 'yarn', 'sew', 'stitch', 'bead', 'glue', 'paper', 'ink', 'brush', 'textile', 'sculpt', 'design'],
+    'books reading': ['book', 'read', 'page', 'author', 'story', 'novel', 'poem', 'prose', 'chapter', 'library', 'print', 'text', 'fiction', 'literary', 'manuscript', 'cover'],
+    'science discovery': ['science', 'experiment', 'lab', 'research', 'theory', 'atom', 'cell', 'energy', 'matter', 'data', 'test', 'discover', 'biology', 'chemistry', 'physics', 'measure'],
+    'games puzzles': ['game', 'puzzle', 'play', 'board', 'card', 'dice', 'token', 'score', 'turn', 'clue', 'grid', 'solve', 'chess', 'maze', 'riddle'],
+    'theater film': ['theater', 'theatre', 'film', 'movie', 'stage', 'actor', 'scene', 'script', 'camera', 'screen', 'cinema', 'director', 'costume', 'prop', 'drama', 'audience'],
+    'clothing fashion': ['cloth', 'clothing', 'fashion', 'garment', 'wear', 'shirt', 'dress', 'shoe', 'fabric', 'sleeve', 'collar', 'button', 'seam', 'style', 'outfit', 'textile']
   };
 
   return (domainSignals[normalizedTheme] || [])

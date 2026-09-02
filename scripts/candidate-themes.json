@@ -34075,5 +34075,3071 @@
         "lexicalSource": "cromulence"
       }
     ]
+  },
+  {
+    "name": "Arts & Crafts",
+    "words": [
+      {
+        "answer": "EASEL",
+        "clue": "Art or craft term for a stand that supports a canvas",
+        "hint": "It starts with E and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CANVAS",
+        "clue": "Art or craft term for a surface used for painting",
+        "hint": "It starts with C and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BRUSH",
+        "clue": "Art or craft term for a tool that applies paint",
+        "hint": "It starts with B and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PALETTE",
+        "clue": "Art or craft term for a board that holds mixed colors",
+        "hint": "It starts with P and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PIGMENT",
+        "clue": "Art or craft term for coloring matter used in paint",
+        "hint": "It starts with P and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PENCIL",
+        "clue": "Art or craft term for a drawing tool with a graphite core",
+        "hint": "It starts with P and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CRAYON",
+        "clue": "Art or craft term for a wax stick used for coloring",
+        "hint": "It starts with C and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PASTEL",
+        "clue": "Art or craft term for a soft colored drawing stick",
+        "hint": "It starts with P and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CHARCOAL",
+        "clue": "Art or craft term for a black material used for sketching",
+        "hint": "It starts with C and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ERASER",
+        "clue": "Art or craft term for a tool that removes pencil marks",
+        "hint": "It starts with E and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SKETCH",
+        "clue": "Art or craft term for a quick freehand drawing",
+        "hint": "It starts with S and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "DRAWING",
+        "clue": "Art or craft term for an image made with lines",
+        "hint": "It starts with D and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PAINTING",
+        "clue": "Art or craft term for a picture made with wet color",
+        "hint": "It starts with P and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "COLLAGE",
+        "clue": "Art or craft term for a picture assembled from pasted pieces",
+        "hint": "It starts with C and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MOSAIC",
+        "clue": "Art or craft term for an image formed from small tiles",
+        "hint": "It starts with M and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "POTTERY",
+        "clue": "Art or craft term for objects shaped from fired clay",
+        "hint": "It starts with P and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CERAMIC",
+        "clue": "Art or craft term for an object hardened by firing clay",
+        "hint": "It starts with C and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CLAY",
+        "clue": "Art or craft term for a soft material shaped before firing",
+        "hint": "It starts with C and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "GLAZE",
+        "clue": "Art or craft term for a glassy coating applied before firing",
+        "hint": "It starts with G and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "KILN",
+        "clue": "Art or craft term for an oven used to fire pottery",
+        "hint": "It starts with K and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SCULPT",
+        "clue": "Art or craft term for shaping material into a three dimensional form",
+        "hint": "It starts with S and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "STATUE",
+        "clue": "Art or craft term for a carved or modeled figure",
+        "hint": "It starts with S and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CARVING",
+        "clue": "Art or craft term for a form shaped by cutting material away",
+        "hint": "It starts with C and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CHISEL",
+        "clue": "Art or craft term for a cutting tool used by sculptors",
+        "hint": "It starts with C and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MALLET",
+        "clue": "Art or craft term for a blunt tool used with a chisel",
+        "hint": "It starts with M and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LOOM",
+        "clue": "Art or craft term for a frame used to weave cloth",
+        "hint": "It starts with L and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "WEAVING",
+        "clue": "Art or craft term for interlacing threads to make textile",
+        "hint": "It starts with W and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "WARP",
+        "clue": "Art or craft term for lengthwise threads held on a loom",
+        "hint": "It starts with W and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "WEFT",
+        "clue": "Art or craft term for crosswise threads woven through warp",
+        "hint": "It starts with W and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "YARN",
+        "clue": "Art or craft term for a strand used for knitting or weaving",
+        "hint": "It starts with Y and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "THREAD",
+        "clue": "Art or craft term for a fine strand used for sewing",
+        "hint": "It starts with T and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "NEEDLE",
+        "clue": "Art or craft term for a pointed tool that carries thread",
+        "hint": "It starts with N and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "STITCH",
+        "clue": "Art or craft term for a loop of thread in sewn fabric",
+        "hint": "It starts with S and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SEWING",
+        "clue": "Art or craft term for joining fabric with needle and thread",
+        "hint": "It starts with S and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "QUILT",
+        "clue": "Art or craft term for a layered textile joined by stitching",
+        "hint": "It starts with Q and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PATCH",
+        "clue": "Art or craft term for a fabric piece covering a worn area",
+        "hint": "It starts with P and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "FABRIC",
+        "clue": "Art or craft term for cloth used in textile projects",
+        "hint": "It starts with F and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "FELT",
+        "clue": "Art or craft term for matted fiber used in soft projects",
+        "hint": "It starts with F and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BEAD",
+        "clue": "Art or craft term for a small ornament threaded on a string",
+        "hint": "It starts with B and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BEADING",
+        "clue": "Art or craft term for decorating a craft with small ornaments",
+        "hint": "It starts with B and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "WIRE",
+        "clue": "Art or craft term for a bendable metal strand used in projects",
+        "hint": "It starts with W and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "GLUE",
+        "clue": "Art or craft term for an adhesive used to join craft materials",
+        "hint": "It starts with G and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PASTE",
+        "clue": "Art or craft term for a spreadable adhesive for paper projects",
+        "hint": "It starts with P and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PAPER",
+        "clue": "Art or craft term for a sheet material used for drawing and folding",
+        "hint": "It starts with P and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CARD",
+        "clue": "Art or craft term for thick paper used for sturdy projects",
+        "hint": "It starts with C and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "FOLD",
+        "clue": "Art or craft term for bending paper to create a shape",
+        "hint": "It starts with F and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ORIGAMI",
+        "clue": "Art or craft term for the craft of folded paper figures",
+        "hint": "It starts with O and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "STENCIL",
+        "clue": "Art or craft term for a cutout guide for repeated shapes",
+        "hint": "It starts with S and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "INK",
+        "clue": "Art or craft term for a fluid used for drawing or printing",
+        "hint": "It starts with I and has 3 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PEN",
+        "clue": "Art or craft term for a handheld tool that applies ink",
+        "hint": "It starts with P and has 3 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MARKER",
+        "clue": "Art or craft term for a broad tipped coloring pen",
+        "hint": "It starts with M and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "DYE",
+        "clue": "Art or craft term for coloring used to tint fiber or cloth",
+        "hint": "It starts with D and has 3 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BATIK",
+        "clue": "Art or craft term for wax resist decoration on dyed fabric",
+        "hint": "It starts with B and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PRINT",
+        "clue": "Art or craft term for an image transferred from an inked surface",
+        "hint": "It starts with P and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ETCHING",
+        "clue": "Art or craft term for a design cut into a prepared plate",
+        "hint": "It starts with E and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ENGRAVE",
+        "clue": "Art or craft term for cutting a design into a hard surface",
+        "hint": "It starts with E and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "RELIEF",
+        "clue": "Art or craft term for a sculpted design raised from its background",
+        "hint": "It starts with R and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MOLD",
+        "clue": "Art or craft term for a hollow form used for shaping material",
+        "hint": "It starts with M and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CAST",
+        "clue": "Art or craft term for an object formed inside a mold",
+        "hint": "It starts with C and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PLASTER",
+        "clue": "Art or craft term for a soft mixture that hardens for modeling",
+        "hint": "It starts with P and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "WOOD",
+        "clue": "Art or craft term for a natural material used for carving",
+        "hint": "It starts with W and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "GRAIN",
+        "clue": "Art or craft term for the visible fiber pattern in timber",
+        "hint": "It starts with G and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "VARNISH",
+        "clue": "Art or craft term for a clear protective finish on artwork",
+        "hint": "It starts with V and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "FRAME",
+        "clue": "Art or craft term for a border that supports displayed artwork",
+        "hint": "It starts with F and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MATTE",
+        "clue": "Art or craft term for a finish without a glossy shine",
+        "hint": "It starts with M and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MURAL",
+        "clue": "Art or craft term for a large picture painted on a wall",
+        "hint": "It starts with M and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "FRESCO",
+        "clue": "Art or craft term for a wall picture painted on wet plaster",
+        "hint": "It starts with F and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PORTRAIT",
+        "clue": "Art or craft term for an artwork depicting a person",
+        "hint": "It starts with P and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LANDSCAPE",
+        "clue": "Art or craft term for an artwork depicting outdoor scenery",
+        "hint": "It starts with L and has 9 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ABSTRACT",
+        "clue": "Art or craft term for a style using nonliteral forms",
+        "hint": "It starts with A and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TEXTURE",
+        "clue": "Art or craft term for the surface quality shown or felt",
+        "hint": "It starts with T and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SHADE",
+        "clue": "Art or craft term for a darker variation of a color",
+        "hint": "It starts with S and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TINT",
+        "clue": "Art or craft term for a color made lighter with white",
+        "hint": "It starts with T and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "HUE",
+        "clue": "Art or craft term for a basic family of color",
+        "hint": "It starts with H and has 3 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TONE",
+        "clue": "Art or craft term for the lightness or darkness of a color",
+        "hint": "It starts with T and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "COLOR",
+        "clue": "Art or craft term for the visual quality created by reflected light",
+        "hint": "It starts with C and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "DESIGN",
+        "clue": "Art or craft term for a planned arrangement of visual elements",
+        "hint": "It starts with D and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PATTERN",
+        "clue": "Art or craft term for a repeated decorative arrangement",
+        "hint": "It starts with P and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MOTIF",
+        "clue": "Art or craft term for a recurring decorative element",
+        "hint": "It starts with M and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BORDER",
+        "clue": "Art or craft term for a decorative band around an artwork",
+        "hint": "It starts with B and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TRIM",
+        "clue": "Art or craft term for ornamental edging added to a project",
+        "hint": "It starts with T and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "RIBBON",
+        "clue": "Art or craft term for a narrow decorative strip of fabric",
+        "hint": "It starts with R and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LACE",
+        "clue": "Art or craft term for an openwork textile used as decoration",
+        "hint": "It starts with L and has 4 letters.",
+        "source": "seed"
+      }
+    ]
+  },
+  {
+    "name": "Books & Reading",
+    "words": [
+      {
+        "answer": "AUTHOR",
+        "clue": "Book or reading term for the person who writes a work",
+        "hint": "It starts with A and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "READER",
+        "clue": "Book or reading term for a person following written text",
+        "hint": "It starts with R and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "NOVEL",
+        "clue": "Book or reading term for a long work of prose fiction",
+        "hint": "It starts with N and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "STORY",
+        "clue": "Book or reading term for a narrative with characters and events",
+        "hint": "It starts with S and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TALE",
+        "clue": "Book or reading term for a short imaginative narrative",
+        "hint": "It starts with T and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "POEM",
+        "clue": "Book or reading term for a literary work arranged in verse",
+        "hint": "It starts with P and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "POET",
+        "clue": "Book or reading term for a writer who composes verse",
+        "hint": "It starts with P and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PROSE",
+        "clue": "Book or reading term for ordinary written language without meter",
+        "hint": "It starts with P and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "VERSE",
+        "clue": "Book or reading term for writing arranged in rhythmic lines",
+        "hint": "It starts with V and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "RHYME",
+        "clue": "Book or reading term for matching sounds at line endings",
+        "hint": "It starts with R and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "METER",
+        "clue": "Book or reading term for a recurring rhythmic pattern in verse",
+        "hint": "It starts with M and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "STANZA",
+        "clue": "Book or reading term for a grouped set of poetic lines",
+        "hint": "It starts with S and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CHAPTER",
+        "clue": "Book or reading term for a major numbered division of a work",
+        "hint": "It starts with C and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SECTION",
+        "clue": "Book or reading term for a distinct division of written material",
+        "hint": "It starts with S and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PAGE",
+        "clue": "Book or reading term for one side of a printed sheet",
+        "hint": "It starts with P and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "COVER",
+        "clue": "Book or reading term for the protective outer part of a volume",
+        "hint": "It starts with C and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SPINE",
+        "clue": "Book or reading term for the bound edge holding pages together",
+        "hint": "It starts with S and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "JACKET",
+        "clue": "Book or reading term for a removable paper wrapper around a volume",
+        "hint": "It starts with J and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TITLE",
+        "clue": "Book or reading term for the name given to a written work",
+        "hint": "It starts with T and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PREFACE",
+        "clue": "Book or reading term for an introductory note by the writer",
+        "hint": "It starts with P and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PROLOGUE",
+        "clue": "Book or reading term for an opening section before the main narrative",
+        "hint": "It starts with P and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "EPILOGUE",
+        "clue": "Book or reading term for a closing section after the main narrative",
+        "hint": "It starts with E and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "INDEX",
+        "clue": "Book or reading term for an alphabetical guide to topics and pages",
+        "hint": "It starts with I and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "GLOSSARY",
+        "clue": "Book or reading term for a list explaining specialized terms",
+        "hint": "It starts with G and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "FOOTNOTE",
+        "clue": "Book or reading term for a reference or comment at the page bottom",
+        "hint": "It starts with F and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CAPTION",
+        "clue": "Book or reading term for text explaining an illustration",
+        "hint": "It starts with C and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BLURB",
+        "clue": "Book or reading term for a short promotional description on a cover",
+        "hint": "It starts with B and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "EDITION",
+        "clue": "Book or reading term for a particular published version of a work",
+        "hint": "It starts with E and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "VOLUME",
+        "clue": "Book or reading term for one physical book in a larger set",
+        "hint": "It starts with V and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SERIES",
+        "clue": "Book or reading term for a sequence of related published works",
+        "hint": "It starts with S and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TRILOGY",
+        "clue": "Book or reading term for a connected group of three works",
+        "hint": "It starts with T and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SEQUEL",
+        "clue": "Book or reading term for a narrative continuing an earlier work",
+        "hint": "It starts with S and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "GENRE",
+        "clue": "Book or reading term for a category of literary composition",
+        "hint": "It starts with G and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "FICTION",
+        "clue": "Book or reading term for writing based on imagined events",
+        "hint": "It starts with F and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "NONFICTION",
+        "clue": "Book or reading term for writing presented as factual",
+        "hint": "It starts with N and has 10 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MYSTERY",
+        "clue": "Book or reading term for fiction centered on solving a crime",
+        "hint": "It starts with M and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "FANTASY",
+        "clue": "Book or reading term for fiction featuring magic or invented worlds",
+        "hint": "It starts with F and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ROMANCE",
+        "clue": "Book or reading term for fiction centered on a love relationship",
+        "hint": "It starts with R and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "THRILLER",
+        "clue": "Book or reading term for fiction built around danger and suspense",
+        "hint": "It starts with T and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MEMOIR",
+        "clue": "Book or reading term for a factual account of personal experience",
+        "hint": "It starts with M and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BIOGRAPHY",
+        "clue": "Book or reading term for a written account of another person's life",
+        "hint": "It starts with B and has 9 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ESSAY",
+        "clue": "Book or reading term for a short work exploring an idea",
+        "hint": "It starts with E and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ANTHOLOGY",
+        "clue": "Book or reading term for a collection of selected writings",
+        "hint": "It starts with A and has 9 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MANUAL",
+        "clue": "Book or reading term for a book of practical instructions",
+        "hint": "It starts with M and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ATLAS",
+        "clue": "Book or reading term for a bound collection of maps",
+        "hint": "It starts with A and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "DIARY",
+        "clue": "Book or reading term for a personal record kept by date",
+        "hint": "It starts with D and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "JOURNAL",
+        "clue": "Book or reading term for a regular written record of experiences",
+        "hint": "It starts with J and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LIBRARY",
+        "clue": "Book or reading term for a place that lends reading materials",
+        "hint": "It starts with L and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SHELF",
+        "clue": "Book or reading term for a flat support where volumes are stored",
+        "hint": "It starts with S and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "STACK",
+        "clue": "Book or reading term for a library storage area for volumes",
+        "hint": "It starts with S and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LOAN",
+        "clue": "Book or reading term for a borrowed item due for return",
+        "hint": "It starts with L and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CATALOG",
+        "clue": "Book or reading term for an organized list of library holdings",
+        "hint": "It starts with C and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BOOKMARK",
+        "clue": "Book or reading term for a marker showing a reader's place",
+        "hint": "It starts with B and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BOOKPLATE",
+        "clue": "Book or reading term for a label identifying a volume's owner",
+        "hint": "It starts with B and has 9 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BINDING",
+        "clue": "Book or reading term for the cover and fastening of pages",
+        "hint": "It starts with B and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PAPERBACK",
+        "clue": "Book or reading term for a volume with a flexible cover",
+        "hint": "It starts with P and has 9 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "HARDCOVER",
+        "clue": "Book or reading term for a volume with rigid boards",
+        "hint": "It starts with H and has 9 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "EBOOK",
+        "clue": "Book or reading term for a publication read on a digital device",
+        "hint": "It starts with E and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "AUDIOBOOK",
+        "clue": "Book or reading term for a recorded narration of a written work",
+        "hint": "It starts with A and has 9 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TABLET",
+        "clue": "Book or reading term for a portable device used for digital reading",
+        "hint": "It starts with T and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TYPEFACE",
+        "clue": "Book or reading term for a coordinated design for printed letters",
+        "hint": "It starts with T and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "FONT",
+        "clue": "Book or reading term for a particular style of printed characters",
+        "hint": "It starts with F and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ITALIC",
+        "clue": "Book or reading term for slanted type used for emphasis",
+        "hint": "It starts with I and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BOLDFACE",
+        "clue": "Book or reading term for heavy type used for emphasis",
+        "hint": "It starts with B and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MARGIN",
+        "clue": "Book or reading term for blank space around printed text",
+        "hint": "It starts with M and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PARAGRAPH",
+        "clue": "Book or reading term for a group of sentences on one topic",
+        "hint": "It starts with P and has 9 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SENTENCE",
+        "clue": "Book or reading term for a complete grammatical unit of text",
+        "hint": "It starts with S and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "DIALOGUE",
+        "clue": "Book or reading term for written conversation between characters",
+        "hint": "It starts with D and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "NARRATOR",
+        "clue": "Book or reading term for the voice that tells a story",
+        "hint": "It starts with N and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PLOT",
+        "clue": "Book or reading term for the ordered events of a narrative",
+        "hint": "It starts with P and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SETTING",
+        "clue": "Book or reading term for the time and place of a narrative",
+        "hint": "It starts with S and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CHARACTER",
+        "clue": "Book or reading term for a person represented in a narrative",
+        "hint": "It starts with C and has 9 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "THEME",
+        "clue": "Book or reading term for a central idea explored in a work",
+        "hint": "It starts with T and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CONFLICT",
+        "clue": "Book or reading term for the central struggle in a narrative",
+        "hint": "It starts with C and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CLIMAX",
+        "clue": "Book or reading term for the point of greatest narrative tension",
+        "hint": "It starts with C and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ENDING",
+        "clue": "Book or reading term for the final part of a written work",
+        "hint": "It starts with E and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "DRAFT",
+        "clue": "Book or reading term for an unfinished version of writing",
+        "hint": "It starts with D and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "EDIT",
+        "clue": "Book or reading term for revising written material for publication",
+        "hint": "It starts with E and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PROOF",
+        "clue": "Book or reading term for a trial copy checked before printing",
+        "hint": "It starts with P and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PUBLISH",
+        "clue": "Book or reading term for preparing written work for public release",
+        "hint": "It starts with P and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PRINTER",
+        "clue": "Book or reading term for a machine that produces text on paper",
+        "hint": "It starts with P and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BOOKSHOP",
+        "clue": "Book or reading term for a store that sells reading material",
+        "hint": "It starts with B and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LITERACY",
+        "clue": "Book or reading term for the ability to read and write",
+        "hint": "It starts with L and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BRAILLE",
+        "clue": "Book or reading term for raised dots used for tactile reading",
+        "hint": "It starts with B and has 7 letters.",
+        "source": "seed"
+      }
+    ]
+  },
+  {
+    "name": "Science & Discovery",
+    "words": [
+      {
+        "answer": "ATOM",
+        "clue": "Science term for a basic unit of chemical matter",
+        "hint": "It starts with A and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MOLECULE",
+        "clue": "Science term for atoms joined by chemical bonds",
+        "hint": "It starts with M and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ELEMENT",
+        "clue": "Science term for a pure substance with one kind of atom",
+        "hint": "It starts with E and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "COMPOUND",
+        "clue": "Science term for a substance made from bonded elements",
+        "hint": "It starts with C and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MATTER",
+        "clue": "Science term for material that has mass and volume",
+        "hint": "It starts with M and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MASS",
+        "clue": "Science term for a measure of how much matter is present",
+        "hint": "It starts with M and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "FORCE",
+        "clue": "Science term for a push or pull studied in physics",
+        "hint": "It starts with F and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ENERGY",
+        "clue": "Science term for the capacity to perform physical work",
+        "hint": "It starts with E and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MOTION",
+        "clue": "Science term for a change in physical position over time",
+        "hint": "It starts with M and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SPEED",
+        "clue": "Science term for distance traveled per unit of time",
+        "hint": "It starts with S and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "GRAVITY",
+        "clue": "Science term for the force attracting masses together",
+        "hint": "It starts with G and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "FRICTION",
+        "clue": "Science term for resistance between moving surfaces",
+        "hint": "It starts with F and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "INERTIA",
+        "clue": "Science term for matter's resistance to changing motion",
+        "hint": "It starts with I and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "WAVE",
+        "clue": "Science term for a disturbance that transfers energy",
+        "hint": "It starts with W and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LIGHT",
+        "clue": "Science term for electromagnetic radiation visible to eyes",
+        "hint": "It starts with L and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SOUND",
+        "clue": "Science term for vibrations traveling through matter",
+        "hint": "It starts with S and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "HEAT",
+        "clue": "Science term for thermal energy transferred between objects",
+        "hint": "It starts with H and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CHARGE",
+        "clue": "Science term for an electrical property of matter",
+        "hint": "It starts with C and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CIRCUIT",
+        "clue": "Science term for a closed path carrying electric current",
+        "hint": "It starts with C and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MAGNET",
+        "clue": "Science term for an object producing an attractive field",
+        "hint": "It starts with M and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ACID",
+        "clue": "Science term for a chemical substance with low pH",
+        "hint": "It starts with A and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BASE",
+        "clue": "Science term for a chemical substance that accepts protons",
+        "hint": "It starts with B and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SALT",
+        "clue": "Science term for an ionic compound formed by neutralization",
+        "hint": "It starts with S and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SOLVENT",
+        "clue": "Science term for a liquid that dissolves another substance",
+        "hint": "It starts with S and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SOLUTION",
+        "clue": "Science term for a uniform chemical mixture",
+        "hint": "It starts with S and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CRYSTAL",
+        "clue": "Science term for a solid with an ordered atomic structure",
+        "hint": "It starts with C and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "METAL",
+        "clue": "Science term for an element that readily conducts heat",
+        "hint": "It starts with M and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "GAS",
+        "clue": "Science term for matter with no fixed shape or volume",
+        "hint": "It starts with G and has 3 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LIQUID",
+        "clue": "Science term for matter with fixed volume but changing shape",
+        "hint": "It starts with L and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SOLID",
+        "clue": "Science term for matter with fixed shape and volume",
+        "hint": "It starts with S and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PLASMA",
+        "clue": "Science term for an ionized high energy state of matter",
+        "hint": "It starts with P and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CELL",
+        "clue": "Science term for the basic structural unit of life",
+        "hint": "It starts with C and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TISSUE",
+        "clue": "Science term for a group of similar biological cells",
+        "hint": "It starts with T and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ORGAN",
+        "clue": "Science term for a body structure performing a function",
+        "hint": "It starts with O and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "GENE",
+        "clue": "Science term for a unit of inherited biological information",
+        "hint": "It starts with G and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "DNA",
+        "clue": "Science term for the molecule carrying genetic instructions",
+        "hint": "It starts with D and has 3 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "RNA",
+        "clue": "Science term for a molecule involved in expressing genetic data",
+        "hint": "It starts with R and has 3 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SPECIES",
+        "clue": "Science term for a biological group able to reproduce",
+        "hint": "It starts with S and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "GENUS",
+        "clue": "Science term for a biological rank above species",
+        "hint": "It starts with G and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "FOSSIL",
+        "clue": "Science term for preserved evidence of ancient life",
+        "hint": "It starts with F and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MICROBE",
+        "clue": "Science term for a microscopic living organism",
+        "hint": "It starts with M and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "VIRUS",
+        "clue": "Science term for an infectious particle using host cells",
+        "hint": "It starts with V and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BACTERIA",
+        "clue": "Science term for single celled microscopic organisms",
+        "hint": "It starts with B and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "FUNGUS",
+        "clue": "Science term for an organism that absorbs nutrients externally",
+        "hint": "It starts with F and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ENZYME",
+        "clue": "Science term for a protein that speeds a chemical reaction",
+        "hint": "It starts with E and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PROTEIN",
+        "clue": "Science term for a biological molecule made from amino acids",
+        "hint": "It starts with P and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "NEURON",
+        "clue": "Science term for a cell that transmits nerve signals",
+        "hint": "It starts with N and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ECOLOGY",
+        "clue": "Science term for the science of organisms and environments",
+        "hint": "It starts with E and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CLIMATE",
+        "clue": "Science term for long term atmospheric patterns studied by scientists",
+        "hint": "It starts with C and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ORBIT",
+        "clue": "Science term for the curved path of one body around another",
+        "hint": "It starts with O and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PLANET",
+        "clue": "Science term for a world orbiting a star",
+        "hint": "It starts with P and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "STAR",
+        "clue": "Science term for a luminous sphere powered by fusion",
+        "hint": "It starts with S and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "GALAXY",
+        "clue": "Science term for a vast system of stars and matter",
+        "hint": "It starts with G and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "COMET",
+        "clue": "Science term for an icy body orbiting a star",
+        "hint": "It starts with C and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SAMPLE",
+        "clue": "Science term for a portion collected for scientific testing",
+        "hint": "It starts with S and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CONTROL",
+        "clue": "Science term for an unchanged comparison in an experiment",
+        "hint": "It starts with C and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "VARIABLE",
+        "clue": "Science term for a factor changed or measured in an experiment",
+        "hint": "It starts with V and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "METHOD",
+        "clue": "Science term for an orderly procedure used in research",
+        "hint": "It starts with M and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "THEORY",
+        "clue": "Science term for a well supported scientific explanation",
+        "hint": "It starts with T and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "HYPOTHESIS",
+        "clue": "Science term for a testable proposed explanation",
+        "hint": "It starts with H and has 10 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "EVIDENCE",
+        "clue": "Science term for observations supporting a scientific claim",
+        "hint": "It starts with E and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "RESULT",
+        "clue": "Science term for an outcome recorded in an experiment",
+        "hint": "It starts with R and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "DATA",
+        "clue": "Science term for facts or measurements gathered in research",
+        "hint": "It starts with D and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "GRAPH",
+        "clue": "Science term for a visual display of scientific data",
+        "hint": "It starts with G and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CHART",
+        "clue": "Science term for an organized display of measured values",
+        "hint": "It starts with C and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SCALE",
+        "clue": "Science term for a marked tool used for measurement",
+        "hint": "It starts with S and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "METER",
+        "clue": "Science term for a scientific unit of length",
+        "hint": "It starts with M and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LITER",
+        "clue": "Science term for a scientific unit of volume",
+        "hint": "It starts with L and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "GRAM",
+        "clue": "Science term for a metric unit used to measure mass",
+        "hint": "It starts with G and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SECOND",
+        "clue": "Science term for the standard scientific unit of time",
+        "hint": "It starts with S and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LAB",
+        "clue": "Science term for a room equipped for experiments",
+        "hint": "It starts with L and has 3 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BEAKER",
+        "clue": "Science term for a wide glass vessel used in a lab",
+        "hint": "It starts with B and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "FLASK",
+        "clue": "Science term for a narrow necked vessel used in chemistry",
+        "hint": "It starts with F and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PIPETTE",
+        "clue": "Science term for a lab tube used to transfer small liquids",
+        "hint": "It starts with P and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SLIDE",
+        "clue": "Science term for a glass plate holding a microscope sample",
+        "hint": "It starts with S and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LENS",
+        "clue": "Science term for a curved piece that focuses light",
+        "hint": "It starts with L and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PRISM",
+        "clue": "Science term for a transparent solid that separates light",
+        "hint": "It starts with P and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SENSOR",
+        "clue": "Science term for a device that detects a physical change",
+        "hint": "It starts with S and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PROBE",
+        "clue": "Science term for an instrument used to examine or measure",
+        "hint": "It starts with P and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TEST",
+        "clue": "Science term for a procedure used to check an idea",
+        "hint": "It starts with T and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TRIAL",
+        "clue": "Science term for one repeated run of an experiment",
+        "hint": "It starts with T and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "RESEARCH",
+        "clue": "Science term for systematic study to establish facts",
+        "hint": "It starts with R and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "DISCOVER",
+        "clue": "Science term for finding something through scientific inquiry",
+        "hint": "It starts with D and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ANALYZE",
+        "clue": "Science term for examining scientific data closely",
+        "hint": "It starts with A and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "OBSERVE",
+        "clue": "Science term for noticing and recording a phenomenon",
+        "hint": "It starts with O and has 7 letters.",
+        "source": "seed"
+      }
+    ]
+  },
+  {
+    "name": "Games & Puzzles",
+    "words": [
+      {
+        "answer": "BOARD",
+        "clue": "Game or puzzle term for a flat surface used for tabletop play",
+        "hint": "It starts with B and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CARD",
+        "clue": "Game or puzzle term for a marked piece from a playing deck",
+        "hint": "It starts with C and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "DICE",
+        "clue": "Game or puzzle term for numbered cubes rolled during play",
+        "hint": "It starts with D and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TOKEN",
+        "clue": "Game or puzzle term for a small piece representing a player",
+        "hint": "It starts with T and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PAWN",
+        "clue": "Game or puzzle term for a basic piece in a chess game",
+        "hint": "It starts with P and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ROOK",
+        "clue": "Game or puzzle term for a chess piece moving in straight lines",
+        "hint": "It starts with R and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BISHOP",
+        "clue": "Game or puzzle term for a chess piece moving diagonally",
+        "hint": "It starts with B and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "KNIGHT",
+        "clue": "Game or puzzle term for a chess piece moving in an L shape",
+        "hint": "It starts with K and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "QUEEN",
+        "clue": "Game or puzzle term for the most mobile chess piece",
+        "hint": "It starts with Q and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "KING",
+        "clue": "Game or puzzle term for the chess piece that must avoid capture",
+        "hint": "It starts with K and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CHECK",
+        "clue": "Game or puzzle term for a chess attack against the king",
+        "hint": "It starts with C and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MATE",
+        "clue": "Game or puzzle term for the final chess position with no escape",
+        "hint": "It starts with M and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "GAMBIT",
+        "clue": "Game or puzzle term for an opening sacrifice for an advantage",
+        "hint": "It starts with G and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MOVE",
+        "clue": "Game or puzzle term for one player's action during a turn",
+        "hint": "It starts with M and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TURN",
+        "clue": "Game or puzzle term for a player's scheduled chance to act",
+        "hint": "It starts with T and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ROUND",
+        "clue": "Game or puzzle term for one complete phase of a game",
+        "hint": "It starts with R and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SCORE",
+        "clue": "Game or puzzle term for the points earned during play",
+        "hint": "It starts with S and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "POINT",
+        "clue": "Game or puzzle term for a single unit used in game scoring",
+        "hint": "It starts with P and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BONUS",
+        "clue": "Game or puzzle term for extra points or ability awarded in play",
+        "hint": "It starts with B and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PENALTY",
+        "clue": "Game or puzzle term for a game consequence for breaking a rule",
+        "hint": "It starts with P and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "RULE",
+        "clue": "Game or puzzle term for an instruction governing how to play",
+        "hint": "It starts with R and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "GOAL",
+        "clue": "Game or puzzle term for the objective players try to reach",
+        "hint": "It starts with G and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "WINNER",
+        "clue": "Game or puzzle term for the player who finishes with victory",
+        "hint": "It starts with W and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LOSER",
+        "clue": "Game or puzzle term for a player who does not win",
+        "hint": "It starts with L and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TIE",
+        "clue": "Game or puzzle term for a game ending with equal scores",
+        "hint": "It starts with T and has 3 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "DRAW",
+        "clue": "Game or puzzle term for a game result with no winner",
+        "hint": "It starts with D and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TEAM",
+        "clue": "Game or puzzle term for a group playing on the same side",
+        "hint": "It starts with T and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PLAYER",
+        "clue": "Game or puzzle term for a person taking part in a game",
+        "hint": "It starts with P and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "DEALER",
+        "clue": "Game or puzzle term for the player distributing cards",
+        "hint": "It starts with D and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "HAND",
+        "clue": "Game or puzzle term for the cards held by one player",
+        "hint": "It starts with H and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "DECK",
+        "clue": "Game or puzzle term for a complete set of playing cards",
+        "hint": "It starts with D and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SUIT",
+        "clue": "Game or puzzle term for one category of cards in a deck",
+        "hint": "It starts with S and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TRUMP",
+        "clue": "Game or puzzle term for a card suit ranked above others",
+        "hint": "It starts with T and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "JOKER",
+        "clue": "Game or puzzle term for a special extra card in some games",
+        "hint": "It starts with J and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ACE",
+        "clue": "Game or puzzle term for a card often ranked high or low",
+        "hint": "It starts with A and has 3 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PAIR",
+        "clue": "Game or puzzle term for two matching cards or game pieces",
+        "hint": "It starts with P and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BLUFF",
+        "clue": "Game or puzzle term for a deceptive bet made with a weak hand",
+        "hint": "It starts with B and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BET",
+        "clue": "Game or puzzle term for something risked on a game outcome",
+        "hint": "It starts with B and has 3 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ANTE",
+        "clue": "Game or puzzle term for a required stake placed before card play",
+        "hint": "It starts with A and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CHIP",
+        "clue": "Game or puzzle term for a small disk representing value in a game",
+        "hint": "It starts with C and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TILE",
+        "clue": "Game or puzzle term for a flat marked piece used in tabletop play",
+        "hint": "It starts with T and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BLOCK",
+        "clue": "Game or puzzle term for a solid piece fitted into a puzzle",
+        "hint": "It starts with B and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PEG",
+        "clue": "Game or puzzle term for a small pin placed in a game board",
+        "hint": "It starts with P and has 3 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SPINNER",
+        "clue": "Game or puzzle term for a rotating game device that selects a result",
+        "hint": "It starts with S and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TIMER",
+        "clue": "Game or puzzle term for a device limiting a puzzle attempt",
+        "hint": "It starts with T and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SANDBOX",
+        "clue": "Game or puzzle term for an open ended style of video game play",
+        "hint": "It starts with S and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LEVEL",
+        "clue": "Game or puzzle term for a stage of progress in a video game",
+        "hint": "It starts with L and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "QUEST",
+        "clue": "Game or puzzle term for a mission assigned within a game",
+        "hint": "It starts with Q and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "AVATAR",
+        "clue": "Game or puzzle term for a player's on screen character",
+        "hint": "It starts with A and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "POWERUP",
+        "clue": "Game or puzzle term for an item granting a temporary game advantage",
+        "hint": "It starts with P and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LIFE",
+        "clue": "Game or puzzle term for one chance to continue in a video game",
+        "hint": "It starts with L and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ARCADE",
+        "clue": "Game or puzzle term for a place containing coin operated games",
+        "hint": "It starts with A and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CONSOLE",
+        "clue": "Game or puzzle term for a device designed for video game play",
+        "hint": "It starts with C and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "JOYSTICK",
+        "clue": "Game or puzzle term for a lever used to control a game",
+        "hint": "It starts with J and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BUTTON",
+        "clue": "Game or puzzle term for a control pressed during video game play",
+        "hint": "It starts with B and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CURSOR",
+        "clue": "Game or puzzle term for a movable screen marker used in play",
+        "hint": "It starts with C and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CLUE",
+        "clue": "Game or puzzle term for information that helps solve a puzzle",
+        "hint": "It starts with C and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ANSWER",
+        "clue": "Game or puzzle term for the word or result completing a puzzle",
+        "hint": "It starts with A and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "GRID",
+        "clue": "Game or puzzle term for a pattern of squares used in a puzzle",
+        "hint": "It starts with G and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SQUARE",
+        "clue": "Game or puzzle term for one cell in a puzzle grid",
+        "hint": "It starts with S and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ENTRY",
+        "clue": "Game or puzzle term for a word written into a puzzle grid",
+        "hint": "It starts with E and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ACROSS",
+        "clue": "Game or puzzle term for a horizontal direction in a word puzzle",
+        "hint": "It starts with A and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "DOWN",
+        "clue": "Game or puzzle term for a vertical direction in a word puzzle",
+        "hint": "It starts with D and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "RIDDLE",
+        "clue": "Game or puzzle term for a question with a clever hidden answer",
+        "hint": "It starts with R and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ENIGMA",
+        "clue": "Game or puzzle term for a mysterious problem to be solved",
+        "hint": "It starts with E and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CIPHER",
+        "clue": "Game or puzzle term for a coded puzzle system",
+        "hint": "It starts with C and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CODE",
+        "clue": "Game or puzzle term for a system of symbols to decode",
+        "hint": "It starts with C and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MAZE",
+        "clue": "Game or puzzle term for a network of paths with one route through",
+        "hint": "It starts with M and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LABYRINTH",
+        "clue": "Game or puzzle term for a complex maze puzzle",
+        "hint": "It starts with L and has 9 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "JIGSAW",
+        "clue": "Game or puzzle term for a picture puzzle made of interlocking pieces",
+        "hint": "It starts with J and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SUDOKU",
+        "clue": "Game or puzzle term for a number puzzle using a nine by nine grid",
+        "hint": "It starts with S and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ANAGRAM",
+        "clue": "Game or puzzle term for a word puzzle made by rearranging letters",
+        "hint": "It starts with A and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "REBUS",
+        "clue": "Game or puzzle term for a puzzle using pictures and symbols",
+        "hint": "It starts with R and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SEARCH",
+        "clue": "Game or puzzle term for a puzzle requiring hidden words to be found",
+        "hint": "It starts with S and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LOGIC",
+        "clue": "Game or puzzle term for reasoning used to solve a deduction puzzle",
+        "hint": "It starts with L and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PATTERN",
+        "clue": "Game or puzzle term for a repeated arrangement found in a puzzle",
+        "hint": "It starts with P and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SEQUENCE",
+        "clue": "Game or puzzle term for an ordered series completed by a solver",
+        "hint": "It starts with S and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MATCH",
+        "clue": "Game or puzzle term for pairing game pieces with shared features",
+        "hint": "It starts with M and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SHUFFLE",
+        "clue": "Game or puzzle term for mixing cards before a game",
+        "hint": "It starts with S and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ROLL",
+        "clue": "Game or puzzle term for casting dice during a turn",
+        "hint": "It starts with R and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SOLVE",
+        "clue": "Game or puzzle term for finding the answer to a puzzle",
+        "hint": "It starts with S and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "HINT",
+        "clue": "Game or puzzle term for extra help offered to a puzzle solver",
+        "hint": "It starts with H and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "STRATEGY",
+        "clue": "Game or puzzle term for a planned approach to winning a game",
+        "hint": "It starts with S and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TACTIC",
+        "clue": "Game or puzzle term for a short term move within a game",
+        "hint": "It starts with T and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "VICTORY",
+        "clue": "Game or puzzle term for the successful outcome of a game",
+        "hint": "It starts with V and has 7 letters.",
+        "source": "seed"
+      }
+    ]
+  },
+  {
+    "name": "Theater & Film",
+    "words": [
+      {
+        "answer": "ACTOR",
+        "clue": "Theater or film term for a performer portraying a character",
+        "hint": "It starts with A and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CAST",
+        "clue": "Theater or film term for the full group of performers in a production",
+        "hint": "It starts with C and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ROLE",
+        "clue": "Theater or film term for a character assigned to a performer",
+        "hint": "It starts with R and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LEAD",
+        "clue": "Theater or film term for the principal performer in a production",
+        "hint": "It starts with L and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "EXTRA",
+        "clue": "Theater or film term for a background performer with no major lines",
+        "hint": "It starts with E and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "STUNT",
+        "clue": "Theater or film term for a difficult action performed for a camera",
+        "hint": "It starts with S and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SCENE",
+        "clue": "Theater or film term for a continuous section of dramatic action",
+        "hint": "It starts with S and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ACT",
+        "clue": "Theater or film term for a major division of a stage work",
+        "hint": "It starts with A and has 3 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SCRIPT",
+        "clue": "Theater or film term for the written dialogue and directions",
+        "hint": "It starts with S and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LINE",
+        "clue": "Theater or film term for words spoken by a performer",
+        "hint": "It starts with L and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CUE",
+        "clue": "Theater or film term for a signal to begin a line or action",
+        "hint": "It starts with C and has 3 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "STAGE",
+        "clue": "Theater or film term for the area where performers appear",
+        "hint": "It starts with S and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SET",
+        "clue": "Theater or film term for the constructed setting for a production",
+        "hint": "It starts with S and has 3 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PROP",
+        "clue": "Theater or film term for an object handled during a performance",
+        "hint": "It starts with P and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "COSTUME",
+        "clue": "Theater or film term for clothing worn to portray a character",
+        "hint": "It starts with C and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MAKEUP",
+        "clue": "Theater or film term for cosmetics used to alter a performer's appearance",
+        "hint": "It starts with M and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MASK",
+        "clue": "Theater or film term for a face covering used in performance",
+        "hint": "It starts with M and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "WIG",
+        "clue": "Theater or film term for artificial hair worn by a performer",
+        "hint": "It starts with W and has 3 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CURTAIN",
+        "clue": "Theater or film term for fabric closing off a stage",
+        "hint": "It starts with C and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "WING",
+        "clue": "Theater or film term for an offstage area beside the scenery",
+        "hint": "It starts with W and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "FLY",
+        "clue": "Theater or film term for the space above a stage for suspended scenery",
+        "hint": "It starts with F and has 3 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "AISLE",
+        "clue": "Theater or film term for a passage between audience seating",
+        "hint": "It starts with A and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LOBBY",
+        "clue": "Theater or film term for the entrance area of a theater",
+        "hint": "It starts with L and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BOX",
+        "clue": "Theater or film term for a private seating area in a theater",
+        "hint": "It starts with B and has 3 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BALCONY",
+        "clue": "Theater or film term for an upper seating level in a theater",
+        "hint": "It starts with B and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ORCHESTRA",
+        "clue": "Theater or film term for the main floor seating near the stage",
+        "hint": "It starts with O and has 9 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TICKET",
+        "clue": "Theater or film term for a pass admitting someone to a showing",
+        "hint": "It starts with T and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MATINEE",
+        "clue": "Theater or film term for a daytime theater performance",
+        "hint": "It starts with M and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PREMIERE",
+        "clue": "Theater or film term for the first public showing of a production",
+        "hint": "It starts with P and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ENCORE",
+        "clue": "Theater or film term for an additional performance after applause",
+        "hint": "It starts with E and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "OVERTURE",
+        "clue": "Theater or film term for instrumental music opening a stage work",
+        "hint": "It starts with O and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "FINALE",
+        "clue": "Theater or film term for the concluding section of a production",
+        "hint": "It starts with F and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "REHEARSAL",
+        "clue": "Theater or film term for a practice session before performance",
+        "hint": "It starts with R and has 9 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "AUDITION",
+        "clue": "Theater or film term for a tryout for a performing role",
+        "hint": "It starts with A and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MONOLOGUE",
+        "clue": "Theater or film term for a long speech by one character",
+        "hint": "It starts with M and has 9 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "DIALOGUE",
+        "clue": "Theater or film term for spoken exchange between characters",
+        "hint": "It starts with D and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "COMEDY",
+        "clue": "Theater or film term for a dramatic work intended to amuse",
+        "hint": "It starts with C and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TRAGEDY",
+        "clue": "Theater or film term for a serious drama ending in downfall",
+        "hint": "It starts with T and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "DRAMA",
+        "clue": "Theater or film term for a story written for performance",
+        "hint": "It starts with D and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MUSICAL",
+        "clue": "Theater or film term for a stage work combining songs and dialogue",
+        "hint": "It starts with M and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CAMERA",
+        "clue": "Theater or film term for a device recording moving images",
+        "hint": "It starts with C and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LENS",
+        "clue": "Theater or film term for the glass that focuses a camera image",
+        "hint": "It starts with L and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "FRAME",
+        "clue": "Theater or film term for one still image within a film",
+        "hint": "It starts with F and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SHOT",
+        "clue": "Theater or film term for one uninterrupted camera recording",
+        "hint": "It starts with S and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TAKE",
+        "clue": "Theater or film term for one recorded attempt at a shot",
+        "hint": "It starts with T and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CUT",
+        "clue": "Theater or film term for a film edit joining one shot to another",
+        "hint": "It starts with C and has 3 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "EDIT",
+        "clue": "Theater or film term for assembling recorded shots into sequence",
+        "hint": "It starts with E and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "REEL",
+        "clue": "Theater or film term for a spool traditionally holding motion picture film",
+        "hint": "It starts with R and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SCREEN",
+        "clue": "Theater or film term for the surface where a movie is projected",
+        "hint": "It starts with S and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CINEMA",
+        "clue": "Theater or film term for the art and venue of motion pictures",
+        "hint": "It starts with C and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MOVIE",
+        "clue": "Theater or film term for a story presented through moving images",
+        "hint": "It starts with M and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "FEATURE",
+        "clue": "Theater or film term for a full length theatrical film",
+        "hint": "It starts with F and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SHORT",
+        "clue": "Theater or film term for a film with brief running time",
+        "hint": "It starts with S and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TRAILER",
+        "clue": "Theater or film term for a promotional preview for a film",
+        "hint": "It starts with T and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CREDITS",
+        "clue": "Theater or film term for the list naming a production's contributors",
+        "hint": "It starts with C and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SUBTITLE",
+        "clue": "Theater or film term for text displaying translated or spoken dialogue",
+        "hint": "It starts with S and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SCORE",
+        "clue": "Theater or film term for music composed to accompany a film",
+        "hint": "It starts with S and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SOUNDTRACK",
+        "clue": "Theater or film term for recorded music and sound from a film",
+        "hint": "It starts with S and has 10 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "VOICEOVER",
+        "clue": "Theater or film term for narration heard over filmed images",
+        "hint": "It starts with V and has 9 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "FOLEY",
+        "clue": "Theater or film term for custom sound effects recorded for film",
+        "hint": "It starts with F and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "DIRECTOR",
+        "clue": "Theater or film term for the person guiding a production's creative work",
+        "hint": "It starts with D and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PRODUCER",
+        "clue": "Theater or film term for the person overseeing production resources",
+        "hint": "It starts with P and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "WRITER",
+        "clue": "Theater or film term for the person creating a screenplay",
+        "hint": "It starts with W and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "EDITOR",
+        "clue": "Theater or film term for the person assembling a finished film",
+        "hint": "It starts with E and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "DESIGNER",
+        "clue": "Theater or film term for a person planning a production's visual elements",
+        "hint": "It starts with D and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "USHER",
+        "clue": "Theater or film term for a theater worker guiding audience members",
+        "hint": "It starts with U and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PROJECTOR",
+        "clue": "Theater or film term for a machine casting film images on a screen",
+        "hint": "It starts with P and has 9 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CLAPPER",
+        "clue": "Theater or film term for a marked board used to identify a take",
+        "hint": "It starts with C and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TRIPOD",
+        "clue": "Theater or film term for a three legged camera support",
+        "hint": "It starts with T and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "DOLLY",
+        "clue": "Theater or film term for a wheeled platform moving a camera",
+        "hint": "It starts with D and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ZOOM",
+        "clue": "Theater or film term for a lens change that alters image size",
+        "hint": "It starts with Z and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PAN",
+        "clue": "Theater or film term for a horizontal camera movement",
+        "hint": "It starts with P and has 3 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ANGLE",
+        "clue": "Theater or film term for the camera's position toward a subject",
+        "hint": "It starts with A and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CLOSEUP",
+        "clue": "Theater or film term for a shot showing a subject at near range",
+        "hint": "It starts with C and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MONTAGE",
+        "clue": "Theater or film term for a sequence of short edited images",
+        "hint": "It starts with M and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "FADE",
+        "clue": "Theater or film term for a gradual film transition to or from darkness",
+        "hint": "It starts with F and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SEQUEL",
+        "clue": "Theater or film term for a film continuing an earlier story",
+        "hint": "It starts with S and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "REMIX",
+        "clue": "Theater or film term for a new audio version used in film promotion",
+        "hint": "It starts with R and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ADAPTATION",
+        "clue": "Theater or film term for a film based on another work",
+        "hint": "It starts with A and has 10 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "GENRE",
+        "clue": "Theater or film term for a category of film or drama",
+        "hint": "It starts with G and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PLOT",
+        "clue": "Theater or film term for the ordered events of a screen story",
+        "hint": "It starts with P and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CHARACTER",
+        "clue": "Theater or film term for a person represented in a production",
+        "hint": "It starts with C and has 9 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "AUDIENCE",
+        "clue": "Theater or film term for the people watching a performance",
+        "hint": "It starts with A and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "APPLAUSE",
+        "clue": "Theater or film term for audience approval shown by clapping",
+        "hint": "It starts with A and has 8 letters.",
+        "source": "seed"
+      }
+    ]
+  },
+  {
+    "name": "Clothing & Fashion",
+    "words": [
+      {
+        "answer": "SHIRT",
+        "clue": "Clothing or fashion term for an upper body garment with sleeves",
+        "hint": "It starts with S and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BLOUSE",
+        "clue": "Clothing or fashion term for a loose upper garment often worn tucked in",
+        "hint": "It starts with B and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SWEATER",
+        "clue": "Clothing or fashion term for a knitted garment worn for warmth",
+        "hint": "It starts with S and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "JACKET",
+        "clue": "Clothing or fashion term for a short outer garment with sleeves",
+        "hint": "It starts with J and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "COAT",
+        "clue": "Clothing or fashion term for a warm outer garment worn outdoors",
+        "hint": "It starts with C and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "VEST",
+        "clue": "Clothing or fashion term for a sleeveless garment worn over a shirt",
+        "hint": "It starts with V and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "DRESS",
+        "clue": "Clothing or fashion term for a one piece garment with a skirt",
+        "hint": "It starts with D and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SKIRT",
+        "clue": "Clothing or fashion term for a garment hanging from the waist",
+        "hint": "It starts with S and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PANTS",
+        "clue": "Clothing or fashion term for a garment covering each leg separately",
+        "hint": "It starts with P and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SHORTS",
+        "clue": "Clothing or fashion term for short legged trousers",
+        "hint": "It starts with S and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "JEANS",
+        "clue": "Clothing or fashion term for sturdy trousers made from denim",
+        "hint": "It starts with J and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LEGGINGS",
+        "clue": "Clothing or fashion term for close fitting stretch trousers",
+        "hint": "It starts with L and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SUIT",
+        "clue": "Clothing or fashion term for a matching jacket and trousers or skirt",
+        "hint": "It starts with S and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TUXEDO",
+        "clue": "Clothing or fashion term for formal evening clothing with satin details",
+        "hint": "It starts with T and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "GOWN",
+        "clue": "Clothing or fashion term for a long formal dress",
+        "hint": "It starts with G and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ROBE",
+        "clue": "Clothing or fashion term for a loose garment worn around the body",
+        "hint": "It starts with R and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PAJAMAS",
+        "clue": "Clothing or fashion term for clothing worn for sleeping",
+        "hint": "It starts with P and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "UNIFORM",
+        "clue": "Clothing or fashion term for standard clothing worn by a group",
+        "hint": "It starts with U and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "APRON",
+        "clue": "Clothing or fashion term for a protective garment worn over clothing",
+        "hint": "It starts with A and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SMOCK",
+        "clue": "Clothing or fashion term for a loose protective outer garment",
+        "hint": "It starts with S and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SHOE",
+        "clue": "Clothing or fashion term for a covering worn on the foot",
+        "hint": "It starts with S and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BOOT",
+        "clue": "Clothing or fashion term for footwear covering the ankle or higher",
+        "hint": "It starts with B and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SANDAL",
+        "clue": "Clothing or fashion term for open footwear held by straps",
+        "hint": "It starts with S and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SNEAKER",
+        "clue": "Clothing or fashion term for a soft casual athletic shoe",
+        "hint": "It starts with S and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "HEEL",
+        "clue": "Clothing or fashion term for the raised rear part of footwear",
+        "hint": "It starts with H and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SOLE",
+        "clue": "Clothing or fashion term for the bottom surface of footwear",
+        "hint": "It starts with S and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LACE",
+        "clue": "Clothing or fashion term for a cord used to fasten a shoe",
+        "hint": "It starts with L and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SOCK",
+        "clue": "Clothing or fashion term for a knitted covering for the foot",
+        "hint": "It starts with S and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "STOCKING",
+        "clue": "Clothing or fashion term for a close fitting covering for foot and leg",
+        "hint": "It starts with S and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "HAT",
+        "clue": "Clothing or fashion term for a shaped covering worn on the head",
+        "hint": "It starts with H and has 3 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CAP",
+        "clue": "Clothing or fashion term for a soft brimmed head covering",
+        "hint": "It starts with C and has 3 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BEANIE",
+        "clue": "Clothing or fashion term for a close fitting knitted cap",
+        "hint": "It starts with B and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BERET",
+        "clue": "Clothing or fashion term for a round flat soft cap",
+        "hint": "It starts with B and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SCARF",
+        "clue": "Clothing or fashion term for a fabric strip worn around the neck",
+        "hint": "It starts with S and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "GLOVE",
+        "clue": "Clothing or fashion term for a fitted covering for the hand",
+        "hint": "It starts with G and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MITTEN",
+        "clue": "Clothing or fashion term for a hand covering with one section for fingers",
+        "hint": "It starts with M and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BELT",
+        "clue": "Clothing or fashion term for a band worn around the waist",
+        "hint": "It starts with B and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TIE",
+        "clue": "Clothing or fashion term for a narrow strip worn around a shirt collar",
+        "hint": "It starts with T and has 3 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BOWTIE",
+        "clue": "Clothing or fashion term for a necktie shaped as a bow",
+        "hint": "It starts with B and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SHAWL",
+        "clue": "Clothing or fashion term for a large fabric wrap for the shoulders",
+        "hint": "It starts with S and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CAPE",
+        "clue": "Clothing or fashion term for a sleeveless outer garment fastened at the neck",
+        "hint": "It starts with C and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PURSE",
+        "clue": "Clothing or fashion term for a small bag carried with an outfit",
+        "hint": "It starts with P and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TOTE",
+        "clue": "Clothing or fashion term for a large open handled bag",
+        "hint": "It starts with T and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "WALLET",
+        "clue": "Clothing or fashion term for a folding holder for cards and money",
+        "hint": "It starts with W and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BUTTON",
+        "clue": "Clothing or fashion term for a small fastener passed through a hole",
+        "hint": "It starts with B and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "ZIPPER",
+        "clue": "Clothing or fashion term for a fastener with interlocking teeth",
+        "hint": "It starts with Z and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "BUCKLE",
+        "clue": "Clothing or fashion term for a framed fastener for a strap",
+        "hint": "It starts with B and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SNAP",
+        "clue": "Clothing or fashion term for a fastener joining two pressed parts",
+        "hint": "It starts with S and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "HOOK",
+        "clue": "Clothing or fashion term for a curved fastener catching a loop",
+        "hint": "It starts with H and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "POCKET",
+        "clue": "Clothing or fashion term for a small sewn pouch in a garment",
+        "hint": "It starts with P and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "COLLAR",
+        "clue": "Clothing or fashion term for the part of a garment around the neck",
+        "hint": "It starts with C and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CUFF",
+        "clue": "Clothing or fashion term for the finished end of a sleeve",
+        "hint": "It starts with C and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SLEEVE",
+        "clue": "Clothing or fashion term for the garment section covering an arm",
+        "hint": "It starts with S and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LAPEL",
+        "clue": "Clothing or fashion term for the folded front edge of a jacket",
+        "hint": "It starts with L and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "HEM",
+        "clue": "Clothing or fashion term for the finished folded edge of fabric",
+        "hint": "It starts with H and has 3 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SEAM",
+        "clue": "Clothing or fashion term for the line where fabric pieces are sewn",
+        "hint": "It starts with S and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PLEAT",
+        "clue": "Clothing or fashion term for a fold pressed into fabric",
+        "hint": "It starts with P and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TUCK",
+        "clue": "Clothing or fashion term for a narrow sewn fold in fabric",
+        "hint": "It starts with T and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "DART",
+        "clue": "Clothing or fashion term for a tapered fold shaping a garment",
+        "hint": "It starts with D and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LINING",
+        "clue": "Clothing or fashion term for an inner fabric layer in a garment",
+        "hint": "It starts with L and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "DENIM",
+        "clue": "Clothing or fashion term for a sturdy cotton fabric used for jeans",
+        "hint": "It starts with D and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SILK",
+        "clue": "Clothing or fashion term for a smooth fiber used in fine garments",
+        "hint": "It starts with S and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "WOOL",
+        "clue": "Clothing or fashion term for warm fiber shorn from animals",
+        "hint": "It starts with W and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "COTTON",
+        "clue": "Clothing or fashion term for soft plant fiber woven into fabric",
+        "hint": "It starts with C and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LINEN",
+        "clue": "Clothing or fashion term for fabric woven from flax fiber",
+        "hint": "It starts with L and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "VELVET",
+        "clue": "Clothing or fashion term for fabric with a dense soft pile",
+        "hint": "It starts with V and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SATIN",
+        "clue": "Clothing or fashion term for smooth glossy fabric used for formal wear",
+        "hint": "It starts with S and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LEATHER",
+        "clue": "Clothing or fashion term for treated hide used for clothing and footwear",
+        "hint": "It starts with L and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "SUEDE",
+        "clue": "Clothing or fashion term for soft leather with a napped surface",
+        "hint": "It starts with S and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "LACEWORK",
+        "clue": "Clothing or fashion term for decorative open fabric made from thread",
+        "hint": "It starts with L and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "YARN",
+        "clue": "Clothing or fashion term for continuous fiber used to knit clothing",
+        "hint": "It starts with Y and has 4 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "THREAD",
+        "clue": "Clothing or fashion term for fine strand used to sew fabric",
+        "hint": "It starts with T and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "NEEDLE",
+        "clue": "Clothing or fashion term for pointed sewing tool carrying thread",
+        "hint": "It starts with N and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "THIMBLE",
+        "clue": "Clothing or fashion term for finger guard used while sewing",
+        "hint": "It starts with T and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "PATTERN",
+        "clue": "Clothing or fashion term for template pieces used to cut a garment",
+        "hint": "It starts with P and has 7 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TAILOR",
+        "clue": "Clothing or fashion term for a person who makes fitted clothing",
+        "hint": "It starts with T and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "DESIGNER",
+        "clue": "Clothing or fashion term for a person creating new fashion styles",
+        "hint": "It starts with D and has 8 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "MODEL",
+        "clue": "Clothing or fashion term for a person displaying clothing",
+        "hint": "It starts with M and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "RUNWAY",
+        "clue": "Clothing or fashion term for a platform used for a fashion show",
+        "hint": "It starts with R and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "TREND",
+        "clue": "Clothing or fashion term for a currently popular fashion direction",
+        "hint": "It starts with T and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "STYLE",
+        "clue": "Clothing or fashion term for a distinctive manner of dressing",
+        "hint": "It starts with S and has 5 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "OUTFIT",
+        "clue": "Clothing or fashion term for a coordinated set of clothing",
+        "hint": "It starts with O and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "CASUAL",
+        "clue": "Clothing or fashion term for a relaxed clothing style",
+        "hint": "It starts with C and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "FORMAL",
+        "clue": "Clothing or fashion term for a dressy clothing style",
+        "hint": "It starts with F and has 6 letters.",
+        "source": "seed"
+      },
+      {
+        "answer": "VINTAGE",
+        "clue": "Clothing or fashion term for clothing representing an earlier era",
+        "hint": "It starts with V and has 7 letters.",
+        "source": "seed"
+      }
+    ]
   }
 ]

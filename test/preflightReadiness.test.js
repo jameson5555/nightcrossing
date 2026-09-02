@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import { analyzeThemeReadiness } from '../scripts/preflight-generation.js';
 import { scoreWordForTheme } from '../scripts/proceduralEngine.js';
 
@@ -110,5 +111,38 @@ test('does not use a thematic answer to excuse the wrong dictionary sense', () =
       source: 'ml',
       themeScore: 1.5
     }) < 0.75);
+  }
+});
+
+test('keeps every successor pool ready with two future batches of runway', () => {
+  const successorNames = [
+    'Arts & Crafts',
+    'Books & Reading',
+    'Science & Discovery',
+    'Games & Puzzles',
+    'Theater & Film',
+    'Clothing & Fashion'
+  ];
+  const candidateThemes = JSON.parse(fs.readFileSync(
+    new URL('../scripts/candidate-themes.json', import.meta.url),
+    'utf8'
+  ));
+  const rotation = JSON.parse(fs.readFileSync(
+    new URL('../scripts/theme-rotation.json', import.meta.url),
+    'utf8'
+  ));
+
+  const weatherSlot = rotation.slots.find(slot => slot.currentTheme === 'Weather & Climate');
+  assert.equal(weatherSlot?.nextTheme, 'Science & Discovery');
+  assert.deepEqual(rotation.candidates, successorNames.filter(name => name !== 'Science & Discovery'));
+
+  for (const themeName of successorNames) {
+    const theme = candidateThemes.find(candidate => candidate.name === themeName);
+    assert.ok(theme, `Missing successor pool: ${themeName}`);
+
+    const report = analyzeThemeReadiness(theme, new Set(), 3, {
+      minFutureRunwayBatches: 2
+    });
+    assert.equal(report.isReady, true, `${themeName}: ${report.readinessFailures.join(', ')}`);
   }
 });

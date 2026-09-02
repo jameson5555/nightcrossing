@@ -28,7 +28,7 @@
     {
       "currentTheme": "Weather & Climate",
       "status": "exhausted",
-      "nextTheme": null,
+      "nextTheme": "Science & Discovery",
       "exhaustedAt": "2026-09-02T16:10:37.000Z",
       "exhaustionReason": "repeated constrained-layout failures (10 attempts across 2 cycles)"
     },
@@ -40,6 +40,12 @@
       "exhaustionReason": "repeated generation failures (5/5)"
     }
   ],
-  "candidates": [],
+  "candidates": [
+    "Arts & Crafts",
+    "Books & Reading",
+    "Games & Puzzles",
+    "Theater & Film",
+    "Clothing & Fashion"
+  ],
   "retired": []
 }

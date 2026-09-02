@@ -148,7 +148,13 @@ const WIKIPEDIA_THEME_CATEGORIES = {
   'transportation vehicles': ['Transport', 'Vehicles', 'Road transport', 'Rail transport', 'Aviation', 'Water transport', 'Public transport'],
   'home tools': ['Home', 'Household equipment', 'Tools', 'Hand tools', 'Home appliances', 'Furniture', 'Do it yourself'],
   'internet software': ['Software', 'Computing', 'Internet terminology', 'Computer networking', 'Databases', 'Web browsers', 'Web applications', 'Algorithms'],
-  'sports athletics': ['Sports terminology', 'Athletics (track and field)', 'Team sports', 'Ball games', 'Sport of athletics', 'Sporting equipment']
+  'sports athletics': ['Sports terminology', 'Athletics (track and field)', 'Team sports', 'Ball games', 'Sport of athletics', 'Sporting equipment'],
+  'arts crafts': ['Visual arts', 'Crafts', 'Art materials', 'Painting techniques', 'Drawing', 'Sculpture', 'Textile arts', 'Pottery'],
+  'books reading': ['Books', 'Reading', 'Book terminology', 'Literature', 'Publishing', 'Libraries', 'Fiction', 'Poetry'],
+  'science discovery': ['Science', 'Scientific method', 'Scientific equipment', 'Experiments', 'Physics', 'Chemistry', 'Biology', 'Laboratories'],
+  'games puzzles': ['Games', 'Puzzles', 'Board games', 'Card games', 'Word games', 'Logic puzzles', 'Game terminology'],
+  'theater film': ['Theatre', 'Film', 'Stage terminology', 'Filmmaking', 'Cinematography', 'Acting', 'Theatrical occupations'],
+  'clothing fashion': ['Clothing', 'Fashion', 'Garments', 'Textiles', 'Sewing', 'Footwear', 'Fashion design']
 };
 
 const WIKIPEDIA_GENERIC_PAGE_TITLE_REGEX = /\b(award|awards|prize|prizes|medal|medals|winner|winners|list|lists|outline|outlines|timeline|timelines|glossary|glossaries|people|births|deaths|company|companies|organization|organizations|association|associations|journal|journals|magazine|magazines|website|websites|film|films|song|songs|album|albums|television|fictional|characters?)\b/i;
@@ -206,7 +212,13 @@ function getThemeSignals(themeName) {
     'transportation vehicles': ['transport', 'vehicle', 'car', 'truck', 'bus', 'train', 'plane', 'boat', 'ship', 'bike', 'road', 'rail', 'route', 'traffic', 'driver', 'passenger', 'cargo', 'airport', 'station'],
     'home tools': ['home', 'house', 'room', 'kitchen', 'door', 'window', 'floor', 'wall', 'tool', 'hammer', 'drill', 'saw', 'wrench', 'repair', 'paint', 'clean', 'faucet', 'pipe', 'wire', 'shelf'],
     'internet software': ['internet', 'web', 'browser', 'server', 'cloud', 'code', 'coding', 'program', 'software', 'query', 'cache', 'file', 'files', 'sync', 'network', 'node', 'nodes', 'protocol', 'database', 'cyber', 'byte', 'chip', 'cpu', 'hash', 'api', 'online', 'digital'],
-    'sports athletics': ['sport', 'team', 'score', 'goal', 'match', 'coach', 'league', 'athlete', 'race', 'medal', 'tournament']
+    'sports athletics': ['sport', 'team', 'score', 'goal', 'match', 'coach', 'league', 'athlete', 'race', 'medal', 'tournament'],
+    'arts crafts': ['art', 'artist', 'craft', 'paint', 'draw', 'sketch', 'canvas', 'color', 'clay', 'yarn', 'sew', 'stitch', 'bead', 'glue', 'paper', 'ink', 'brush', 'textile', 'sculpt', 'design'],
+    'books reading': ['book', 'read', 'page', 'author', 'story', 'novel', 'poem', 'prose', 'chapter', 'library', 'print', 'text', 'fiction', 'literary', 'manuscript', 'cover'],
+    'science discovery': ['science', 'experiment', 'lab', 'research', 'theory', 'atom', 'cell', 'energy', 'matter', 'data', 'test', 'discover', 'biology', 'chemistry', 'physics', 'measure'],
+    'games puzzles': ['game', 'puzzle', 'play', 'board', 'card', 'dice', 'token', 'score', 'turn', 'clue', 'grid', 'solve', 'chess', 'maze', 'riddle'],
+    'theater film': ['theater', 'theatre', 'film', 'movie', 'stage', 'actor', 'scene', 'script', 'camera', 'screen', 'cinema', 'director', 'costume', 'prop', 'drama', 'audience'],
+    'clothing fashion': ['cloth', 'clothing', 'fashion', 'garment', 'wear', 'shirt', 'dress', 'shoe', 'fabric', 'sleeve', 'collar', 'button', 'seam', 'style', 'outfit', 'textile']
   };
 
   return signals[normalizedThemeKey(themeName)] || [];
