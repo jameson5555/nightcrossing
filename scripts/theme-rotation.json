@@ -17,8 +17,10 @@
     },
     {
       "currentTheme": "Ocean & Marine Life",
-      "status": "active",
-      "nextTheme": "Home & Tools"
+      "status": "exhausted",
+      "nextTheme": "Home & Tools",
+      "exhaustedAt": "2026-09-01T23:20:06.648Z",
+      "exhaustionReason": "repeated generation failures (5/5)"
     },
     {
       "currentTheme": "Sports & Athletics",
