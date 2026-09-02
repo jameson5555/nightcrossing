@@ -21,7 +21,8 @@
     "report:regeneration": "node scripts/regeneration-compare.js",
     "audit:difficulty": "node scripts/audit-difficulty.js",
     "audit:clues": "node scripts/audit-clues.js",
-    "audit:ci": "npm run audit:difficulty && npm run audit:clues"
+    "audit:relevance": "node scripts/audit-theme-relevance.js --changed-only",
+    "audit:ci": "npm run audit:difficulty && npm run audit:clues && npm run audit:relevance"
   },
   "dependencies": {
     "@capacitor-community/admob": "^8.0.0",

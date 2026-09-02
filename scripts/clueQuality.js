@@ -1,6 +1,6 @@
 const BANNED_CONTENT_REGEX = /\b(surname|surnames|given\s+name|given\s+names|male\s+given\s+name|male\s+given\s+names|female\s+given\s+name|female\s+given\s+names|unisex\s+given\s+name|unisex\s+given\s+names|legal\s+balls|first\s+name|first\s+names|last\s+name|last\s+names)\b/i;
 
-const PROFANITY_REGEX = /\b(fuck|fucking|shit|shitty|bitch|asshole|cunt|slut|motherfucker|dickhead|porn|pornography|masturbat|flatus|anal\s+sex|oral\s+sex)\b/i;
+const PROFANITY_REGEX = /\b(fuck|fucking|shit|shitty|bitch|asshole|cunt|slut|motherfucker|dickhead|porn|pornography|masturbat|flatus|fellatio|penis|intercourse|zoophilia|bestiality|race\s+traitor|anal\s+sex|oral\s+sex)\b/i;
 
 const LOW_QUALITY_REGEXES = [
   /\b(initialism|acronym|abbreviation|abbr\.)\b/i,

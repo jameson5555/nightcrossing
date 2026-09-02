@@ -43,6 +43,7 @@ jobs:
           NC_THEME_EXHAUSTION_FAILURE_THRESHOLD: '5'
           NC_NEW_PUZZLES_PER_THEME: '3'
           NC_PRIMARY_CORE_POOL_LIMIT: '120'
+          NC_MAX_PUZZLE_LOW_RELEVANCE: '0'
         run: node scripts/generate-starters.js --skip-enrichment
 
       - name: Audit generated dataset

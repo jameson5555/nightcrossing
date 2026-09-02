@@ -36,6 +36,17 @@ test('rejects dictionary clues with dangling context references', () => {
   }
 });
 
+test('rejects inappropriate alternate-sense hints', () => {
+  const result = isWordEntryAcceptable({
+    answer: 'NOSH',
+    clue: 'Light meal or snack',
+    hint: 'Fellatio'
+  });
+
+  assert.equal(result.ok, false);
+  assert.equal(result.reason, 'profanity');
+});
+
 test('keeps standalone examples that use such as', () => {
   assert.equal(
     isWordEntryAcceptable({

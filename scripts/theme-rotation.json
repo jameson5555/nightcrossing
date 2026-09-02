@@ -17,10 +17,8 @@
     },
     {
       "currentTheme": "Ocean & Marine Life",
-      "status": "exhausted",
-      "nextTheme": "Home & Tools",
-      "exhaustedAt": "2026-09-01T23:20:06.648Z",
-      "exhaustionReason": "repeated generation failures (5/5)"
+      "status": "active",
+      "nextTheme": "Home & Tools"
     },
     {
       "currentTheme": "Sports & Athletics",
@@ -29,13 +27,17 @@
     },
     {
       "currentTheme": "Weather & Climate",
-      "status": "active",
-      "nextTheme": null
+      "status": "exhausted",
+      "nextTheme": null,
+      "exhaustedAt": "2026-09-02T16:10:37.000Z",
+      "exhaustionReason": "repeated constrained-layout failures (10 attempts across 2 cycles)"
     },
     {
       "currentTheme": "Internet & Software",
-      "status": "active",
-      "nextTheme": "History & Civilization"
+      "status": "exhausted",
+      "nextTheme": "History & Civilization",
+      "exhaustedAt": "2026-09-02T16:16:42.581Z",
+      "exhaustionReason": "repeated generation failures (5/5)"
     }
   ],
   "candidates": [],

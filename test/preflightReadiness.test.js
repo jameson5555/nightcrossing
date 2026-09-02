@@ -62,3 +62,53 @@ test('matches theme signals by token prefix without substring false positives', 
   assert.ok(historyFalsePositive < 0.75);
   assert.ok(natureMatch >= 1.15);
 });
+
+test('does not use a theme-related hint to excuse an unrelated displayed clue', () => {
+  assert.ok(scoreWordForTheme('Nature & Wilderness', {
+    answer: 'VEIN',
+    clue: 'Blood vessel that transports blood to the heart',
+    hint: 'Stripe in materials such as wood or marble',
+    source: 'ml',
+    themeScore: 1.5
+  }) < 0.75);
+
+  assert.ok(scoreWordForTheme('History & Civilization', {
+    answer: 'DIKE',
+    clue: 'Formalwear or other fashionable dress',
+    hint: 'Greek goddess of justice',
+    source: 'ml',
+    themeScore: 1.5
+  }) < 0.75);
+
+  assert.ok(scoreWordForTheme('Nature & Wilderness', {
+    answer: 'RESPONSE',
+    clue: 'Answer or reply, or something in the nature of an answer or reply',
+    hint: 'Act of responding or replying',
+    source: 'rel_trg',
+    themeScore: 1.5
+  }) < 0.75);
+});
+
+test('does not use a thematic answer to excuse the wrong dictionary sense', () => {
+  for (const [theme, entry] of [
+    ['Food & Cooking', {
+      answer: 'GRILL',
+      clue: 'Criss-cross pieces that separate panes of glass in a window'
+    }],
+    ['Animals & Wildlife', {
+      answer: 'FLOCKS',
+      clue: 'Large number of people'
+    }],
+    ['Home & Tools', {
+      answer: 'HOTEL',
+      clue: 'Public house or pub'
+    }]
+  ]) {
+    assert.ok(scoreWordForTheme(theme, {
+      ...entry,
+      hint: '',
+      source: 'ml',
+      themeScore: 1.5
+    }) < 0.75);
+  }
+});

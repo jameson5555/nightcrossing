@@ -26,14 +26,14 @@ const PREFERRED_MIN_PLACED_WORDS = 7;
 const MIN_WORD_TARGET = 6;
 const DEFAULT_LAYOUT_ATTEMPTS = 6000;
 const VERBOSE_GENERATION = process.env.NC_VERBOSE_GENERATION === '1';
-const STRICT_THEME_MIN_RELEVANCE = 1.15;
-const RELAXED_THEME_MIN_RELEVANCE = 0.75;
+export const STRICT_THEME_MIN_RELEVANCE = 1.15;
+export const RELAXED_THEME_MIN_RELEVANCE = 0.75;
 const MIN_PUZZLE_AVG_RELEVANCE = Number.isFinite(Number(process.env.NC_MIN_PUZZLE_AVG_RELEVANCE))
   ? Number(process.env.NC_MIN_PUZZLE_AVG_RELEVANCE)
   : 1.05;
 const MAX_PUZZLE_LOW_RELEVANCE = Number.isFinite(Number(process.env.NC_MAX_PUZZLE_LOW_RELEVANCE))
   ? Number(process.env.NC_MAX_PUZZLE_LOW_RELEVANCE)
-  : 1;
+  : 0;
 const MAX_EXTENDED_WORDS_PER_PUZZLE = Number.isFinite(Number(process.env.NC_MAX_EXTENDED_WORDS_PER_PUZZLE))
   ? Number(process.env.NC_MAX_EXTENDED_WORDS_PER_PUZZLE)
   : 2;
@@ -70,6 +70,27 @@ const PRIMARY_CORE_POOL_LIMIT = Number.isFinite(Number(process.env.NC_PRIMARY_CO
 
 const LAYOUT_OBSCURE_PROPER_NOUN_REGEX = /\b(goddess|god|deity|mythological|myth|constellation|kuiper|planetoid|primordial|trojan|tau\s+[a-z]+|mistress\s+of\s+zeus|one\s+of\s+the\s+moons\s+of\s+jupiter|pegasi|uranian|salacia|aoede|elara|amalthea|ganymede|callisto)\b/i;
 
+const THEME_IRRELEVANT_CLUE_PATTERNS = {
+  'home tools': [
+    /\bpublic house\b/i,
+    /\bpub\b/i,
+    /\bgambl(?:e|ing)\b/i,
+    /\bcasino\b/i,
+    /\btooth\b/i,
+    /\bdental\b/i,
+    /\bmiddle ear\b/i,
+    /\bbanished\b/i
+  ],
+  'nature wilderness': [
+    /\bplace of burial\b/i,
+    /\bneolithic culture\b/i,
+    /\bstanding upright\b/i,
+    /\bparticular way\b/i,
+    /\badvertis(?:e|ing)\b/i,
+    /\bclimbing wall\b/i
+  ]
+};
+
 const SCORE_WEIGHTS = {
   minIntersection: 42,
   avgIntersection: 56,
@@ -104,7 +125,7 @@ const SOURCE_RELIABILITY_ADJUSTMENTS = {
 };
 
 const SOURCE_THEME_SCORE_CAP_BONUS = {
-  seed: 0.35,
+  seed: 0.15,
   'wikidata-search': 0.05,
   'wikipedia-category': 0.06,
   'wikipedia-subcategory': 0.03,
@@ -182,17 +203,14 @@ function calculateFallbackThemeRelevance(themeName, word) {
   const themeTokenSet = new Set(themeTokens);
   const answerTokens = tokenizeForTheme(word.answer);
   const clueTokens = tokenizeForTheme(word.clue);
-  const hintTokens = tokenizeForTheme(word.hint);
 
   let score = 0.35;
 
   const answerOverlap = answerTokens.filter(token => themeTokenSet.has(token)).length;
   const clueOverlap = clueTokens.filter(token => themeTokenSet.has(token)).length;
-  const hintOverlap = hintTokens.filter(token => themeTokenSet.has(token)).length;
 
   score += Math.min(0.85, answerOverlap * 0.45);
   score += Math.min(0.95, clueOverlap * 0.2);
-  score += Math.min(0.5, hintOverlap * 0.14);
 
   const answer = (word.answer || '').toLowerCase();
   for (const themeToken of themeTokens) {
@@ -203,27 +221,34 @@ function calculateFallbackThemeRelevance(themeName, word) {
   // Keep obvious, high-signal domains available even when clue text is sparse.
   const domainSignals = {
     'space astronomy': ['orbit', 'star', 'planet', 'moon', 'solar', 'lunar', 'cosmic', 'galaxy', 'rocket', 'saturn', 'venus', 'mars', 'pluto', 'nebula', 'astro'],
-    'food cooking': ['cook', 'bake', 'fry', 'grill', 'dish', 'meal', 'spice', 'kitchen', 'chef', 'recipe', 'broth', 'sauce'],
-    'ocean marine life': ['ocean', 'sea', 'tide', 'reef', 'fish', 'whale', 'shark', 'coral', 'marine', 'kelp', 'naut', 'sail'],
+    'food cooking': ['cook', 'bake', 'fry', 'grill', 'dish', 'meal', 'eat', 'spice', 'kitchen', 'chef', 'recipe', 'broth', 'sauce', 'stove', 'biscuit', 'cookie', 'dessert', 'pastry', 'tart', 'almond', 'coconut', 'oven'],
+    'ocean marine life': ['ocean', 'sea', 'water', 'tide', 'reef', 'fish', 'whale', 'shark', 'coral', 'marine', 'kelp', 'naut', 'sail'],
     'music sound': ['music', 'song', 'note', 'tune', 'rhythm', 'melody', 'chord', 'tempo', 'audio', 'sound', 'drum', 'piano', 'guitar'],
-    'weather climate': ['weather', 'climate', 'storm', 'rain', 'wind', 'cloud', 'snow', 'sun', 'solar', 'sky', 'forecast', 'season', 'breeze', 'gale', 'frost', 'thunder', 'lightning', 'atmos', 'meteor'],
-    'plants gardens': ['plant', 'garden', 'leaf', 'tree', 'flower', 'bloom', 'seed', 'stem', 'root', 'fern', 'moss', 'shrub', 'vine', 'petal', 'orchid', 'cactus', 'pollen', 'flora', 'herb', 'botan'],
-    'animals wildlife': ['animal', 'wild', 'habitat', 'mammal', 'bird', 'insect', 'reptile', 'fish', 'forest', 'nest', 'den', 'burrow', 'herd', 'flock', 'track', 'predator', 'prey', 'paw', 'claw', 'feather'],
+    'weather climate': ['weather', 'climate', 'storm', 'rain', 'wind', 'cloud', 'snow', 'snowfall', 'snowspout', 'sun', 'solar', 'sky', 'forecast', 'season', 'breeze', 'gale', 'frost', 'thunder', 'lightning', 'atmos', 'meteor'],
+    'plants gardens': ['plant', 'garden', 'leaf', 'tree', 'flower', 'bloom', 'seed', 'stem', 'root', 'fern', 'moss', 'shrub', 'shrubbery', 'grove', 'arbour', 'vine', 'petal', 'orchid', 'cactus', 'pollen', 'flora', 'herb', 'botan'],
+    'animals wildlife': ['animal', 'wild', 'habitat', 'mammal', 'bird', 'insect', 'reptile', 'fish', 'forest', 'nest', 'den', 'burrow', 'herd', 'flock', 'livestock', 'track', 'predator', 'prey', 'paw', 'claw', 'feather'],
     'transportation vehicles': ['transport', 'vehicle', 'car', 'truck', 'bus', 'train', 'plane', 'boat', 'ship', 'bike', 'road', 'rail', 'route', 'traffic', 'driver', 'passenger', 'cargo', 'airport', 'station'],
     'home tools': ['home', 'house', 'room', 'kitchen', 'door', 'window', 'floor', 'wall', 'tool', 'hammer', 'drill', 'saw', 'wrench', 'repair', 'paint', 'clean', 'faucet', 'pipe', 'wire', 'shelf'],
-    'internet software': ['internet', 'web', 'browser', 'server', 'cloud', 'code', 'coding', 'program', 'software', 'query', 'cache', 'file', 'files', 'sync', 'network', 'node', 'nodes', 'protocol', 'database', 'cyber', 'byte', 'chip', 'cpu', 'hash', 'api', 'online', 'digital'],
-    'sports athletics': ['sport', 'team', 'score', 'goal', 'match', 'coach', 'league', 'athlete', 'race', 'medal', 'tournament'],
-    'nature wilderness': ['nature', 'wild', 'wilderness', 'forest', 'wood', 'tree', 'river', 'lake', 'mountain', 'valley', 'canyon', 'meadow', 'trail', 'habitat', 'ecosystem', 'earth', 'outdoor', 'camp', 'hike'],
-    'history civilization': ['history', 'civilization', 'ancient', 'empire', 'dynasty', 'king', 'queen', 'ruler', 'war', 'battle', 'treaty', 'nation', 'culture', 'society', 'era', 'age', 'century', 'medieval', 'roman', 'greek', 'archaeolog']
+    'internet software': ['internet', 'web', 'browser', 'server', 'cloud', 'code', 'coding', 'program', 'software', 'query', 'cache', 'file', 'files', 'sync', 'network', 'node', 'nodes', 'protocol', 'database', 'cyber', 'cyberspace', 'virtual', 'byte', 'chip', 'cpu', 'hash', 'api', 'online', 'digital'],
+    'sports athletics': ['sport', 'sportive', 'cyclosportive', 'team', 'score', 'goal', 'match', 'coach', 'league', 'athlete', 'race', 'medal', 'tournament'],
+    'nature wilderness': ['natural', 'organism', 'wild', 'wilderness', 'forest', 'wood', 'timber', 'tree', 'river', 'lake', 'mountain', 'valley', 'canyon', 'meadow', 'trail', 'habitat', 'ecosystem', 'earth', 'outdoor', 'camp', 'hike'],
+    'history civilization': ['history', 'civilization', 'ancient', 'empire', 'dynasty', 'king', 'kingdom', 'queen', 'ruler', 'noble', 'war', 'battle', 'treaty', 'nation', 'culture', 'society', 'era', 'age', 'century', 'medieval', 'roman', 'roma', 'nomad', 'greek', 'byzant', 'persia', 'iran', 'korea', 'archaeolog']
   };
 
   const themeKey = normalizedThemeKey(themeName);
+  const irrelevantPatterns = THEME_IRRELEVANT_CLUE_PATTERNS[themeKey] || [];
+  if (irrelevantPatterns.some(pattern => pattern.test(word.clue || ''))) {
+    return Math.min(score, 0.54);
+  }
+
   const signals = domainSignals[themeKey] || [];
-  const combinedText = `${word.answer || ''} ${word.clue || ''} ${word.hint || ''}`.toLowerCase();
-  const combinedTokens = tokenizeForTheme(combinedText);
-  const matchedSignals = signals.filter(signal => combinedTokens.some(token =>
-    token === signal || (signal.length >= 4 && token.startsWith(signal))
-  )).length;
+  const signalTokens = word?.source === 'ml' ? clueTokens : [...answerTokens, ...clueTokens];
+  const matchedSignals = signals.filter(signal => signalTokens.some(token => {
+    if (token === signal) return true;
+    if (signal.length < 4 || !token.startsWith(signal)) return false;
+    return ['s', 'es', 'ed', 'ing', 'er', 'ers', 'ly', 'al', 'ic', 'ical', 'ology', 'ologist', 'ological', 'y']
+      .includes(token.slice(signal.length));
+  })).length;
   if (matchedSignals > 0) {
     score += 0.65;
     if (matchedSignals >= 2) score += 0.15;

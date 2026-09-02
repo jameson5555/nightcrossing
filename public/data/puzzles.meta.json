@@ -1,7 +1,7 @@
 {
-  "version": "9f81459445e23551",
+  "version": "38001a020af29c6b",
   "resetVersion": "bb837de6de25538c",
-  "puzzleCount": 166,
+  "puzzleCount": 163,
   "themeVisibility": {
     "Transportation & Vehicles": {
       "lockedUntilThemeCompleted": "Space & Sky"
@@ -48,8 +48,8 @@
       "receivesNextBatch": true
     },
     "Ocean & Marine Life": {
-      "status": "exhausted",
-      "receivesNextBatch": false
+      "status": "scheduled",
+      "receivesNextBatch": true
     },
     "Home & Tools": {
       "status": "scheduled",
@@ -64,12 +64,12 @@
       "receivesNextBatch": true
     },
     "Weather & Climate": {
-      "status": "scheduled",
-      "receivesNextBatch": true
+      "status": "exhausted",
+      "receivesNextBatch": false
     },
     "Internet & Software": {
-      "status": "scheduled",
-      "receivesNextBatch": true
+      "status": "exhausted",
+      "receivesNextBatch": false
     },
     "History & Civilization": {
       "status": "scheduled",
@@ -77,5 +77,5 @@
     }
   },
   "nextReleaseAt": "2026-10-01T00:00:00.000Z",
-  "generatedAt": "2026-09-02T00:05:42.951Z"
+  "generatedAt": "2026-09-02T17:00:03.170Z"
 }
