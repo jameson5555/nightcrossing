@@ -473,56 +473,60 @@ const PuzzleList = ({
               data-rank-tier={journey.current.level === 17 ? 'final' : journey.current.level >= 8 ? 'advanced' : 'early'}
             >
               <img src={journey.current.asset} alt={`${journey.current.name} journey badge`} className="journey-modal-badge" />
-              <span className="journey-modal-level">Level {journey.current.level}</span>
             </div>
 
-            <div className="journey-modal-heading">
-              <span className="journey-eyebrow">Your Journey Rank</span>
-              <h2 id="journey-modal-title">{journey.current.name}</h2>
-              <p id="journey-modal-summary">
-                {journey.next
-                  ? `${puzzlesToNextRank} more ${puzzlesToNextRank === 1 ? 'puzzle' : 'puzzles'} until ${journey.next.name}.`
-                  : 'You have reached the final Nightcrossing rank.'}
-              </p>
+            <div className="journey-modal-details">
+              <div className="journey-modal-heading">
+                <div className="journey-modal-rank-meta">
+                  <span className="journey-eyebrow">Your Journey Rank</span>
+                  <span className="journey-modal-level">Level {journey.current.level}</span>
+                </div>
+                <h2 id="journey-modal-title">{journey.current.name}</h2>
+                <p id="journey-modal-summary">
+                  {journey.next
+                    ? `${puzzlesToNextRank} more ${puzzlesToNextRank === 1 ? 'puzzle' : 'puzzles'} until ${journey.next.name}.`
+                    : 'You have reached the final Nightcrossing rank.'}
+                </p>
+              </div>
+
+              <div className="journey-modal-progress">
+                <div className="journey-modal-progress-copy">
+                  <span>Rank progress</span>
+                  <strong>{journeyPercent}</strong>
+                </div>
+                <div
+                  className="journey-meter"
+                  role="progressbar"
+                  aria-label={`Progress toward ${journey.next?.name || 'the final rank'}`}
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow={Math.round(journey.progress * 100)}
+                >
+                  <span style={{ width: journeyPercent }}></span>
+                </div>
+              </div>
+
+              <dl className="journey-stats">
+                <div>
+                  <dt>Completed</dt>
+                  <dd>{completedPuzzleCount}</dd>
+                </div>
+                <div>
+                  <dt>Available</dt>
+                  <dd>{puzzles.length}</dd>
+                </div>
+                <div>
+                  <dt>Remaining</dt>
+                  <dd>{puzzlesRemaining}</dd>
+                </div>
+                <div>
+                  <dt>{journey.next ? 'Next rank at' : 'Top rank'}</dt>
+                  <dd>{journey.next ? journey.next.required : 'Reached'}</dd>
+                </div>
+              </dl>
+
+              <p className="journey-modal-catalog">{catalogCompletionCopy}</p>
             </div>
-
-            <div className="journey-modal-progress">
-              <div className="journey-modal-progress-copy">
-                <span>Rank progress</span>
-                <strong>{journeyPercent}</strong>
-              </div>
-              <div
-                className="journey-meter"
-                role="progressbar"
-                aria-label={`Progress toward ${journey.next?.name || 'the final rank'}`}
-                aria-valuemin="0"
-                aria-valuemax="100"
-                aria-valuenow={Math.round(journey.progress * 100)}
-              >
-                <span style={{ width: journeyPercent }}></span>
-              </div>
-            </div>
-
-            <dl className="journey-stats">
-              <div>
-                <dt>Completed</dt>
-                <dd>{completedPuzzleCount}</dd>
-              </div>
-              <div>
-                <dt>Available</dt>
-                <dd>{puzzles.length}</dd>
-              </div>
-              <div>
-                <dt>Remaining</dt>
-                <dd>{puzzlesRemaining}</dd>
-              </div>
-              <div>
-                <dt>{journey.next ? 'Next rank at' : 'Top rank'}</dt>
-                <dd>{journey.next ? journey.next.required : 'Reached'}</dd>
-              </div>
-            </dl>
-
-            <p className="journey-modal-catalog">{catalogCompletionCopy}</p>
           </div>
         </div>
       )}
