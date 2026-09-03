@@ -62,8 +62,11 @@ const PuzzleList = ({
   const [expandedTheme, setExpandedTheme] = useState(null);
   const [moonAnimationReady, setMoonAnimationReady] = useState(false);
   const [journeyRankHighWatermark, setJourneyRankHighWatermark] = useState(1);
+  const [isJourneyModalOpen, setIsJourneyModalOpen] = useState(false);
   const statusesRef = useRef(statuses);
   const onListStateChangeRef = useRef(onListStateChange);
+  const journeyTriggerRef = useRef(null);
+  const journeyCloseRef = useRef(null);
   const themeVisibility = puzzleMeta?.themeVisibility || {};
   const themeAvailability = puzzleMeta?.themeAvailability || {};
   const nextReleaseAt = puzzleMeta?.nextReleaseAt || '';
@@ -75,6 +78,31 @@ const PuzzleList = ({
   useEffect(() => {
     onListStateChangeRef.current = onListStateChange;
   }, [onListStateChange]);
+
+  useEffect(() => {
+    if (!isJourneyModalOpen) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    const triggerElement = journeyTriggerRef.current;
+    document.body.style.overflow = 'hidden';
+    journeyCloseRef.current?.focus();
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setIsJourneyModalOpen(false);
+      } else if (event.key === 'Tab') {
+        event.preventDefault();
+        journeyCloseRef.current?.focus();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+      triggerElement?.focus();
+    };
+  }, [isJourneyModalOpen]);
 
   useEffect(() => {
     let cancelled = false;
@@ -354,53 +382,151 @@ const PuzzleList = ({
     ? `${Math.max(0, journey.next.required - completedPuzzleCount)} to ${journey.next.name}`
     : 'Final rank reached';
   const catalogCompletionCopy = `${completedPuzzleCount} of ${puzzles.length} available puzzles complete`;
+  const puzzlesRemaining = Math.max(0, puzzles.length - completedPuzzleCount);
+  const puzzlesToNextRank = journey.next
+    ? Math.max(0, journey.next.required - completedPuzzleCount)
+    : 0;
 
   return (
-    <div className="puzzle-list-wrapper animate-fade-in">
-      {inProgressPuzzles.length > 0 && (
-        <section className="puzzle-section">
-          <h2 className="section-title">In Progress</h2>
-          <ul className="puzzle-list">
-            {inProgressPuzzles.map(p => renderPuzzleItem(p, { showWordsLeft: true }))}
-          </ul>
-        </section>
-      )}
+    <>
+      <div className="puzzle-list-wrapper animate-fade-in">
+        {inProgressPuzzles.length > 0 && (
+          <section className="puzzle-section">
+            <h2 className="section-title">In Progress</h2>
+            <ul className="puzzle-list">
+              {inProgressPuzzles.map(p => renderPuzzleItem(p, { showWordsLeft: true }))}
+            </ul>
+          </section>
+        )}
 
-      <section className="puzzle-section theme-section">
-        <h2 className="section-title">Themes</h2>
-        <div className="theme-list">
-          {visibleActiveThemeEntries.map(([theme, themeState]) => renderThemeGroup(theme, themeState))}
-        </div>
-      </section>
-
-      <section className="journey-section">
-        <div className="journey-rank">
-          <div
-            className="journey-badge-frame"
-            data-rank-tier={journey.current.level === 17 ? 'final' : journey.current.level >= 8 ? 'advanced' : 'early'}
-          >
-            <img src={journey.current.asset} alt={journey.current.name} className="journey-badge" />
-          </div>
-          <div className="journey-copy">
-            <span className="journey-eyebrow">Journey Rank</span>
-            <span className="journey-title">{journey.current.name}</span>
-            <span className="journey-progress-copy">{`${completedPuzzleCount} completed • ${nextRankCopy}`}</span>
-          </div>
-        </div>
-        <div className="journey-meter" aria-hidden="true">
-          <span style={{ width: journeyPercent }}></span>
-        </div>
-      </section>
-
-      {completedThemeEntries.length > 0 && (
-        <section className="puzzle-section theme-section completed-theme-section">
-          <h2 className="section-title">Completed Themes</h2>
+        <section className="puzzle-section theme-section">
+          <h2 className="section-title">Themes</h2>
           <div className="theme-list">
-            {completedThemeEntries.map(([theme, themeState]) => renderThemeGroup(theme, themeState, { archived: true }))}
+            {visibleActiveThemeEntries.map(([theme, themeState]) => renderThemeGroup(theme, themeState))}
           </div>
         </section>
+
+        <section className="journey-section">
+          <button
+            ref={journeyTriggerRef}
+            type="button"
+            className="journey-trigger"
+            onClick={() => setIsJourneyModalOpen(true)}
+            aria-haspopup="dialog"
+            aria-label={`View journey rank details for ${journey.current.name}`}
+          >
+            <div className="journey-rank">
+              <div
+                className="journey-badge-frame"
+                data-rank-tier={journey.current.level === 17 ? 'final' : journey.current.level >= 8 ? 'advanced' : 'early'}
+              >
+                <img src={journey.current.asset} alt="" className="journey-badge" />
+              </div>
+              <div className="journey-copy">
+                <span className="journey-eyebrow">Journey Rank</span>
+                <span className="journey-title">{journey.current.name}</span>
+                <span className="journey-progress-copy">{`${completedPuzzleCount} completed • ${nextRankCopy}`}</span>
+              </div>
+            </div>
+            <div className="journey-meter" aria-hidden="true">
+              <span style={{ width: journeyPercent }}></span>
+            </div>
+          </button>
+        </section>
+
+        {completedThemeEntries.length > 0 && (
+          <section className="puzzle-section theme-section completed-theme-section">
+            <h2 className="section-title">Completed Themes</h2>
+            <div className="theme-list">
+              {completedThemeEntries.map(([theme, themeState]) => renderThemeGroup(theme, themeState, { archived: true }))}
+            </div>
+          </section>
+        )}
+      </div>
+
+      {isJourneyModalOpen && (
+        <div
+          className="journey-modal-overlay"
+          onClick={() => setIsJourneyModalOpen(false)}
+          role="presentation"
+        >
+          <div
+            className="journey-modal glass-panel animate-pop-in"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="journey-modal-title"
+            aria-describedby="journey-modal-summary"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              ref={journeyCloseRef}
+              type="button"
+              className="journey-modal-close"
+              onClick={() => setIsJourneyModalOpen(false)}
+              aria-label="Close journey details"
+            >
+              &times;
+            </button>
+
+            <div
+              className="journey-modal-badge-frame"
+              data-rank-tier={journey.current.level === 17 ? 'final' : journey.current.level >= 8 ? 'advanced' : 'early'}
+            >
+              <img src={journey.current.asset} alt={`${journey.current.name} journey badge`} className="journey-modal-badge" />
+              <span className="journey-modal-level">Level {journey.current.level}</span>
+            </div>
+
+            <div className="journey-modal-heading">
+              <span className="journey-eyebrow">Your Journey Rank</span>
+              <h2 id="journey-modal-title">{journey.current.name}</h2>
+              <p id="journey-modal-summary">
+                {journey.next
+                  ? `${puzzlesToNextRank} more ${puzzlesToNextRank === 1 ? 'puzzle' : 'puzzles'} until ${journey.next.name}.`
+                  : 'You have reached the final Nightcrossing rank.'}
+              </p>
+            </div>
+
+            <div className="journey-modal-progress">
+              <div className="journey-modal-progress-copy">
+                <span>Rank progress</span>
+                <strong>{journeyPercent}</strong>
+              </div>
+              <div
+                className="journey-meter"
+                role="progressbar"
+                aria-label={`Progress toward ${journey.next?.name || 'the final rank'}`}
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow={Math.round(journey.progress * 100)}
+              >
+                <span style={{ width: journeyPercent }}></span>
+              </div>
+            </div>
+
+            <dl className="journey-stats">
+              <div>
+                <dt>Completed</dt>
+                <dd>{completedPuzzleCount}</dd>
+              </div>
+              <div>
+                <dt>Available</dt>
+                <dd>{puzzles.length}</dd>
+              </div>
+              <div>
+                <dt>Remaining</dt>
+                <dd>{puzzlesRemaining}</dd>
+              </div>
+              <div>
+                <dt>{journey.next ? 'Next rank at' : 'Top rank'}</dt>
+                <dd>{journey.next ? journey.next.required : 'Reached'}</dd>
+              </div>
+            </dl>
+
+            <p className="journey-modal-catalog">{catalogCompletionCopy}</p>
+          </div>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 
