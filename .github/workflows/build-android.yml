@@ -2,44 +2,83 @@ name: Build Android App
 
 on:
   workflow_dispatch:
+    inputs:
+      release_bundle:
+        description: Build a signed Play Store bundle
+        type: boolean
+        default: false
+      version_code:
+        description: Increasing Play Store version code
+        default: '1'
+      version_name:
+        description: User-facing version
+        default: '1.0'
   release:
     types: [published]
+
+permissions:
+  contents: read
 
 jobs:
   build-android:
     runs-on: ubuntu-latest
+    env:
+      NC_BUILD_TARGET: android
+      NC_RELEASE: ${{ github.event_name == 'release' || inputs.release_bundle }}
+      NC_ANDROID_VERSION_CODE: ${{ inputs.version_code || github.run_number }}
+      NC_ANDROID_VERSION_NAME: ${{ inputs.version_name || github.event.release.tag_name || '1.0' }}
+      VITE_ANDROID_REWARDED_ADS_ENABLED: ${{ vars.NC_ANDROID_REWARDED_ADS_ENABLED || 'false' }}
+      VITE_WEB_REWARDED_ADS_ENABLED: 'false'
+      VITE_ADS_TEST_MODE: ${{ vars.NC_ADS_TEST_MODE || 'true' }}
+      VITE_ANDROID_ADS_REVIEWED: ${{ vars.NC_ANDROID_ADS_REVIEWED || 'false' }}
+      VITE_ADMOB_REWARDED_UNIT_ID: ${{ vars.NC_ADMOB_REWARDED_UNIT_ID }}
+      NC_ADMOB_APP_ID: ${{ vars.NC_ADMOB_APP_ID }}
+      VITE_PUZZLE_DATA_URL: https://jamesonmacarthur.com/nightcrossing/data/
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-
-      - name: Setup Java
-        uses: actions/setup-java@v3
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
-          java-version: '17'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build Web Assets
+          distribution: temurin
+          java-version: '21'
+      - uses: android-actions/setup-android@v3
+      - run: sdkmanager 'platforms;android-36' 'build-tools;36.0.0'
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - run: npx cap sync android
+      - name: Decode upload key
+        if: env.NC_RELEASE == 'true'
         env:
-          VITE_PUZZLE_DATA_URL: https://jamesonmacarthur.com/nightcrossing/data/
-        run: npm run build
-
-      - name: Sync Capacitor
-        run: npx cap sync android
-
-      - name: Build Android APK
-        working-directory: ./android
-        run: ./gradlew assembleDebug # Replace with assembleRelease and signing for Play Store
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+          NC_KEYSTORE_BASE64: ${{ secrets.NC_ANDROID_KEYSTORE_BASE64 }}
+        shell: bash
+        run: |
+          test -n "$NC_KEYSTORE_BASE64" || { echo 'Missing upload keystore secret'; exit 1; }
+          umask 077
+          printf '%s' "$NC_KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/nightcrossing-upload.jks"
+      - name: Build Android artifact
+        working-directory: android
+        env:
+          NC_ANDROID_KEYSTORE_PATH: ${{ runner.temp }}/nightcrossing-upload.jks
+          NC_ANDROID_KEYSTORE_PASSWORD: ${{ secrets.NC_ANDROID_KEYSTORE_PASSWORD }}
+          NC_ANDROID_KEY_ALIAS: ${{ secrets.NC_ANDROID_KEY_ALIAS }}
+          NC_ANDROID_KEY_PASSWORD: ${{ secrets.NC_ANDROID_KEY_PASSWORD }}
+        run: |
+          if [ "$NC_RELEASE" = 'true' ]; then
+            ./gradlew bundleRelease
+          else
+            ./gradlew assembleDebug
+          fi
+      - name: Remove temporary signing material
+        if: always()
+        run: rm -f "$RUNNER_TEMP/nightcrossing-upload.jks"
+      - uses: actions/upload-artifact@v4
         with:
-          name: app-debug.apk
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          name: nightcrossing-android
+          if-no-files-found: error
+          path: |
+            android/app/build/outputs/apk/debug/*.apk
+            android/app/build/outputs/bundle/release/*.aab

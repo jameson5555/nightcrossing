@@ -1,3 +1,4 @@
+import { createHintWallet } from './hintWallet.js';
 import { Preferences } from '@capacitor/preferences';
 
 const PUZZLE_DATASET_VERSION_KEY = 'puzzle_dataset_version';
@@ -12,6 +13,7 @@ const RESETTABLE_KEY_PREFIXES = [
 ];
 const RESETTABLE_EXACT_KEYS = [
   'global_hints_remaining',
+  'hint_wallet_v1',
   'hints_empty_timestamp',
   'bonus_hint_toast_pending',
   'bonus_hints_awarded_since_empty'
@@ -79,18 +81,20 @@ export const checkPuzzleStatus = async (puzzleId, expectedGrid) => {
 
 // --- HINT SYSTEM ---
 
-export const saveHintsRemaining = async (count) => {
-  await Preferences.set({
-    key: 'global_hints_remaining',
-    value: String(count)
-  });
-};
+const hintWallet = createHintWallet({
+  read: async () => {
+    const { value } = await Preferences.get({ key: 'hint_wallet_v1' });
+    return value ? JSON.parse(value) : null;
+  },
+  write: async (wallet) => Preferences.set({ key: 'hint_wallet_v1', value: JSON.stringify(wallet) }),
+  readLegacy: async () => {
+    const { value } = await Preferences.get({ key: 'global_hints_remaining' });
+    return value === null ? 5 : Number(value);
+  },
+});
 
-export const loadHintsRemaining = async () => {
-  const { value } = await Preferences.get({ key: 'global_hints_remaining' });
-  // Default to 5 hints if never set.
-  return value !== null ? parseInt(value, 10) : 5;
-};
+export const loadHintsRemaining = () => hintWallet.balance();
+export const changeHintsRemaining = (delta, receipt) => hintWallet.change(delta, receipt);
 
 export const saveUnlockedHints = async (puzzleId, hintIdsSet) => {
   await Preferences.set({

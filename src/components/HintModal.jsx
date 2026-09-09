@@ -12,7 +12,10 @@ const HintModal = ({
   hintsRemaining,
   hasFreeHintAvailable,
   canUnlockHint,
-  outOfHintsMessage
+  outOfHintsMessage,
+  adState,
+  onWatchAd,
+  onRetryReward
 }) => {
   if (!isOpen) return null;
 
@@ -76,6 +79,22 @@ const HintModal = ({
             </div>
           )}
 
+          {hintsRemaining === 0 && !hasFreeHintAvailable && !isWordSolved && (
+            <div className="rewarded-hint" aria-live="polite">
+              {adState === 'ready' && (
+                <button className="unlock-btn" onClick={onWatchAd}>Watch an ad → get 1 bonus hint</button>
+              )}
+              {adState === 'loading' && <p>Checking for a bonus hint ad…</p>}
+              {adState === 'showing' && <p>Your bonus hint will be added when the ad confirms your reward.</p>}
+              {['unavailable', 'failed'].includes(adState) && <p>Bonus hint ads are unavailable right now.</p>}
+              {adState === 'dismissed' && <p>Ad closed. No hint was added.</p>}
+              {adState === 'save-failed' && <>
+                <p>Your reward could not be saved. Try saving it again without watching another ad.</p>
+                <button className="unlock-btn" onClick={onRetryReward}>Save earned hint</button>
+              </>}
+            </div>
+          )}
+          {adState === 'completed' && <p role="status">Your bonus hint has been added!</p>}
           {hintsRemaining <= 0 && !hasFreeHintAvailable && (
             <p className="hint-error">{outOfHintsMessage || 'Free bonus hint coming soon.'}</p>
           )}

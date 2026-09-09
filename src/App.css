@@ -380,3 +380,5 @@ html, body {
     display: none;
   }
 }
+
+.privacy-link { display: block; width: fit-content; margin: 1.5rem auto; color: var(--text-secondary, #bbc3d8); font-size: .85rem; }

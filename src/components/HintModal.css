@@ -16,6 +16,8 @@
 .modal-content {
   width: 100%;
   max-width: 440px;
+  max-height: calc(100dvh - 2 * var(--spacing-md));
+  overflow-y: auto;
   position: relative;
   padding: var(--spacing-lg);
   display: flex;
@@ -194,3 +196,6 @@
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+.rewarded-hint { margin-top: 1rem; }
+.rewarded-hint p { color: var(--text-secondary, #bbc3d8); font-size: .9rem; line-height: 1.5; }

@@ -50,3 +50,12 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## Monetization and Android release
+
+Optional rewarded hints are implemented for Android and web, disabled by default.
+See [launch setup and validation](docs/monetization-launch.md),
+[store listing draft](docs/store-listing.md), and `.env.example`.
+The game is positioned for adult crossword players, with no age screen or optional
+minor-access restriction. Publisher approval, privacy setup, signing credentials,
+and physical-device testing are required before monetized Play distribution.

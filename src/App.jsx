@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useSyncExternalStore } from 'react';
 import './App.css';
 import CrosswordGrid from './components/CrosswordGrid';
 import ClueList from './components/ClueList';
@@ -7,7 +7,7 @@ import { getWordAt, getSolvedClueIds } from './utils/crossword';
 import { 
   loadPuzzleProgress, 
   loadHintsRemaining, 
-  saveHintsRemaining, 
+  changeHintsRemaining,
   loadUnlockedHints, 
   saveUnlockedHints,
   loadRevealedIndices,
@@ -36,6 +36,11 @@ import { Capacitor } from '@capacitor/core';
 import HintModal from './components/HintModal';
 import { fetchPuzzleData } from './utils/puzzleData';
 import { getThemeCompletionOutcome } from './utils/themeAvailability';
+
+import { createRewardedHints } from './ads/rewardedHints';
+import { getAdConfig } from './ads/config';
+import { createAndroidProvider } from './ads/android';
+import { createWebProvider } from './ads/web';
 
 const TITLE_FADE_OUT_MS = 220;
 const TITLE_FADE_IN_MS = 280;
@@ -112,6 +117,19 @@ function App() {
   const [selectedCell, setSelectedCell] = useState(null);
   const [answers, setAnswers] = useState([]);
   const [hintsRemaining, setHintsRemaining] = useState(5);
+  const [rewardedHints] = useState(() => {
+    const platform = Capacitor.getPlatform();
+    const config = getAdConfig(import.meta.env, platform);
+    const provider = platform === 'android' ? createAndroidProvider(config) : createWebProvider(config);
+    return createRewardedHints({
+      provider,
+      credit: async (receipt) => {
+        const count = await changeHintsRemaining(1, receipt);
+        setHintsRemaining(count);
+      },
+    });
+  });
+  const adState = useSyncExternalStore(rewardedHints.subscribe, rewardedHints.getState);
   const [unlockedHints, setUnlockedHints] = useState(new Set());
   const [revealedIndices, setRevealedIndices] = useState(new Set());
   const [isHintModalOpen, setIsHintModalOpen] = useState(false);
@@ -185,10 +203,10 @@ function App() {
       }
 
       const newlyEarnedHints = eligibleHints - alreadyAwardedHints;
-      const currentCount = await loadHintsRemaining();
-      const newCount = currentCount + newlyEarnedHints;
-
-      await saveHintsRemaining(newCount);
+      let newCount;
+      for (let index = alreadyAwardedHints; index < eligibleHints; index++) {
+        newCount = await changeHintsRemaining(1, `timer:${emptyTs}:${index}`);
+      }
       await saveBonusHintsAwardedSinceEmpty(eligibleHints);
       await saveBonusHintToastPending(true);
 
@@ -380,6 +398,12 @@ function App() {
   const solvedClueIds = puzzleData ? getSolvedClueIds(puzzleData, answers) : new Set();
   const isPuzzleComplete = puzzleData && solvedClueIds.size === (puzzleData.answers.across.length + puzzleData.answers.down.length);
 
+  const eligibleForAd = isHintModalOpen && hintsRemaining === 0 && hasUsedFreeHint && !activeWord?.isCorrect;
+  useEffect(() => {
+    if (eligibleForAd) void rewardedHints.prepare();
+    return () => rewardedHints.cancel();
+  }, [eligibleForAd, rewardedHints]);
+
   // Handle reward on completion
   useEffect(() => {
     if (isPuzzleComplete && puzzleData) {
@@ -387,11 +411,8 @@ function App() {
         const alreadyClaimed = await loadRewardClaimed(puzzleData.id);
         if (alreadyClaimed) return;
 
-        setHintsRemaining(prev => {
-          const newCount = prev + 5;
-          saveHintsRemaining(newCount); // Side effect inside state update is usually avoided, but here we need the exact new value
-          return newCount;
-        });
+        const newCount = await changeHintsRemaining(5, `puzzle:${puzzleData.id}`);
+        setHintsRemaining(newCount);
         
         await clearHintsEmptyTimestamp();
         if (Capacitor.isNativePlatform()) {
@@ -596,9 +617,9 @@ function App() {
           await saveFreeHintToastSeen(true);
         }
       } else {
-        const newCount = hintsRemaining - 1;
+        const newCount = await changeHintsRemaining(-1);
+        if (newCount === null) return false;
         setHintsRemaining(newCount);
-        await saveHintsRemaining(newCount);
 
         if (newCount === 0) {
           await handleHintsDepleted();
@@ -613,6 +634,9 @@ function App() {
   };
 
   const handleHintsDepleted = async () => {
+    // Spending an ad-funded hint must not postpone an already running bonus.
+    const existing = await loadHintsEmptyTimestamp();
+    if (existing && await loadBonusHintsAwardedSinceEmpty() < MAX_BONUS_HINTS_PER_EMPTY) return;
     const now = Date.now();
     await saveHintsEmptyTimestamp(now);
     await saveBonusHintsAwardedSinceEmpty(0);
@@ -670,9 +694,9 @@ function App() {
 
       if (chargeHint) {
         // Deduct hint
-        const newCount = hintsRemaining - 1;
+        const newCount = await changeHintsRemaining(-1);
+        if (newCount === null) return false;
         setHintsRemaining(newCount);
-        await saveHintsRemaining(newCount);
 
         if (newCount === 0) {
           await handleHintsDepleted();
@@ -805,6 +829,9 @@ function App() {
             hasFreeHintAvailable={!hasUsedFreeHint}
             canUnlockHint={canUnlockSelectedClueHint}
             outOfHintsMessage={outOfHintsMessage}
+            adState={adState}
+            onWatchAd={() => { if (eligibleForAd) void rewardedHints.show(); }}
+            onRetryReward={() => { void rewardedHints.prepare(); }}
           />
         </>
       ) : (
@@ -817,6 +844,7 @@ function App() {
             onListStateChange={setPuzzleListState}
             refreshToken={puzzleListRefreshToken}
           />
+          <a className="privacy-link" href={`${import.meta.env.BASE_URL}privacy.html`}>Privacy</a>
         </div>
       )}
 

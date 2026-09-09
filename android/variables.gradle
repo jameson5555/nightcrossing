@@ -1,4 +1,6 @@
 ext {
+    // Pin the ad SDK so release testing applies to a reproducible version.
+    playServicesAdsVersion = '24.9.0'
     minSdkVersion = 24
     compileSdkVersion = 36
     targetSdkVersion = 36

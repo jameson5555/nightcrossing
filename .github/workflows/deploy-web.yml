@@ -16,12 +16,19 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Install dependencies
         run: npm ci
 
       - name: Build Web App
+        env:
+          VITE_ANDROID_REWARDED_ADS_ENABLED: 'false'
+          VITE_WEB_REWARDED_ADS_ENABLED: ${{ vars.NC_WEB_REWARDED_ADS_ENABLED || 'false' }}
+          VITE_ADS_TEST_MODE: ${{ vars.NC_ADS_TEST_MODE || 'true' }}
+          VITE_H5_PUBLISHER_ID: ${{ vars.NC_H5_PUBLISHER_ID }}
+          VITE_WEB_ADS_REVIEWED: ${{ vars.NC_WEB_ADS_REVIEWED || 'false' }}
+          VITE_WEB_US_AD_SERVING_VERIFIED: ${{ vars.NC_WEB_US_AD_SERVING_VERIFIED || 'false' }}
         run: npm run build
 
       - name: Deploy to cPanel via FTP
