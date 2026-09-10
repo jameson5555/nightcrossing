@@ -26,7 +26,7 @@ Only append this paragraph when rewarded ads are activated in the submitted buil
 
 Privacy URL after deployment: `https://jamesonmacarthur.com/nightcrossing/privacy.html`
 
-Support email: **Owner to provide.**
+Support email: **nightcrossing@jamesonmacarthur.com**
 
 Screenshots to capture from the release candidate: puzzle selection, an active unsolved crossword, the hint window, and journey/completion progress. Use actual gameplay without live ads or personal information. Existing launcher artwork can supply the store icon after checking its resolution and appearance. Capture final phone screenshots and feature artwork after device QA; they are not included in this draft.
 
