@@ -1,5 +1,8 @@
 import { createHintWallet } from './hintWallet.js';
 import { Preferences } from '@capacitor/preferences';
+import { reconcilePuzzleRevisions } from './puzzleRevisions.js';
+
+export const resetReplacedPuzzleProgress = (revisions) => reconcilePuzzleRevisions(Preferences, revisions);
 
 const PUZZLE_DATASET_VERSION_KEY = 'puzzle_dataset_version';
 const JOURNEY_RANK_HIGH_WATERMARK_KEY = 'journey_rank_high_watermark';

@@ -194,14 +194,14 @@
   ],
   "clues": {
     "across": [
-      "5. Act by which terrain or a road etc. is crossed",
-      "6. Rails that a tram runs on"
+      "5. Place where a road or railway meets another route",
+      "6. Rail route used by a streetcar"
     ],
     "down": [
-      "1. Road that is not frequently travelled",
-      "2. Vehicle used in farms e.g. for pulling farm equipment and preparing the fields",
-      "3. Heavier four-wheeled vehicle designed to carry goods",
-      "4. Weight in tons, especially of cargo or freight"
+      "1. Quiet roads away from major traffic routes",
+      "2. Farm vehicles used to pull heavy equipment",
+      "3. Four-wheeled vehicle used to carry goods",
+      "4. Cargo weight measured in tons"
     ]
   },
   "answers": {
@@ -217,11 +217,11 @@
     ]
   },
   "hints": {
-    "down-1": "Little-known or arcane field of study or detail",
-    "down-2": "Truck for pulling a semi-trailer or trailer",
-    "down-3": "Vehicle designed to transport goods or people on railway",
-    "down-4": "Number of tons of water that a floating ship displaces",
-    "across-5": "Intersection where roads, lines, or tracks cross",
-    "across-6": "Either of the two pairs of sidelines marked on a tennis court which mark the outside of the singles and doubles playing areas"
+    "down-1": "Often take travelers through the countryside.",
+    "down-2": "They can tow plows or trailers.",
+    "down-3": "Traditionally pulled by animals.",
+    "down-4": "A measure of how much freight is being transported.",
+    "across-5": "Travelers must watch for passing traffic.",
+    "across-6": "The vehicle follows its fixed track through town."
   }
 }

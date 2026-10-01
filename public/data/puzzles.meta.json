@@ -1,7 +1,109 @@
 {
-  "version": "d2142bd4a2419b8b",
+  "version": "6dc8a1576514b0f1",
   "resetVersion": "bb837de6de25538c",
   "puzzleCount": 198,
+  "puzzleRevisions": {
+    "animals---wildlife-vol13": {
+      "revision": "f7fbe3d835e34107",
+      "theme": "Animals & Wildlife"
+    },
+    "animals---wildlife-vol14": {
+      "revision": "687375b3432b0f9b",
+      "theme": "Animals & Wildlife"
+    },
+    "animals---wildlife-vol9": {
+      "revision": "a9450c50dc192af8",
+      "theme": "Animals & Wildlife"
+    },
+    "food---cooking-vol12": {
+      "revision": "bc1847c8c518cbac",
+      "theme": "Food & Cooking"
+    },
+    "food---cooking-vol19": {
+      "revision": "6184a9b7d38c3ebe",
+      "theme": "Food & Cooking"
+    },
+    "food---cooking-vol20": {
+      "revision": "e4b6fdfd89074e95",
+      "theme": "Food & Cooking"
+    },
+    "food---cooking-vol21": {
+      "revision": "89b922bf36ed7029",
+      "theme": "Food & Cooking"
+    },
+    "home---tools-vol14": {
+      "revision": "2632ff8b3e3b6ed5",
+      "theme": "Home & Tools"
+    },
+    "home---tools-vol15": {
+      "revision": "17d14a29378c593e",
+      "theme": "Home & Tools"
+    },
+    "music---sound-vol14": {
+      "revision": "7e02842a9ca4ab94",
+      "theme": "Music & Sound"
+    },
+    "music---sound-vol19": {
+      "revision": "74d4a87b1694d17d",
+      "theme": "Music & Sound"
+    },
+    "music---sound-vol20": {
+      "revision": "a12bc5357428016f",
+      "theme": "Music & Sound"
+    },
+    "music---sound-vol21": {
+      "revision": "d2023da04970479a",
+      "theme": "Music & Sound"
+    },
+    "nature---wilderness-vol7": {
+      "revision": "452355c97f3dae70",
+      "theme": "Nature & Wilderness"
+    },
+    "nature---wilderness-vol8": {
+      "revision": "4db87edc91225446",
+      "theme": "Nature & Wilderness"
+    },
+    "nature---wilderness-vol9": {
+      "revision": "3a7e93d483dc8f35",
+      "theme": "Nature & Wilderness"
+    },
+    "ocean---marine-life-vol15": {
+      "revision": "509015ac13bdda1c",
+      "theme": "Ocean & Marine Life"
+    },
+    "ocean---marine-life-vol17": {
+      "revision": "e4f0ece427f67ae8",
+      "theme": "Ocean & Marine Life"
+    },
+    "ocean---marine-life-vol18": {
+      "revision": "17021306fa607770",
+      "theme": "Ocean & Marine Life"
+    },
+    "ocean---marine-life-vol19": {
+      "revision": "57f1249bafbfa09b",
+      "theme": "Ocean & Marine Life"
+    },
+    "plants---gardens-vol13": {
+      "revision": "3f5708f0dfa4d14a",
+      "theme": "Plants & Gardens"
+    },
+    "plants---gardens-vol14": {
+      "revision": "a6b46e67095eb690",
+      "theme": "Plants & Gardens"
+    },
+    "plants---gardens-vol15": {
+      "revision": "158ca4218cbe63c3",
+      "theme": "Plants & Gardens"
+    },
+    "sports---athletics-vol17": {
+      "revision": "823cbedcac7ecae1",
+      "theme": "Sports & Athletics"
+    },
+    "theater---film-vol3": {
+      "revision": "26e688b315124ca5",
+      "theme": "Theater & Film"
+    }
+  },
   "themeVisibility": {
     "Transportation & Vehicles": {
       "lockedUntilThemeCompleted": "Space & Sky"
@@ -92,5 +194,5 @@
     }
   },
   "nextReleaseAt": "2026-11-01T00:00:00.000Z",
-  "generatedAt": "2026-10-01T02:24:18.586Z"
+  "generatedAt": "2026-10-01T22:09:14.779Z"
 }

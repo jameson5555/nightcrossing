@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { analyzeThemeReadiness } from '../scripts/preflight-generation.js';
-import { scoreWordForTheme } from '../scripts/proceduralEngine.js';
+import { THEMES, scoreWordForTheme } from '../scripts/proceduralEngine.js';
 
 function word(index, { hint = 'Helpful hint', source = 'seed' } = {}) {
   const answers = [
@@ -12,14 +12,15 @@ function word(index, { hint = 'Helpful hint', source = 'seed' } = {}) {
   ];
   return {
     answer: answers[index],
-    clue: `Kitchen food item number ${index}`,
+    clue: `Kitchen food item for recipe number ${index}`,
     hint,
     source,
+    zipfFrequency: 4,
     themeScore: 1.5
   };
 }
 
-test('treats low pool hint coverage as an advisory when generation capacity is ample', () => {
+test('counts only hinted entries toward actual generation capacity', () => {
   const theme = {
     name: 'Food & Cooking',
     words: Array.from({ length: 18 }, (_, index) => word(index, {
@@ -27,13 +28,13 @@ test('treats low pool hint coverage as an advisory when generation capacity is a
     }))
   };
 
-  const report = analyzeThemeReadiness(theme, new Set(), 1, {
+  const report = analyzeThemeReadiness(theme, new Set(), 2, {
     minFutureRunwayBatches: 0
   });
 
-  assert.equal(report.isReady, true);
-  assert.deepEqual(report.readinessFailures, []);
-  assert.ok(report.readinessAdvisories.some(item => item.startsWith('hint coverage')));
+  assert.equal(report.usableCoreWords, 8);
+  assert.equal(report.isReady, false);
+  assert.ok(report.readinessFailures.length > 0);
 });
 
 test('matches theme signals by token prefix without substring false positives', () => {
@@ -123,10 +124,6 @@ test('keeps every successor pool ready with two future batches of runway', () =>
     'Theater & Film',
     'Clothing & Fashion'
   ];
-  const candidateThemes = JSON.parse(fs.readFileSync(
-    new URL('../scripts/candidate-themes.json', import.meta.url),
-    'utf8'
-  ));
   const rotation = JSON.parse(fs.readFileSync(
     new URL('../scripts/theme-rotation.json', import.meta.url),
     'utf8'
@@ -134,10 +131,11 @@ test('keeps every successor pool ready with two future batches of runway', () =>
 
   const weatherSlot = rotation.slots.find(slot => slot.currentTheme === 'Weather & Climate');
   assert.equal(weatherSlot?.nextTheme, 'Science & Discovery');
-  assert.deepEqual(rotation.candidates, successorNames.filter(name => name !== 'Science & Discovery'));
+  const assigned = new Set(rotation.slots.flatMap(slot => [slot.currentTheme, slot.nextTheme]));
+  assert.deepEqual(rotation.candidates, successorNames.filter(name => !assigned.has(name)));
 
   for (const themeName of successorNames) {
-    const theme = candidateThemes.find(candidate => candidate.name === themeName);
+    const theme = THEMES.find(candidate => candidate.name === themeName);
     assert.ok(theme, `Missing successor pool: ${themeName}`);
 
     const report = analyzeThemeReadiness(theme, new Set(), 3, {

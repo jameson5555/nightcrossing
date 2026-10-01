@@ -1,9 +1,17 @@
 const BANNED_CONTENT_REGEX = /\b(surname|surnames|given\s+name|given\s+names|male\s+given\s+name|male\s+given\s+names|female\s+given\s+name|female\s+given\s+names|unisex\s+given\s+name|unisex\s+given\s+names|legal\s+balls|first\s+name|first\s+names|last\s+name|last\s+names)\b/i;
 
-const PROFANITY_REGEX = /\b(fuck|fucking|shit|shitty|bitch|asshole|cunt|slut|motherfucker|dickhead|porn|pornography|masturbat|flatus|fellatio|penis|intercourse|zoophilia|bestiality|race\s+traitor|anal\s+sex|oral\s+sex)\b/i;
+const PROFANITY_REGEX = /\b(fuck\w*|shit\w*|bitch\w*|asshole\w*|cunt\w*|slut\w*|motherfucker\w*|dickhead\w*|porn\w*|masturbat\w*|flatus|fellatio|penis|intercourse|zoophilia|bestiality|brothels?|prostitut\w*|erotic|race\s+traitor|anal\s+sex|oral\s+sex)\b/i;
 
 const LOW_QUALITY_REGEXES = [
   /\b(initialism|acronym|abbreviation|abbr\.)\b/i,
+  /\b(?:alternative|alternate|variant)\s+spelling\b/i,
+  /\b(?:such\s+as|particularly|especially|including|for\s+example|namely)\s*[.,:]?$/i,
+  /\b(?:this|that|such|the\s+above)\s+(?:method|dance|dish|type|gathering|region|animal|output|sauce)\b/i,
+  /^fish,\s*(?:the|a|an)\b/i,
+  /\b(?:other|similar)\s+(?:genera|species|fish|plants)\b/i,
+  /\b(?:genus|subgenus|subfamily|subclass|taxonomic|scorpaeniform|belemnoidea)\b/i,
+  /\b[a-z]+(?:idae|inae)\b/i,
+  /(?:,\s*|\bspecies\s+)[A-Z][a-z]{3,}\s+[a-z]{3,}\b/,
   /\b(alternative\s+form|obsolete\s+form|obsolete\s+spelling|dated\s+spelling|misspelling\s+of|clipping\s+of|ellipsis\s+of|plural\s+of|transliteration\s+of|diminutive\s+of)\b/i,
   /\b(?:used|played|performed|featuring|made|eaten|cooked|adapted|scored)\s+(?:in|with|from|for|by)?\s*(?:this|such|the\s+above)\s+(?:a|an|the)?\s*(?:sport|game|style|plant|tree|shrub|grill|device|apparatus|material|sound|variety|rank|way|manner)\b/i,
   /\b(?:this|these|those|that|such)\s+(?:a|an|the)?\s*(?:sport|game|style|plant|tree|shrub|grill|device|apparatus|condition|rank|way|manner|material|sound|variety|concept)\b/i,
@@ -152,6 +160,12 @@ export function containsBannedContent(text) {
   return BANNED_CONTENT_REGEX.test(text || '');
 }
 
+export function hasReliableHint(entry) {
+  return Boolean(String(entry?.hint || '').trim()) &&
+    (entry.source !== 'ml' || entry.editorialReviewed === true ||
+      entry.hintSource === 'spelling');
+}
+
 export function containsProfanity(text) {
   return PROFANITY_REGEX.test(text || '');
 }
@@ -209,6 +223,10 @@ export function isWordEntryAcceptable(entry) {
 
   if (clue.length < 8 || clue.length > 96) {
     return { ok: false, reason: 'invalid-clue-length' };
+  }
+
+  if (hint.length > 160) {
+    return { ok: false, reason: 'invalid-hint-length' };
   }
 
   if (containsBannedContent(clue) || containsBannedContent(hint)) {

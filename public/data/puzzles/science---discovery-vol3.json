@@ -214,17 +214,17 @@
   ],
   "clues": {
     "across": [
-      "3. Science term for matter's resistance to changing motion",
-      "4. Science term for thermal energy transferred between objects",
-      "8. Scientific community",
-      "9. Science term for an outcome recorded in an experiment"
+      "3. Matter's resistance to a change in motion",
+      "4. Energy transferred because of a temperature difference",
+      "8. Systematic study of the natural world",
+      "9. Outcome recorded after an experiment"
     ],
     "down": [
-      "1. Science term for material that has mass and volume",
-      "2. Science term for a scientific unit of volume",
-      "5. Science term for a group of similar biological cells",
-      "6. Science term for the basic structural unit of life",
-      "7. Science term for a procedure used to check an idea"
+      "1. Anything that has mass and takes up space",
+      "2. Metric unit of volume equal to a thousand milliliters",
+      "5. Group of similar cells working together",
+      "6. Basic structural unit of living organisms",
+      "7. Procedure used to check a scientific idea"
     ]
   },
   "answers": {
@@ -243,14 +243,14 @@
     ]
   },
   "hints": {
-    "down-1": "It starts with M and has 6 letters.",
-    "down-2": "It starts with L and has 5 letters.",
-    "across-3": "It starts with I and has 7 letters.",
-    "across-4": "It starts with H and has 4 letters.",
-    "down-5": "It starts with T and has 6 letters.",
-    "down-6": "It starts with C and has 4 letters.",
-    "down-7": "It starts with T and has 4 letters.",
-    "across-8": "Particular discipline or branch of knowledge that is natural, measurable or consisting of systematic principles rather than intuition or technical skill",
-    "across-9": "It starts with R and has 6 letters."
+    "down-1": "Solids, liquids, and gases are forms of it.",
+    "down-2": "Often used to measure laboratory liquids.",
+    "across-3": "A moving object tends to keep moving without an outside force.",
+    "across-4": "It moves from warmer things toward cooler ones.",
+    "down-5": "Muscle and nerve are two examples.",
+    "down-6": "Many contain a nucleus and other internal structures.",
+    "down-7": "It gathers evidence to support or challenge a prediction.",
+    "across-8": "Experiments and observations help test explanations.",
+    "across-9": "Compare it with the prediction made beforehand."
   }
 }

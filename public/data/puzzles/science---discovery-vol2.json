@@ -214,16 +214,16 @@
   ],
   "clues": {
     "across": [
-      "1. Science term for long term atmospheric patterns studied by scientists",
-      "4. Science term for resistance between moving surfaces",
-      "5. Science term for a curved piece that focuses light",
-      "6. Science term for a portion collected for scientific testing"
+      "1. Long-term pattern of weather in a region",
+      "4. Resistance between surfaces moving against each other",
+      "5. Curved transparent piece that focuses light",
+      "6. Small portion collected for scientific testing"
     ],
     "down": [
-      "1. Science term for an unchanged comparison in an experiment",
-      "2. Science term for facts or measurements gathered in research",
-      "3. Science term for a basic unit of chemical matter",
-      "4. Science term for an organism that absorbs nutrients externally"
+      "1. Comparison condition in a scientific experiment",
+      "2. Facts or measurements collected in research",
+      "3. Smallest unit of an element retaining its identity",
+      "4. Organism such as a mushroom or mold"
     ]
   },
   "answers": {
@@ -241,13 +241,13 @@
     ]
   },
   "hints": {
-    "across-1": "It starts with C and has 7 letters.",
-    "down-1": "It starts with C and has 7 letters.",
-    "down-2": "It starts with D and has 4 letters.",
-    "down-3": "It starts with A and has 4 letters.",
-    "across-4": "It starts with F and has 8 letters.",
-    "down-4": "It starts with F and has 6 letters.",
-    "across-5": "It starts with L and has 4 letters.",
-    "across-6": "It starts with S and has 6 letters."
+    "across-1": "It describes conditions over many years.",
+    "down-1": "Helps isolate the effect of a tested change.",
+    "down-2": "Scientists examine these to find patterns.",
+    "down-3": "Contains a nucleus surrounded by electrons.",
+    "across-4": "It can turn motion into heat.",
+    "down-4": "It absorbs nutrients from its surroundings.",
+    "across-5": "Used in cameras and microscopes.",
+    "across-6": "A laboratory can examine it to learn about the whole."
   }
 }

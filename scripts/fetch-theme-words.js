@@ -450,39 +450,10 @@ function isLikelyObscureProperNoun(themeName, answerUpper, clueText, hintText) {
   return score >= threshold;
 }
 
-function buildDefinitionBackstopHint(definitionText, clueText = '', answer = '') {
-  const cleaned = String(definitionText || '')
-    .replace(/\([^)]*\)/g, ' ')
-    .replace(/[.;:!?]+$/g, '')
-    .replace(/\s+/g, ' ')
-    .trim();
-
-  if (!cleaned) return null;
-
-  const words = cleaned.split(' ').filter(Boolean);
-  if (words.length === 0) return null;
-
-  const clueTokenSet = new Set(contentTokens(clueText));
-  const answerTokenSet = new Set(contentTokens(answer));
-  const filtered = words.filter(word => {
-    const token = word.toLowerCase().replace(/[^a-z0-9]/g, '');
-    if (!token || token.length < 4) return false;
-    if (clueTokenSet.has(token)) return false;
-    if (answerTokenSet.has(token)) return false;
-    return true;
-  });
-
-  if (filtered.length < 2) return null;
-
-  const conceptWords = filtered
-    .slice(0, Math.min(6, filtered.length))
-    .join(' ');
-  if (!conceptWords) return null;
-
-  const hint = `Related concept: ${conceptWords}`;
-  if (looksLikeClueEcho(hint, clueText)) return null;
-
-  return hint;
+function buildSpellingHint(answer) {
+  const letters = String(answer || '').trim().toUpperCase();
+  if (!/^[A-Z]{3,15}$/.test(letters)) return null;
+  return `Starts with ${letters[0]} and ends with ${letters.at(-1)}.`;
 }
 
 function decodeHtmlEntities(text) {
@@ -585,7 +556,7 @@ function normalizeDefinitionText(rawText) {
   return cleaned;
 }
 
-function buildDefinitionEntryFromTexts(definitionTexts = [], answerText = '') {
+export function buildDefinitionEntryFromTexts(definitionTexts = [], answerText = '') {
   const cleanDefinitions = [...new Set(
     definitionTexts
       .map(text => normalizeDefinitionText(text))
@@ -613,27 +584,13 @@ function buildDefinitionEntryFromTexts(definitionTexts = [], answerText = '') {
 
   if (!cleanDef || !clueText) return null;
 
+  // Dictionary definitions usually represent different senses. An unrelated
+  // sense is not a hint for the selected clue (e.g. clothing vs salad dressing).
+  // Supply verifiable spelling guidance instead of an unrelated meaning.
   let hint = null;
-  for (const candidateDefinition of cleanDefinitions) {
-    if (candidateDefinition === cleanDef) continue;
-
-    const humanizedHint = humanizeClue(candidateDefinition);
-    if (!humanizedHint) continue;
-    if (looksLikeClueEcho(humanizedHint, clueText)) continue;
-
-    const hintValidation = isWordEntryAcceptable({
-      answer: normalizedAnswer,
-      clue: clueText,
-      hint: humanizedHint
-    });
-    if (!hintValidation.ok) continue;
-
-    hint = humanizedHint;
-    break;
-  }
 
   if (!hint) {
-    const fallbackHint = buildDefinitionBackstopHint(cleanDef, clueText, answerText);
+    const fallbackHint = buildSpellingHint(answerText);
     const hintValidation = fallbackHint
       ? isWordEntryAcceptable({
           answer: normalizedAnswer,
@@ -1537,6 +1494,7 @@ export async function fetchThemeWords() {
                   clue: clueText,
                   hint: hint,
                   source: strategy.name,
+                  hintSource: 'spelling',
                   definitionSource: definitionData.source,
                   themeScore: Number((themeScore + clueAccessibility * 0.08).toFixed(3))
                 }));

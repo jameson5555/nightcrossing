@@ -68,3 +68,37 @@ test('rejects clues with glued source attribution tails', () => {
     'low-quality'
   );
 });
+
+test('rejects the dangling and taxonomic definitions found in the October batch', () => {
+  for (const [answer, clue] of [
+    ['HALFMOON', 'Certain fish in the subfamily Scorpidinae, such as'],
+    ['SCHELLY', 'Fish, the powan'],
+    ['FISHERY', 'Place related to fishing, particularly'],
+    ['BRAAI', 'Meat cooked by this method'],
+    ['ALFREDO', 'Any dish of this type'],
+    ['AEGEAN', 'Relating to the Bronze Age civilization in that region'],
+    ['STRIPEY', 'Any fish in the kyphosid subfamily Microcanthinae'],
+    ['THEATRE', 'Alternative spelling of theater']
+  ]) assert.equal(isWordEntryAcceptable({ answer, clue }).reason, 'low-quality', clue);
+});
+
+test('blocks inflected explicit words in hints and answers', () => {
+  for (const hint of ['Act of masturbating', 'Pornographic material', 'House of prostitution']) {
+    assert.equal(isWordEntryAcceptable({ answer: 'CLOPPING', clue: 'Sound of horse hooves', hint }).reason, 'profanity');
+  }
+  assert.equal(isWordEntryAcceptable({ answer: 'BROTHELS', clue: 'House of prostitution' }).ok, false);
+});
+
+test('keeps ordinary standalone marine clues and helpful same-sense hints', () => {
+  assert.equal(isWordEntryAcceptable({ answer: 'CRAB',
+    clue: 'Sea creature with claws and a sideways walk',
+    hint: 'You might find one in a rock pool.' }).ok, true);
+});
+
+test('quarantines old dictionary hints until their sense has been reviewed', async () => {
+  const { hasReliableHint } = await import('../scripts/clueQuality.js');
+  const word = { answer: 'RETORT', clue: 'Pressure cooker', hint: 'Sharp or witty reply', source: 'ml' };
+  assert.equal(hasReliableHint(word), false);
+  assert.equal(hasReliableHint({ ...word, hint: '', hintSource: 'spelling' }), false);
+  assert.equal(hasReliableHint({ ...word, hint: 'Starts with R and ends with T.', hintSource: 'spelling' }), true);
+});

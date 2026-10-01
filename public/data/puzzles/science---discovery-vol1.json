@@ -176,15 +176,15 @@
   ],
   "clues": {
     "across": [
-      "3. Science term for single celled microscopic organisms",
-      "5. Favoring fundamental change, or change at the root cause of a matter",
-      "6. Science term for the force attracting masses together",
-      "7. Science term for distance traveled per unit of time"
+      "3. Single-celled microscopic life forms",
+      "5. Chemical species with an unpaired electron",
+      "6. Force that attracts masses toward one another",
+      "7. Distance traveled per unit of time"
     ],
     "down": [
-      "1. Science term for a luminous sphere powered by fusion",
-      "2. Operation in which data is transmitted",
-      "4. Science term for examining scientific data closely"
+      "1. Hot glowing ball of gas powered by nuclear fusion",
+      "2. Transmit data to another device",
+      "4. Examine scientific data closely"
     ]
   },
   "answers": {
@@ -201,12 +201,12 @@
     ]
   },
   "hints": {
-    "down-1": "It starts with S and has 4 letters.",
-    "down-2": "Icon on which one clicks or taps to transmit an email or other electronic message",
-    "across-3": "It starts with B and has 8 letters.",
-    "down-4": "It starts with A and has 7 letters.",
-    "across-5": "Pertaining to a root",
-    "across-6": "It starts with G and has 7 letters.",
-    "across-7": "It starts with S and has 5 letters."
+    "down-1": "Our sun is a nearby example.",
+    "down-2": "An email button performs this action.",
+    "across-3": "Some cause illness while others help with digestion.",
+    "down-4": "Look for patterns and evidence in the results.",
+    "across-5": "Often reactive and involved in chain reactions.",
+    "across-6": "It keeps us on the ground and planets in orbit.",
+    "across-7": "A car's dashboard can display it in miles per hour."
   }
 }

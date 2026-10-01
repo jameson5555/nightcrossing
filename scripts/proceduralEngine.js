@@ -2,7 +2,10 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { generateLayout } from 'crossword-layout-generator';
-import { isWordEntryAcceptable } from './clueQuality.js';
+import { hasReliableHint, isWordEntryAcceptable } from './clueQuality.js';
+import { annotateWordEntries } from './lexicalDifficulty.js';
+import { isAccessibleAnswer, passesAnswerAccessibility } from './answerAccessibility.js';
+import { applyEditorialWords } from './editorialWords.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,7 +20,10 @@ const BASE_THEMES = JSON.parse(fs.readFileSync(THEMES_FILE, 'utf8'));
 const CANDIDATE_THEMES = fs.existsSync(CANDIDATE_THEMES_FILE)
   ? JSON.parse(fs.readFileSync(CANDIDATE_THEMES_FILE, 'utf8'))
   : [];
-const THEMES = [...BASE_THEMES, ...CANDIDATE_THEMES];
+const THEMES = applyEditorialWords([...BASE_THEMES, ...CANDIDATE_THEMES]);
+// Enrichment does not attach frequencies consistently, especially to successors.
+// Score every answer before ranking, preflight, or any fallback search.
+for (const theme of THEMES) theme.words = await annotateWordEntries(theme.words);
 
 const MAX_GRID_ROWS = 10;
 const MAX_GRID_COLS = 10;
@@ -178,8 +184,8 @@ function themeRelevanceScore(word) {
 function lexicalEasePreference(word) {
   const zipfFrequency = Number(word?.zipfFrequency);
   if (!Number.isFinite(zipfFrequency)) return 0;
-  if (zipfFrequency <= 3.1) return 0;
-  return Math.min(0.32, (zipfFrequency - 3.1) * 0.22);
+  if (word.editorialReviewed) return 2.5;
+  return Math.max(0, Math.min(2.5, (zipfFrequency - 2.5) * 1.2));
 }
 
 function tokenizeForTheme(str) {
@@ -269,6 +275,8 @@ function calculateFallbackThemeRelevance(themeName, word) {
 }
 
 export function scoreWordForTheme(themeName, word) {
+  // These exact answer/clue pairs are assigned to a theme by an editor.
+  if (word?.editorialReviewed === true) return 1.5;
   const fallbackScore = calculateFallbackThemeRelevance(themeName, word);
   const sourceKey = word?.source || 'seed';
   const sourceAdjustment = SOURCE_RELIABILITY_ADJUSTMENTS[sourceKey] || 0;
@@ -286,6 +294,10 @@ export function scoreWordForTheme(themeName, word) {
 
 export function createThemePools(themeName, words) {
   const scoredWords = words
+    .filter(isAccessibleAnswer)
+    // Existing dictionary imports paired separate senses as clues and hints.
+    // Quarantine those pairs until reviewed or rebuilt from one definition.
+    .filter(hasReliableHint)
     .filter(word => isWordEntryAcceptable({
       answer: word?.answer || '',
       clue: word?.clue || '',
@@ -357,6 +369,7 @@ function layoutPassesThemeGuardrails(layout, relevanceByAnswer, options = {}) {
 
 function layoutPassesLexicalGuardrails(layout, options = {}) {
   if (!layout || !Array.isArray(layout.result) || layout.result.length === 0) return false;
+  if (!passesAnswerAccessibility(layout.result)) return false;
 
   const normalizedTheme = normalizedThemeKey(options.themeName || '');
   const defaultMaxLoad = normalizedTheme === 'space astronomy'
@@ -594,7 +607,7 @@ function isLayoutWordSafe(word) {
   if (!word?.clue || !word?.answer) return false;
   if (word.clue.length > 80) return false;
   if (word.answer.length > Math.max(MAX_GRID_ROWS, MAX_GRID_COLS)) return false;
-  if (!hasUsableHint(word.hint) && word.answer.length >= 6) return false;
+  if (!hasReliableHint(word) || !isAccessibleAnswer(word)) return false;
 
   const qualityCheck = isWordEntryAcceptable({
     answer: word.answer,
@@ -650,10 +663,14 @@ function generateBestLayout(
     }
     layout.result = layout.result.filter(w => w.orientation === 'across' || w.orientation === 'down');
     
-    // Re-attach hints as the generator might strip them
+    // Re-attach source metadata: the library may strip custom fields.
     layout.result.forEach(r => {
-      const source = input.find(i => i.answer === r.answer);
-      if (source) r.hint = source.hint;
+      const source = subset.find(word => word.answer.toLowerCase() === r.answer);
+      if (source) {
+        r.hint = source.hint;
+        r.zipfFrequency = source.zipfFrequency;
+        r.editorialReviewed = source.editorialReviewed;
+      }
     });
     
     // Trim early to check true dimensions
@@ -736,6 +753,10 @@ function generateBestLayout(
     }
 
     const longWordMisses = Math.max(0, longWordCount - longWordsAtMin);
+    // Fallback searches can relax individual crossing targets, but every
+    // candidate must still meet the published puzzle-wide quality thresholds.
+    if (longWordCount && longWordsAtMin / longWordCount < 0.82) continue;
+    if (veryLongWordCount && veryLongWordsAtTarget / veryLongWordCount < 0.62) continue;
     if (enforceLongIntersections && longWordMisses > allowLongMisses) {
       continue;
     }

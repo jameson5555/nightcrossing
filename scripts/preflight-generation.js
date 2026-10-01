@@ -19,7 +19,7 @@ const PUZZLES_DIR = path.join(__dirname, '../public/data/puzzles');
 const DEFAULT_TARGET_PUZZLES = 3;
 const DEFAULT_MIN_FUTURE_RUNWAY_BATCHES = Number.isFinite(Number(process.env.NC_MIN_FUTURE_RUNWAY_BATCHES))
   ? Math.max(0, Math.min(12, Number(process.env.NC_MIN_FUTURE_RUNWAY_BATCHES)))
-  : 2;
+  : 1;
 const DEFAULT_CANDIDATE_MIN_FUTURE_RUNWAY_BATCHES = Number.isFinite(Number(process.env.NC_CANDIDATE_MIN_FUTURE_RUNWAY_BATCHES))
   ? Math.max(0, Math.min(12, Number(process.env.NC_CANDIDATE_MIN_FUTURE_RUNWAY_BATCHES)))
   : 1;
@@ -139,6 +139,7 @@ function sourceKey(word) {
 }
 
 function isUsableEntry(word) {
+  if (!hasUsableHint(word) || word.answer.length > 10 || word.clue.length > 80) return false;
   return isWordEntryAcceptable({
     answer: word?.answer || '',
     clue: word?.clue || '',

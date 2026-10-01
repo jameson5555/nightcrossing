@@ -12,7 +12,27 @@ Position Nightcrossing for adult crossword players. In Play Console select **18 
 
 The target audience describes the game's design and marketing; it does not establish each player's age or determine the IARC content rating. The selected audience must remain accurate. Review any future evidence that the service is child-directed or knowingly collects personal information from children before serving those users ads.
 
-## Before enabling ads
+## PWA first: account and test setup
+
+The owner has an existing AdSense account, has added `jamesonmacarthur.com`, and supplied publisher ID `pub-6539140496743179`. The script uses `ca-pub-6539140496743179`. Site approval and H5 access have not yet been confirmed. Google Play and AdMob setup can wait until after PWA testing.
+
+Google provides a separate [H5 Games Ads application](https://adsense.google.com/start/h5-game-ads-apply/). Receiving the standard AdSense installation code does not establish H5 approval. Use the existing AdSense account, the publisher ID above, and game URL `https://jamesonmacarthur.com/nightcrossing/`. The form asks for the email associated with the AdSense account when available; the public support address can remain `nightcrossing@jamesonmacarthur.com`.
+
+Local `.env.local` is configured for web test ads, with live review flags false and Android ads disabled. This file is ignored by Git and is not deployed. Restart `npm run dev` after changing environment settings. Exhaust banked hints and use the puzzle's free hint, then open an unsolved word's hint window while online. Google test ads should be explicitly labeled; verify completion adds one hint and early dismissal adds none. Local configuration and mocked tests do not establish that Google's SDK or the publisher account works end to end.
+
+To configure a deployed test build later, set these GitHub Actions repository variables before rebuilding:
+
+```text
+NC_WEB_REWARDED_ADS_ENABLED=true
+NC_ADS_TEST_MODE=true
+NC_H5_PUBLISHER_ID=ca-pub-6539140496743179
+NC_WEB_ADS_REVIEWED=false
+NC_WEB_US_AD_SERVING_VERIFIED=false
+```
+
+Both web workflows already read these variables. These repository settings have not been changed as part of local setup. Test ads do not generate revenue. Leave live ads disabled until H5/site approval and the applicable web launch checks below are complete. Do not add a second generic AdSense script to the game: the rewarded provider loads its script with test settings when needed. Site verification at the domain root is a separate hosting step; the lazy game script may not satisfy the site's verification check.
+
+## Before enabling live ads
 
 1. Create a personal Google Play Console account, pay its one-time registration fee, and complete identity and device verification. Create AdMob and apply separately for AdSense H5 Games Ads. Account, payment, identity and publisher approval steps must be completed by the owner.
 2. Set the adult audience and unrestricted access options described above, and complete the content-rating questionnaire based on actual game content. No mixed-audience Families launch is planned.

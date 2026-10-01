@@ -154,15 +154,15 @@
   ],
   "clues": {
     "across": [
-      "4. Theater or film term for a film based on another work",
-      "5. Theater or film term for one still image within a film",
-      "6. Theater or film term for a spool traditionally holding motion picture film"
+      "4. Film or play based on another work",
+      "5. Single still image within a film",
+      "6. Spool that holds motion picture film"
     ],
     "down": [
-      "1. Theater or film term for a marked board used to identify a take",
-      "2. Theater or film term for the constructed setting for a production",
-      "3. Medium used to capture images in a camera",
-      "5. Theater or film term for the space above a stage for suspended scenery"
+      "1. Marked board used to identify a filmed take",
+      "2. Constructed setting for a film or stage production",
+      "3. Recorded moving images shown as a screen production",
+      "5. Space above a stage where scenery can be suspended"
     ]
   },
   "answers": {
@@ -179,12 +179,12 @@
     ]
   },
   "hints": {
-    "down-1": "It starts with C and has 7 letters.",
-    "down-2": "It starts with S and has 3 letters.",
-    "down-3": "Visual art form that consists of a sequence of still images preserved on a recording medium to give the illusion of motion; movies generally",
-    "across-4": "It starts with A and has 10 letters.",
-    "down-5": "It starts with F and has 3 letters.",
-    "across-5": "It starts with F and has 5 letters.",
-    "across-6": "It starts with R and has 4 letters."
+    "down-1": "Its hinged top makes a sound to help synchronize audio.",
+    "down-2": "Scenery and furnishings establish the location.",
+    "down-3": "The word also names the strip once used in cameras.",
+    "across-4": "A novel can provide its story.",
+    "down-5": "Ropes lift set pieces into this overhead area.",
+    "across-5": "Many are shown each second to create movement.",
+    "across-6": "Projectors once fed long strips from it."
   }
 }

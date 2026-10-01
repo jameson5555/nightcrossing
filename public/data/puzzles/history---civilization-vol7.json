@@ -194,14 +194,14 @@
   ],
   "clues": {
     "across": [
-      "3. Writer of history.",
-      "4. Relating to the Bronze Age civilization in that region",
-      "6. Male monarch or ruler of an empire."
+      "3. Person who studies and writes about the past",
+      "4. Sea beside Greece and ancient Bronze Age civilizations",
+      "6. Male ruler of an empire"
     ],
     "down": [
-      "1. Succession of rulers from one family",
+      "1. Succession of rulers from the same family",
       "2. Formal agreement between nations",
-      "5. Group of nations under one ruler"
+      "5. Group of territories under one ruler"
     ]
   },
   "answers": {
@@ -217,11 +217,11 @@
     ]
   },
   "hints": {
-    "down-1": "Family considered over time, with its ancestors and descendants",
-    "down-2": "Get into through a treaty.",
-    "across-3": "One who studies or researches history.",
-    "across-4": "Sea between Greece and Anatolia north of Crete; a lobe of the Mediterranean; in full, Aegean Sea",
-    "down-5": "Political unit ruled by an emperor or empress.",
-    "across-6": "Any monarch ruling an empire, irrespective of gender, with \"empress\" contrasting to mean the consort of an emperor."
+    "down-1": "Power passes between relatives over generations.",
+    "down-2": "It may end a war or establish peaceful cooperation.",
+    "across-3": "Documents and artifacts provide evidence for their work.",
+    "across-4": "It lies between Greece and the western coast of Turkey.",
+    "down-5": "Conquered lands may be governed from a central capital.",
+    "across-6": "A sovereign whose domain may include several peoples or nations."
   }
 }

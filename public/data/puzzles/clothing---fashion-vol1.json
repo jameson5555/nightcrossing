@@ -214,19 +214,19 @@
   ],
   "clues": {
     "across": [
-      "2. Clothing or fashion term for a person who makes fitted clothing",
-      "3. Clothing or fashion term for the line where fabric pieces are sewn",
+      "2. Person who makes fitted clothing",
+      "3. Line where two fabric pieces are sewn together",
       "7. Prevailing fashion or style",
-      "8. Clothing or fashion term for a close fitting knitted cap",
-      "9. Clothing or fashion term for a knitted covering for the foot",
-      "10. Clothing or fashion term for a band worn around the waist"
+      "8. Close-fitting knitted cap",
+      "9. Knitted covering worn on a foot",
+      "10. Band worn around the waist"
     ],
     "down": [
-      "1. Clothing or fashion term for a small bag carried with an outfit",
-      "4. Clothing or fashion term for a person displaying clothing",
-      "5. Clothing or fashion term for continuous fiber used to knit clothing",
-      "6. Clothing or fashion term for the finished folded edge of fabric",
-      "7. Clothing or fashion term for a sleeveless garment worn over a shirt"
+      "1. Small bag carried with an outfit",
+      "4. Person paid to display clothing",
+      "5. Continuous fiber used for knitting",
+      "6. Folded and sewn edge of a garment",
+      "7. Sleeveless garment worn over a shirt"
     ]
   },
   "answers": {
@@ -247,16 +247,16 @@
     ]
   },
   "hints": {
-    "down-1": "It starts with P and has 5 letters.",
-    "across-2": "It starts with T and has 6 letters.",
-    "across-3": "It starts with S and has 4 letters.",
-    "down-4": "It starts with M and has 5 letters.",
-    "down-5": "It starts with Y and has 4 letters.",
-    "down-6": "It starts with H and has 3 letters.",
-    "across-7": "Popularity or a current craze",
-    "down-7": "It starts with V and has 4 letters.",
-    "across-8": "It starts with B and has 6 letters.",
-    "across-9": "It starts with S and has 4 letters.",
-    "across-10": "It starts with B and has 4 letters."
+    "down-1": "Often used to hold keys, money, and a phone.",
+    "across-2": "They take measurements before cutting the fabric.",
+    "across-3": "Stitches hold the joined edges in place.",
+    "down-4": "They may walk along a runway at a fashion show.",
+    "down-5": "It is often sold wound into a ball.",
+    "down-6": "Adjusting it changes a skirt's length.",
+    "across-7": "Something popular is said to be in this.",
+    "down-7": "Often forms part of a three-piece suit.",
+    "across-8": "A warm head covering often worn in winter.",
+    "across-9": "Usually worn between the skin and a shoe.",
+    "across-10": "A buckle fastens it in place."
   }
 }

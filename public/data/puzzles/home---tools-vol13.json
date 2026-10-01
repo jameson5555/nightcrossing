@@ -174,14 +174,14 @@
   ],
   "clues": {
     "across": [
-      "4. Cooking room",
-      "5. Kitchen work surface",
-      "6. Made on a mould of closely woven wire"
+      "4. Room used to prepare meals",
+      "5. Flat work surface in a kitchen",
+      "6. Made fabric by crossing threads on a loom"
     ],
     "down": [
-      "1. Style of decoration of a room or building",
-      "2. Attached home fitting",
-      "3. Act of repairing"
+      "1. Decorative style of a room",
+      "2. Item permanently attached to a home",
+      "3. Repair a damaged household item"
     ]
   },
   "answers": {
@@ -197,10 +197,11 @@
     ]
   },
   "hints": {
-    "down-1": "Stage setting; scenery; set; backdrop",
-    "down-2": "An item fixed in place in a home.",
-    "down-3": "Chiefly in on the mend: improvement in health; recovery from illness",
-    "across-4": "A room used for preparing food.",
-    "across-5": "A flat surface used for preparing food or working."
+    "down-1": "Furniture, colors, and accessories help create it.",
+    "down-2": "A fitted light or sink is an example.",
+    "down-3": "Fix it so that it can be used again.",
+    "across-4": "The stove and sink are usually found here.",
+    "across-5": "Chop food or place appliances on it.",
+    "across-6": "The past tense of the craft that interlaces fibers."
   }
 }

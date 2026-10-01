@@ -34,6 +34,26 @@ generate:monthly` for the full local enrichment-and-generation flow, and `npm
 run test:generation-smoke` to exercise the three historically difficult themes
 with the workflow search budget.
 
+Every generated clue now requires a hint and must pass the quality gates;
+the generator fails rather than publishing a candidate below those gates.
+Unreviewed answers need a Zipf frequency of at least 2.5, with no more than half
+the puzzle below 3.1. Frequencies are computed for all theme pools before
+generation, including newly enriched words and successors. Reviewed vocabulary,
+clues, and same-sense hints live in `scripts/editorialWords.js`. Dictionary
+alternate meanings are no longer used as hints; imported entries receive
+verifiable first-and-last-letter guidance instead. The full quality audit checks
+changed puzzles; the content-safety audit checks the entire catalog.
+Old unreviewed dictionary clue/hint pairs are excluded until rebuilt from a
+safe spelling guidance or replaced by reviewed entries.
+
+To replace particular grids, use `npm run regenerate:selected --
+ocean---marine-life-vol15` (or pass several puzzle IDs). This uses reviewed
+vocabulary, excludes answers in other volumes of the same theme, validates every
+replacement before writing any, and preserves IDs, titles, wave labels, and
+catalog size. Replacement layout revisions in metadata let updated clients
+clear saved cells and hints for those puzzles without resetting the wallet or
+progress on other puzzles. Clue-only edits do not require a layout revision.
+
 ## Development
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

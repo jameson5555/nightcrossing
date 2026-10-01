@@ -2,7 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { isWordEntryAcceptable } from './clueQuality.js';
+import { isWordEntryAcceptable, containsProfanity } from './clueQuality.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -214,6 +214,13 @@ function auditPuzzle(puzzleId, puzzle) {
 
   for (const entry of entries) {
     if (!entry.answer || !entry.clueText) continue;
+
+    // Apply content safety to the complete historical catalog, even when
+    // stricter editorial checks are limited to newly changed puzzles.
+    if (containsProfanity(`${entry.answer} ${entry.clueText} ${entry.hint}`)) {
+      violations.push({ type: 'inappropriate-content', puzzleId,
+        clue: entry.clueText, entry: { clueId: entry.clueId, answer: entry.answer } });
+    }
 
     const validation = isWordEntryAcceptable({
       answer: entry.answer,

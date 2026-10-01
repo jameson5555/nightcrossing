@@ -4,14 +4,12 @@ import path from 'path';
 import { execFileSync } from 'child_process';
 import process from 'process';
 import { fileURLToPath } from 'url';
-import { RELAXED_THEME_MIN_RELEVANCE, scoreWordForTheme } from './proceduralEngine.js';
+import { THEMES, RELAXED_THEME_MIN_RELEVANCE, scoreWordForTheme } from './proceduralEngine.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.join(__dirname, '..');
 const PUZZLES_DIR = path.join(ROOT_DIR, 'public/data/puzzles');
-const THEMES_FILE = path.join(__dirname, 'themes.json');
-const CANDIDATE_THEMES_FILE = path.join(__dirname, 'candidate-themes.json');
 
 function loadJSON(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
@@ -43,11 +41,7 @@ function collectEntries(puzzle) {
 }
 
 function loadThemes() {
-  const themes = [
-    ...loadJSON(THEMES_FILE),
-    ...(fs.existsSync(CANDIDATE_THEMES_FILE) ? loadJSON(CANDIDATE_THEMES_FILE) : [])
-  ];
-  return new Map(themes.map(theme => [theme.name, theme]));
+  return new Map(THEMES.map(theme => [theme.name, theme]));
 }
 
 function changedPuzzleFiles() {

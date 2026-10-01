@@ -194,14 +194,14 @@
   ],
   "clues": {
     "across": [
-      "3. Ball used to play the sport",
-      "5. Sports team at the University of Louisville",
-      "6. Collectively, the members of a team."
+      "3. Bat-and-ball sport using a larger ball than baseball",
+      "5. St. Louis baseball team named after red birds",
+      "6. List of players selected for a sports team"
     ],
     "down": [
-      "1. Sport of travelling down a bob track as fast as possible",
-      "2. Game or match in which heavy blows are exchanged.",
-      "4. Stadium or similar building in which a sporting competition is held"
+      "1. Small sled used to race down an icy track",
+      "2. Sports contest featuring a great deal of hard hitting",
+      "4. Location hosting a sports competition"
     ]
   },
   "answers": {
@@ -217,11 +217,11 @@
     ]
   },
   "hints": {
-    "down-1": "Short sled, mostly used as one of a pair connected by a reach or coupling; the compound sled so formed",
-    "down-2": "Tough, heated contest.",
-    "across-3": "Game similar to baseball but played with a larger and softer ball which can be thrown overhand or underhand",
-    "down-4": "Theater, auditorium, arena, or other area designated for sporting or entertainment events",
-    "across-5": "Team St. Louis Cardinals",
-    "across-6": "Acts performing at a concert or festival."
+    "down-1": "A crew rides it through banked turns.",
+    "down-2": "In baseball, both teams may score many runs.",
+    "across-3": "Teams score by running around bases to home plate.",
+    "down-4": "A stadium or arena can serve as one.",
+    "across-5": "A major-league team in Missouri.",
+    "across-6": "Shows who will take part and sometimes their order."
   }
 }

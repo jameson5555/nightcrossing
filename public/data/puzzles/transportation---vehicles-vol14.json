@@ -158,15 +158,15 @@
   ],
   "clues": {
     "across": [
-      "1. Large open box or basket, used especially to transport fragile goods",
-      "4. Vehicles on a road",
-      "5. Bar or bars of rolled steel making a track along which vehicles can roll",
-      "6. Group of vehicles travelling together for safety, especially one with an escort"
+      "1. Strong box used to transport goods",
+      "4. Vehicles moving along a road",
+      "5. Steel bars supporting the wheels of a train",
+      "6. Group of vehicles traveling together"
     ],
     "down": [
-      "2. Route or circuit generally",
-      "3. Minor road which is used to leave a major road",
-      "4. Farm pulling vehicle"
+      "2. Marked route used for travel through the countryside",
+      "3. Road branch used to leave a major highway",
+      "4. Farm vehicle used to pull heavy equipment"
     ]
   },
   "answers": {
@@ -183,11 +183,12 @@
     ]
   },
   "hints": {
-    "across-1": "Put into a crate",
-    "down-2": "Track or indication marking the route followed by something that has passed, such as the footprints of animal on land or the contrail of an airplane in the sky",
-    "down-3": "Act of going out or going away, or leaving; a departure",
-    "across-4": "Movement of vehicles along roads.",
-    "down-4": "A powerful vehicle used to pull machinery.",
-    "across-6": "Act of convoying; protection"
+    "across-1": "Protects its contents during shipping.",
+    "down-2": "Follow the path rather than crossing rough ground.",
+    "down-3": "Signs announce it before the turn.",
+    "across-4": "It can slow to a crawl during rush hour.",
+    "down-4": "Large tires help it work on soft ground.",
+    "across-6": "An escort may protect them along the route.",
+    "across-5": "A matching pair forms the track."
   }
 }

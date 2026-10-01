@@ -194,14 +194,14 @@
   ],
   "clues": {
     "across": [
-      "3. Vehicle rear lamp",
-      "5. Toll road, especially a toll expressway",
-      "6. Short branch road of a motorway, freeway or major road"
+      "3. Lamp at the rear of a vehicle",
+      "5. Road that charges a toll to use it",
+      "6. Short branch road leaving a main route"
     ],
     "down": [
-      "1. Person who traffics in commodities for profit",
-      "2. Route through ground",
-      "4. One side of a divided highway that carries traffic in a single direction"
+      "1. Trader whose goods may travel aboard cargo ships",
+      "2. Passage carrying a route through earth or rock",
+      "4. Parallel strips of road used by moving vehicles"
     ]
   },
   "answers": {
@@ -217,11 +217,11 @@
     ]
   },
   "hints": {
-    "down-1": "Owner or operator of a retail business",
-    "down-2": "A passage dug through earth or rock.",
-    "across-3": "A red light at the back of a vehicle.",
-    "down-4": "Bowling alley",
-    "across-5": "Gate or bar set across a road to stop carriages, animals, and sometimes people, until a toll is paid",
-    "across-6": "Anything that inspires or motivates, as a spur does a horse"
+    "down-1": "Buys and sells products for profit.",
+    "down-2": "Vehicles can travel beneath a mountain or waterway.",
+    "across-3": "A red light helps drivers behind see the car.",
+    "down-4": "Painted lines help separate traffic.",
+    "across-5": "Payment helps fund the route's operation.",
+    "across-6": "Connects the larger route to another destination."
   }
 }

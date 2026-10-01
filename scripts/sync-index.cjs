@@ -539,6 +539,7 @@ async function syncIndex() {
   const files = fs.readdirSync(PUZZLES_DIR).filter(f => f.endsWith('.json')).sort();
   const entryDrafts = [];
   const hasher = crypto.createHash('sha256');
+  const puzzleRevisions = {};
 
   for (const file of files) {
     const full = path.join(PUZZLES_DIR, file);
@@ -551,6 +552,9 @@ async function syncIndex() {
     const puzzle = loadJSON(full);
     if (!puzzle) continue;
     const id = puzzle.id || path.basename(file, '.json');
+    if (puzzle.layoutRevision) puzzleRevisions[id] = {
+      revision: puzzle.layoutRevision, theme: puzzle.theme
+    };
     const volume = parseVolumeFromId(id);
     const waveLabel = formatWaveLabel(volume);
     const cols = puzzle.size && typeof puzzle.size.cols === 'number' ? puzzle.size.cols : (puzzle.cols || 0);
@@ -639,6 +643,7 @@ async function syncIndex() {
     version,
     resetVersion,
     puzzleCount: entries.length,
+    puzzleRevisions,
     themeVisibility: buildThemeVisibility(rotation),
     themeAvailability: buildThemeAvailability(rotation),
     nextReleaseAt: getNextMonthlyReleaseAt(generatedAt),

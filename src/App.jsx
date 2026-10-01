@@ -26,6 +26,7 @@ import {
   loadBonusHintsAwardedSinceEmpty,
   saveBonusHintsAwardedSinceEmpty,
   resetPuzzleDataIfDatasetChanged,
+  resetReplacedPuzzleProgress,
   loadJourneyRankHighWatermark,
   saveJourneyRankHighWatermark
 } from './utils/storage';
@@ -277,6 +278,7 @@ function App() {
 
         setPuzzleMeta(meta || {});
         await resetPuzzleDataIfDatasetChanged(meta?.resetVersion || nextVersion);
+        await resetReplacedPuzzleProgress(meta?.puzzleRevisions);
 
         if (!datasetChanged) return;
 

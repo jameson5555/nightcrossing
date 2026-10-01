@@ -13,6 +13,7 @@ import {
   isExhaustibleGenerationFailure
 } from './generationPolicy.js';
 import { computePuzzleMetrics } from './puzzleMetrics.js';
+import { auditPuzzleQuality } from './puzzleQuality.js';
 import { computeLexicalStatsForAnswers } from './lexicalDifficulty.js';
 import difficultyRubricPkg from './difficultyRubric.cjs';
 
@@ -120,7 +121,7 @@ const EASY_TOP_OFF_FOCUSED_POOL_MIN = Number.isFinite(Number(process.env.NC_EASY
   : 18;
 const MIN_FUTURE_RUNWAY_BATCHES = Number.isFinite(Number(process.env.NC_MIN_FUTURE_RUNWAY_BATCHES))
   ? Math.max(0, Math.min(12, Number(process.env.NC_MIN_FUTURE_RUNWAY_BATCHES)))
-  : 2;
+  : 1;
 const CANDIDATE_MIN_FUTURE_RUNWAY_BATCHES = Number.isFinite(Number(process.env.NC_CANDIDATE_MIN_FUTURE_RUNWAY_BATCHES))
   ? Math.max(0, Math.min(12, Number(process.env.NC_CANDIDATE_MIN_FUTURE_RUNWAY_BATCHES)))
   : 1;
@@ -706,7 +707,8 @@ function passesLayoutQualityGate(metrics, puzzle) {
   const duplicateClueGate = duplicateClues.duplicateCount === 0;
 
   return {
-    accepted: longWordGate && veryLongWordGate && hintGate && lexicalGate && duplicateClueGate,
+    accepted: longWordGate && veryLongWordGate && hintGate && lexicalGate && duplicateClueGate &&
+      auditPuzzleQuality(puzzle, THEMES.find(theme => theme.name === puzzle.theme)).length === 0,
     hintCoverage,
     lexicalSignals,
     duplicateClues,
@@ -960,9 +962,6 @@ async function generateStarters() {
             let generatedMetrics = null;
             let generatedHintCoverage = null;
             let generatedQuality = null;
-            let bestFallbackCandidate = null;
-            let bestFallbackMetrics = null;
-            let bestFallbackQuality = null;
             const totalAttempts = MAX_LAYOUT_QUALITY_RETRIES;
 
             for (let attempt = 1; attempt <= totalAttempts; attempt++) {
@@ -983,24 +982,6 @@ async function generateStarters() {
                 continue;
               }
 
-              const fallbackScore =
-                (quality.hintCoverage.coverage * 1000) +
-                (candidateMetrics.longWordTwoPlusRate * 100) +
-                (candidateMetrics.veryLongWordThreePlusRate * 80) +
-                ((1 - quality.lexicalSignals.load) * 140);
-              const bestFallbackScore = bestFallbackQuality
-                ? (bestFallbackQuality.hintCoverage.coverage * 1000) +
-                  (bestFallbackMetrics.longWordTwoPlusRate * 100) +
-                  (bestFallbackMetrics.veryLongWordThreePlusRate * 80) +
-                  ((1 - bestFallbackQuality.lexicalSignals.load) * 140)
-                : -Infinity;
-
-              if (fallbackScore > bestFallbackScore) {
-                bestFallbackCandidate = candidate;
-                bestFallbackMetrics = candidateMetrics;
-                bestFallbackQuality = quality;
-              }
-
               if (quality.accepted) {
                 generated = candidate;
                 generatedMetrics = candidateMetrics;
@@ -1008,28 +989,13 @@ async function generateStarters() {
                 generatedQuality = quality;
                 break;
               }
-
-              if (attempt === totalAttempts && bestFallbackCandidate) {
-                generated = bestFallbackCandidate;
-                generatedMetrics = bestFallbackMetrics;
-                generatedHintCoverage = bestFallbackQuality.hintCoverage;
-                generatedQuality = bestFallbackQuality;
-              }
             }
 
             if (!generated) {
-              throw new Error(`No candidate generated for ${id}.`);
+              throw new Error(`No candidate passed the quality gates for ${id}.`);
             }
 
             const { puzzle, usedWords: placedWords } = generated;
-
-            if (!generatedQuality?.accepted) {
-              const hintPct = ((generatedHintCoverage?.coverage || 0) * 100).toFixed(0);
-              const lexicalPct = ((generatedQuality?.lexicalSignals?.load || 0) * 100).toFixed(0);
-              console.warn(
-                `  ⚠️ ${id} accepted below quality gates after ${totalAttempts} attempts (hint coverage ${hintPct}%, lexical signal ${lexicalPct}%, long gate ${generatedQuality?.longWordGate ? 'ok' : 'fail'}, very long gate ${generatedQuality?.veryLongWordGate ? 'ok' : 'fail'}, lexical gate ${generatedQuality?.lexicalGate ? 'ok' : 'fail'}, duplicate clue gate ${generatedQuality?.duplicateClueGate ? 'ok' : 'fail'}).`
-              );
-            }
 
             // Track the newly placed words so they aren't used in subsequent volumes
             placedWords.forEach(w => consumedWords.add(w));

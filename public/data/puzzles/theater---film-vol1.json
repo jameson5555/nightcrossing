@@ -194,16 +194,16 @@
   ],
   "clues": {
     "across": [
-      "3. Theater or film term for a pass admitting someone to a showing",
-      "5. Relating to the drama",
-      "7. Short film clip, with or without audio",
-      "8. Alternative spelling of theater"
+      "3. Pass admitting someone to a film or play",
+      "5. Relating to plays and stage performance",
+      "7. Recording of moving images",
+      "8. Building where plays are performed"
     ],
     "down": [
-      "1. Theater or film term for one uninterrupted camera recording",
-      "2. Theater or film term for a device recording moving images",
-      "4. Theater or film term for a film edit joining one shot to another",
-      "6. Theater or film term for a story presented through moving images"
+      "1. One continuous camera recording in a film",
+      "2. Device that records moving images for a film",
+      "4. Film edit joining one shot to another",
+      "6. Story told through recorded moving images"
     ]
   },
   "answers": {
@@ -221,13 +221,13 @@
     ]
   },
   "hints": {
-    "down-1": "It starts with S and has 4 letters.",
-    "down-2": "It starts with C and has 6 letters.",
-    "across-3": "It starts with T and has 6 letters.",
-    "down-4": "It starts with C and has 3 letters.",
-    "across-5": "Striking in appearance or effect",
-    "down-6": "It starts with M and has 5 letters.",
-    "across-7": "Television, a television show, or a movie",
-    "across-8": "Cinema; movie theatre"
+    "down-1": "It runs from the start of recording to the cut.",
+    "down-2": "The operator points its lens at the scene.",
+    "across-3": "Show it at the entrance before finding your seat.",
+    "down-4": "The view changes instantly at this point.",
+    "across-5": "Describes the art of acting out a story.",
+    "down-6": "A feature-length one often lasts around two hours.",
+    "across-7": "You can play it on a screen.",
+    "across-8": "An audience watches the action on a stage."
   }
 }

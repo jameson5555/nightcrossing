@@ -6,9 +6,10 @@ import process from 'node:process';
 process.env.NC_LAYOUT_ATTEMPT_SCALE ||= '0.2';
 process.env.NC_PRIMARY_CORE_POOL_LIMIT ||= '120';
 
-const [{ generateThemedPuzzle, THEMES }, { computePuzzleMetrics }] = await Promise.all([
+const [{ generateThemedPuzzle, THEMES }, { computePuzzleMetrics }, { auditPuzzleQuality }] = await Promise.all([
   import('./proceduralEngine.js'),
-  import('./puzzleMetrics.js')
+  import('./puzzleMetrics.js'),
+  import('./puzzleQuality.js')
 ]);
 
 const HARD_THEMES = [
@@ -34,7 +35,7 @@ for (const themeName of HARD_THEMES) {
   assert.ok(theme, `Missing smoke-test theme: ${themeName}`);
 
   const consumed = collectConsumedAnswers(themeName);
-  const runs = themeName === 'Music & Sound' ? 1 : 3;
+  const runs = 3;
 
   for (let run = 1; run <= runs; run++) {
     const availableWords = theme.words.filter(word => !consumed.has(word.answer.toUpperCase()));
@@ -52,6 +53,7 @@ for (const themeName of HARD_THEMES) {
     assert.ok(metrics.cols <= 10, `${themeName} exceeded the 10-column limit`);
     assert.ok(metrics.placedWords >= 6, `${themeName} placed fewer than six words`);
     assert.equal(metrics.connected, true, `${themeName} produced a disconnected layout`);
+    assert.deepEqual(auditPuzzleQuality(puzzle, theme), [], `${themeName} failed content quality checks`);
     assert.ok(
       metrics.longWordCount === 0 || metrics.longWordTwoPlusRate >= 0.82,
       `${themeName} failed the long-word intersection gate`

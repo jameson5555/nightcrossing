@@ -214,18 +214,18 @@
   ],
   "clues": {
     "across": [
-      "3. Clothing or fashion term for a necktie shaped as a bow",
-      "5. Article of clothing worn as underpants by women",
-      "7. Activity of getting dressed",
-      "9. Clothing or fashion term for the part of a garment around the neck",
-      "10. Material made of fibers, a textile or cloth"
+      "3. Neckwear shaped like a bow",
+      "5. Single women's undergarment worn below the waist",
+      "7. Putting on clothes",
+      "9. Part of a garment surrounding the neck",
+      "10. Material used to make clothing"
     ],
     "down": [
-      "1. Clothing or fashion term for footwear covering the ankle or higher",
-      "2. Clothing or fashion term for an inner fabric layer in a garment",
-      "4. Clothing or fashion term for a cord used to fasten a shoe",
-      "6. Of clothing, elasticated",
-      "8. Clothing or fashion term for a fabric strip worn around the neck"
+      "1. Footwear covering the ankle or higher",
+      "2. Inner fabric layer in a garment",
+      "4. Cord threaded through holes to fasten a shoe",
+      "6. Able to stretch and return to shape",
+      "8. Strip of fabric worn around the neck"
     ]
   },
   "answers": {
@@ -245,15 +245,15 @@
     ]
   },
   "hints": {
-    "down-1": "It starts with B and has 4 letters.",
-    "down-2": "It starts with L and has 6 letters.",
-    "across-3": "It starts with B and has 6 letters.",
-    "down-4": "It starts with L and has 4 letters.",
-    "across-5": "Helmet cover",
-    "down-6": "Capable of stretching; particularly, capable of stretching so as to return to an original shape or size when force is released",
-    "across-7": "Sauce, especially a cold one for salads",
-    "down-8": "It starts with S and has 5 letters.",
-    "across-9": "It starts with C and has 6 letters.",
-    "across-10": "Physical material of a building"
+    "down-1": "Useful in wet weather or on rough ground.",
+    "down-2": "It can hide seams and help the garment slide on.",
+    "across-3": "It is often worn with a tuxedo.",
+    "down-4": "Tie it into a bow before walking.",
+    "across-5": "Usually made from soft lightweight fabric.",
+    "down-6": "A waistband with this quality expands comfortably.",
+    "across-7": "The morning task of choosing and wearing an outfit.",
+    "down-8": "Wrap it around yourself for warmth.",
+    "across-9": "It may be buttoned down on a shirt.",
+    "across-10": "Cotton, wool, and silk are examples."
   }
 }
