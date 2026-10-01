@@ -13,7 +13,7 @@
     {
       "currentTheme": "Music & Sound",
       "status": "active",
-      "nextTheme": "Animals & Wildlife"
+      "nextTheme": "Clothing & Fashion"
     },
     {
       "currentTheme": "Ocean & Marine Life",
@@ -22,8 +22,10 @@
     },
     {
       "currentTheme": "Sports & Athletics",
-      "status": "active",
-      "nextTheme": "Nature & Wilderness"
+      "status": "exhausted",
+      "nextTheme": "Nature & Wilderness",
+      "exhaustedAt": "2026-10-01T01:38:38.205Z",
+      "exhaustionReason": "repeated generation failures (5/5)"
     },
     {
       "currentTheme": "Weather & Climate",
@@ -35,7 +37,7 @@
     {
       "currentTheme": "Internet & Software",
       "status": "exhausted",
-      "nextTheme": "History & Civilization",
+      "nextTheme": "Theater & Film",
       "exhaustedAt": "2026-09-02T16:16:42.581Z",
       "exhaustionReason": "repeated generation failures (5/5)"
     }
@@ -43,9 +45,20 @@
   "candidates": [
     "Arts & Crafts",
     "Books & Reading",
-    "Games & Puzzles",
-    "Theater & Film",
-    "Clothing & Fashion"
+    "Games & Puzzles"
   ],
-  "retired": []
+  "retired": [
+    {
+      "theme": "Animals & Wildlife",
+      "replacedBy": "Clothing & Fashion",
+      "retiredAt": "2026-10-01T01:52:11.592Z",
+      "reason": "repeated generation failures (5/5)"
+    },
+    {
+      "theme": "History & Civilization",
+      "replacedBy": "Theater & Film",
+      "retiredAt": "2026-10-01T02:19:33.084Z",
+      "reason": "repeated generation failures (5/5)"
+    }
+  ]
 }

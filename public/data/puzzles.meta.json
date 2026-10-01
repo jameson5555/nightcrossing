@@ -1,7 +1,7 @@
 {
-  "version": "38001a020af29c6b",
+  "version": "d2142bd4a2419b8b",
   "resetVersion": "bb837de6de25538c",
-  "puzzleCount": 163,
+  "puzzleCount": 198,
   "themeVisibility": {
     "Transportation & Vehicles": {
       "lockedUntilThemeCompleted": "Space & Sky"
@@ -9,7 +9,7 @@
     "Plants & Gardens": {
       "lockedUntilThemeCompleted": "Food & Cooking"
     },
-    "Animals & Wildlife": {
+    "Clothing & Fashion": {
       "lockedUntilThemeCompleted": "Music & Sound"
     },
     "Home & Tools": {
@@ -18,7 +18,10 @@
     "Nature & Wilderness": {
       "lockedUntilThemeCompleted": "Sports & Athletics"
     },
-    "History & Civilization": {
+    "Science & Discovery": {
+      "lockedUntilThemeCompleted": "Weather & Climate"
+    },
+    "Theater & Film": {
       "lockedUntilThemeCompleted": "Internet & Software"
     }
   },
@@ -43,7 +46,7 @@
       "status": "scheduled",
       "receivesNextBatch": true
     },
-    "Animals & Wildlife": {
+    "Clothing & Fashion": {
       "status": "scheduled",
       "receivesNextBatch": true
     },
@@ -56,8 +59,8 @@
       "receivesNextBatch": true
     },
     "Sports & Athletics": {
-      "status": "scheduled",
-      "receivesNextBatch": true
+      "status": "exhausted",
+      "receivesNextBatch": false
     },
     "Nature & Wilderness": {
       "status": "scheduled",
@@ -67,15 +70,27 @@
       "status": "exhausted",
       "receivesNextBatch": false
     },
+    "Science & Discovery": {
+      "status": "scheduled",
+      "receivesNextBatch": true
+    },
     "Internet & Software": {
       "status": "exhausted",
       "receivesNextBatch": false
     },
-    "History & Civilization": {
+    "Theater & Film": {
       "status": "scheduled",
       "receivesNextBatch": true
+    },
+    "Animals & Wildlife": {
+      "status": "exhausted",
+      "receivesNextBatch": false
+    },
+    "History & Civilization": {
+      "status": "exhausted",
+      "receivesNextBatch": false
     }
   },
-  "nextReleaseAt": "2026-10-01T00:00:00.000Z",
-  "generatedAt": "2026-09-02T17:00:03.170Z"
+  "nextReleaseAt": "2026-11-01T00:00:00.000Z",
+  "generatedAt": "2026-10-01T02:24:18.586Z"
 }
