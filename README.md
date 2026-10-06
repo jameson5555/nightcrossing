@@ -16,6 +16,12 @@ full catalog only when the metadata version changes. Android builds set
 receive newly generated puzzle batches without requiring another APK. The
 bundled dataset remains available as an offline fallback.
 
+Catalog refreshes wait until the player returns to the menu so an open puzzle
+keeps its grid and saved cells together. Cached puzzle files include the catalog
+version in their URLs, keeping the list and play screen on the same data.
+The list honors saved completion records as well as solved cells; an explicit
+layout revision clears that puzzle's incompatible saved state.
+
 Runtime controls:
 
 - `NC_NEW_PUZZLES_PER_THEME` sets the batch size. The monthly workflow pins it

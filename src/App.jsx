@@ -4,6 +4,7 @@ import CrosswordGrid from './components/CrosswordGrid';
 import ClueList from './components/ClueList';
 import PuzzleList from './components/PuzzleList';
 import { getWordAt, getSolvedClueIds } from './utils/crossword';
+import { getClueText } from './utils/clues';
 import { 
   loadPuzzleProgress, 
   loadHintsRemaining, 
@@ -152,7 +153,9 @@ function App() {
   const MAX_BONUS_HINTS_PER_EMPTY = 5;
   const titleFadeTimersRef = useRef({ swap: null, settle: null });
   const bonusHintCheckInFlightRef = useRef(false);
-  const puzzleRefreshInFlightRef = useRef(false);
+  const puzzleRefreshPromiseRef = useRef(null);
+  const refreshPuzzlesRef = useRef(null);
+  const puzzleSessionActiveRef = useRef(false);
   const puzzleVersionRef = useRef(null);
 
   const triggerHeaderTitleMorph = (nextTitle) => {
@@ -267,30 +270,34 @@ function App() {
     };
     initHints();
 
-    const refreshPuzzles = async () => {
-      if (puzzleRefreshInFlightRef.current) return;
-      puzzleRefreshInFlightRef.current = true;
+    const refreshPuzzles = () => {
+      // Keep the active grid and its stored state together until the player
+      // returns to the menu. Selection waits for any refresh already underway.
+      if (puzzleSessionActiveRef.current) return Promise.resolve();
+      if (puzzleRefreshPromiseRef.current) return puzzleRefreshPromiseRef.current;
+      puzzleRefreshPromiseRef.current = (async () => {
+        try {
+          const meta = await fetchPuzzleData('puzzles.meta.json');
+          const nextVersion = meta?.version || meta?.generatedAt || '';
+          const datasetChanged = puzzleVersionRef.current !== nextVersion;
 
-      try {
-        const meta = await fetchPuzzleData('puzzles.meta.json');
-        const nextVersion = meta?.version || meta?.generatedAt || '';
-        const datasetChanged = puzzleVersionRef.current !== nextVersion;
+          if (!datasetChanged) return;
 
-        setPuzzleMeta(meta || {});
-        await resetPuzzleDataIfDatasetChanged(meta?.resetVersion || nextVersion);
-        await resetReplacedPuzzleProgress(meta?.puzzleRevisions);
-
-        if (!datasetChanged) return;
-
-        const data = await fetchPuzzleData('puzzles.json');
-        setPuzzlesIndex(data);
-        puzzleVersionRef.current = nextVersion;
-      } catch (e) {
-        console.error('Failed to refresh puzzle catalog', e);
-      } finally {
-        puzzleRefreshInFlightRef.current = false;
-      }
+          const data = await fetchPuzzleData('puzzles.json');
+          await resetPuzzleDataIfDatasetChanged(meta?.resetVersion || nextVersion);
+          await resetReplacedPuzzleProgress(meta?.puzzleRevisions);
+          setPuzzleMeta(meta || {});
+          setPuzzlesIndex(data);
+          puzzleVersionRef.current = nextVersion;
+        } catch (e) {
+          console.error('Failed to refresh puzzle catalog', e);
+        } finally {
+          puzzleRefreshPromiseRef.current = null;
+        }
+      })();
+      return puzzleRefreshPromiseRef.current;
     };
+    refreshPuzzlesRef.current = refreshPuzzles;
     refreshPuzzles();
 
     const handleAppResume = () => {
@@ -335,8 +342,13 @@ function App() {
 
   const handleSelectPuzzle = async (id) => {
     try {
+      await refreshPuzzlesRef.current?.();
+      if (puzzleSessionActiveRef.current) return;
+      puzzleSessionActiveRef.current = true;
       // Show loading or transition
-      const data = await fetchPuzzleData(`puzzles/${encodeURIComponent(id)}.json`);
+      const data = await fetchPuzzleData(`puzzles/${encodeURIComponent(id)}.json`, {
+        version: puzzleVersionRef.current
+      });
       setPuzzleData(data);
 
       const cachedAnswers = await loadPuzzleProgress(id);
@@ -365,18 +377,21 @@ function App() {
       
       setCurrentView('play');
     } catch (e) {
+      puzzleSessionActiveRef.current = false;
       console.error('Failed to load puzzle', e);
       alert('Error loading puzzle data.');
     }
   };
 
   const handleBackToMenu = () => {
+    puzzleSessionActiveRef.current = false;
     triggerHeaderTitleMorph('Nightcrossing');
     setCurrentView('menu');
     setPuzzleData(null);
     setCompletionRewardInfo(null);
     setHasUsedFreeHint(false);
     setPuzzleListRefreshToken(prev => prev + 1);
+    void refreshPuzzlesRef.current?.();
   };
 
   const activeWord = puzzleData && selectedCell !== null
@@ -527,7 +542,7 @@ function App() {
   useEffect(() => {
     const newNum = activeWord?.clueNum ?? null;
     const newDir = direction;
-    const newText = activeClueText ? (activeClueText.split('. ')[1] || activeClueText) : null;
+    const newText = getClueText(activeClueText);
 
     // If nothing is displayed yet and we have new text, show immediately (initial appear)
     if (!displayedClue.text && newText) {

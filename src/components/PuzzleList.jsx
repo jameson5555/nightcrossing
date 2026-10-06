@@ -149,7 +149,7 @@ const PuzzleList = ({
           try {
             const puzzleData = await fetchPuzzleData(
               `puzzles/${encodeURIComponent(p.id)}.json`,
-              { fresh: false }
+              { fresh: false, version: puzzleMeta?.version }
             );
 
             const progress = await loadPuzzleProgress(p.id);
@@ -197,7 +197,7 @@ const PuzzleList = ({
     };
     resolveStatuses();
     return () => { mounted = false; };
-  }, [puzzles, refreshToken]);
+  }, [puzzles, refreshToken, puzzleMeta?.version]);
 
   if (loading) {
     return (
