@@ -19,26 +19,22 @@ export function formatNextReleaseDate(nextReleaseAt, {
   }).format(releaseDate);
 }
 
-export const MAX_VISIBLE_UNCOMPLETED_THEMES = 5;
+export const MAX_VISIBLE_THEMES = 5;
 
 export function selectVisibleThemeEntries(
   activeThemeEntries,
-  maxUncompletedThemes = MAX_VISIBLE_UNCOMPLETED_THEMES
+  maxThemes = MAX_VISIBLE_THEMES
 ) {
-  const limit = Math.max(0, Number(maxUncompletedThemes) || 0);
-  const uncompletedThemes = activeThemeEntries
-    .filter(([, themeState]) => !themeState.hasCompletedAllThemePuzzles);
+  const limit = Math.max(0, Number(maxThemes) || 0);
   const prioritizedThemes = [
-    ...uncompletedThemes.filter(([, themeState]) => themeState.hasInProgressPuzzle),
-    ...uncompletedThemes.filter(([, themeState]) => !themeState.hasInProgressPuzzle)
+    ...activeThemeEntries.filter(([, themeState]) => themeState.hasInProgressPuzzle),
+    ...activeThemeEntries.filter(([, themeState]) => !themeState.hasInProgressPuzzle)
   ];
-  const visibleUncompletedThemes = new Set(
+  const visibleThemes = new Set(
     prioritizedThemes.slice(0, limit).map(([theme]) => theme)
   );
 
-  return activeThemeEntries.filter(([theme, themeState]) => (
-    themeState.hasCompletedAllThemePuzzles || visibleUncompletedThemes.has(theme)
-  ));
+  return activeThemeEntries.filter(([theme]) => visibleThemes.has(theme));
 }
 
 export function classifyThemeEntries({
@@ -49,6 +45,19 @@ export function classifyThemeEntries({
 }) {
   const activeThemeEntries = [];
   const completedThemeEntries = [];
+  const themeOrder = new Map(sortedThemeEntries.map(([theme], index) => [theme, index]));
+  const getProgressionOrder = (theme) => {
+    const visited = new Set([theme]);
+    let parent = themeVisibility?.[theme]?.lockedUntilThemeCompleted;
+    while (themeOrder.has(parent) && !visited.has(parent)) {
+      // Successors inherit their original parent's slot, including across
+      // multiple generations, so an unrelated theme cannot take the reward's place.
+      visited.add(parent);
+      theme = parent;
+      parent = themeVisibility?.[theme]?.lockedUntilThemeCompleted;
+    }
+    return themeOrder.get(theme);
+  };
 
   for (const [theme] of sortedThemeEntries) {
     const themeState = themeStatesByName[theme];
@@ -73,6 +82,10 @@ export function classifyThemeEntries({
       activeThemeEntries.push([theme, themeState]);
     }
   }
+
+  activeThemeEntries.sort(([themeA], [themeB]) => (
+    getProgressionOrder(themeA) - getProgressionOrder(themeB)
+  ));
 
   return { activeThemeEntries, completedThemeEntries };
 }

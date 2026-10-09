@@ -112,7 +112,7 @@ test('keeps an in-progress theme inside the five-theme window', () => {
   );
 });
 
-test('does not count caught-up scheduled themes against the uncompleted theme limit', () => {
+test('counts caught-up scheduled themes toward the five-theme limit', () => {
   const caughtUp = ['Caught Up', {
     hasCompletedAllThemePuzzles: true,
     hasInProgressPuzzle: false
@@ -124,7 +124,88 @@ test('does not count caught-up scheduled themes against the uncompleted theme li
 
   assert.deepEqual(
     selectVisibleThemeEntries([caughtUp, ...uncompleted]).map(([theme]) => theme),
-    ['Caught Up', 'Theme 1', 'Theme 2', 'Theme 3', 'Theme 4', 'Theme 5']
+    ['Caught Up', 'Theme 1', 'Theme 2', 'Theme 3', 'Theme 4']
+  );
+});
+
+test('announced successors replace their parents inside a full five-theme list', () => {
+  const themes = [
+    'Space & Sky', 'Food & Cooking', 'Music & Sound', 'Ocean & Marine Life',
+    'Sports & Athletics', 'Weather & Climate', 'Internet & Software',
+    'Transportation & Vehicles', 'Nature & Wilderness'
+  ];
+  const themeVisibility = {
+    'Transportation & Vehicles': { lockedUntilThemeCompleted: 'Space & Sky' },
+    'Nature & Wilderness': { lockedUntilThemeCompleted: 'Sports & Athletics' }
+  };
+  const themeAvailability = {
+    'Space & Sky': { receivesNextBatch: false },
+    'Sports & Athletics': { receivesNextBatch: false }
+  };
+  const visibleThemes = (completedThemes) => {
+    const result = classifyThemeEntries({
+      sortedThemeEntries: themes.map(theme => [theme, []]),
+      themeStatesByName: Object.fromEntries(themes.map(theme => [
+        theme, themeState(completedThemes.includes(theme))
+      ])),
+      themeVisibility,
+      themeAvailability
+    });
+    return selectVisibleThemeEntries(result.activeThemeEntries).map(([theme]) => theme);
+  };
+
+  assert.deepEqual(visibleThemes([]), themes.slice(0, 5));
+  const outcome = getThemeCompletionOutcome({
+    theme: 'Space & Sky', completed: true, availableThemes: themes,
+    themeVisibility, themeAvailability
+  });
+  assert.deepEqual(outcome.unlockedThemes, ['Transportation & Vehicles']);
+  assert.deepEqual(visibleThemes(['Space & Sky']), [
+    'Transportation & Vehicles', 'Food & Cooking', 'Music & Sound',
+    'Ocean & Marine Life', 'Sports & Athletics'
+  ]);
+  assert.deepEqual(visibleThemes(['Space & Sky', 'Sports & Athletics']), [
+    'Transportation & Vehicles', 'Food & Cooking', 'Music & Sound',
+    'Ocean & Marine Life', 'Nature & Wilderness'
+  ]);
+});
+
+test('successors retain the original slot across multiple generations', () => {
+  const themes = ['Original', 'Other', 'Backfill', 'Successor', 'Latest'];
+  const result = classifyThemeEntries({
+    sortedThemeEntries: themes.map(theme => [theme, []]),
+    themeStatesByName: Object.fromEntries(themes.map(theme => [
+      theme, themeState(theme === 'Original' || theme === 'Successor')
+    ])),
+    themeVisibility: {
+      Successor: { lockedUntilThemeCompleted: 'Original' },
+      Latest: { lockedUntilThemeCompleted: 'Successor' }
+    },
+    themeAvailability: {
+      Original: { receivesNextBatch: false },
+      Successor: { receivesNextBatch: false }
+    }
+  });
+
+  assert.deepEqual(
+    selectVisibleThemeEntries(result.activeThemeEntries, 2).map(([theme]) => theme),
+    ['Latest', 'Other']
+  );
+  assert.deepEqual(result.completedThemeEntries.map(([theme]) => theme), ['Original', 'Successor']);
+});
+
+test('backfills a slot when an exhausted theme has no available successor', () => {
+  const themes = ['Finished', 'Other', 'Backfill'];
+  const result = classifyThemeEntries({
+    sortedThemeEntries: themes.map(theme => [theme, []]),
+    themeStatesByName: Object.fromEntries(themes.map(theme => [theme, themeState(theme === 'Finished')])),
+    themeVisibility: { Unavailable: { lockedUntilThemeCompleted: 'Finished' } },
+    themeAvailability: { Finished: { receivesNextBatch: false } }
+  });
+
+  assert.deepEqual(
+    selectVisibleThemeEntries(result.activeThemeEntries, 2).map(([theme]) => theme),
+    ['Other', 'Backfill']
   );
 });
 

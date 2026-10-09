@@ -22,6 +22,11 @@ version in their URLs, keeping the list and play screen on the same data.
 The list honors saved completion records as well as solved cells; an explicit
 layout revision clears that puzzle's incompatible saved state.
 
+The menu shows at most five active themes, including themes waiting for their
+next batch. When a finished, exhausted theme unlocks a successor, that successor
+inherits its parent's position in the list. Finished exhausted themes move to
+Completed Themes; themes with in-progress puzzles remain prioritized.
+
 Runtime controls:
 
 - `NC_NEW_PUZZLES_PER_THEME` sets the batch size. The monthly workflow pins it
