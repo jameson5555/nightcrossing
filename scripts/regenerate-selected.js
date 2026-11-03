@@ -5,16 +5,17 @@ import process from 'node:process';
 import { THEMES, generateThemedPuzzle } from './proceduralEngine.js';
 import { dedupeWordsByClue, isExhaustibleGenerationFailure } from './generationPolicy.js';
 import { auditPuzzleQuality } from './puzzleQuality.js';
+import { readCurrentPuzzle, publishPuzzleEdition } from './puzzleCatalog.cjs';
 
 const ids = new Set(process.argv.slice(2));
 if (!ids.size || [...ids].some(id => !/^[a-z0-9-]+-vol\d+$/.test(id))) {
   throw new Error('Usage: node scripts/regenerate-selected.js <puzzle-id> [...]');
 }
 const dir = 'public/data/puzzles';
-const originals = new Map([...ids].map(id => [id, JSON.parse(fs.readFileSync(`${dir}/${id}.json`, 'utf8'))]));
+const originals = new Map([...ids].map(id => [id, readCurrentPuzzle(`${dir}/${id}.json`)]));
 const consumed = new Map();
 for (const file of fs.readdirSync(dir).filter(file => file.endsWith('.json'))) {
-  const puzzle = JSON.parse(fs.readFileSync(`${dir}/${file}`, 'utf8'));
+  const puzzle = readCurrentPuzzle(`${dir}/${file}`);
   if (ids.has(puzzle.id)) continue;
   if (!consumed.has(puzzle.theme)) consumed.set(puzzle.theme, new Set());
   for (const answer of [...puzzle.answers.across, ...puzzle.answers.down]) consumed.get(puzzle.theme).add(answer);
@@ -55,7 +56,7 @@ for (const [id, original] of originals) {
   console.log(`${id}: ${[...replacement.answers.across, ...replacement.answers.down].join(', ')}`);
 }
 // Nothing is changed until every selected replacement has passed validation.
-for (const [id, puzzle] of staged) fs.writeFileSync(`${dir}/${id}.json`, JSON.stringify(puzzle, null, 2));
+for (const [id, puzzle] of staged) publishPuzzleEdition(`${dir}/${id}.json`, puzzle);
 const result = spawnSync(process.execPath, ['scripts/sync-index.cjs'], { stdio: 'inherit' });
 if (result.status !== 0) throw new Error('Failed to refresh puzzle metadata');
 console.log(`Replaced ${staged.size} puzzles; all other layouts and the catalog count are preserved.`);

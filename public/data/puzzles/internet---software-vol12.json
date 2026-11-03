@@ -223,5 +223,6 @@
     "down-4": "Digital picture of any kind",
     "across-5": "In nodal analysis: a combination of two nodes which are connected by a voltage source, allowing for the voltage of the nodes to be solved simultaneously without having to consider the unknown current between them",
     "across-6": "Set of software components, often open source, that have been packaged into a larger product or component for distribution to end-users"
-  }
+  },
+  "currentEdition": "editions/internet---software-vol12-1958f8d323bb303f.json"
 }

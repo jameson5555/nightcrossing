@@ -1,5 +1,5 @@
 {
-  "version": "1c25cfe0bb11c1e3",
+  "version": "3b6396f98b8def44",
   "resetVersion": "bb837de6de25538c",
   "puzzleCount": 228,
   "puzzleRevisions": {
@@ -194,5 +194,5 @@
     }
   },
   "nextReleaseAt": "2026-12-01T00:00:00.000Z",
-  "generatedAt": "2026-11-01T01:25:04.824Z"
+  "generatedAt": "2026-11-03T17:56:16.542Z"
 }

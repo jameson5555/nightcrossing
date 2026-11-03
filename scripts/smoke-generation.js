@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { performance } from 'node:perf_hooks';
 import process from 'node:process';
+import { readCurrentPuzzle } from './puzzleCatalog.cjs';
 
 process.env.NC_LAYOUT_ATTEMPT_SCALE ||= '0.2';
 process.env.NC_PRIMARY_CORE_POOL_LIMIT ||= '120';
@@ -21,7 +22,7 @@ const HARD_THEMES = [
 function collectConsumedAnswers(themeName) {
   const consumed = new Set();
   for (const file of fs.readdirSync('public/data/puzzles').filter(name => name.endsWith('.json'))) {
-    const puzzle = JSON.parse(fs.readFileSync(`public/data/puzzles/${file}`, 'utf8'));
+    const puzzle = readCurrentPuzzle(`public/data/puzzles/${file}`);
     if (puzzle.theme !== themeName) continue;
     for (const answer of [...puzzle.answers.across, ...puzzle.answers.down]) {
       consumed.add(answer.toUpperCase());

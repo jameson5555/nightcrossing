@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './PuzzleList.css';
-import { checkPuzzleStatus, loadJourneyRankHighWatermark, loadPuzzleProgress } from '../utils/storage';
+import { loadRewardClaimed, loadJourneyRankHighWatermark, loadPuzzleProgress } from '../utils/storage';
+import { getPuzzleStatus } from '../utils/puzzleProgress';
 import { getJourneyProgress } from '../utils/badges';
 import { getSolvedClueIds } from '../utils/crossword';
 import {
@@ -8,7 +9,7 @@ import {
   formatNextReleaseDate,
   selectVisibleThemeEntries
 } from '../utils/themeAvailability';
-import { fetchPuzzleData } from '../utils/puzzleData';
+import { loadPuzzleForPlayer } from '../utils/puzzleData';
 
 const THEME_DISPLAY_ORDER = [
   'Space & Sky',
@@ -147,14 +148,20 @@ const PuzzleList = ({
 
         const results = await Promise.allSettled(puzzles.map(async (p) => {
           try {
-            const puzzleData = await fetchPuzzleData(
-              `puzzles/${encodeURIComponent(p.id)}.json`,
+            const [progress, completed] = await Promise.all([
+              loadPuzzleProgress(p.id), loadRewardClaimed(p.id)
+            ]);
+            if (completed) return { id: p.id, status: 'Completed', wordsLeft: null };
+            const currentAnswers = Array.isArray(progress) ? progress : [];
+            if (!currentAnswers.some(cell => typeof cell === 'string' && cell.trim())) {
+              return { id: p.id, status: 'New', wordsLeft: null };
+            }
+            const puzzleData = await loadPuzzleForPlayer(
+              p.id,
               { fresh: false, version: puzzleMeta?.version }
             );
 
-            const progress = await loadPuzzleProgress(p.id);
-            const currentAnswers = Array.isArray(progress) ? progress : [];
-            const status = await checkPuzzleStatus(p.id, puzzleData.grid);
+            const status = getPuzzleStatus(currentAnswers, puzzleData.grid);
             let wordsLeft = null;
 
             if (status === 'In Progress') {

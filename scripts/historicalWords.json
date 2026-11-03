@@ -1,0 +1,4396 @@
+{
+  "Animals & Wildlife": [
+    {
+      "answer": "FOREST",
+      "clue": "Woodland habitat",
+      "hint": "Starts with F and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "ANIMALS",
+      "clue": "Living creatures such as birds and mammals",
+      "hint": "Starts with A and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "OTTER",
+      "clue": "Playful river mammal",
+      "hint": "Starts with O and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FEED",
+      "clue": "Food given to non-human animals",
+      "hint": "Starts with F and ends with D.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "PAW",
+      "clue": "Animal foot",
+      "hint": "Starts with P and ends with W.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FISH",
+      "clue": "Gilled water animal",
+      "hint": "Starts with F and ends with H.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "DEER",
+      "clue": "Antlered forest animal",
+      "hint": "Starts with D and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SCALE",
+      "clue": "Fish or reptile plate",
+      "hint": "Starts with S and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FORAGE",
+      "clue": "Search for and gather food for animals, particularly cattle and horses",
+      "hint": "Starts with F and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "ARCTIC",
+      "clue": "Far northern habitat",
+      "hint": "Starts with A and ends with C.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "STALL",
+      "clue": "Compartment for a single animal in a stable or cattle shed",
+      "hint": "Starts with S and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SONGBIRD",
+      "clue": "Musical bird",
+      "hint": "Starts with S and ends with D.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "WETLAND",
+      "clue": "Marshy wildlife habitat",
+      "hint": "Starts with W and ends with D.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "MAMMAL",
+      "clue": "Milk-producing animal",
+      "hint": "Starts with M and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FLOCKS",
+      "clue": "Groups of birds or grazing animals",
+      "hint": "Starts with F and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FAUNA",
+      "clue": "Animal life of a region",
+      "hint": "Starts with F and ends with A.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "DIET",
+      "clue": "Food and beverage a person or animal consumes",
+      "hint": "Starts with D and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "CRITTER",
+      "clue": "Creature, an animal",
+      "hint": "Starts with C and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "HUTCH",
+      "clue": "Coop or cage for keeping small animals",
+      "hint": "Starts with H and ends with H.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "GRAZE",
+      "clue": "Feed on grass in a pasture",
+      "hint": "Starts with G and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SWARMS",
+      "clue": "Large groups of insects moving together",
+      "hint": "Starts with S and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FOXES",
+      "clue": "Dog-like omnivorous mammals",
+      "hint": "Starts with F and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "PEN",
+      "clue": "Enclosure used to contain domesticated animals, especially sheep or cattle",
+      "hint": "Starts with P and ends with N.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "ANIMAL",
+      "clue": "Living creature",
+      "hint": "Starts with A and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BEETLE",
+      "clue": "Hard-shelled insect",
+      "hint": "Starts with B and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "EAGLE",
+      "clue": "Large bird of prey",
+      "hint": "Starts with E and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BEAST",
+      "clue": "Animal, especially a large or dangerous land vertebrate",
+      "hint": "Starts with B and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "TRACKS",
+      "clue": "Animal footprints",
+      "hint": "Starts with T and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BIRD",
+      "clue": "Feathered animal",
+      "hint": "Starts with B and ends with D.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "REPTILE",
+      "clue": "Scaly cold-blooded animal",
+      "hint": "Starts with R and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SAVANNA",
+      "clue": "Grassy wildlife plain",
+      "hint": "Starts with S and ends with A.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FUR",
+      "clue": "Animal coat",
+      "hint": "Starts with F and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "NEST",
+      "clue": "Bird's home",
+      "hint": "Starts with N and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "INSECT",
+      "clue": "Six-legged creature",
+      "hint": "Starts with I and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "HABITAT",
+      "clue": "Animal's natural home",
+      "hint": "Starts with H and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "PREDATOR",
+      "clue": "Hunting animal",
+      "hint": "Starts with P and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BROWSE",
+      "clue": "Fodder for cattle and other animals",
+      "hint": "Starts with B and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "PREDATION",
+      "clue": "Preying of one animal on others",
+      "hint": "Starts with P and ends with N.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "DUCK",
+      "clue": "Web-footed bird",
+      "hint": "Starts with D and ends with K.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "MOOSE",
+      "clue": "Large antlered animal",
+      "hint": "Starts with M and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "GROVE",
+      "clue": "Small forest",
+      "hint": "Starts with G and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "WILD",
+      "clue": "Living freely in a natural habitat",
+      "hint": "Starts with W and ends with D.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SNAKE",
+      "clue": "Legless reptile",
+      "hint": "Starts with S and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "LOUSE",
+      "clue": "Small wingless insect that lives on a host",
+      "hint": "Starts with L and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "RODENT",
+      "clue": "Gnawing mammal",
+      "hint": "Starts with R and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "COOP",
+      "clue": "Basket, pen or enclosure for birds or small animals",
+      "hint": "Starts with C and ends with P.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "STREAM",
+      "clue": "Small flowing habitat",
+      "hint": "Starts with S and ends with M.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BEASTS",
+      "clue": "Large or dangerous wild animals",
+      "hint": "Starts with B and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "CRITTERS",
+      "clue": "Informal word for animals",
+      "hint": "Starts with C and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "RAPTOR",
+      "clue": "Bird of prey",
+      "hint": "Starts with R and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BRISTLE",
+      "clue": "Stiff or coarse hair on a nonhuman mammal or on a plant",
+      "hint": "Starts with B and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "LIZARD",
+      "clue": "Four-legged reptile",
+      "hint": "Starts with L and ends with D.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "TUNDRA",
+      "clue": "Treeless cold habitat",
+      "hint": "Starts with T and ends with A.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "PREDATORY",
+      "clue": "Living by preying on other living animals",
+      "hint": "Starts with P and ends with Y.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "AVIAN",
+      "clue": "Characteristic of or pertaining to birds, or to bird-like or flying creatures",
+      "hint": "Starts with A and ends with N.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "TURTLE",
+      "clue": "Shelled reptile",
+      "hint": "Starts with T and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "PAWS",
+      "clue": "Feet of cats and dogs",
+      "hint": "Starts with P and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "GOAD",
+      "clue": "Long, pointed stick used to prod animals",
+      "hint": "Starts with G and ends with D.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "MEADOW",
+      "clue": "Grassy wildlife area",
+      "hint": "Starts with M and ends with W.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FLEECE",
+      "clue": "Hair or wool of a sheep or similar animal",
+      "hint": "Starts with F and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "REPTILES",
+      "clue": "Cold-blooded animals with scaly skin",
+      "hint": "Starts with R and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "DESERT",
+      "clue": "Dry wildlife habitat",
+      "hint": "Starts with D and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FURS",
+      "clue": "Hairy skins of animals used as a material for clothing",
+      "hint": "Starts with F and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "DEN",
+      "clue": "Wild animal shelter",
+      "hint": "Starts with D and ends with N.",
+      "source": "ml",
+      "hintSource": "spelling"
+    }
+  ],
+  "Food & Cooking": [
+    {
+      "answer": "RECIPE",
+      "clue": "Instructions for preparing a dish",
+      "hint": "Starts with R and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SAUCE",
+      "clue": "Liquid condiment or accompaniment to food.",
+      "hint": "Starts with S and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "PLATE",
+      "clue": "Slightly curved but almost flat dish from which food is served or eaten.",
+      "hint": "Starts with P and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "COOKER",
+      "clue": "Appliance or utensil for cooking food.",
+      "hint": "Starts with C and ends with R.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "CHEF",
+      "clue": "Head cook of a restaurant or other establishment.",
+      "hint": "Starts with C and ends with F.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "BOILED",
+      "clue": "Cooked in boiling water.",
+      "hint": "Starts with B and ends with D.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "PICNIC",
+      "clue": "Meal eaten outdoors on a blanket or at a table",
+      "hint": "Starts with P and ends with C.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "MEALS",
+      "clue": "Food served or eaten as a repast",
+      "hint": "Starts with M and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FEASTS",
+      "clue": "Very large meal, often of a ceremonial nature.",
+      "hint": "Starts with F and ends with S.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "COOKING",
+      "clue": "Process of preparing food by using heat.",
+      "hint": "Starts with C and ends with G.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SAUCER",
+      "clue": "Small shallow dish to hold a cup and catch drips.",
+      "hint": "Starts with S and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SALMON",
+      "clue": "Pink-fleshed fish often grilled or baked",
+      "hint": "Starts with S and ends with N.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "WILT",
+      "clue": "Cook greens until they soften",
+      "hint": "Starts with W and ends with T.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "PUDDING",
+      "clue": "Soft dessert often served in a bowl",
+      "hint": "Starts with P and ends with G.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BURNER",
+      "clue": "Element on a kitchen stove that generates localized heat for cooking.",
+      "hint": "Starts with B and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "DINNERS",
+      "clue": "Main meal of the day, often eaten in the evening",
+      "hint": "Starts with D and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "GRILL",
+      "clue": "Metal cooking grate over a heat source",
+      "hint": "Starts with G and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "UTENSILS",
+      "clue": "Tools used to prepare or serve food",
+      "hint": "Starts with U and ends with S.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "STEAMING",
+      "clue": "Method of cooking by immersion in steam.",
+      "hint": "Starts with S and ends with G.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "UTENSIL",
+      "clue": "Instrument or device for domestic use, especially in the kitchen.",
+      "hint": "Starts with U and ends with L.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "DESSERT",
+      "clue": "Sweet dish or confection served as the last course of a meal",
+      "hint": "Starts with D and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BREAKFAST",
+      "clue": "First meal of the day, usually eaten in the morning.",
+      "hint": "Starts with B and ends with T.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "CUMIN",
+      "clue": "Earthy spice used in chili",
+      "hint": "Starts with C and ends with N.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "FLAN",
+      "clue": "Custard dessert topped with caramel",
+      "hint": "Starts with F and ends with N.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SEARING",
+      "clue": "Cooking food quickly at high temperature",
+      "hint": "Starts with S and ends with G.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "RECIPES",
+      "clue": "Instructions for preparing dishes",
+      "hint": "Starts with R and ends with S.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SNACK",
+      "clue": "Item of food eaten between meals.",
+      "hint": "Starts with S and ends with K.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "OVEN",
+      "clue": "Enclosed cooking chamber",
+      "hint": "Starts with O and ends with N.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "FEAST",
+      "clue": "Very large meal, often of a ceremonial nature.",
+      "hint": "Starts with F and ends with T.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "LUNCHEON",
+      "clue": "Formal meal served in the middle of the day.",
+      "hint": "Starts with L and ends with N.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "EATING",
+      "clue": "Act of ingesting food.",
+      "hint": "Starts with E and ends with G.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "STEAMER",
+      "clue": "Cooking appliance that cooks by steaming.",
+      "hint": "Starts with S and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BAKE",
+      "clue": "Cook in an oven",
+      "hint": "Starts with B and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "COOKERY",
+      "clue": "Art of preparing food",
+      "hint": "Starts with C and ends with Y.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "COOK",
+      "clue": "Person who prepares food.",
+      "hint": "Starts with C and ends with K.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "STOVE",
+      "clue": "Device for heating food, a cooker.",
+      "hint": "Starts with S and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "POT",
+      "clue": "Flat-bottomed vessel used for cooking food, possibly excluding saucepans.",
+      "hint": "Starts with P and ends with T.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "CULINARY",
+      "clue": "Relating to the preparation of food",
+      "hint": "Starts with C and ends with Y.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "KITCHEN",
+      "clue": "Room or area for preparing food.",
+      "hint": "Starts with K and ends with N.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "FRY",
+      "clue": "Cook in hot fat.",
+      "hint": "Starts with F and ends with Y.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "CASSEROLE",
+      "clue": "Meal baked in a deep dish",
+      "hint": "Starts with C and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SPICES",
+      "clue": "Aromatic or pungent plant matter used to season or flavor food.",
+      "hint": "Starts with S and ends with S.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "WOK",
+      "clue": "Large, round-bottomed cooking pan used in East Asian cooking.",
+      "hint": "Starts with W and ends with K.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "COOKED",
+      "clue": "Prepared using heat",
+      "hint": "Starts with C and ends with D.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "COOKIE",
+      "clue": "Small sweet baked treat",
+      "hint": "Starts with C and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "DELI",
+      "clue": "Shop that sells cooked or prepared food ready for serving.",
+      "hint": "Starts with D and ends with I.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BURNERS",
+      "clue": "Parts of a stove that provide cooking heat",
+      "hint": "Starts with B and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BONED",
+      "clue": "Having had the bones removed before cooking.",
+      "hint": "Starts with B and ends with D.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FOOD",
+      "clue": "Things that people eat for nourishment",
+      "hint": "Starts with F and ends with D.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "KITCHENS",
+      "clue": "Rooms used to prepare meals",
+      "hint": "Starts with K and ends with S.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "FRIED",
+      "clue": "Prepared in hot oil or fat",
+      "hint": "Starts with F and ends with D.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "BAKED",
+      "clue": "Cooked in the dry heat of an oven",
+      "hint": "Starts with B and ends with D.",
+      "hintSource": "spelling",
+      "source": "ml"
+    }
+  ],
+  "History & Civilization": [
+    {
+      "answer": "WARTIME",
+      "clue": "Period during which a war is in progress in a particular place.",
+      "hint": "Starts with W and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "RUINS",
+      "clue": "Remains of a civilization's architecture.",
+      "hint": "Starts with R and ends with S.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "HISTORIC",
+      "clue": "Important in the events of the past",
+      "hint": "Starts with H and ends with C.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "PRINCES",
+      "clue": "Male members of a royal family",
+      "hint": "Starts with P and ends with S.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SERF",
+      "clue": "Medieval peasant bound to land",
+      "hint": "Starts with S and ends with F.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "NOBILITY",
+      "clue": "People belonging to a hereditary upper social class",
+      "hint": "Starts with N and ends with Y.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "PERSIA",
+      "clue": "Former term referring to Iran.",
+      "hint": "Starts with P and ends with A.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "PACT",
+      "clue": "Agreement between two or more nations",
+      "hint": "Starts with P and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FLAG",
+      "clue": "Banner representing a nation",
+      "hint": "Starts with F and ends with G.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "ARCHDUKE",
+      "clue": "Ruler of an archduchy, in particular the Archduchy of Austria.",
+      "hint": "Starts with A and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SHIELD",
+      "clue": "Protective armor carried in battle",
+      "hint": "Starts with S and ends with D.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "GUILD",
+      "clue": "Medieval trade organization",
+      "hint": "Starts with G and ends with D.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "WARFARE",
+      "clue": "Waging of war or armed conflict against an enemy.",
+      "hint": "Starts with W and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SHAH",
+      "clue": "King of Persia or Iran.",
+      "hint": "Starts with S and ends with H.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "RUNE",
+      "clue": "Ancient Germanic letter",
+      "hint": "Starts with R and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "CASTLE",
+      "clue": "Fortified medieval residence",
+      "hint": "Starts with C and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "NOBLE",
+      "clue": "Person of high social rank",
+      "hint": "Starts with N and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "CULTURAL",
+      "clue": "Relating to a society's customs and arts",
+      "hint": "Starts with C and ends with L.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "BRONZE",
+      "clue": "Metal alloy that named an age",
+      "hint": "Starts with B and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "LATIN",
+      "clue": "Relating to ancient Rome or its Empire",
+      "hint": "Starts with L and ends with N.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "REALM",
+      "clue": "Kingdom or domain",
+      "hint": "Starts with R and ends with M.",
+      "hintSource": "spelling",
+      "source": "ml"
+    }
+  ],
+  "Home & Tools": [
+    {
+      "answer": "TOOLS",
+      "clue": "Devices used to carry out practical tasks",
+      "hint": "Starts with T and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "HOMECOMING",
+      "clue": "Act or event of returning home",
+      "hint": "Starts with H and ends with G.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "DRILL",
+      "clue": "Hole-making tool",
+      "hint": "Starts with D and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "LEVEL",
+      "clue": "Tool for checking flatness",
+      "hint": "Starts with L and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "DOMICILE",
+      "clue": "Home or residence",
+      "hint": "Starts with D and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "DOOR",
+      "clue": "Room entry panel",
+      "hint": "Starts with D and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "TOOL",
+      "clue": "Device used to carry out a practical task",
+      "hint": "Starts with T and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BRUSH",
+      "clue": "Painting or cleaning tool",
+      "hint": "Starts with B and ends with H.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "HOMESTEAD",
+      "clue": "Place that is one's home",
+      "hint": "Starts with H and ends with D.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "DISHWASHER",
+      "clue": "Plate-cleaning appliance",
+      "hint": "Starts with D and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "ARTISAN",
+      "clue": "Skilled manual worker who uses tools and machinery in a particular craft",
+      "hint": "Starts with A and ends with N.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BEATER",
+      "clue": "Kitchen implement for mixing",
+      "hint": "Starts with B and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SLAMS",
+      "clue": "Shuts doors with a loud bang",
+      "hint": "Starts with S and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "HAMMER",
+      "clue": "Tool for nails",
+      "hint": "Starts with H and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SPONGE",
+      "clue": "Absorbent cleaner",
+      "hint": "Starts with S and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FORGING",
+      "clue": "Shaping heated metal with a hammer",
+      "hint": "Starts with F and ends with G.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BRACKET",
+      "clue": "Fixture attached to a wall to hold up a shelf",
+      "hint": "Starts with B and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SOAP",
+      "clue": "Cleaning substance that forms a lather in water",
+      "hint": "Starts with S and ends with P.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "CURTAIN",
+      "clue": "Window hanging",
+      "hint": "Starts with C and ends with N.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "MANSION",
+      "clue": "Large luxurious house or building, usually built for the wealthy",
+      "hint": "Starts with M and ends with N.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "REPAIR",
+      "clue": "Fix something broken",
+      "hint": "Starts with R and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "RAKE",
+      "clue": "Garden tool with teeth for gathering leaves",
+      "hint": "Starts with R and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "HOMEOWNERS",
+      "clue": "People who own the houses they live in",
+      "hint": "Starts with H and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "UTENSILS",
+      "clue": "Tools used to prepare or serve food",
+      "hint": "Starts with U and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "EAVES",
+      "clue": "Edges of a roof that project beyond the walls",
+      "hint": "Starts with E and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "GARAGE",
+      "clue": "Car storage room",
+      "hint": "Starts with G and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SCRUBBER",
+      "clue": "Person or appliance that cleans floors or similar by scrubbing",
+      "hint": "Starts with S and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "WALL",
+      "clue": "Vertical room boundary",
+      "hint": "Starts with W and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "PAINT",
+      "clue": "Wall color coating",
+      "hint": "Starts with P and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "LADDER",
+      "clue": "Climbing tool",
+      "hint": "Starts with L and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "OUTLET",
+      "clue": "Wall power socket",
+      "hint": "Starts with O and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SAW",
+      "clue": "Cutting tool with teeth",
+      "hint": "Starts with S and ends with W.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "TOOLBOX",
+      "clue": "Tool storage case",
+      "hint": "Starts with T and ends with X.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "ROOM",
+      "clue": "Part of a house",
+      "hint": "Starts with R and ends with M.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SHELF",
+      "clue": "Storage board",
+      "hint": "Starts with S and ends with F.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "LOCK",
+      "clue": "Door security device",
+      "hint": "Starts with L and ends with K.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "VILLA",
+      "clue": "Country house, with farm buildings around a courtyard",
+      "hint": "Starts with V and ends with A.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "DOMESTIC",
+      "clue": "Relating to the home",
+      "hint": "Starts with D and ends with C.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "WRENCH",
+      "clue": "Nut-turning tool",
+      "hint": "Starts with W and ends with H.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "WIRE",
+      "clue": "Electrical strand",
+      "hint": "Starts with W and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "JANITOR",
+      "clue": "Someone who looks after the maintenance and cleaning of a public building",
+      "hint": "Starts with J and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "COTTAGE",
+      "clue": "Small house",
+      "hint": "Starts with C and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SOFA",
+      "clue": "Living room seat",
+      "hint": "Starts with S and ends with A.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SINK",
+      "clue": "Basin with faucet",
+      "hint": "Starts with S and ends with K.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "ROLLER",
+      "clue": "Paint-spreading cylinder",
+      "hint": "Starts with R and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SPANNER",
+      "clue": "Tool for tightening nuts and bolts",
+      "hint": "Starts with S and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FLOOR",
+      "clue": "Surface underfoot",
+      "hint": "Starts with F and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "HALL",
+      "clue": "Large meeting room",
+      "hint": "Starts with H and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BATHROOM",
+      "clue": "Room with sink or shower",
+      "hint": "Starts with B and ends with M.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "HINGE",
+      "clue": "Door pivot hardware",
+      "hint": "Starts with H and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "MATTRESS",
+      "clue": "Padded support placed on a bed frame",
+      "hint": "Starts with M and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "NAIL",
+      "clue": "Hammered fastener",
+      "hint": "Starts with N and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "MANSE",
+      "clue": "House inhabited by the minister of a parish",
+      "hint": "Starts with M and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "HOUSE",
+      "clue": "Standalone dwelling",
+      "hint": "Starts with H and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "MOP",
+      "clue": "Wet floor cleaner",
+      "hint": "Starts with M and ends with P.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "HOMEMADE",
+      "clue": "Made at home",
+      "hint": "Starts with H and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "RUGS",
+      "clue": "Small movable coverings for floors",
+      "hint": "Starts with R and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "LODGINGS",
+      "clue": "Room or set of rooms in another person's house where a person lodges",
+      "hint": "Starts with L and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FAUCET",
+      "clue": "Water tap",
+      "hint": "Starts with F and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "WASHROOM",
+      "clue": "Room with a toilet, particularly a public toilet",
+      "hint": "Starts with W and ends with M.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "MAID",
+      "clue": "Female servant or cleaner",
+      "hint": "Starts with M and ends with D.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "HOME",
+      "clue": "Place where one lives",
+      "hint": "Starts with H and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "ALCOVE",
+      "clue": "Small recessed area set off from a larger room",
+      "hint": "Starts with A and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FORK",
+      "clue": "Pronged utensil used when eating",
+      "hint": "Starts with F and ends with K.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "CARPETS",
+      "clue": "Fabric used as a complete floor covering",
+      "hint": "Starts with C and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "WIELD",
+      "clue": "Handle with skill and ease, especially a weapon or tool",
+      "hint": "Starts with W and ends with D.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SALON",
+      "clue": "Large room, especially one used to receive and entertain guests",
+      "hint": "Starts with S and ends with N.",
+      "source": "ml",
+      "hintSource": "spelling"
+    }
+  ],
+  "Internet & Software": [
+    {
+      "answer": "CPU",
+      "clue": "Computer processor that executes instructions",
+      "hint": "Starts with C and ends with U.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "NETWORKING",
+      "clue": "Connecting computers so they can share data",
+      "hint": "Starts with N and ends with G.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "BLOG",
+      "clue": "Personal online journal",
+      "hint": "Starts with B and ends with G.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "CACHE",
+      "clue": "Temporary data storage for speed",
+      "hint": "Starts with C and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "FILES",
+      "clue": "Stored collections of data on a device.",
+      "hint": "Starts with F and ends with S.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "TOOL",
+      "clue": "Software utility used to perform a task.",
+      "hint": "Starts with T and ends with L.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "CHIP",
+      "clue": "Integrated circuit",
+      "hint": "Starts with C and ends with P.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "GOOGLE",
+      "clue": "To search for on the Internet using any comprehensive search engine",
+      "hint": "Starts with G and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "EMULATOR",
+      "clue": "Piece of software or hardware that simulates another system",
+      "hint": "Starts with E and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "DATABASES",
+      "clue": "Organized collections of searchable digital records",
+      "hint": "Starts with D and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "COMPILER",
+      "clue": "Computer program that transforms source code into object code",
+      "hint": "Starts with C and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "INCLUDE",
+      "clue": "Use a directive that allows the use of source code from another file",
+      "hint": "Starts with I and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "OFFLINE",
+      "clue": "Disconnected from the internet",
+      "hint": "Starts with O and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "WORKBOOK",
+      "clue": "Collection of spreadsheets stored in the same file",
+      "hint": "Starts with W and ends with K.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "CYBER",
+      "clue": "Relating to computers and online networks",
+      "hint": "Starts with C and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BROWSER",
+      "clue": "Software for viewing web pages",
+      "hint": "Starts with B and ends with R.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "TOKEN",
+      "clue": "Digital authentication credential",
+      "hint": "Starts with T and ends with N.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "BYTE",
+      "clue": "Eight bits of data",
+      "hint": "Starts with B and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "ENCRYPT",
+      "clue": "Conceal information by means of a code or cipher",
+      "hint": "Starts with E and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "PROGRAM",
+      "clue": "Set of instructions a computer can execute.",
+      "hint": "Starts with P and ends with M.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "PING",
+      "clue": "Test network connectivity",
+      "hint": "Starts with P and ends with G.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SCRIPT",
+      "clue": "Brief and simple program",
+      "hint": "Starts with S and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "HASH",
+      "clue": "Fixed-length output from input data",
+      "hint": "Starts with H and ends with H.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SERVER",
+      "clue": "Computer that provides data to others",
+      "hint": "Starts with S and ends with R.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "FILE",
+      "clue": "Named collection of stored data.",
+      "hint": "Starts with F and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "NODE",
+      "clue": "Connection point in a network",
+      "hint": "Starts with N and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "INTERNET",
+      "clue": "Global network connecting computers worldwide.",
+      "hint": "Starts with I and ends with T.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "EBAY",
+      "clue": "Popular Internet auction website",
+      "hint": "Starts with E and ends with Y.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "TOOLS",
+      "clue": "Software utilities used to perform tasks.",
+      "hint": "Starts with T and ends with S.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SYNC",
+      "clue": "Keep copies of digital files up to date",
+      "hint": "Starts with S and ends with C.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "DOCUMENT",
+      "clue": "File that contains text",
+      "hint": "Starts with D and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "NETWORK",
+      "clue": "Group of connected computers sharing data",
+      "hint": "Starts with N and ends with K.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "WEBSITE",
+      "clue": "Collection of related pages on the internet.",
+      "hint": "Starts with W and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "QUERY",
+      "clue": "Database search request",
+      "hint": "Starts with Q and ends with Y.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "WEB",
+      "clue": "System of linked pages accessed through a browser.",
+      "hint": "Starts with W and ends with B.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "DATABASE",
+      "clue": "Set of tables and other objects in the form of a structured data set.",
+      "hint": "Starts with D and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "CODE",
+      "clue": "Instructions written for computers",
+      "hint": "Starts with C and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "INSTALLER",
+      "clue": "Program that installs software in a computer and prepares it for use.",
+      "hint": "Starts with I and ends with R.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "NODES",
+      "clue": "Devices or connection points in a network",
+      "hint": "Starts with N and ends with S.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "CODING",
+      "clue": "Process of writing computer software code.",
+      "hint": "Starts with C and ends with G.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "TOOLKIT",
+      "clue": "Set of software tools or components",
+      "hint": "Starts with T and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "PROGRAMMER",
+      "clue": "One who writes computer programs",
+      "hint": "Starts with P and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "DEFAULT",
+      "clue": "Setting used by software unless changed",
+      "hint": "Starts with D and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SOFTWARE",
+      "clue": "Encoded computer instructions, usually modifiable.",
+      "hint": "Starts with S and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "PIXEL",
+      "clue": "Smallest unit of a digital image",
+      "hint": "Starts with P and ends with L.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "LOOP",
+      "clue": "Repeating block of code",
+      "hint": "Starts with L and ends with P.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "MODIFIER",
+      "clue": "Keyword that qualifies the meaning of other code",
+      "hint": "Starts with M and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "GMAIL",
+      "clue": "Web-based e-mail system provided by Google",
+      "hint": "Starts with G and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "PAYPAL",
+      "clue": "Worldwide online payment system",
+      "hint": "Starts with P and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    }
+  ],
+  "Music & Sound": [
+    {
+      "answer": "RHYTHM",
+      "clue": "Pattern of beats in music",
+      "hint": "Starts with R and ends with M.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SWISH",
+      "clue": "Sound of liquid flowing inside a container",
+      "hint": "Starts with S and ends with H.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "PIANOS",
+      "clue": "Large keyboard instruments with strings struck by hammers",
+      "hint": "Starts with P and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "MUTE",
+      "clue": "Device to soften an instrument's sound",
+      "hint": "Starts with M and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SNORT",
+      "clue": "Sound made by exhaling or inhaling roughly through the nose.",
+      "hint": "Starts with S and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "GROWL",
+      "clue": "Low rough sound made by a dog",
+      "hint": "Starts with G and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BLEEP",
+      "clue": "Brief high-pitched sound, as from some electronic device.",
+      "hint": "Starts with B and ends with P.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "QUINTET",
+      "clue": "Group of five musicians performing together",
+      "hint": "Starts with Q and ends with T.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "CHIME",
+      "clue": "Clear ringing sound made by a bell",
+      "hint": "Starts with C and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "RIPPLE",
+      "clue": "Gentle sound of small waves moving across water",
+      "hint": "Starts with R and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "TANGO",
+      "clue": "Lively ballroom dance with dramatic pauses",
+      "hint": "Starts with T and ends with O.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SKIP",
+      "clue": "Jump over a track while playing recorded music",
+      "hint": "Starts with S and ends with P.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "HOWL",
+      "clue": "Long loud cry made by a wolf",
+      "hint": "Starts with H and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "CLANK",
+      "clue": "Loud, hard sound of metal hitting metal",
+      "hint": "Starts with C and ends with K.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "CLAP",
+      "clue": "Explosive sound of thunder",
+      "hint": "Starts with C and ends with P.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "JINGLE",
+      "clue": "Sound of metal or glass clattering against itself",
+      "hint": "Starts with J and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "TRILL",
+      "clue": "Tremulous high-pitched vocal sound produced by cats",
+      "hint": "Starts with T and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SLAP",
+      "clue": "Sharp sound of an open hand striking a surface",
+      "hint": "Starts with S and ends with P.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "TING",
+      "clue": "High-pitched sharp sound like a small bell being struck.",
+      "hint": "Starts with T and ends with G.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "POPPING",
+      "clue": "Act or sound of something that pops.",
+      "hint": "Starts with P and ends with G.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "THUD",
+      "clue": "Sound of a dull impact",
+      "hint": "Starts with T and ends with D.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "RINGING",
+      "clue": "Sound of something that rings.",
+      "hint": "Starts with R and ends with G.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SPLASH",
+      "clue": "Sound made by an object hitting a liquid.",
+      "hint": "Starts with S and ends with H.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SOUNDTRACK",
+      "clue": "Recorded music accompanying a film",
+      "hint": "Starts with S and ends with K.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "AURAL",
+      "clue": "Pertaining to sound or hearing.",
+      "hint": "Starts with A and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "ORCHESTRAL",
+      "clue": "Relating to a large group of instrumental musicians",
+      "hint": "Starts with O and ends with L.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "CLUNKY",
+      "clue": "Making a heavy dull knocking sound",
+      "hint": "Starts with C and ends with Y.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "CRACKLE",
+      "clue": "Make a prolonged, frequent cracking sound which sounds like fizzing or popping",
+      "hint": "Starts with C and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "WHIZZING",
+      "clue": "Sound or action of something that whizzes.",
+      "hint": "Starts with W and ends with G.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "PURRING",
+      "clue": "Sound that purrs.",
+      "hint": "Starts with P and ends with G.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BANGING",
+      "clue": "Action or sound of something that bangs",
+      "hint": "Starts with B and ends with G.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "CLINK",
+      "clue": "Sound of metal on metal, or glass on glass.",
+      "hint": "Starts with C and ends with K.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "PURR",
+      "clue": "Vibrating sound made by a cat in its throat when contented.",
+      "hint": "Starts with P and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "KNOCKING",
+      "clue": "Act in which something is knocked on, or the sound thus produced",
+      "hint": "Starts with K and ends with G.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BUZZER",
+      "clue": "Device that makes a buzzing sound.",
+      "hint": "Starts with B and ends with R.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "TONE",
+      "clue": "Quality of a musical sound",
+      "hint": "Starts with T and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "PIANIST",
+      "clue": "Person who plays the piano, particularly with skill or as part of an orchestra.",
+      "hint": "Starts with P and ends with T.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "CODA",
+      "clue": "Final passage of a musical piece",
+      "hint": "Starts with C and ends with A.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "HYMN",
+      "clue": "Religious song of praise",
+      "hint": "Starts with H and ends with N.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "FRET",
+      "clue": "Ridge on a guitar neck",
+      "hint": "Starts with F and ends with T.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SONGS",
+      "clue": "Pieces of music written to be sung",
+      "hint": "Starts with S and ends with S.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "RIFF",
+      "clue": "Short repeated musical phrase",
+      "hint": "Starts with R and ends with F.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "VOICE",
+      "clue": "Sound produced when a person speaks or sings",
+      "hint": "Starts with V and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "IPOD",
+      "clue": "Portable music player made by Apple.",
+      "hint": "Starts with I and ends with D.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "MUSICALLY",
+      "clue": "In terms of music.",
+      "hint": "Starts with M and ends with Y.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "REST",
+      "clue": "Silent beat in music",
+      "hint": "Starts with R and ends with T.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "BASS",
+      "clue": "Lowest range of musical notes",
+      "hint": "Starts with B and ends with S.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "LYRIC",
+      "clue": "Words of a song",
+      "hint": "Starts with L and ends with C.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "RESOUNDING",
+      "clue": "Loud enough to echo",
+      "hint": "Starts with R and ends with G.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BASSES",
+      "clue": "Instruments that play low musical notes",
+      "hint": "Starts with B and ends with S.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "MUSIC",
+      "clue": "Any interesting or pleasing sounds",
+      "hint": "Starts with M and ends with C.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "RAPPING",
+      "clue": "Musical speech accompanied by a rhythm, most commonly as part of hip-hop music.",
+      "hint": "Starts with R and ends with G.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "CHORDS",
+      "clue": "Harmonic set of three or more notes that is heard as if sounding simultaneously.",
+      "hint": "Starts with C and ends with S.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "NOTE",
+      "clue": "Single musical sound",
+      "hint": "Starts with N and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "STEREO",
+      "clue": "Sound reproduced through separate left and right channels",
+      "hint": "Starts with S and ends with O.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "GROOVE",
+      "clue": "Pronounced, enjoyable rhythm.",
+      "hint": "Starts with G and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "RAPPERS",
+      "clue": "Performers who deliver rhythmic spoken lyrics",
+      "hint": "Starts with R and ends with S.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "TUNE",
+      "clue": "Melody or song",
+      "hint": "Starts with T and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "RUSTLE",
+      "clue": "Soft crackling sound similar to the movement of dry leaves.",
+      "hint": "Starts with R and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "AUDIO",
+      "clue": "Sound, or a sound signal.",
+      "hint": "Starts with A and ends with O.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "PIPING",
+      "clue": "Sound of musical pipes.",
+      "hint": "Starts with P and ends with G.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "CHORD",
+      "clue": "Three or more notes played together",
+      "hint": "Starts with C and ends with D.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "PIANO",
+      "clue": "Keyboard instrument",
+      "hint": "Starts with P and ends with O.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "RAPPER",
+      "clue": "Performer of rap music, or someone who raps in any form of music.",
+      "hint": "Starts with R and ends with R.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "WHISTLE",
+      "clue": "Make a high clear sound by blowing through pursed lips",
+      "hint": "Starts with W and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "MUSICAL",
+      "clue": "Play or film whose action and dialogue is interspersed with singing and dancing",
+      "hint": "Starts with M and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SONIC",
+      "clue": "Relating to sound",
+      "hint": "Starts with S and ends with C.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "PITCH",
+      "clue": "Highness or lowness of a sound",
+      "hint": "Starts with P and ends with H.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "TREBLE",
+      "clue": "High-pitched sound range",
+      "hint": "Starts with T and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "HUM",
+      "clue": "Sing softly with the lips closed",
+      "hint": "Starts with H and ends with M.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "JAMMING",
+      "clue": "Playing of improvisational music.",
+      "hint": "Starts with J and ends with G.",
+      "hintSource": "spelling",
+      "source": "ml"
+    }
+  ],
+  "Nature & Wilderness": [
+    {
+      "answer": "BOLE",
+      "clue": "Trunk or stem of a tree.",
+      "hint": "Starts with B and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "CANYON",
+      "clue": "Deep gorge cut by a river",
+      "hint": "Starts with C and ends with N.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "GROVE",
+      "clue": "Small group of trees",
+      "hint": "Starts with G and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "ATMOSPHERE",
+      "clue": "Gases surrounding the Earth or any astronomical body.",
+      "hint": "Starts with A and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SIERRA",
+      "clue": "Rugged range of mountains.",
+      "hint": "Starts with S and ends with A.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "THICKET",
+      "clue": "Dense group of bushes or trees",
+      "hint": "Starts with T and ends with T.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "EAST",
+      "clue": "Direction in which the sun rises",
+      "hint": "Starts with E and ends with T.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "MASSIF",
+      "clue": "Principal mountain mass.",
+      "hint": "Starts with M and ends with F.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "MEADOW",
+      "clue": "Open grassy field",
+      "hint": "Starts with M and ends with W.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "WILD",
+      "clue": "Living or growing without human cultivation",
+      "hint": "Starts with W and ends with D.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "LOG",
+      "clue": "Trunk of a dead tree, cleared of branches.",
+      "hint": "Starts with L and ends with G.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "TRAIL",
+      "clue": "Path through the wilderness",
+      "hint": "Starts with T and ends with L.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "TIMBER",
+      "clue": "Trees in a forest regarded as a source of wood.",
+      "hint": "Starts with T and ends with R.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "BRIDGE",
+      "clue": "Construction or natural feature that spans a divide.",
+      "hint": "Starts with B and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "CANOPY",
+      "clue": "Uppermost layer of forest trees",
+      "hint": "Starts with C and ends with Y.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "BIRCH",
+      "clue": "Tree with white peeling bark",
+      "hint": "Starts with B and ends with H.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "HUMP",
+      "clue": "Rounded rise in the ground",
+      "hint": "Starts with H and ends with P.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "VALLEY",
+      "clue": "Low area between hills",
+      "hint": "Starts with V and ends with Y.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SEISMIC",
+      "clue": "Related to, or caused by an earthquake or other vibration of the Earth.",
+      "hint": "Starts with S and ends with C.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "LAKE",
+      "clue": "Large inland body of water",
+      "hint": "Starts with L and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "CRUDE",
+      "clue": "In a raw and unprocessed natural state",
+      "hint": "Starts with C and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FORESTS",
+      "clue": "Large areas densely covered with trees",
+      "hint": "Starts with F and ends with S.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "WOODLAND",
+      "clue": "Land covered with woody vegetation.",
+      "hint": "Starts with W and ends with D.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "VINE",
+      "clue": "Climbing or trailing plant",
+      "hint": "Starts with V and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "PISTE",
+      "clue": "Marked ski trail down a mountain",
+      "hint": "Starts with P and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FOREST",
+      "clue": "Large area covered with trees",
+      "hint": "Starts with F and ends with T.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "CEDAR",
+      "clue": "Fragrant evergreen tree",
+      "hint": "Starts with C and ends with R.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "CAVE",
+      "clue": "Natural underground chamber",
+      "hint": "Starts with C and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "NATURE",
+      "clue": "Physical world and its living ecosystems",
+      "hint": "Starts with N and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    }
+  ],
+  "Ocean & Marine Life": [
+    {
+      "answer": "TURTLE",
+      "clue": "Shelled reptile of the sea",
+      "hint": "Starts with T and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "REEF",
+      "clue": "Underwater ridge of rock or coral",
+      "hint": "Starts with R and ends with F.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SEAL",
+      "clue": "Flippered marine mammal",
+      "hint": "Starts with S and ends with L.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "TIDE",
+      "clue": "Rise and fall of ocean water",
+      "hint": "Starts with T and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "CRUISE",
+      "clue": "Sea or lake voyage, especially one taken for pleasure.",
+      "hint": "Starts with C and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "DOLPHIN",
+      "clue": "Intelligent marine mammal",
+      "hint": "Starts with D and ends with N.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "KELP",
+      "clue": "Large brown seaweed",
+      "hint": "Starts with K and ends with P.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "CORAL",
+      "clue": "Colorful underwater colony organism",
+      "hint": "Starts with C and ends with L.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "WHALE",
+      "clue": "Largest mammal on Earth",
+      "hint": "Starts with W and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "CORALS",
+      "clue": "Reef-building marine animals with hard skeletons",
+      "hint": "Starts with C and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BLACKFISH",
+      "clue": "Another name for a pilot whale",
+      "hint": "Starts with B and ends with H.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "MAST",
+      "clue": "Tall pole on a sailing ship",
+      "hint": "Starts with M and ends with T.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "LAND",
+      "clue": "Solid ground seen from a ship at sea",
+      "hint": "Starts with L and ends with D.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "URCHIN",
+      "clue": "Spiny marine animal found on the seabed",
+      "hint": "Starts with U and ends with N.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "GUST",
+      "clue": "Sudden burst of wind at sea",
+      "hint": "Starts with G and ends with T.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "HARPOON",
+      "clue": "Spearlike weapon with a barbed head used in hunting whales and large fish.",
+      "hint": "Starts with H and ends with N.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "ABYSS",
+      "clue": "Extremely deep part of the ocean",
+      "hint": "Starts with A and ends with S.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "ANGLER",
+      "clue": "Person who fishes with a hook and line",
+      "hint": "Starts with A and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FISHES",
+      "clue": "Multiple kinds of fish",
+      "hint": "Starts with F and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "MARINE",
+      "clue": "Relating to the sea and its life",
+      "hint": "Starts with M and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "OCEAN",
+      "clue": "One of the large bodies of water separating the continents.",
+      "hint": "Starts with O and ends with N.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SHARK",
+      "clue": "Apex predator of the ocean",
+      "hint": "Starts with S and ends with K.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SEAWATER",
+      "clue": "Saltwater of a sea or ocean.",
+      "hint": "Starts with S and ends with R.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SEASHORE",
+      "clue": "Coastal land bordering a sea or an ocean.",
+      "hint": "Starts with S and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "OCEANIC",
+      "clue": "Relating to the ocean",
+      "hint": "Starts with O and ends with C.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "OCEANS",
+      "clue": "Vast bodies of salt water between continents",
+      "hint": "Starts with O and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "HAWAII",
+      "clue": "Archipelago of the Pacific Ocean, between North America and Oceania",
+      "hint": "Starts with H and ends with I.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "OFFSHORE",
+      "clue": "Area of or portion of sea away from the shore.",
+      "hint": "Starts with O and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SAILED",
+      "clue": "Traveled across water using wind power",
+      "hint": "Starts with S and ends with D.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SAIL",
+      "clue": "Fabric that catches the wind",
+      "hint": "Starts with S and ends with L.",
+      "hintSource": "spelling",
+      "source": "ml"
+    }
+  ],
+  "Plants & Gardens": [
+    {
+      "answer": "FRUIT",
+      "clue": "Seed-bearing part of a flowering plant",
+      "hint": "Starts with F and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "HOSE",
+      "clue": "Garden watering tube",
+      "hint": "Starts with H and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "ORCHARD",
+      "clue": "Fruit tree garden",
+      "hint": "Starts with O and ends with D.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "STEM",
+      "clue": "Plant support",
+      "hint": "Starts with S and ends with M.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "MOSS",
+      "clue": "Soft green groundcover",
+      "hint": "Starts with M and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "PETAL",
+      "clue": "Part of a bloom",
+      "hint": "Starts with P and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "GARDEN",
+      "clue": "Planted outdoor space",
+      "hint": "Starts with G and ends with N.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "OREGANO",
+      "clue": "Herb often sprinkled on pizza",
+      "hint": "Starts with O and ends with O.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "PEAR",
+      "clue": "Type of fruit tree",
+      "hint": "Starts with P and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "RAKE",
+      "clue": "Garden cleanup tool",
+      "hint": "Starts with R and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "GARDENS",
+      "clue": "Outdoor spaces planted with flowers or vegetables",
+      "hint": "Starts with G and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "TIMBER",
+      "clue": "Trees in a forest regarded as a source of wood",
+      "hint": "Starts with T and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "TWIG",
+      "clue": "Small thin branch of a tree or bush",
+      "hint": "Starts with T and ends with G.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "JASMINE",
+      "clue": "Climbing plant with sweet-smelling flowers",
+      "hint": "Starts with J and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "LEAFLET",
+      "clue": "One of the components of a compound leaf",
+      "hint": "Starts with L and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "HEATH",
+      "clue": "Open land covered with low-growing shrubs",
+      "hint": "Starts with H and ends with H.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "VEGETATION",
+      "clue": "Plants, taken collectively",
+      "hint": "Starts with V and ends with N.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "MULCH",
+      "clue": "Protective garden covering",
+      "hint": "Starts with M and ends with H.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "LEGUME",
+      "clue": "Fruit or seed of leguminous plants used for food",
+      "hint": "Starts with L and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "CHICORY",
+      "clue": "Blue-flowered plant whose roasted root can flavor coffee",
+      "hint": "Starts with C and ends with Y.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BULB",
+      "clue": "Underground flower starter",
+      "hint": "Starts with B and ends with B.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "WATERING",
+      "clue": "Giving plants a drink",
+      "hint": "Starts with W and ends with G.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SHRUB",
+      "clue": "Small woody plant",
+      "hint": "Starts with S and ends with B.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "NURSERY",
+      "clue": "Place to buy young plants",
+      "hint": "Starts with N and ends with Y.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FLOWER",
+      "clue": "Colorful bloom",
+      "hint": "Starts with F and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FLORA",
+      "clue": "Plant life of a region",
+      "hint": "Starts with F and ends with A.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "TUBER",
+      "clue": "Starchy underground stem",
+      "hint": "Starts with T and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "HERB",
+      "clue": "Flavorful garden plant",
+      "hint": "Starts with H and ends with B.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "DAISY",
+      "clue": "Simple white flower",
+      "hint": "Starts with D and ends with Y.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BLOOM",
+      "clue": "Flowering state",
+      "hint": "Starts with B and ends with M.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "ROSE",
+      "clue": "Thorny flower",
+      "hint": "Starts with R and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BOTANICAL",
+      "clue": "Relating to plants and their study",
+      "hint": "Starts with B and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "PLOT",
+      "clue": "Small garden section",
+      "hint": "Starts with P and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SOIL",
+      "clue": "Garden bed material",
+      "hint": "Starts with S and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "LILY",
+      "clue": "Showy garden flower",
+      "hint": "Starts with L and ends with Y.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "PLANTER",
+      "clue": "Container used to grow flowers or vegetables",
+      "hint": "Starts with P and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FERN",
+      "clue": "Fronded plant",
+      "hint": "Starts with F and ends with N.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "PLANT",
+      "clue": "Living thing with roots and usually green leaves",
+      "hint": "Starts with P and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "TEND",
+      "clue": "Care for plants",
+      "hint": "Starts with T and ends with D.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "TREE",
+      "clue": "Tall woody plant",
+      "hint": "Starts with T and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BOTANY",
+      "clue": "Science of plants",
+      "hint": "Starts with B and ends with Y.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BRANCH",
+      "clue": "Tree limb",
+      "hint": "Starts with B and ends with H.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BASIL",
+      "clue": "Pesto herb",
+      "hint": "Starts with B and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BUD",
+      "clue": "Unopened flower",
+      "hint": "Starts with B and ends with D.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "POLLEN",
+      "clue": "Flower dust",
+      "hint": "Starts with P and ends with N.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BUSHES",
+      "clue": "Woody plants shorter than most trees",
+      "hint": "Starts with B and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SUNLIGHT",
+      "clue": "Plant energy source",
+      "hint": "Starts with S and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FLORAL",
+      "clue": "Relating to flowers",
+      "hint": "Starts with F and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "NECTAR",
+      "clue": "Sweet flower liquid",
+      "hint": "Starts with N and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SAGE",
+      "clue": "Earthy kitchen herb",
+      "hint": "Starts with S and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "LEAF",
+      "clue": "Green plant blade",
+      "hint": "Starts with L and ends with F.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "WEED",
+      "clue": "Unwanted garden plant",
+      "hint": "Starts with W and ends with D.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "THYME",
+      "clue": "Tiny-leaved herb",
+      "hint": "Starts with T and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BED",
+      "clue": "Planted garden area",
+      "hint": "Starts with B and ends with D.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "WOODS",
+      "clue": "Areas of land covered with trees",
+      "hint": "Starts with W and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "MINT",
+      "clue": "Cool-flavored herb",
+      "hint": "Starts with M and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    }
+  ],
+  "Space & Sky": [
+    {
+      "answer": "VENUS",
+      "clue": "Second planet from the sun",
+      "hint": "Starts with V and ends with S.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "AXIS",
+      "clue": "Line a planet rotates around",
+      "hint": "Starts with A and ends with S.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SATURN",
+      "clue": "Sixth planet, known for its rings",
+      "hint": "Starts with S and ends with N.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "RINGS",
+      "clue": "Saturn's famous orbiting feature",
+      "hint": "Starts with R and ends with S.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SPACE",
+      "clue": "Unlimited or generalized extent, physical or otherwise.",
+      "hint": "Starts with S and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "MOON",
+      "clue": "Any natural satellite of a planet.",
+      "hint": "Starts with M and ends with N.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "STAR",
+      "clue": "Luminous ball of gas",
+      "hint": "Starts with S and ends with R.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SUN",
+      "clue": "Star that is closest to the Earth.",
+      "hint": "Starts with S and ends with N.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "TELESCOPE",
+      "clue": "Instrument for viewing distant stars",
+      "hint": "Starts with T and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "URANUS",
+      "clue": "Seventh planet in our solar system, discovered in 1781 by William Herschel.",
+      "hint": "Starts with U and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "ASTEROID",
+      "clue": "Rocky body orbiting the sun",
+      "hint": "Starts with A and ends with D.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "NOVA",
+      "clue": "Sudden brightening of a star",
+      "hint": "Starts with N and ends with A.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "PANDORA",
+      "clue": "Moon of the planet Saturn",
+      "hint": "Starts with P and ends with A.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "METEOR",
+      "clue": "Shooting star",
+      "hint": "Starts with M and ends with R.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "NEBULA",
+      "clue": "Cloud of gas and dust in space",
+      "hint": "Starts with N and ends with A.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "PLANETS",
+      "clue": "Third studio album by the American rock band Adema.",
+      "hint": "Starts with P and ends with S.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "STARRY",
+      "clue": "Having stars visible.",
+      "hint": "Starts with S and ends with Y.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "PLASMA",
+      "clue": "Superheated state of matter in stars",
+      "hint": "Starts with P and ends with A.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "ROCKET",
+      "clue": "Vehicle propelled by thrust",
+      "hint": "Starts with R and ends with T.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "STARCRAFT",
+      "clue": "Vehicle which travels to or among the stars.",
+      "hint": "Starts with S and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "PLANET",
+      "clue": "Body that orbits a star",
+      "hint": "Starts with P and ends with T.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "GALAXY",
+      "clue": "Collection of billions of stars",
+      "hint": "Starts with G and ends with Y.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "ORBIT",
+      "clue": "Curved path around a celestial body",
+      "hint": "Starts with O and ends with T.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "MARS",
+      "clue": "Red planet",
+      "hint": "Starts with M and ends with S.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "CORE",
+      "clue": "Center of a planet or star",
+      "hint": "Starts with C and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "MOONS",
+      "clue": "Celestial bodies that orbit planets or smaller bodies.",
+      "hint": "Starts with M and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "ORBITAL",
+      "clue": "Relating to, or forming an orbit.",
+      "hint": "Starts with O and ends with L.",
+      "hintSource": "spelling",
+      "source": "ml"
+    }
+  ],
+  "Sports & Athletics": [
+    {
+      "answer": "FOCUSED",
+      "clue": "Concentrating attention on a sporting goal",
+      "hint": "Starts with F and ends with D.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SPEEDWAY",
+      "clue": "Racetrack venue designated especially for the sport of auto racing.",
+      "hint": "Starts with S and ends with Y.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SPORTING",
+      "clue": "Pertaining to sports",
+      "hint": "Starts with S and ends with G.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "STADIUM",
+      "clue": "Venue where sporting events are held.",
+      "hint": "Starts with S and ends with M.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SPORT",
+      "clue": "Physical game or competition requiring skill",
+      "hint": "Starts with S and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "MARATHON",
+      "clue": "42.195-kilometre road race.",
+      "hint": "Starts with M and ends with N.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "LINEUPS",
+      "clue": "Lists of players selected for teams",
+      "hint": "Starts with L and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BOUT",
+      "clue": "Boxing or wrestling match",
+      "hint": "Starts with B and ends with T.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SCORING",
+      "clue": "Process of keeping score in a sport or contest",
+      "hint": "Starts with S and ends with G.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "RINGER",
+      "clue": "Skilled player brought in under a false identity",
+      "hint": "Starts with R and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SNOOKER",
+      "clue": "Cue sport, popular in the UK and other Commonwealth of Nations countries",
+      "hint": "Starts with S and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "GYMNASIUM",
+      "clue": "Large room or building for indoor sports.",
+      "hint": "Starts with G and ends with M.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SPORTSMAN",
+      "clue": "Man who takes part in athletic activities",
+      "hint": "Starts with S and ends with N.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "CANOEING",
+      "clue": "Water sport involving travelling or racing in canoes or kayaks.",
+      "hint": "Starts with C and ends with G.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "MEDALIST",
+      "clue": "Athlete awarded a medal in a competition",
+      "hint": "Starts with M and ends with T.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "CROSSBAR",
+      "clue": "Top of the goal structure",
+      "hint": "Starts with C and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "RACEWAY",
+      "clue": "Track where motor races are held",
+      "hint": "Starts with R and ends with Y.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BANDY",
+      "clue": "Winter sport played on ice, from which ice hockey developed.",
+      "hint": "Starts with B and ends with Y.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SOUTHPAW",
+      "clue": "One who is left-handed, especially in sports",
+      "hint": "Starts with S and ends with W.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SAILORS",
+      "clue": "People who race boats powered by wind",
+      "hint": "Starts with S and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "REGATTA",
+      "clue": "Series of boat races, or sometimes a single race",
+      "hint": "Starts with R and ends with A.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "DOUBLE",
+      "clue": "Baseball hit that lets the batter reach second base",
+      "hint": "Starts with D and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BOWLER",
+      "clue": "One who engages in the sport of bowling",
+      "hint": "Starts with B and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "RUNNER",
+      "clue": "Athlete competing on foot",
+      "hint": "Starts with R and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SAILOR",
+      "clue": "Person who races a boat powered by wind",
+      "hint": "Starts with S and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "DISCUS",
+      "clue": "Round plate-like object that is thrown for sport.",
+      "hint": "Starts with D and ends with S.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SPORTS",
+      "clue": "Physical games or competitions requiring skill",
+      "hint": "Starts with S and ends with S.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "VARSITY",
+      "clue": "Principal sports team representing an institution",
+      "hint": "Starts with V and ends with Y.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "RELAY",
+      "clue": "Race with team handoffs",
+      "hint": "Starts with R and ends with Y.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SPORTY",
+      "clue": "Fond of sports.",
+      "hint": "Starts with S and ends with Y.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "ATHLETE",
+      "clue": "Exceptionally physically fit person",
+      "hint": "Starts with A and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "GOAL",
+      "clue": "Target to score in soccer",
+      "hint": "Starts with G and ends with L.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "FINAL",
+      "clue": "Last competition of a tournament",
+      "hint": "Starts with F and ends with L.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SLALOM",
+      "clue": "Sport of skiing in a zigzag course through gates.",
+      "hint": "Starts with S and ends with M.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "RACER",
+      "clue": "Person who participates in races, especially an athlete.",
+      "hint": "Starts with R and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "LEAGUE",
+      "clue": "Organization of sports teams which play against one another for a championship.",
+      "hint": "Starts with L and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "RINKS",
+      "clue": "Surfaces used for ice skating or hockey",
+      "hint": "Starts with R and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "TEAM",
+      "clue": "Group playing together",
+      "hint": "Starts with T and ends with M.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "PLAYMAKER",
+      "clue": "Sportsman who leads attacks for his team and creates chances to score.",
+      "hint": "Starts with P and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "UMPIRE",
+      "clue": "Official who presides over a sports match.",
+      "hint": "Starts with U and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "COACH",
+      "clue": "Person who trains athletes",
+      "hint": "Starts with C and ends with H.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "RACE",
+      "clue": "Speed competition",
+      "hint": "Starts with R and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "RACERS",
+      "clue": "Athletes competing to finish a course first",
+      "hint": "Starts with R and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "MATCH",
+      "clue": "Competitive game or contest",
+      "hint": "Starts with M and ends with H.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SPRINT",
+      "clue": "Short fast race",
+      "hint": "Starts with S and ends with T.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "BOWL",
+      "clue": "Roll or throw in the correct manner in cricket and similar games and sports",
+      "hint": "Starts with B and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "TRIPLE",
+      "clue": "Baseball hit that lets the batter reach third base",
+      "hint": "Starts with T and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "RACETRACK",
+      "clue": "Course over which any type of races are run.",
+      "hint": "Starts with R and ends with K.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "HURDLE",
+      "clue": "Barrier jumped over in a race",
+      "hint": "Starts with H and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SCORE",
+      "clue": "Number of points earned in a game",
+      "hint": "Starts with S and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "HIKING",
+      "clue": "Walking in the countryside for pleasure or sport.",
+      "hint": "Starts with H and ends with G.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "MEDAL",
+      "clue": "Award for winning a competition",
+      "hint": "Starts with M and ends with L.",
+      "hintSource": "spelling",
+      "source": "ml"
+    }
+  ],
+  "Transportation & Vehicles": [
+    {
+      "answer": "ROAD",
+      "clue": "Vehicle path",
+      "hint": "Starts with R and ends with D.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "TAXI",
+      "clue": "Hired car",
+      "hint": "Starts with T and ends with I.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SHIPMENT",
+      "clue": "Load of goods that is transported by any method",
+      "hint": "Starts with S and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "STATION",
+      "clue": "Train stop",
+      "hint": "Starts with S and ends with N.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "RIDE",
+      "clue": "Transport oneself by sitting on and directing a horse, later also a bicycle etc",
+      "hint": "Starts with R and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BUS",
+      "clue": "Public road vehicle",
+      "hint": "Starts with B and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "HARBOR",
+      "clue": "Sheltered boat area",
+      "hint": "Starts with H and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "TRAIN",
+      "clue": "Rail vehicle",
+      "hint": "Starts with T and ends with N.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "NAVIES",
+      "clue": "Military fleets of ships",
+      "hint": "Starts with N and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "VOYAGE",
+      "clue": "Long journey, especially by ship",
+      "hint": "Starts with V and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "GOODS",
+      "clue": "Freight, as opposed to passengers",
+      "hint": "Starts with G and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "HAULAGE",
+      "clue": "Business of transporting heavy goods",
+      "hint": "Starts with H and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "PARKING",
+      "clue": "Leaving a vehicle stopped",
+      "hint": "Starts with P and ends with G.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "ROADIE",
+      "clue": "Cyclist who mainly rides on paved roads",
+      "hint": "Starts with R and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "ANCHOR",
+      "clue": "Boat-holding weight",
+      "hint": "Starts with A and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SAILOR",
+      "clue": "Person who sails sailing boats as a sport or recreation",
+      "hint": "Starts with S and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "AUTOS",
+      "clue": "Motor vehicles used for personal road travel",
+      "hint": "Starts with A and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "ROADWAYS",
+      "clue": "Surfaces used by vehicles traveling along roads",
+      "hint": "Starts with R and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "JEEPS",
+      "clue": "Rugged vehicles built for off-road travel",
+      "hint": "Starts with J and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "TRAM",
+      "clue": "Street-running rail car",
+      "hint": "Starts with T and ends with M.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "WAGONS",
+      "clue": "Four-wheeled vehicles used to carry goods",
+      "hint": "Starts with W and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "CAR",
+      "clue": "Road vehicle",
+      "hint": "Starts with C and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BOAT",
+      "clue": "Small water vehicle",
+      "hint": "Starts with B and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "DRIVER",
+      "clue": "Vehicle operator",
+      "hint": "Starts with D and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "GARAGE",
+      "clue": "Vehicle storage space",
+      "hint": "Starts with G and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "RAIL",
+      "clue": "Train track piece",
+      "hint": "Starts with R and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "HYBRID",
+      "clue": "Bicycle that is a compromise between a road bike and a mountain bike",
+      "hint": "Starts with H and ends with D.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "PLANE",
+      "clue": "Flying vehicle",
+      "hint": "Starts with P and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FERRY",
+      "clue": "Boat carrying passengers across a stretch of water",
+      "hint": "Starts with F and ends with Y.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "CONVEYANCE",
+      "clue": "Means of transporting, especially a vehicle",
+      "hint": "Starts with C and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "AIRPORT",
+      "clue": "Plane travel hub",
+      "hint": "Starts with A and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "TRUCK",
+      "clue": "Cargo road vehicle",
+      "hint": "Starts with T and ends with K.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FLEET",
+      "clue": "Group of vessels or vehicles",
+      "hint": "Starts with F and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "CARGO",
+      "clue": "Goods being transported",
+      "hint": "Starts with C and ends with O.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "ROUTE",
+      "clue": "Planned path",
+      "hint": "Starts with R and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "NAVIGATION",
+      "clue": "Finding and following a route during travel",
+      "hint": "Starts with N and ends with N.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "RIDING",
+      "clue": "Traveling on a bicycle or horse",
+      "hint": "Starts with R and ends with G.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "TRUNK",
+      "clue": "Luggage storage compartment of a sedan/saloon-style car",
+      "hint": "Starts with T and ends with K.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "CANOE",
+      "clue": "Paddled narrow boat",
+      "hint": "Starts with C and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "AUTO",
+      "clue": "Motor vehicle used for personal road travel",
+      "hint": "Starts with A and ends with O.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "GUTTER",
+      "clue": "Ditch along the side of a road",
+      "hint": "Starts with G and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "VEHICLE",
+      "clue": "Thing used for transport",
+      "hint": "Starts with V and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BICYCLE",
+      "clue": "Two-wheeled pedal vehicle",
+      "hint": "Starts with B and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "ENGINE",
+      "clue": "Vehicle power source",
+      "hint": "Starts with E and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "COACH",
+      "clue": "Long-distance bus",
+      "hint": "Starts with C and ends with H.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "LANE",
+      "clue": "Marked road strip",
+      "hint": "Starts with L and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SIGNAL",
+      "clue": "Traffic light cue",
+      "hint": "Starts with S and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "HIGHWAYS",
+      "clue": "Major roads used for travel between towns",
+      "hint": "Starts with H and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "RUNWAY",
+      "clue": "Plane takeoff strip",
+      "hint": "Starts with R and ends with Y.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SUBWAY",
+      "clue": "Underground train",
+      "hint": "Starts with S and ends with Y.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "CABIN",
+      "clue": "Passenger area",
+      "hint": "Starts with C and ends with N.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "METRO",
+      "clue": "City rail system",
+      "hint": "Starts with M and ends with O.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BIKE",
+      "clue": "Pedaled vehicle",
+      "hint": "Starts with B and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "TRACK",
+      "clue": "Rail route",
+      "hint": "Starts with T and ends with K.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "RAILWAY",
+      "clue": "Transport network with trains running on fixed tracks",
+      "hint": "Starts with R and ends with Y.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "PASSENGER",
+      "clue": "Person being carried",
+      "hint": "Starts with P and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "TANKER",
+      "clue": "Tankship, a vessel used to transport large quantities of fluid",
+      "hint": "Starts with T and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SEDAN",
+      "clue": "Passenger car with a separate enclosed trunk",
+      "hint": "Starts with S and ends with N.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "MARINA",
+      "clue": "Harbour for small boats",
+      "hint": "Starts with M and ends with A.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "CROSSOVER",
+      "clue": "Vehicle combining features of a car and an SUV",
+      "hint": "Starts with C and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "CRAFT",
+      "clue": "Vehicle built for travel on water or through air",
+      "hint": "Starts with C and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "NAVY",
+      "clue": "A country's military fleet of ships",
+      "hint": "Starts with N and ends with Y.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "ROADWAY",
+      "clue": "Main or central portion of a road, used by the vehicles",
+      "hint": "Starts with R and ends with Y.",
+      "source": "ml",
+      "hintSource": "spelling"
+    }
+  ],
+  "Weather & Climate": [
+    {
+      "answer": "STORMY",
+      "clue": "Pertaining to storms",
+      "hint": "Starts with S and ends with Y.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "WIND",
+      "clue": "Natural movement of air.",
+      "hint": "Starts with W and ends with D.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "FROSTY",
+      "clue": "Having frost on it or in it",
+      "hint": "Starts with F and ends with Y.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SUNSET",
+      "clue": "Moment each evening when the sun disappears below the western horizon.",
+      "hint": "Starts with S and ends with T.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "OVERCAST",
+      "clue": "Cloud covering all of the sky from horizon to horizon.",
+      "hint": "Starts with O and ends with T.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "WINTRY",
+      "clue": "Containing sleet or snow",
+      "hint": "Starts with W and ends with Y.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "THUNDERING",
+      "clue": "Making a loud rumbling sound during a storm",
+      "hint": "Starts with T and ends with G.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "WINDY",
+      "clue": "Accompanied by wind",
+      "hint": "Starts with W and ends with Y.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SPATE",
+      "clue": "Sudden heavy downpour of rain",
+      "hint": "Starts with S and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "WASHOUT",
+      "clue": "Sporting fixture or other event that cannot be completed because of rain",
+      "hint": "Starts with W and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FORECASTS",
+      "clue": "Predictions of coming weather conditions",
+      "hint": "Starts with F and ends with S.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "WINDSCREEN",
+      "clue": "Shield that reduces wind noise on a microphone",
+      "hint": "Starts with W and ends with N.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "DELUGE",
+      "clue": "Heavy downpour of rain",
+      "hint": "Starts with D and ends with E.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "WINDFALL",
+      "clue": "Fruit blown from a tree onto the ground",
+      "hint": "Starts with W and ends with L.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "TEMPEST",
+      "clue": "Storm, especially one with severe winds",
+      "hint": "Starts with T and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SUNRISE",
+      "clue": "Time of day when the sun appears above the eastern horizon.",
+      "hint": "Starts with S and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "FORECAST",
+      "clue": "Prediction of upcoming weather conditions.",
+      "hint": "Starts with F and ends with T.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SLEET",
+      "clue": "Precipitation in the form of a mixture of rain and snow",
+      "hint": "Starts with S and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "CLIMATE",
+      "clue": "Long-term pattern of weather in a region.",
+      "hint": "Starts with C and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "WEATHERING",
+      "clue": "Gradual breakdown of rock exposed to air and water",
+      "hint": "Starts with W and ends with G.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SKY",
+      "clue": "Expanse visible above the earth.",
+      "hint": "Starts with S and ends with Y.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "BLAST",
+      "clue": "Violent gust of wind or apparent wind",
+      "hint": "Starts with B and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "FROST",
+      "clue": "Thin layer of ice crystals on a cold surface.",
+      "hint": "Starts with F and ends with T.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SNOW",
+      "clue": "Frozen precipitation falling as flakes.",
+      "hint": "Starts with S and ends with W.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "GALE",
+      "clue": "Very strong wind",
+      "hint": "Starts with G and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "DAY",
+      "clue": "Time when the Sun is above the horizon and it lights the sky",
+      "hint": "Starts with D and ends with Y.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "SUN",
+      "clue": "Star that is closest to the Earth.",
+      "hint": "Starts with S and ends with N.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "STORM",
+      "clue": "Violent weather with strong wind or precipitation.",
+      "hint": "Starts with S and ends with M.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "WINDWARD",
+      "clue": "Direction from which the wind blows",
+      "hint": "Starts with W and ends with D.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "LIGHTNING",
+      "clue": "Flash of electricity during a storm.",
+      "hint": "Starts with L and ends with G.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "ARID",
+      "clue": "Very dry, with little or no rain.",
+      "hint": "Starts with A and ends with D.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "RAINFALL",
+      "clue": "Occurrence of liquid precipitation, the fall of rain.",
+      "hint": "Starts with R and ends with L.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "MONSOON",
+      "clue": "Seasonal wind pattern often bringing heavy rain.",
+      "hint": "Starts with M and ends with N.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "WEATHER",
+      "clue": "State of the atmosphere at a given time.",
+      "hint": "Starts with W and ends with R.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "SOLAR",
+      "clue": "Produced by the action of the sun, or peculiarly affected by its influence",
+      "hint": "Starts with S and ends with R.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "THUNDER",
+      "clue": "Rumbling sound following a lightning flash",
+      "hint": "Starts with T and ends with R.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "WINTER",
+      "clue": "Coldest season of the year",
+      "hint": "Starts with W and ends with R.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "GUST",
+      "clue": "Sudden burst of wind at sea",
+      "hint": "Starts with G and ends with T.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "RAIN",
+      "clue": "Condensed water falling from a cloud.",
+      "hint": "Starts with R and ends with N.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "CYCLONE",
+      "clue": "Large rotating storm system.",
+      "hint": "Starts with C and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    },
+    {
+      "answer": "WEATHERMAN",
+      "clue": "Male presenter who reports the weather",
+      "hint": "Starts with W and ends with N.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "NIGHT",
+      "clue": "Time when the Sun is below the horizon when the sky is dark",
+      "hint": "Starts with N and ends with T.",
+      "source": "ml",
+      "hintSource": "spelling"
+    },
+    {
+      "answer": "BREEZE",
+      "clue": "Light, gentle wind.",
+      "hint": "Starts with B and ends with E.",
+      "hintSource": "spelling",
+      "source": "ml"
+    }
+  ]
+}

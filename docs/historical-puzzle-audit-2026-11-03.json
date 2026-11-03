@@ -1,0 +1,4894 @@
+{
+  "date": "2026-11-03",
+  "puzzleCount": 228,
+  "initialFailures": 155,
+  "actions": {
+    "unchanged": 57,
+    "reclue": 17,
+    "replace": 154
+  },
+  "preservedResetVersion": "bb837de6de25538c",
+  "puzzles": [
+    {
+      "id": "animals---wildlife-vol1",
+      "theme": "Animals & Wildlife",
+      "action": "replace",
+      "originalContentHash": "1912cd2166299994a78547a90947d0d14117e3d64b72f5939cda9b9510a5db9a",
+      "currentEdition": "editions/animals---wildlife-vol1-3fc69060588c9314.json",
+      "beforeIssues": [
+        "across-5:WILDLIFE missing-source-pair",
+        "across-6:SHARK low-quality",
+        "across-6:SHARK unreviewed-dictionary-hint",
+        "down-1:FEED unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "FURS",
+        "PREDATION",
+        "TIGER",
+        "BEASTS",
+        "FEED",
+        "RAPTOR",
+        "CRITTERS",
+        "WOLF"
+      ]
+    },
+    {
+      "id": "animals---wildlife-vol10",
+      "theme": "Animals & Wildlife",
+      "action": "reclue",
+      "originalContentHash": "7e99ab8f805966bf6cb6b47df24b59f865486f1fc0fa829ec223da219c78fd5d",
+      "currentEdition": "editions/animals---wildlife-vol10-28b9859c5eb50362.json",
+      "beforeIssues": [
+        "across-2:FORAGE unreviewed-dictionary-hint",
+        "across-6:STALL unreviewed-dictionary-hint",
+        "down-7:DIET unreviewed-dictionary-hint"
+      ],
+      "answers": [
+        "FORAGE",
+        "ARCTIC",
+        "STALL",
+        "SONGBIRD",
+        "WETLAND",
+        "MAMMAL",
+        "FLOCKS",
+        "FAUNA",
+        "DIET"
+      ]
+    },
+    {
+      "id": "animals---wildlife-vol11",
+      "theme": "Animals & Wildlife",
+      "action": "replace",
+      "originalContentHash": "508f528ea7d6b0c07797bcb50534f800674bc1c5c1929d0cd588afa7b2c366e2",
+      "currentEdition": "editions/animals---wildlife-vol11-657582a84d8593a9.json",
+      "beforeIssues": [
+        "across-2:MOURNER low-quality",
+        "across-2:MOURNER unreviewed-dictionary-hint",
+        "across-4:CRITTER unreviewed-dictionary-hint",
+        "across-7:ZOOPHILE unreviewed-dictionary-hint",
+        "across-8:RESIDENT unreviewed-dictionary-hint",
+        "down-1:HUTCH unreviewed-dictionary-hint",
+        "down-3:GRAZE unreviewed-dictionary-hint",
+        "down-5:HORSE low-quality",
+        "down-5:HORSE unreviewed-dictionary-hint",
+        "down-6:BITER unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "DESERT",
+        "ZEBRA",
+        "EAGLE",
+        "HEDGEHOG",
+        "SCALE",
+        "GOAD",
+        "DEN"
+      ]
+    },
+    {
+      "id": "animals---wildlife-vol12",
+      "theme": "Animals & Wildlife",
+      "action": "replace",
+      "originalContentHash": "6f93b47f6da0d91b21560a6ee5e7dd5605951b7fc6bda1f3a7274379bc791eed",
+      "currentEdition": "editions/animals---wildlife-vol12-8b99ce99f62b0107.json",
+      "beforeIssues": [
+        "across-1:SWARMS unreviewed-dictionary-hint",
+        "across-2:BAITFISH unreviewed-dictionary-hint",
+        "down-1:SHAGREEN unreviewed-dictionary-hint",
+        "down-3:FOXES unreviewed-dictionary-hint",
+        "down-4:PEN unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "PEN",
+        "GORILLA",
+        "RABBIT",
+        "BROWSE",
+        "DEER",
+        "SLOTH",
+        "BISON"
+      ]
+    },
+    {
+      "id": "animals---wildlife-vol13",
+      "theme": "Animals & Wildlife",
+      "action": "unchanged",
+      "originalContentHash": "bffeae0a16e421124300ade20a2243e5989933d9f63ec979c839e48a328345b5",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "KOALA",
+        "ANTEATER",
+        "HERON",
+        "WOMBAT",
+        "LION",
+        "HARE",
+        "CRANE",
+        "HIPPO"
+      ]
+    },
+    {
+      "id": "animals---wildlife-vol14",
+      "theme": "Animals & Wildlife",
+      "action": "unchanged",
+      "originalContentHash": "7d3fd88ff1c78a5bbe23462ec4738543131d7412dadfed22e62563785cb8386c",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "ANTELOPE",
+        "ELEPHANT",
+        "BADGER",
+        "LEOPARD",
+        "COYOTE",
+        "PEACOCK"
+      ]
+    },
+    {
+      "id": "animals---wildlife-vol2",
+      "theme": "Animals & Wildlife",
+      "action": "replace",
+      "originalContentHash": "6f55a17a6d4129578e0a59de36ac80a3e79e7b71db0695a0a73dec90e3918e82",
+      "currentEdition": "editions/animals---wildlife-vol2-696f29e3d2a572dc.json",
+      "beforeIssues": [
+        "across-7:ANIMALIA low-quality",
+        "across-7:ANIMALIA unreviewed-dictionary-hint",
+        "down-4:BEAST unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "MARMOT",
+        "BEAVER",
+        "GIRAFFE",
+        "PANDA",
+        "MEERKAT",
+        "WILD",
+        "ELK"
+      ]
+    },
+    {
+      "id": "animals---wildlife-vol3",
+      "theme": "Animals & Wildlife",
+      "action": "replace",
+      "originalContentHash": "99383e886edf5572c1e0788d205c66ec7204bc1636da3722705a5c0dd8e40b8a",
+      "currentEdition": "editions/animals---wildlife-vol3-b858f5e2b55c071c.json",
+      "beforeIssues": [
+        "across-4:ANIMALES unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "COOP",
+        "SQUIRREL",
+        "RACCOON",
+        "VULTURE",
+        "ANIMALS",
+        "PUFFIN"
+      ]
+    },
+    {
+      "id": "animals---wildlife-vol4",
+      "theme": "Animals & Wildlife",
+      "action": "replace",
+      "originalContentHash": "9d93021b44f371d8616cf1e2d79f27bd3f88d1a14d9e664553aefcb0ff3cb58e",
+      "currentEdition": "editions/animals---wildlife-vol4-455f443a2313457f.json",
+      "beforeIssues": [
+        "across-2:BOBCAT unreviewed-dictionary-hint",
+        "across-4:BROWSE unreviewed-dictionary-hint",
+        "across-8:PREDATION unreviewed-dictionary-hint",
+        "down-3:GROVE unreviewed-dictionary-hint",
+        "down-5:LARK low-quality",
+        "down-5:LARK unreviewed-dictionary-hint"
+      ],
+      "answers": [
+        "PENGUIN",
+        "LEMUR",
+        "MONKEY",
+        "NEST",
+        "BIRD",
+        "GAZELLE",
+        "CARIBOU"
+      ]
+    },
+    {
+      "id": "animals---wildlife-vol5",
+      "theme": "Animals & Wildlife",
+      "action": "replace",
+      "originalContentHash": "7026d8f5dcd3651b68fb946059a152c4071c5d34a8152c8686779919d3460c83",
+      "currentEdition": "editions/animals---wildlife-vol5-e779765a2d9891bf.json",
+      "beforeIssues": [
+        "across-4:FLAMINGO low-quality",
+        "across-4:FLAMINGO unreviewed-dictionary-hint",
+        "across-5:LOUSE unreviewed-dictionary-hint",
+        "across-8:MAGPIE low-quality",
+        "across-8:MAGPIE unreviewed-dictionary-hint",
+        "down-1:FALCON low-quality",
+        "down-1:FALCON unreviewed-dictionary-hint",
+        "down-2:COOP unreviewed-dictionary-hint",
+        "down-3:KITE invalid-hint-length",
+        "down-3:KITE unreviewed-dictionary-hint"
+      ],
+      "answers": [
+        "HABITAT",
+        "PREDATORY",
+        "FISH",
+        "LIZARD",
+        "REPTILE",
+        "HUTCH"
+      ]
+    },
+    {
+      "id": "animals---wildlife-vol6",
+      "theme": "Animals & Wildlife",
+      "action": "replace",
+      "originalContentHash": "52432f20d78cfd927d8acccf1f504be821d46e88e94b1ad9fd45579c4de01fa0",
+      "currentEdition": "editions/animals---wildlife-vol6-b3750478b0c7288a.json",
+      "beforeIssues": [
+        "across-2:BEASTS unreviewed-dictionary-hint",
+        "across-3:CRITTERS unreviewed-dictionary-hint",
+        "across-5:DENIZEN unreviewed-dictionary-hint",
+        "down-4:SPINNEY unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "OTTER",
+        "TRACKS",
+        "SNAKE",
+        "TURTLE",
+        "MOOSE",
+        "DUCK"
+      ]
+    },
+    {
+      "id": "animals---wildlife-vol7",
+      "theme": "Animals & Wildlife",
+      "action": "replace",
+      "originalContentHash": "905dc584c49dfa19bdd39fd6a8c3a17632b2989e0cdbeb8c161fd9237255cea0",
+      "currentEdition": "editions/animals---wildlife-vol7-2d7396b717b01dd6.json",
+      "beforeIssues": [
+        "across-7:PREDATORY unreviewed-dictionary-hint",
+        "across-8:MEWS unreviewed-dictionary-hint",
+        "down-6:GOAD unreviewed-dictionary-hint"
+      ],
+      "answers": [
+        "PORCUPINE",
+        "PREDATOR",
+        "AVIAN",
+        "BEETLE",
+        "TUNDRA",
+        "FOREST"
+      ]
+    },
+    {
+      "id": "animals---wildlife-vol8",
+      "theme": "Animals & Wildlife",
+      "action": "replace",
+      "originalContentHash": "0090a7add789bd31ca5581226b64ceb68cdf90c7863c94b189cb7dc5806fbeb7",
+      "currentEdition": "editions/animals---wildlife-vol8-8739b0f5450f0082.json",
+      "beforeIssues": [
+        "across-3:FLEECE unreviewed-dictionary-hint"
+      ],
+      "answers": [
+        "GROVE",
+        "CRITTER",
+        "LOUSE",
+        "STREAM",
+        "BEAST",
+        "FOXES",
+        "BRISTLE",
+        "RODENT"
+      ]
+    },
+    {
+      "id": "animals---wildlife-vol9",
+      "theme": "Animals & Wildlife",
+      "action": "unchanged",
+      "originalContentHash": "b0b73efd81ed9f3ffee76bd0b17c2ad742340a46058fe1b59559d24b688eee9c",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "GOOSE",
+        "ARMADILLO",
+        "RHINO",
+        "SKUNK",
+        "PARROT",
+        "SWAN",
+        "OWL",
+        "LYNX",
+        "HAWK",
+        "PUMA"
+      ]
+    },
+    {
+      "id": "clothing---fashion-vol1",
+      "theme": "Clothing & Fashion",
+      "action": "unchanged",
+      "originalContentHash": "139a44f1f010371b6b99aea59d2424aaccda8e495f7fea9bbe682710093aa921",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "TAILOR",
+        "SEAM",
+        "VOGUE",
+        "BEANIE",
+        "SOCK",
+        "BELT",
+        "PURSE",
+        "MODEL",
+        "YARN",
+        "HEM",
+        "VEST"
+      ]
+    },
+    {
+      "id": "clothing---fashion-vol2",
+      "theme": "Clothing & Fashion",
+      "action": "unchanged",
+      "originalContentHash": "cd6c8cecc34cfdb3774ca167ddded652a900a88d47d854c5f0d8888bc2a06253",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "BOWTIE",
+        "PANTY",
+        "DRESSING",
+        "COLLAR",
+        "FABRIC",
+        "BOOT",
+        "LINING",
+        "LACE",
+        "ELASTIC",
+        "SCARF"
+      ]
+    },
+    {
+      "id": "clothing---fashion-vol3",
+      "theme": "Clothing & Fashion",
+      "action": "unchanged",
+      "originalContentHash": "77e3605366b8d839c340eef231611d176e9752167f46eea0e93d055c1cc82ad7",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "HOOK",
+        "CAMISOLE",
+        "SPATS",
+        "BUCKLE",
+        "SWEATER",
+        "DUDS",
+        "HEEL",
+        "JEANS",
+        "SUEDE"
+      ]
+    },
+    {
+      "id": "clothing---fashion-vol4",
+      "theme": "Clothing & Fashion",
+      "action": "unchanged",
+      "originalContentHash": "73652916a06b2829c90b15ebd10ecc4cf7eb08f9b94587c72ef8306e91a9f2a3",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "SOLE",
+        "LAPEL",
+        "REMNANTS",
+        "LEATHER",
+        "WOOL",
+        "WALLET",
+        "SIZE",
+        "PATTERN",
+        "SASH"
+      ]
+    },
+    {
+      "id": "clothing---fashion-vol5",
+      "theme": "Clothing & Fashion",
+      "action": "unchanged",
+      "originalContentHash": "bdcc46f8073a00696d98e3bf56e2ae208de281d5ae95f7362f3cc40903e34e85",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "SMOCK",
+        "TIES",
+        "STOCKING",
+        "SNAP",
+        "DRESSER",
+        "GOWNS",
+        "COAT",
+        "SILK",
+        "CAP"
+      ]
+    },
+    {
+      "id": "clothing---fashion-vol6",
+      "theme": "Clothing & Fashion",
+      "action": "unchanged",
+      "originalContentHash": "ecd90c7ffc95d6ee904103cc325b613c094d866702887812cf020163177478ed",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "SHORTS",
+        "LINEN",
+        "DART",
+        "HAT",
+        "ROBE",
+        "SKIRT",
+        "SKIMPY"
+      ]
+    },
+    {
+      "id": "food---cooking-vol1",
+      "theme": "Food & Cooking",
+      "action": "replace",
+      "originalContentHash": "cee1b2977157d682052bcbecd366784a4fa98d729e43014d7772e81ddd3c390d",
+      "currentEdition": "editions/food---cooking-vol1-e095a28e4a99639f.json",
+      "beforeIssues": [
+        "across-3:VIAND unreviewed-dictionary-hint",
+        "across-9:KITCHENING unreviewed-dictionary-hint",
+        "down-5:SAUCES missing-source-pair",
+        "down-8:TIAN unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "BASTE",
+        "BREAD",
+        "RISOTTO",
+        "KEBAB",
+        "BROIL",
+        "FOOD",
+        "CORN"
+      ]
+    },
+    {
+      "id": "food---cooking-vol10",
+      "theme": "Food & Cooking",
+      "action": "replace",
+      "originalContentHash": "f965efe5e1973a450e2f991b2dc0d786b641b1103f7d436fc37fb06dc663a80a",
+      "currentEdition": "editions/food---cooking-vol10-800c061ba03ecf43.json",
+      "beforeIssues": [
+        "across-6:ROTISSERIE low-quality",
+        "down-1:PICNIC unreviewed-dictionary-hint",
+        "down-4:WOKERY unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "CABBAGE",
+        "STOCK",
+        "BRAISE",
+        "BATTER",
+        "FETA",
+        "YEAST",
+        "SOUR"
+      ]
+    },
+    {
+      "id": "food---cooking-vol11",
+      "theme": "Food & Cooking",
+      "action": "replace",
+      "originalContentHash": "8ab9a339ba4422ba55a2573682fb946b4075307707fa601f05a3135bddf2f237",
+      "currentEdition": "editions/food---cooking-vol11-8361e3f32313a507.json",
+      "beforeIssues": [
+        "across-4:SAUCEPAN unreviewed-dictionary-hint",
+        "down-1:WOKS unreviewed-dictionary-hint",
+        "down-2:CAKE unreviewed-dictionary-hint",
+        "down-5:POTHOOK unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "TURKEY",
+        "COOKING",
+        "BROTH",
+        "BROWNIE",
+        "CRACKER",
+        "SCONE",
+        "YOGURT"
+      ]
+    },
+    {
+      "id": "food---cooking-vol12",
+      "theme": "Food & Cooking",
+      "action": "unchanged",
+      "originalContentHash": "526932671472c6bd2b76c82621b2d0c13c3851099b2298c33bb9eb635c01a837",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "GARLIC",
+        "CARROT",
+        "LUNCH",
+        "COLANDER",
+        "SIEVE",
+        "APRON",
+        "MEASURE",
+        "LENTIL",
+        "CHOP",
+        "OATS"
+      ]
+    },
+    {
+      "id": "food---cooking-vol13",
+      "theme": "Food & Cooking",
+      "action": "replace",
+      "originalContentHash": "c47a0fcbc6ae3fe89f28930bf6c59797537cd090ca044f87a64bdfe20bfb9482",
+      "currentEdition": "editions/food---cooking-vol13-d491893b39033eac.json",
+      "beforeIssues": [
+        "across-1:REPASTS unreviewed-dictionary-hint",
+        "across-5:CHARCHARI unreviewed-dictionary-hint",
+        "down-2:SAUCER unreviewed-dictionary-hint",
+        "down-3:SALMON invalid-hint-length",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "RAVIOLI",
+        "CELERY",
+        "DUMPLING",
+        "GOUDA",
+        "JELLY",
+        "ROLL",
+        "KNEAD"
+      ]
+    },
+    {
+      "id": "food---cooking-vol14",
+      "theme": "Food & Cooking",
+      "action": "replace",
+      "originalContentHash": "94310e6f90f6c78bce1e4357dde641b118c2f30c219161ceecf539cb12e892ee",
+      "currentEdition": "editions/food---cooking-vol14-891cd88da08b7603.json",
+      "beforeIssues": [
+        "across-2:PUDDING unreviewed-dictionary-hint",
+        "across-4:REFECTION unreviewed-dictionary-hint",
+        "down-3:BUN unreviewed-dictionary-hint",
+        "down-5:OLLA unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "SUSHI",
+        "LASAGNA",
+        "RAMEN",
+        "HUMMUS",
+        "RICOTTA",
+        "BUN",
+        "BAGEL"
+      ]
+    },
+    {
+      "id": "food---cooking-vol15",
+      "theme": "Food & Cooking",
+      "action": "replace",
+      "originalContentHash": "834903ff437ba2673aaddce56cbfbb1932ec6db38fdeeb181243c802e7511265",
+      "currentEdition": "editions/food---cooking-vol15-4ebf74f4386c0aab.json",
+      "beforeIssues": [
+        "across-4:SAUCIER unreviewed-dictionary-hint",
+        "across-5:BAKERIES unreviewed-dictionary-hint",
+        "across-6:BRAISES unreviewed-dictionary-hint",
+        "down-1:TRIVETS unreviewed-dictionary-hint",
+        "down-2:DINNERS unreviewed-dictionary-hint",
+        "down-3:GRAVIES unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "CHEDDAR",
+        "BURRITO",
+        "PRETZEL",
+        "KETCHUP",
+        "JAM",
+        "FLOUR",
+        "CREPE"
+      ]
+    },
+    {
+      "id": "food---cooking-vol16",
+      "theme": "Food & Cooking",
+      "action": "replace",
+      "originalContentHash": "dee7214a687dd59b6ed53d5d81da0443a963b5ce815ba61f57c52fddb414a690",
+      "currentEdition": "editions/food---cooking-vol16-46952a0e7b61bedf.json",
+      "beforeIssues": [
+        "across-3:GRIOT unreviewed-dictionary-hint",
+        "across-5:CANNELON unreviewed-dictionary-hint",
+        "down-2:BEVER unreviewed-dictionary-hint",
+        "down-4:NOSH unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "BURGER",
+        "PESTO",
+        "GARNISH",
+        "EGGS",
+        "POACH",
+        "VEAL",
+        "OIL"
+      ]
+    },
+    {
+      "id": "food---cooking-vol17",
+      "theme": "Food & Cooking",
+      "action": "replace",
+      "originalContentHash": "0f69f9e5746591ded21c86f9c4aa7aaba400565df0611a2dab14a195d7641003",
+      "currentEdition": "editions/food---cooking-vol17-2ec442cf03f5e548.json",
+      "beforeIssues": [
+        "across-3:MACAROON unreviewed-dictionary-hint",
+        "across-6:DESSERT unreviewed-dictionary-hint",
+        "down-1:GATEAU unreviewed-dictionary-hint",
+        "down-2:PARM unreviewed-dictionary-hint",
+        "down-4:SIZZLER unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "SALSA",
+        "TACO",
+        "BEAT",
+        "DRIZZLE",
+        "SCOOP",
+        "CARVE",
+        "BRIE"
+      ]
+    },
+    {
+      "id": "food---cooking-vol18",
+      "theme": "Food & Cooking",
+      "action": "replace",
+      "originalContentHash": "f0491040ffd54edc39efe91f6868420657a51d7eaec4bb8acc83cd52b59f293d",
+      "currentEdition": "editions/food---cooking-vol18-f74543946d0ff8e2.json",
+      "beforeIssues": [
+        "down-1:DARIOLE unreviewed-dictionary-hint",
+        "down-2:FLAN unreviewed-dictionary-hint",
+        "down-3:PARMA unreviewed-dictionary-hint",
+        "down-5:TANDOORI unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "BISCUIT",
+        "SEASON",
+        "WHIP",
+        "TENDER",
+        "TOSS",
+        "CHUTNEY",
+        "RIPE",
+        "SLICE"
+      ]
+    },
+    {
+      "id": "food---cooking-vol19",
+      "theme": "Food & Cooking",
+      "action": "unchanged",
+      "originalContentHash": "6c6fa0fa2a56c01c306b254aef1187376edbe8c63cf8a424ed0b5f6062227c4d",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "PIE",
+        "MUSHROOM",
+        "APPLE",
+        "DICE",
+        "SEAR",
+        "PASTA",
+        "HONEY",
+        "MINCE"
+      ]
+    },
+    {
+      "id": "food---cooking-vol2",
+      "theme": "Food & Cooking",
+      "action": "replace",
+      "originalContentHash": "90730e0ebd36dc81f9b174bdc3d763a81faff0c347a1feacf7bb74bca2cbe1ce",
+      "currentEdition": "editions/food---cooking-vol2-3d49bcdad0ca979d.json",
+      "beforeIssues": [
+        "across-6:GRILLADE unreviewed-dictionary-hint",
+        "down-1:HANGI low-quality",
+        "down-1:HANGI unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "GNOCCHI",
+        "BITTER",
+        "FOLD",
+        "MARINATE",
+        "TOASTED",
+        "RAISIN",
+        "LAMB",
+        "RAW"
+      ]
+    },
+    {
+      "id": "food---cooking-vol20",
+      "theme": "Food & Cooking",
+      "action": "unchanged",
+      "originalContentHash": "d8d4bce1f622100d628e5321ed9aab51df3522359cf289d166246f59699e1611",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "MUFFIN",
+        "STRAIN",
+        "SANDWICH",
+        "BUTTER",
+        "CURRY",
+        "SALAD",
+        "NOODLE",
+        "BOIL",
+        "SALT"
+      ]
+    },
+    {
+      "id": "food---cooking-vol21",
+      "theme": "Food & Cooking",
+      "action": "unchanged",
+      "originalContentHash": "789a3d4c66d1547f4de85581f674ee44169d450ac29fa98a34d284aa089dd009",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "CHOCOLATE",
+        "CHEESE",
+        "WAFFLE",
+        "BAKER",
+        "BEANS",
+        "CUPCAKE",
+        "OMELET"
+      ]
+    },
+    {
+      "id": "food---cooking-vol22",
+      "theme": "Food & Cooking",
+      "action": "reclue",
+      "originalContentHash": "eaee9805fed9faf41c3bde1e2dbdabfe15d05154db5f7203a7495ad8e71b58fc",
+      "currentEdition": "editions/food---cooking-vol22-8bfe30222d6eaccd.json",
+      "beforeIssues": [],
+      "answers": [
+        "STEAM",
+        "APPETITE",
+        "GRATE",
+        "KETTLE",
+        "PIZZA",
+        "FEAST",
+        "SOUP",
+        "POTATO",
+        "EGG"
+      ]
+    },
+    {
+      "id": "food---cooking-vol23",
+      "theme": "Food & Cooking",
+      "action": "reclue",
+      "originalContentHash": "7faedc67d824d6022fbd4bb5fdbf77c4f87924022aacded3cf68f485c2f77aec",
+      "currentEdition": "editions/food---cooking-vol23-bc26b19c966bb293.json",
+      "beforeIssues": [],
+      "answers": [
+        "ROAST",
+        "LUNCHEON",
+        "STEW",
+        "SIMMER",
+        "SAUTE",
+        "PEEL",
+        "STIR",
+        "WHISK",
+        "TOMATO"
+      ]
+    },
+    {
+      "id": "food---cooking-vol24",
+      "theme": "Food & Cooking",
+      "action": "unchanged",
+      "originalContentHash": "790a9da23cb971829fcc3bb78ca7189af818730769abc367fb6e0f09733caf03",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "VANILLA",
+        "CREAM",
+        "BANANA",
+        "LADLE",
+        "ORANGE",
+        "RICE",
+        "LEMON",
+        "SUGAR",
+        "BERRY"
+      ]
+    },
+    {
+      "id": "food---cooking-vol3",
+      "theme": "Food & Cooking",
+      "action": "replace",
+      "originalContentHash": "9bf778f2c7fd633d6f272671f2acaf393d95b7200dafad11d83aa9ea15ef151a",
+      "currentEdition": "editions/food---cooking-vol3-6a6760ac3d640796.json",
+      "beforeIssues": [
+        "across-4:BARBECUE low-quality",
+        "across-6:RAMEKIN unreviewed-dictionary-hint",
+        "down-1:STEAMER unreviewed-dictionary-hint",
+        "down-5:COOKERY unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "GRAPE",
+        "PENNE",
+        "BURNER",
+        "PECAN",
+        "PEAR",
+        "LIME",
+        "PLUM"
+      ]
+    },
+    {
+      "id": "food---cooking-vol4",
+      "theme": "Food & Cooking",
+      "action": "replace",
+      "originalContentHash": "5e444f3d2dcdd7f71735358c38e661a78d402f0b55fdcf47cb95e0bed948ce4b",
+      "currentEdition": "editions/food---cooking-vol4-160984eb90d32bc1.json",
+      "beforeIssues": [
+        "across-6:FRYERS unreviewed-dictionary-hint",
+        "down-3:POT low-quality",
+        "down-5:BROTHS unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "ICING",
+        "MOZZARELLA",
+        "SPICY",
+        "COCOA",
+        "SAUSAGE",
+        "ALMOND",
+        "SALTY"
+      ]
+    },
+    {
+      "id": "food---cooking-vol5",
+      "theme": "Food & Cooking",
+      "action": "replace",
+      "originalContentHash": "a7925ae694f0bfef5c84e7714cb69c61e4b83e39f63f777e7dcb4d7686b8da28",
+      "currentEdition": "editions/food---cooking-vol5-db90266413d0f6c2.json",
+      "beforeIssues": [
+        "across-2:COOKTOP unreviewed-dictionary-hint",
+        "across-4:PASTRY unreviewed-dictionary-hint",
+        "down-1:ROBATA low-quality",
+        "down-1:ROBATA unreviewed-dictionary-hint",
+        "down-5:FRY unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "NACHOS",
+        "MACARONI",
+        "GRAVY",
+        "RELISH",
+        "SAVORY",
+        "OAT",
+        "DOUGH"
+      ]
+    },
+    {
+      "id": "food---cooking-vol6",
+      "theme": "Food & Cooking",
+      "action": "replace",
+      "originalContentHash": "66566de2a348ed1ceef71676fb704a681863fd282c5bca0c3af35fa7a7110d72",
+      "currentEdition": "editions/food---cooking-vol6-6ba8f80b9df2f9d8.json",
+      "beforeIssues": [
+        "across-5:CASSEROLE unreviewed-dictionary-hint",
+        "across-6:SUPPER unreviewed-dictionary-hint",
+        "down-2:GREEZE unreviewed-dictionary-hint",
+        "down-3:STEWER unreviewed-dictionary-hint",
+        "down-4:WOK unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "SYRUP",
+        "SIFT",
+        "CUCUMBER",
+        "CHICKPEA",
+        "MUSTARD",
+        "DUCK",
+        "BEET"
+      ]
+    },
+    {
+      "id": "food---cooking-vol7",
+      "theme": "Food & Cooking",
+      "action": "replace",
+      "originalContentHash": "ea666b95c822a76ce4c627f8da793060b547d82a8cc3a8bba88326f274b694d7",
+      "currentEdition": "editions/food---cooking-vol7-1d236f4224447fc9.json",
+      "beforeIssues": [
+        "across-2:GRILLER unreviewed-dictionary-hint",
+        "across-7:GRIDDLING unreviewed-dictionary-hint",
+        "down-1:TIMBALE unreviewed-dictionary-hint",
+        "down-4:KAZAN unreviewed-dictionary-hint",
+        "down-6:DELI unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "FALAFEL",
+        "CHERRY",
+        "VINEGAR",
+        "OLIVE",
+        "BARLEY",
+        "RYE",
+        "KALE"
+      ]
+    },
+    {
+      "id": "food---cooking-vol8",
+      "theme": "Food & Cooking",
+      "action": "replace",
+      "originalContentHash": "2de2f9134a2ddc0ea25467b8baff8ac0102abf4c34d5de7df7cecf94a14ebac2",
+      "currentEdition": "editions/food---cooking-vol8-ad04a64dffd98814.json",
+      "beforeIssues": [
+        "across-1:BURNERS unreviewed-dictionary-hint",
+        "down-1:BONED unreviewed-dictionary-hint",
+        "down-5:REPAST unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "PEAS",
+        "PANCAKE",
+        "TOAST",
+        "PEACH",
+        "PEANUT",
+        "PEA",
+        "TART",
+        "STEEP"
+      ]
+    },
+    {
+      "id": "food---cooking-vol9",
+      "theme": "Food & Cooking",
+      "action": "replace",
+      "originalContentHash": "c7c85aab0fde2b1695f3c7c3f2709bed9865b6d17493deb28d0f32cad25b65de",
+      "currentEdition": "editions/food---cooking-vol9-749eb080f7c31182.json",
+      "beforeIssues": [
+        "across-5:TAKEAWAY unreviewed-dictionary-hint",
+        "down-1:HOTDISH unreviewed-dictionary-hint",
+        "down-3:MEAL unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "SPRINKLE",
+        "BLEND",
+        "SEARING",
+        "OVEN",
+        "MILK",
+        "DRAIN",
+        "LEEK"
+      ]
+    },
+    {
+      "id": "history---civilization-vol1",
+      "theme": "History & Civilization",
+      "action": "replace",
+      "originalContentHash": "b9470c2894c4191d68d406906ba6f515df35ac621bdb7c729a33fd5bc8c387ce",
+      "currentEdition": "editions/history---civilization-vol1-0dcad66bc8a8b357.json",
+      "beforeIssues": [
+        "across-4:THOUGHTFUL unreviewed-dictionary-hint",
+        "across-5:XERARCH unreviewed-dictionary-hint",
+        "across-7:DRINKER unreviewed-dictionary-hint",
+        "down-1:WARTIME unreviewed-dictionary-hint",
+        "down-3:DUDE unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "RELIC",
+        "TRADE",
+        "ANCIENT",
+        "AGE",
+        "DECADE",
+        "TRUCE",
+        "ERA"
+      ]
+    },
+    {
+      "id": "history---civilization-vol2",
+      "theme": "History & Civilization",
+      "action": "replace",
+      "originalContentHash": "38253ac85d45fab4eb78f6fb4fd05d92640fa39af4287237c381d3163d1459b8",
+      "currentEdition": "editions/history---civilization-vol2-2f7b04d3b5356c9e.json",
+      "beforeIssues": [
+        "across-1:BRIDEWORT missing-source-pair",
+        "across-7:ENUMERATE unreviewed-dictionary-hint",
+        "down-2:ROMISH unreviewed-dictionary-hint",
+        "down-4:CYNARA low-quality",
+        "down-4:CYNARA unreviewed-dictionary-hint",
+        "down-6:NET unreviewed-dictionary-hint",
+        "answer-accessibility",
+        "long-word-crossings"
+      ],
+      "answers": [
+        "REFORM",
+        "ARMOR",
+        "ARCHIVE",
+        "COLONY",
+        "PHARAOH",
+        "EPOCH",
+        "QUEEN"
+      ]
+    },
+    {
+      "id": "history---civilization-vol3",
+      "theme": "History & Civilization",
+      "action": "replace",
+      "originalContentHash": "2f7f14a23f310b6556d2936fa1a47c720334157b92c3ade3213890349982d462",
+      "currentEdition": "editions/history---civilization-vol3-5df28a8b5b3b6f0c.json",
+      "beforeIssues": [
+        "across-1:VERSANT unreviewed-dictionary-hint",
+        "across-6:TOWERING unreviewed-dictionary-hint",
+        "across-7:SHOT unreviewed-dictionary-hint",
+        "down-2:THRONG unreviewed-dictionary-hint",
+        "down-3:BATCH unreviewed-dictionary-hint",
+        "down-4:CHICORY unreviewed-dictionary-hint",
+        "down-5:DELS unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "SCRIBE",
+        "KING",
+        "SETTLER",
+        "DIG",
+        "COIN",
+        "SENATE",
+        "SCROLL",
+        "RUINS"
+      ]
+    },
+    {
+      "id": "history---civilization-vol4",
+      "theme": "History & Civilization",
+      "action": "replace",
+      "originalContentHash": "b88c571df52bbccee2a71b5910608bfb78bf425fd12748c1e23d39b5ba015e00",
+      "currentEdition": "editions/history---civilization-vol4-3063ba7b95c538de.json",
+      "beforeIssues": [
+        "across-4:POPISH unreviewed-dictionary-hint",
+        "down-3:HELOT unreviewed-dictionary-hint",
+        "down-5:PACT unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "PALACE",
+        "MONARCH",
+        "CARAVAN",
+        "SPEAR",
+        "TOMB",
+        "COURT"
+      ]
+    },
+    {
+      "id": "history---civilization-vol5",
+      "theme": "History & Civilization",
+      "action": "reclue",
+      "originalContentHash": "2002c4aff729b885fd00ff6c056bf8f8e41def1de7f67f7e11b5c8f3ff70aab1",
+      "currentEdition": "editions/history---civilization-vol5-590d2e187f7c206c.json",
+      "beforeIssues": [],
+      "answers": [
+        "ARCHDUKE",
+        "SHIELD",
+        "GUILD",
+        "WARFARE",
+        "SHAH",
+        "RUNE",
+        "CASTLE"
+      ]
+    },
+    {
+      "id": "history---civilization-vol6",
+      "theme": "History & Civilization",
+      "action": "replace",
+      "originalContentHash": "8fd0d84f21d1f24b491c7528bb1f4cb920f54529d8a698315d49628b872c5773",
+      "currentEdition": "editions/history---civilization-vol6-9f2942790f83a5d2.json",
+      "beforeIssues": [
+        "across-7:ROMANI invalid-hint-length",
+        "across-7:ROMANI unreviewed-dictionary-hint",
+        "down-4:LATIN unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "LEGACY",
+        "CHRONICLE",
+        "MUMMY",
+        "REPUBLIC",
+        "BATTLE",
+        "LATIN",
+        "FORUM"
+      ]
+    },
+    {
+      "id": "history---civilization-vol7",
+      "theme": "History & Civilization",
+      "action": "unchanged",
+      "originalContentHash": "f316fb98b79b7a489e0421ee236e957f06143fd8315b01925375a64f9ba8ce47",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "HISTORIAN",
+        "AEGEAN",
+        "EMPEROR",
+        "DYNASTY",
+        "TREATY",
+        "EMPIRE"
+      ]
+    },
+    {
+      "id": "home---tools-vol1",
+      "theme": "Home & Tools",
+      "action": "replace",
+      "originalContentHash": "903b851e0cc45c016a89ea235ba0a902443fc9590526ca55c3e23ba54aaf0f30",
+      "currentEdition": "editions/home---tools-vol1-9a9aff07918149b8.json",
+      "beforeIssues": [
+        "across-4:TOOLS missing-source-pair",
+        "across-5:HOMECOMING unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "CLAMP",
+        "SHUTTER",
+        "BROOM",
+        "CEILING",
+        "PATIO",
+        "BALCONY",
+        "BRICK"
+      ]
+    },
+    {
+      "id": "home---tools-vol10",
+      "theme": "Home & Tools",
+      "action": "replace",
+      "originalContentHash": "cc2ce2847fa6f70fb22f5bc51c4ab90d96fe955f1e9a75dac4cbda9d9be2b1cf",
+      "currentEdition": "editions/home---tools-vol10-1b41c96e4dda8c6e.json",
+      "beforeIssues": [
+        "across-1:CUBBY unreviewed-dictionary-hint",
+        "across-3:HOMESTEAD unreviewed-dictionary-hint",
+        "across-7:ARTISAN unreviewed-dictionary-hint",
+        "down-2:BEATER unreviewed-dictionary-hint",
+        "down-4:SLAMS unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "BEDROOM",
+        "CHISEL",
+        "CABINET",
+        "GLUE",
+        "MALLET",
+        "BOLT"
+      ]
+    },
+    {
+      "id": "home---tools-vol11",
+      "theme": "Home & Tools",
+      "action": "replace",
+      "originalContentHash": "0e4483ea95de8865100dcd5732d769ca0ab8712dc6f31658a8f2f1cb5e7acc59",
+      "currentEdition": "editions/home---tools-vol11-b431955a492ba92a.json",
+      "beforeIssues": [
+        "across-3:STOPCOCK invalid-hint-length",
+        "across-3:STOPCOCK unreviewed-dictionary-hint",
+        "across-5:FORGING unreviewed-dictionary-hint",
+        "across-6:BRACKET unreviewed-dictionary-hint",
+        "down-1:SOAP unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "DRAWER",
+        "SCREWS",
+        "BLINDS",
+        "MORTAR",
+        "BRICKS",
+        "PLIERS",
+        "DUSTER"
+      ]
+    },
+    {
+      "id": "home---tools-vol12",
+      "theme": "Home & Tools",
+      "action": "replace",
+      "originalContentHash": "3fbd5ab0fc0d894057c7a75b8d820c62bdc60c47aa9a1da05a35de92866b4504",
+      "currentEdition": "editions/home---tools-vol12-6e32100e4d8e6785.json",
+      "beforeIssues": [
+        "across-3:SCOURER unreviewed-dictionary-hint",
+        "across-5:HOMESPUN unreviewed-dictionary-hint",
+        "across-6:PRICKER unreviewed-dictionary-hint",
+        "down-1:MANSION unreviewed-dictionary-hint",
+        "down-2:FLOORER unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "MIRROR",
+        "HOMESTEAD",
+        "BOOKCASE",
+        "LATCH",
+        "CORD",
+        "FAN"
+      ]
+    },
+    {
+      "id": "home---tools-vol13",
+      "theme": "Home & Tools",
+      "action": "unchanged",
+      "originalContentHash": "a815417994122458d86a97da26f7c81428b3d847ba9df1b3615a589126fc0571",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "KITCHEN",
+        "COUNTER",
+        "WOVE",
+        "DECOR",
+        "FIXTURE",
+        "MEND"
+      ]
+    },
+    {
+      "id": "home---tools-vol14",
+      "theme": "Home & Tools",
+      "action": "unchanged",
+      "originalContentHash": "aca7574bf693fcb5ba2857c1c21a86058d02e4810bf951b106d821dd1d7ae9a2",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "ATTIC",
+        "TILES",
+        "PLASTER",
+        "CELLAR",
+        "TABLE",
+        "PIPE",
+        "STAIRS",
+        "TAPE",
+        "TILE"
+      ]
+    },
+    {
+      "id": "home---tools-vol15",
+      "theme": "Home & Tools",
+      "action": "unchanged",
+      "originalContentHash": "03dc23cb49ad42f7bc099ffe4d14d5d3844c735a778eda7cb58ec24bdbe4a0fd",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "NAILS",
+        "PLUMBING",
+        "CHAIR",
+        "DUST",
+        "LAMP",
+        "FILE",
+        "PORCH",
+        "CARPET",
+        "ROOF"
+      ]
+    },
+    {
+      "id": "home---tools-vol16",
+      "theme": "Home & Tools",
+      "action": "reclue",
+      "originalContentHash": "3de82d052d082ea12265ae2da2e950110e812928d2cdff9401f40c10c810810d",
+      "currentEdition": "editions/home---tools-vol16-c77a8f8a974933a4.json",
+      "beforeIssues": [],
+      "answers": [
+        "HACKSAW",
+        "WINDOW",
+        "STAIRCASE",
+        "PIPES",
+        "SANDER",
+        "PUTTY",
+        "RAKE",
+        "KEY"
+      ]
+    },
+    {
+      "id": "home---tools-vol17",
+      "theme": "Home & Tools",
+      "action": "reclue",
+      "originalContentHash": "fe3f6644bcaf5f4a14d75e4c8ef6dc51e496b4240aee87b56ebe8f931c82985a",
+      "currentEdition": "editions/home---tools-vol17-dd36a32f5acd60bf.json",
+      "beforeIssues": [],
+      "answers": [
+        "DUSTPAN",
+        "HOMEOWNERS",
+        "SANDPAPER",
+        "UTENSILS",
+        "KEYHOLE",
+        "SCREW",
+        "RUG"
+      ]
+    },
+    {
+      "id": "home---tools-vol18",
+      "theme": "Home & Tools",
+      "action": "reclue",
+      "originalContentHash": "8e8d930cff604f4e11a9d6a6ca37fc0b5ea862f2cf8e159c64f5520e23f81a4f",
+      "currentEdition": "editions/home---tools-vol18-3f12e184ffe98dc8.json",
+      "beforeIssues": [],
+      "answers": [
+        "EAVES",
+        "FIREPLACE",
+        "SWITCH",
+        "VISE",
+        "CLOCK",
+        "SEALANT"
+      ]
+    },
+    {
+      "id": "home---tools-vol2",
+      "theme": "Home & Tools",
+      "action": "reclue",
+      "originalContentHash": "61972820de9a456c34b5f9416b9169699add75d531b4657bca4e72a079c59ec1",
+      "currentEdition": "editions/home---tools-vol2-27987084435dceaa.json",
+      "beforeIssues": [],
+      "answers": [
+        "GARAGE",
+        "SCRUBBER",
+        "WALL",
+        "PAINT",
+        "LADDER",
+        "OUTLET",
+        "SAW"
+      ]
+    },
+    {
+      "id": "home---tools-vol3",
+      "theme": "Home & Tools",
+      "action": "replace",
+      "originalContentHash": "b6b85c65c739fa85bc4a2089dac11abd89606a27727aa21ca6d2bd955e777e31",
+      "currentEdition": "editions/home---tools-vol3-f02f28faa05426ca.json",
+      "beforeIssues": [
+        "across-5:HOMELAND unreviewed-dictionary-hint",
+        "across-7:PECKER low-quality",
+        "across-7:PECKER unreviewed-dictionary-hint",
+        "down-2:JOINTER low-quality",
+        "down-2:JOINTER unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "CHIMNEY",
+        "BUCKET",
+        "WINDOWS",
+        "HEATER",
+        "CAULK",
+        "TOOLS",
+        "HOME"
+      ]
+    },
+    {
+      "id": "home---tools-vol4",
+      "theme": "Home & Tools",
+      "action": "replace",
+      "originalContentHash": "8eefa8f044e8432f1399ab1b144ba4f08203f82d1e3187ef5d8202d41e9ec057",
+      "currentEdition": "editions/home---tools-vol4-ecba34d708f808cb.json",
+      "beforeIssues": [
+        "across-3:VILLA unreviewed-dictionary-hint",
+        "down-2:JANITOR unreviewed-dictionary-hint"
+      ],
+      "answers": [
+        "DOMICILE",
+        "PAINTBRUSH",
+        "OTTOMAN",
+        "BENCH",
+        "DRAIN",
+        "TAP"
+      ]
+    },
+    {
+      "id": "home---tools-vol5",
+      "theme": "Home & Tools",
+      "action": "replace",
+      "originalContentHash": "f2f066e7e117a05e55dea6479f8510b3b6d05d4ecd30e4388fe6c943421af8f3",
+      "currentEdition": "editions/home---tools-vol5-6a58bdc784c66af0.json",
+      "beforeIssues": [
+        "down-1:SPANNER unreviewed-dictionary-hint",
+        "down-4:HALL unreviewed-dictionary-hint"
+      ],
+      "answers": [
+        "SHOWER",
+        "LODGINGS",
+        "DUVET",
+        "TOWEL",
+        "DRESSER",
+        "QUILT"
+      ]
+    },
+    {
+      "id": "home---tools-vol6",
+      "theme": "Home & Tools",
+      "action": "replace",
+      "originalContentHash": "e69473caf98ef609efd80f3a9f7b3769fa9adb7fd2ac1fb95a639b58885ef785",
+      "currentEdition": "editions/home---tools-vol6-192a05dfb5239593.json",
+      "beforeIssues": [
+        "across-6:MATTRESS invalid-hint-length",
+        "across-6:MATTRESS unreviewed-dictionary-hint",
+        "across-7:PLACARD unreviewed-dictionary-hint",
+        "down-3:MANSE unreviewed-dictionary-hint",
+        "down-4:VISIT unreviewed-dictionary-hint"
+      ],
+      "answers": [
+        "JIGSAW",
+        "DOMESTIC",
+        "DOORBELL",
+        "ARTISAN",
+        "DOORKNOB",
+        "BULBS"
+      ]
+    },
+    {
+      "id": "home---tools-vol7",
+      "theme": "Home & Tools",
+      "action": "replace",
+      "originalContentHash": "ec450e6b71e8ee77ccd7c0034a207fe04a4a36a65735efc345ab98d06924cd62",
+      "currentEdition": "editions/home---tools-vol7-bc2525d9ba647d0c.json",
+      "beforeIssues": [
+        "across-4:RUGS unreviewed-dictionary-hint",
+        "across-6:SPATULAS unreviewed-dictionary-hint",
+        "down-1:LODGINGS unreviewed-dictionary-hint",
+        "down-2:FOYER unreviewed-dictionary-hint",
+        "down-5:SALA unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "BRUSH",
+        "SOCKET",
+        "TOILET",
+        "TOWELS",
+        "SHEET",
+        "PINS",
+        "STOOL",
+        "MOP"
+      ]
+    },
+    {
+      "id": "home---tools-vol8",
+      "theme": "Home & Tools",
+      "action": "replace",
+      "originalContentHash": "fdbe38f81700c8b3631291ffc78b2bc5b83e00bbd58b22dc33bc409fc471a38d",
+      "currentEdition": "editions/home---tools-vol8-bfeb12b3e825136e.json",
+      "beforeIssues": [
+        "across-6:WASHROOM unreviewed-dictionary-hint",
+        "down-1:SPATTLE unreviewed-dictionary-hint",
+        "down-3:CHAMBER low-quality",
+        "down-3:CHAMBER unreviewed-dictionary-hint",
+        "down-4:MAID unreviewed-dictionary-hint",
+        "down-7:HAFT unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "BRACKET",
+        "LANDING",
+        "BLANKET",
+        "BATHTUB",
+        "PILLOW",
+        "BASIN",
+        "GROUT"
+      ]
+    },
+    {
+      "id": "home---tools-vol9",
+      "theme": "Home & Tools",
+      "action": "replace",
+      "originalContentHash": "867ff320e54cd6bfa9a989a44e2d30cbb5db7fbae8acb30bbcb4be0048c04ac2",
+      "currentEdition": "editions/home---tools-vol9-cec252327f80db1d.json",
+      "beforeIssues": [
+        "across-4:ALCOVE unreviewed-dictionary-hint",
+        "across-6:HANDSAWS unreviewed-dictionary-hint",
+        "across-7:FORK unreviewed-dictionary-hint",
+        "down-1:CARPETS unreviewed-dictionary-hint",
+        "down-2:SWABBER unreviewed-dictionary-hint",
+        "down-3:WIELD unreviewed-dictionary-hint",
+        "down-5:SALON unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "DOOR",
+        "WARDROBE",
+        "SLAMS",
+        "MANSION",
+        "LEVEL",
+        "ROOM",
+        "HALL",
+        "MANSE"
+      ]
+    },
+    {
+      "id": "internet---software-vol1",
+      "theme": "Internet & Software",
+      "action": "replace",
+      "originalContentHash": "dd58cc26c9aa16010aaafab2d1abbf97b55d236afc325dd1750a61e3bf00b798",
+      "currentEdition": "editions/internet---software-vol1-9c995568653147d0.json",
+      "beforeIssues": [],
+      "answers": [
+        "ROUTER",
+        "SESSION",
+        "OPEN",
+        "SITES",
+        "ICON",
+        "ONLINE",
+        "RESTORE",
+        "SITE"
+      ]
+    },
+    {
+      "id": "internet---software-vol10",
+      "theme": "Internet & Software",
+      "action": "replace",
+      "originalContentHash": "92508fc5789f59517c1f4d9acf41efa0a0ce6bccd7f2c422042876792cd41ba8",
+      "currentEdition": "editions/internet---software-vol10-5300790d8dbcd982.json",
+      "beforeIssues": [
+        "across-2:SITES unreviewed-dictionary-hint",
+        "across-4:NAMEFAG unreviewed-dictionary-hint",
+        "across-6:BOATING unreviewed-dictionary-hint",
+        "down-3:SESSION unreviewed-dictionary-hint",
+        "down-5:FLIC unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "RESULT",
+        "RESULTS",
+        "EMAIL",
+        "RELEASE",
+        "URL",
+        "SAVE",
+        "FILTER"
+      ]
+    },
+    {
+      "id": "internet---software-vol11",
+      "theme": "Internet & Software",
+      "action": "replace",
+      "originalContentHash": "017074042500f1f88f3537d62629c97e8509b09dda7d41b974a56a1180280e86",
+      "currentEdition": "editions/internet---software-vol11-04747693caf742ad.json",
+      "beforeIssues": [
+        "across-1:WEBISODE unreviewed-dictionary-hint",
+        "across-4:CYBERPOWER unreviewed-dictionary-hint",
+        "across-5:EMULATOR unreviewed-dictionary-hint",
+        "down-1:WEBBER unreviewed-dictionary-hint",
+        "down-2:IRC missing-hint",
+        "down-2:IRC unreviewed-dictionary-hint",
+        "down-3:HOSTNAME unreviewed-dictionary-hint",
+        "answer-accessibility",
+        "long-word-crossings"
+      ],
+      "answers": [
+        "SEARCH",
+        "MODEM",
+        "DELETE",
+        "WIFI",
+        "SOURCE",
+        "HOST",
+        "EDIT"
+      ]
+    },
+    {
+      "id": "internet---software-vol12",
+      "theme": "Internet & Software",
+      "action": "replace",
+      "originalContentHash": "9bb412d81f4d3f3100f383ea3e14a40c71b7001b96da039c8dcbc14e80441313",
+      "currentEdition": "editions/internet---software-vol12-1958f8d323bb303f.json",
+      "beforeIssues": [
+        "across-3:COBWEB unreviewed-dictionary-hint",
+        "across-5:SUPERNODE invalid-hint-length",
+        "across-5:SUPERNODE unreviewed-dictionary-hint",
+        "across-6:DISTRO unreviewed-dictionary-hint",
+        "down-1:PROFILE unreviewed-dictionary-hint",
+        "down-2:WIRELESS unreviewed-dictionary-hint",
+        "down-4:PHOTO unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "PHOTO",
+        "ANTIVIRUS",
+        "DEBUG",
+        "MALWARE",
+        "LOGIN",
+        "TABS",
+        "UPLOAD"
+      ]
+    },
+    {
+      "id": "internet---software-vol13",
+      "theme": "Internet & Software",
+      "action": "replace",
+      "originalContentHash": "4d1f6e8b2c820202e25f9aa24727f62654a07d8179e8cff7a9db2648b4870567",
+      "currentEdition": "editions/internet---software-vol13-1954b2b4c886400a.json",
+      "beforeIssues": [
+        "across-6:RELEASE unreviewed-dictionary-hint",
+        "down-2:CARDWARE unreviewed-dictionary-hint",
+        "down-3:FATAL unreviewed-dictionary-hint",
+        "down-4:NEXUS unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "ARRAY",
+        "BUILD",
+        "USERNAME",
+        "STRING",
+        "PROFILE",
+        "BUG",
+        "TEST"
+      ]
+    },
+    {
+      "id": "internet---software-vol14",
+      "theme": "Internet & Software",
+      "action": "replace",
+      "originalContentHash": "83426b8dae76a552de3b361fce2d97e34e4c84dd61bda081524d2c513d52f41c",
+      "currentEdition": "editions/internet---software-vol14-41f8e845c6a66d73.json",
+      "beforeIssues": [
+        "across-3:SUBCODE unreviewed-dictionary-hint",
+        "across-5:RENDERER unreviewed-dictionary-hint",
+        "across-6:UPCODE unreviewed-dictionary-hint",
+        "down-1:COMPILER unreviewed-dictionary-hint",
+        "down-2:INCLUDE unreviewed-dictionary-hint",
+        "down-4:EWORLD unreviewed-dictionary-hint",
+        "answer-accessibility",
+        "long-word-crossings"
+      ],
+      "answers": [
+        "ATTACHMENT",
+        "CLOSE",
+        "EXPORT",
+        "CLIENT",
+        "CLASS",
+        "MENU",
+        "IMPORT"
+      ]
+    },
+    {
+      "id": "internet---software-vol2",
+      "theme": "Internet & Software",
+      "action": "replace",
+      "originalContentHash": "b53cab679fd2b828eac7dc371e36026a077543bfe1766f52eb72172bc8758930",
+      "currentEdition": "editions/internet---software-vol2-b517f51ca6b87435.json",
+      "beforeIssues": [
+        "across-3:SUBPATH unreviewed-dictionary-hint",
+        "across-5:WORKBOOK unreviewed-dictionary-hint",
+        "across-7:CYBER unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "STREAM",
+        "INTERNET",
+        "MODULE",
+        "SECURE",
+        "WINDOW",
+        "HTML",
+        "DOMAIN"
+      ]
+    },
+    {
+      "id": "internet---software-vol3",
+      "theme": "Internet & Software",
+      "action": "replace",
+      "originalContentHash": "7e9727ae270e20a64ed7fac257113497bd7405272f07decfbed46fb299756a42",
+      "currentEdition": "editions/internet---software-vol3-60b89a3b88ff455b.json",
+      "beforeIssues": [
+        "across-5:NETWORKS unreviewed-dictionary-hint",
+        "across-7:ENCRYPT unreviewed-dictionary-hint",
+        "down-3:SCRIPT invalid-hint-length",
+        "down-3:SCRIPT unreviewed-dictionary-hint"
+      ],
+      "answers": [
+        "VERSION",
+        "APP",
+        "INTEGER",
+        "COOKIE",
+        "SHARE",
+        "LINK",
+        "ARCHIVE",
+        "TAB"
+      ]
+    },
+    {
+      "id": "internet---software-vol4",
+      "theme": "Internet & Software",
+      "action": "replace",
+      "originalContentHash": "4ae1b0af9126aed17f1fe3cb12d5b1f149151235d184df4a490763d7c2e18d6c",
+      "currentEdition": "editions/internet---software-vol4-0f22c58e1170496f.json",
+      "beforeIssues": [
+        "across-5:SOFTWARES unreviewed-dictionary-hint",
+        "across-7:NODE invalid-hint-length",
+        "across-8:TOOLSET unreviewed-dictionary-hint",
+        "down-3:EBAY missing-hint",
+        "down-3:EBAY unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "UPDATE",
+        "LOGOUT",
+        "EBAY",
+        "FORMAT",
+        "ZIP",
+        "TOOL",
+        "FOLDER",
+        "OBJECT"
+      ]
+    },
+    {
+      "id": "internet---software-vol5",
+      "theme": "Internet & Software",
+      "action": "replace",
+      "originalContentHash": "75a4875f5419f22eec1532601192abc63e7525873e762231447e5ca7c50308ab",
+      "currentEdition": "editions/internet---software-vol5-c6d08a7d0332c90e.json",
+      "beforeIssues": [
+        "across-3:DOCUMENT invalid-hint-length",
+        "across-3:DOCUMENT unreviewed-dictionary-hint"
+      ],
+      "answers": [
+        "DOWNLOAD",
+        "FIREWALL",
+        "SYNC",
+        "FUNCTION",
+        "GOOGLE",
+        "DEFAULT",
+        "TOOLKIT"
+      ]
+    },
+    {
+      "id": "internet---software-vol6",
+      "theme": "Internet & Software",
+      "action": "replace",
+      "originalContentHash": "207a793e2626e370346bab7ec7d1b0b6953f37e881f6bc0b0728099df341cd25",
+      "currentEdition": "editions/internet---software-vol6-4bb5bbefd5f96b2d.json",
+      "beforeIssues": [
+        "across-7:NODES invalid-hint-length",
+        "down-1:PROGRAMS answer-leakage",
+        "down-1:PROGRAMS missing-source-pair",
+        "down-3:SOFT unreviewed-dictionary-hint",
+        "down-5:CLOUD missing-source-pair",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "OFFLINE",
+        "VARIABLE",
+        "UPGRADE",
+        "BROWSER",
+        "WEBSITE",
+        "CODING"
+      ]
+    },
+    {
+      "id": "internet---software-vol7",
+      "theme": "Internet & Software",
+      "action": "replace",
+      "originalContentHash": "cf3da447f03dfb7790b1100a5e7a2376c1b7dc1d011fd9481ed527a225fff591",
+      "currentEdition": "editions/internet---software-vol7-fad6b229ead4ac2e.json",
+      "beforeIssues": [
+        "across-3:TOOLKIT unreviewed-dictionary-hint",
+        "across-5:PROGRAMMER unreviewed-dictionary-hint",
+        "across-6:DEFAULT unreviewed-dictionary-hint",
+        "down-1:INTERNETTY unreviewed-dictionary-hint",
+        "down-2:FILER unreviewed-dictionary-hint",
+        "down-4:WEBBOOK unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "HACKER",
+        "BUFFER",
+        "CURSOR",
+        "INSTALLER",
+        "CYBER",
+        "SPAM",
+        "REDO"
+      ]
+    },
+    {
+      "id": "internet---software-vol8",
+      "theme": "Internet & Software",
+      "action": "replace",
+      "originalContentHash": "85708883bfe83b8f3d3e4d55376d195045c53a2bf5f1235b285ca46ab18c3712",
+      "currentEdition": "editions/internet---software-vol8-01d1957f66c61f42.json",
+      "beforeIssues": [
+        "across-2:WEBLOG unreviewed-dictionary-hint",
+        "across-6:YOUTUBE unreviewed-dictionary-hint",
+        "down-4:HACKER unreviewed-dictionary-hint"
+      ],
+      "answers": [
+        "PACKAGE",
+        "COPY",
+        "BOOLEAN",
+        "TOOLS",
+        "CLICK",
+        "PASTE",
+        "SORT"
+      ]
+    },
+    {
+      "id": "internet---software-vol9",
+      "theme": "Internet & Software",
+      "action": "replace",
+      "originalContentHash": "3888303fcab409b46c2a026fc5822e7358f03795302a97558ac67e3bdd43f739",
+      "currentEdition": "editions/internet---software-vol9-3d5fc9d22ff74392.json",
+      "beforeIssues": [
+        "across-4:BUNDLEWARE unreviewed-dictionary-hint",
+        "across-6:CYBERREAL unreviewed-dictionary-hint",
+        "down-1:MODIFIER unreviewed-dictionary-hint",
+        "down-2:GREP missing-hint",
+        "down-2:GREP unreviewed-dictionary-hint",
+        "down-3:GMAIL unreviewed-dictionary-hint",
+        "down-5:PAYPAL unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "BACKUP",
+        "DESKTOP",
+        "PRIVACY",
+        "PATCH",
+        "UNDO",
+        "SCROLL",
+        "CUT"
+      ]
+    },
+    {
+      "id": "music---sound-vol1",
+      "theme": "Music & Sound",
+      "action": "replace",
+      "originalContentHash": "bc5b2cd4b7d57c772483c9728f1eae2653c45511706bc33be9256443dfd9f83c",
+      "currentEdition": "editions/music---sound-vol1-b39cddd5a74a8cf6.json",
+      "beforeIssues": [
+        "across-7:SOUNDINESS invalid-hint-length",
+        "across-7:SOUNDINESS unreviewed-dictionary-hint",
+        "across-8:SWISH unreviewed-dictionary-hint",
+        "down-1:PIANOS invalid-hint-length",
+        "down-4:CLONK unreviewed-dictionary-hint",
+        "down-5:SNAP low-quality",
+        "down-5:SNAP unreviewed-dictionary-hint",
+        "down-6:HISS low-quality",
+        "down-6:HISS unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "REVERB",
+        "TIMPANI",
+        "KEY",
+        "FLAT",
+        "ROAR",
+        "TOCK",
+        "SYNTH"
+      ]
+    },
+    {
+      "id": "music---sound-vol10",
+      "theme": "Music & Sound",
+      "action": "replace",
+      "originalContentHash": "71fe1c607041e78f7f597cbf9efc57b48664ec3a6a1ab8d9595b53b87abd0874",
+      "currentEdition": "editions/music---sound-vol10-539c855736a50acb.json",
+      "beforeIssues": [
+        "across-1:SNORT unreviewed-dictionary-hint",
+        "across-5:CROON unreviewed-dictionary-hint",
+        "across-8:GROWL unreviewed-dictionary-hint",
+        "down-1:SISS unreviewed-dictionary-hint",
+        "down-2:OINK missing-hint",
+        "down-2:OINK unreviewed-dictionary-hint",
+        "down-4:CHING unreviewed-dictionary-hint",
+        "down-6:POOF unreviewed-dictionary-hint",
+        "down-7:PLASH unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "BANJO",
+        "REFRAIN",
+        "CLATTER",
+        "UNISON",
+        "POP",
+        "CHANT",
+        "FOLK"
+      ]
+    },
+    {
+      "id": "music---sound-vol11",
+      "theme": "Music & Sound",
+      "action": "replace",
+      "originalContentHash": "4c20fc1b081275e78c006e313f7cca0da0482d926b288fd43281c3c8eaae2ef4",
+      "currentEdition": "editions/music---sound-vol11-c87e9f1ad646b651.json",
+      "beforeIssues": [
+        "across-1:SCHLOOP unreviewed-dictionary-hint",
+        "across-5:SIGUIRIYA low-quality",
+        "across-5:SIGUIRIYA unreviewed-dictionary-hint",
+        "across-6:BLEEP unreviewed-dictionary-hint",
+        "down-1:SPLOSH unreviewed-dictionary-hint",
+        "down-2:CHIME unreviewed-dictionary-hint",
+        "down-3:RIPPLE unreviewed-dictionary-hint",
+        "down-4:TANGO unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "CHATTER",
+        "HARMONIZE",
+        "BONGO",
+        "RUMBLE",
+        "MUSIC",
+        "BOOM",
+        "BRIDGE"
+      ]
+    },
+    {
+      "id": "music---sound-vol12",
+      "theme": "Music & Sound",
+      "action": "replace",
+      "originalContentHash": "e30fbe247a43e08158a8287c7d2262b93529744d87e4848ea6694e46759c862d",
+      "currentEdition": "editions/music---sound-vol12-16784ac21cd0e317.json",
+      "beforeIssues": [
+        "across-3:SKIP unreviewed-dictionary-hint",
+        "across-5:SOUNDABLE unreviewed-dictionary-hint",
+        "across-6:PLISH missing-hint",
+        "across-6:PLISH unreviewed-dictionary-hint",
+        "down-1:SWISHY unreviewed-dictionary-hint",
+        "down-2:HOWL unreviewed-dictionary-hint",
+        "down-3:SOUFFLE low-quality",
+        "down-3:SOUFFLE unreviewed-dictionary-hint",
+        "down-4:PEAL unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "BAND",
+        "RHYTHMIC",
+        "PICCOLO",
+        "TUNER",
+        "BALLAD",
+        "PICK",
+        "TICK"
+      ]
+    },
+    {
+      "id": "music---sound-vol13",
+      "theme": "Music & Sound",
+      "action": "replace",
+      "originalContentHash": "2b5eb962e4762b336433d733c622e8a049ba4ecd293d154ce1c350b54c2368b4",
+      "currentEdition": "editions/music---sound-vol13-3528b1795a568efe.json",
+      "beforeIssues": [
+        "across-1:CLANK unreviewed-dictionary-hint",
+        "across-3:CLAP unreviewed-dictionary-hint",
+        "across-4:JATI unreviewed-dictionary-hint",
+        "across-8:RASPING unreviewed-dictionary-hint",
+        "down-2:AHATA missing-hint",
+        "down-2:AHATA unreviewed-dictionary-hint",
+        "down-4:JINGLE invalid-hint-length",
+        "down-4:JINGLE unreviewed-dictionary-hint",
+        "down-5:TRILL invalid-hint-length",
+        "down-5:TRILL unreviewed-dictionary-hint",
+        "down-6:SLAP unreviewed-dictionary-hint",
+        "down-7:TING unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "MEASURE",
+        "MUSICALLY",
+        "SNARE",
+        "REGGAE",
+        "MURMUR",
+        "SOUL",
+        "CONGA"
+      ]
+    },
+    {
+      "id": "music---sound-vol14",
+      "theme": "Music & Sound",
+      "action": "unchanged",
+      "originalContentHash": "709250878511949574d328cc0cfe728fd042a5709818fc39b2717ef05a5798f5",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "INSTRUMENT",
+        "ENCORE",
+        "HARMONY",
+        "TIMBRE",
+        "DONG",
+        "SPEAKER",
+        "ROCK"
+      ]
+    },
+    {
+      "id": "music---sound-vol15",
+      "theme": "Music & Sound",
+      "action": "replace",
+      "originalContentHash": "9fe7cb478fcdc000c5c49c6e15a558908c3759c56cec289676ec6b46288e1748",
+      "currentEdition": "editions/music---sound-vol15-06ccbe310a14f90c.json",
+      "beforeIssues": [
+        "across-3:CHIRR missing-hint",
+        "across-3:CHIRR unreviewed-dictionary-hint",
+        "across-5:POPPING unreviewed-dictionary-hint",
+        "across-6:PLINK missing-hint",
+        "across-6:PLINK unreviewed-dictionary-hint",
+        "across-7:THUD unreviewed-dictionary-hint",
+        "down-1:CHIRPER unreviewed-dictionary-hint",
+        "down-2:RINGING unreviewed-dictionary-hint",
+        "down-3:CHIRL unreviewed-dictionary-hint",
+        "down-4:SPLASH unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "FORTE",
+        "HOOK",
+        "RATTLE",
+        "GONG",
+        "CAROL",
+        "INTRO",
+        "OUTRO",
+        "DRUM"
+      ]
+    },
+    {
+      "id": "music---sound-vol16",
+      "theme": "Music & Sound",
+      "action": "replace",
+      "originalContentHash": "a0c5faa5c736391f602b7787ef0263dd4b3366dbdc528bc2dff451485cf8db1e",
+      "currentEdition": "editions/music---sound-vol16-461220dfb07e12c8.json",
+      "beforeIssues": [
+        "across-2:SQUINK unreviewed-dictionary-hint",
+        "across-6:SOUNDTRACK unreviewed-dictionary-hint",
+        "across-8:PLOPPY unreviewed-dictionary-hint",
+        "down-1:FILMI missing-hint",
+        "down-1:FILMI unreviewed-dictionary-hint",
+        "down-3:CLICKY unreviewed-dictionary-hint",
+        "down-4:PALA unreviewed-dictionary-hint",
+        "down-7:DOOK unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "NATURAL",
+        "LEGATO",
+        "STAFF",
+        "PUNK",
+        "METAL",
+        "BAR",
+        "POLKA"
+      ]
+    },
+    {
+      "id": "music---sound-vol17",
+      "theme": "Music & Sound",
+      "action": "replace",
+      "originalContentHash": "3cb80d6c0a0ffdceff2e03378fb17ba25c3ca0098f358cb31d8fdbeb89c834c4",
+      "currentEdition": "editions/music---sound-vol17-cce9a9c9a91b621f.json",
+      "beforeIssues": [
+        "across-1:AURAL unreviewed-dictionary-hint",
+        "across-6:CRONK unreviewed-dictionary-hint",
+        "across-7:CLUNKY unreviewed-dictionary-hint",
+        "down-2:LAYA unreviewed-dictionary-hint",
+        "down-3:CRACKLE unreviewed-dictionary-hint",
+        "down-4:CHOO missing-hint",
+        "down-4:CHOO unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "BEATS",
+        "SHARP",
+        "ACCENT",
+        "HISS",
+        "DRONE",
+        "ANTHEM",
+        "BARK"
+      ]
+    },
+    {
+      "id": "music---sound-vol18",
+      "theme": "Music & Sound",
+      "action": "replace",
+      "originalContentHash": "1fc8ca55077e8446e34c92ee7d90611f00189eff73d47609000028d9e7bf9716",
+      "currentEdition": "editions/music---sound-vol18-f6fd567d674a35e8.json",
+      "beforeIssues": [
+        "across-3:SUCKING unreviewed-dictionary-hint",
+        "across-6:WHIZZING unreviewed-dictionary-hint",
+        "down-1:PURRING unreviewed-dictionary-hint",
+        "down-2:BANGING unreviewed-dictionary-hint",
+        "down-4:CLINK unreviewed-dictionary-hint",
+        "down-5:CHUFF unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "BUGLE",
+        "CELLO",
+        "METRONOME",
+        "UKULELE",
+        "DISCO",
+        "INDIE",
+        "OBOE"
+      ]
+    },
+    {
+      "id": "music---sound-vol19",
+      "theme": "Music & Sound",
+      "action": "unchanged",
+      "originalContentHash": "efee8645a1a46c708de1283c6514cfeb8f67281e232eb8bbcf126eb7d4499d69",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "CONCERT",
+        "COMPOSER",
+        "BABBLE",
+        "RECITAL",
+        "ECHO",
+        "RAP",
+        "SOUND"
+      ]
+    },
+    {
+      "id": "music---sound-vol2",
+      "theme": "Music & Sound",
+      "action": "replace",
+      "originalContentHash": "335d2b446b72b6954483657d5102290be539678b03812b5682e6c022551c425c",
+      "currentEdition": "editions/music---sound-vol2-abd1c800a07ee7c1.json",
+      "beforeIssues": [
+        "across-2:WHEEZE unreviewed-dictionary-hint",
+        "across-4:PURR unreviewed-dictionary-hint",
+        "across-6:KNOCKING unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "MALLET",
+        "SAXOPHONE",
+        "SONATA",
+        "CONCERTO",
+        "REED",
+        "HORN"
+      ]
+    },
+    {
+      "id": "music---sound-vol20",
+      "theme": "Music & Sound",
+      "action": "unchanged",
+      "originalContentHash": "856e7e4b314fad05d80493e8837bb693c4a61e750a6f5422395ae1c955f00b2c",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "SCREECH",
+        "QUIET",
+        "ORCHESTRA",
+        "VOLUME",
+        "ACOUSTIC",
+        "VERSE",
+        "BELL"
+      ]
+    },
+    {
+      "id": "music---sound-vol21",
+      "theme": "Music & Sound",
+      "action": "unchanged",
+      "originalContentHash": "9db8e12d9987bcec93ae2c8bfaaebf4e709e7c93bbc5f8c47f972510771f1dbd",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "CHORUS",
+        "QUARTET",
+        "ARIA",
+        "BLUES",
+        "SYMPHONY",
+        "OCTAVE",
+        "ALBUM",
+        "SOLO",
+        "VINYL"
+      ]
+    },
+    {
+      "id": "music---sound-vol22",
+      "theme": "Music & Sound",
+      "action": "reclue",
+      "originalContentHash": "e44fccdcae1d079dcba71dd1013ec1e6289203bcd751f1acf33897ca38be4998",
+      "currentEdition": "editions/music---sound-vol22-7a6f2d623ee21b73.json",
+      "beforeIssues": [],
+      "answers": [
+        "BEAT",
+        "HEADPHONE",
+        "GUITAR",
+        "PIANIST",
+        "HARP",
+        "CODA",
+        "HYMN",
+        "TRIO"
+      ]
+    },
+    {
+      "id": "music---sound-vol23",
+      "theme": "Music & Sound",
+      "action": "reclue",
+      "originalContentHash": "9c60ebb308e4e506e655e3c131825f2e0493cc9862ed2fbedb3abaa76a8e95ca",
+      "currentEdition": "editions/music---sound-vol23-420ed3762cecdda3.json",
+      "beforeIssues": [],
+      "answers": [
+        "WHOOSH",
+        "QING",
+        "CLASSICAL",
+        "FRET",
+        "SONGS",
+        "SCALE",
+        "RIFF"
+      ]
+    },
+    {
+      "id": "music---sound-vol24",
+      "theme": "Music & Sound",
+      "action": "unchanged",
+      "originalContentHash": "ef24058c5301c705bdef9f13fae4b6bb92418696f4b2e93fb80eebc7a73bf3a6",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "MELODY",
+        "SINGER",
+        "SILENCE",
+        "DUET",
+        "DANCE",
+        "TEMPO",
+        "SONG",
+        "SPLAT",
+        "LOUD"
+      ]
+    },
+    {
+      "id": "music---sound-vol3",
+      "theme": "Music & Sound",
+      "action": "replace",
+      "originalContentHash": "59fa8c514e1a131030fcbfb26fd7f10ea102b50948317df7b13b354689176252",
+      "currentEdition": "editions/music---sound-vol3-bdecb40b49e0825c.json",
+      "beforeIssues": [
+        "across-2:VOICE unreviewed-dictionary-hint",
+        "down-1:SONOROUS unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "STACCATO",
+        "WALTZ",
+        "SQUEAK",
+        "RAPPER",
+        "JAZZ",
+        "TONE",
+        "TREBLE"
+      ]
+    },
+    {
+      "id": "music---sound-vol4",
+      "theme": "Music & Sound",
+      "action": "replace",
+      "originalContentHash": "38f626b23caf8ff2f8104a4a2faacf8f8ac58c54bbc62a2e225789cbf4fa90f0",
+      "currentEdition": "editions/music---sound-vol4-f9c8eb34a64c00f6.json",
+      "beforeIssues": [
+        "across-6:RESOUNDING unreviewed-dictionary-hint",
+        "down-2:RAPPING unreviewed-dictionary-hint",
+        "down-4:BLOOP unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "PITCH",
+        "RAPPING",
+        "MUTE",
+        "PIPING",
+        "COUNTRY",
+        "AUDIO",
+        "NOTE"
+      ]
+    },
+    {
+      "id": "music---sound-vol5",
+      "theme": "Music & Sound",
+      "action": "replace",
+      "originalContentHash": "e3e018efceea5c3be5e3f505ec3315a310c4dfe23eb00606625bbbc5863c4e99",
+      "currentEdition": "editions/music---sound-vol5-2fe79250ece8d8ba.json",
+      "beforeIssues": [
+        "across-2:STEREO unreviewed-dictionary-hint",
+        "across-7:GROOVE unreviewed-dictionary-hint",
+        "down-4:RUSTLE low-quality",
+        "down-4:RUSTLE unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "RINGING",
+        "IPOD",
+        "LULLABY",
+        "REST",
+        "GOSPEL",
+        "LYRICS",
+        "TING"
+      ]
+    },
+    {
+      "id": "music---sound-vol6",
+      "theme": "Music & Sound",
+      "action": "replace",
+      "originalContentHash": "d8970d3a9cdb38fcdda9e29f8ff5ac389a3e5a6b8af80a1856ca315348a743db",
+      "currentEdition": "editions/music---sound-vol6-834c38d4496791b6.json",
+      "beforeIssues": [
+        "across-1:PIPING unreviewed-dictionary-hint",
+        "across-4:SOUNDER unreviewed-dictionary-hint",
+        "down-2:GAMELAN low-quality",
+        "down-3:CLOP low-quality",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "VOICE",
+        "RHYTHM",
+        "POPPING",
+        "SNORT",
+        "STEREO",
+        "PURR"
+      ]
+    },
+    {
+      "id": "music---sound-vol7",
+      "theme": "Music & Sound",
+      "action": "replace",
+      "originalContentHash": "6c0e62d81cf49a10f6b463cfbb1c2e76d6933386bf7dd028aec204d720f5c4ad",
+      "currentEdition": "editions/music---sound-vol7-d893a9c541ac66c4.json",
+      "beforeIssues": [
+        "across-2:GURGLE low-quality",
+        "across-2:GURGLE unreviewed-dictionary-hint",
+        "across-3:WHISTLE unreviewed-dictionary-hint",
+        "down-1:GUGGLE low-quality",
+        "down-1:GUGGLE unreviewed-dictionary-hint",
+        "down-5:RASP unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "BANGING",
+        "RUSTLE",
+        "SPLASH",
+        "CRESCENDO",
+        "AURAL",
+        "SWISH",
+        "SONIC"
+      ]
+    },
+    {
+      "id": "music---sound-vol8",
+      "theme": "Music & Sound",
+      "action": "replace",
+      "originalContentHash": "70336e6fc7d5d5b97ec5ce1ed1e2b2361504f5c05bceba15bb1e4c9f23120e77",
+      "currentEdition": "editions/music---sound-vol8-9421c27d2a5b1092.json",
+      "beforeIssues": [
+        "across-4:SOUNDNESS unreviewed-dictionary-hint",
+        "across-6:SOUNDERS unreviewed-dictionary-hint",
+        "down-3:HUM unreviewed-dictionary-hint",
+        "down-5:SWISHING low-quality",
+        "down-5:SWISHING unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "WHISTLE",
+        "SKIP",
+        "RIPPLE",
+        "JINGLE",
+        "CLAP",
+        "CRACKLE",
+        "SLAP",
+        "CLINK"
+      ]
+    },
+    {
+      "id": "music---sound-vol9",
+      "theme": "Music & Sound",
+      "action": "replace",
+      "originalContentHash": "9975c2dc0cbdb25b438ec264202c3e7981cba544af4cf084e8f4dcdd5083f9de",
+      "currentEdition": "editions/music---sound-vol9-7bd2a438ecdb20df.json",
+      "beforeIssues": [
+        "across-2:WHUMP unreviewed-dictionary-hint",
+        "across-5:CRAUNCH unreviewed-dictionary-hint",
+        "across-7:JANGLE unreviewed-dictionary-hint",
+        "down-1:CLUCK unreviewed-dictionary-hint",
+        "down-3:PLUGG missing-hint",
+        "down-3:PLUGG unreviewed-dictionary-hint",
+        "down-4:SVARA missing-hint",
+        "down-4:SVARA unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "BASS",
+        "TRILL",
+        "PURRING",
+        "BUZZER",
+        "CHORDS",
+        "THUD",
+        "TUNE"
+      ]
+    },
+    {
+      "id": "nature---wilderness-vol1",
+      "theme": "Nature & Wilderness",
+      "action": "replace",
+      "originalContentHash": "e1f2ae9ab2ce00fd9b29517a5700ac108806c17a72f7215a2341e9577d5e674e",
+      "currentEdition": "editions/nature---wilderness-vol1-eeeec4a6aac2495c.json",
+      "beforeIssues": [
+        "across-4:CARBARN unreviewed-dictionary-hint",
+        "across-5:BOLE invalid-hint-length",
+        "across-5:BOLE unreviewed-dictionary-hint",
+        "down-1:FRENZY unreviewed-dictionary-hint",
+        "down-2:SCAW unreviewed-dictionary-hint",
+        "down-4:CANOPIC unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "SUNRISE",
+        "DESERT",
+        "PEAK",
+        "ASPEN",
+        "MIST",
+        "DEW",
+        "NEEDLES"
+      ]
+    },
+    {
+      "id": "nature---wilderness-vol10",
+      "theme": "Nature & Wilderness",
+      "action": "reclue",
+      "originalContentHash": "6da3d7a7c94cde00eb0576f9da9421af274f09b0cdf19b1f63a28ebb1f694dd1",
+      "currentEdition": "editions/nature---wilderness-vol10-e434fea4a1b41a69.json",
+      "beforeIssues": [],
+      "answers": [
+        "CREEK",
+        "ATMOSPHERE",
+        "HABITAT",
+        "SIERRA",
+        "BROOK",
+        "FIR",
+        "THICKET",
+        "PEBBLE"
+      ]
+    },
+    {
+      "id": "nature---wilderness-vol11",
+      "theme": "Nature & Wilderness",
+      "action": "replace",
+      "originalContentHash": "e7cf86c87558b57f6699349104a0a180c4670976b88218107e496e3a3f6ef8b1",
+      "currentEdition": "editions/nature---wilderness-vol11-4060538199af2e82.json",
+      "beforeIssues": [],
+      "answers": [
+        "STREAM",
+        "BOREAL",
+        "SLOPE",
+        "ALPINE",
+        "TRAIL",
+        "BOG",
+        "FERNS",
+        "SUNSET"
+      ]
+    },
+    {
+      "id": "nature---wilderness-vol12",
+      "theme": "Nature & Wilderness",
+      "action": "unchanged",
+      "originalContentHash": "4f0974da0359da76cc51c26859501184fe5915220cd8fecf9e516a13ef71bb72",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "RIVER",
+        "OUTDOORS",
+        "WETLAND",
+        "SWAMP",
+        "RIDGE",
+        "BASIN",
+        "TUNDRA"
+      ]
+    },
+    {
+      "id": "nature---wilderness-vol2",
+      "theme": "Nature & Wilderness",
+      "action": "replace",
+      "originalContentHash": "c242e24bd56c70befaa5c9f5bfa0dbd4cb3d5845d1c2c6ee86f244ad2e078c4e",
+      "currentEdition": "editions/nature---wilderness-vol2-7ae5ae2c488b7a85.json",
+      "beforeIssues": [
+        "across-3:MASSIF unreviewed-dictionary-hint",
+        "across-5:RIVERIAN unreviewed-dictionary-hint",
+        "across-6:BOXWOOD low-quality",
+        "across-6:BOXWOOD unreviewed-dictionary-hint",
+        "down-1:PLATINE unreviewed-dictionary-hint",
+        "down-2:RAVING unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "WILLOW",
+        "WATERFALL",
+        "SPRING",
+        "REDWOOD",
+        "BLUFF",
+        "ICECAP"
+      ]
+    },
+    {
+      "id": "nature---wilderness-vol3",
+      "theme": "Nature & Wilderness",
+      "action": "replace",
+      "originalContentHash": "0dec8f6e0f79968099f3e18c7a65d039a58da0299f3d736fe7a0571c1d135ea2",
+      "currentEdition": "editions/nature---wilderness-vol3-0ebbd3143008df72.json",
+      "beforeIssues": [
+        "across-2:SCREE unreviewed-dictionary-hint",
+        "across-3:STREET unreviewed-dictionary-hint",
+        "across-7:LOG unreviewed-dictionary-hint",
+        "down-1:TREEN unreviewed-dictionary-hint",
+        "down-4:TRAIN unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "ECOSYSTEM",
+        "FUNGI",
+        "SPRUCE",
+        "JUNGLE",
+        "DUNES",
+        "MARSH",
+        "CLIFF"
+      ]
+    },
+    {
+      "id": "nature---wilderness-vol4",
+      "theme": "Nature & Wilderness",
+      "action": "replace",
+      "originalContentHash": "91798453b1d3c8fd0c2e20439b26ef9ed6f2c1bd7c0dc3087e35cc05b90090b4",
+      "currentEdition": "editions/nature---wilderness-vol4-581fb5b3650d56fa.json",
+      "beforeIssues": [
+        "across-1:WARTHOG low-quality",
+        "across-1:WARTHOG unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "SEQUOIA",
+        "LICHEN",
+        "STEPPE",
+        "FROST",
+        "GRAVEL",
+        "BOULDER"
+      ]
+    },
+    {
+      "id": "nature---wilderness-vol5",
+      "theme": "Nature & Wilderness",
+      "action": "replace",
+      "originalContentHash": "ce19269b1d5cb937ea04481d4a1a64ab7bfc31e9b2cca39ac7e7da15e3627304",
+      "currentEdition": "editions/nature---wilderness-vol5-25ed8b9b91828f94.json",
+      "beforeIssues": [
+        "across-5:ARBOREAL unreviewed-dictionary-hint",
+        "down-3:CRUDE unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "TIMBER",
+        "OUTCROP",
+        "SAVANNA",
+        "BRUSH",
+        "KNOLL",
+        "CASCADE"
+      ]
+    },
+    {
+      "id": "nature---wilderness-vol6",
+      "theme": "Nature & Wilderness",
+      "action": "reclue",
+      "originalContentHash": "088e2ca92c8d0d99e60a1006f32cfdfcb2159e3bdaef6c6bee40204000563627",
+      "currentEdition": "editions/nature---wilderness-vol6-9a5d1fe9708fc766.json",
+      "beforeIssues": [
+        "across-4:VINE low-quality",
+        "across-6:PISTE unreviewed-dictionary-hint"
+      ],
+      "answers": [
+        "WOODLAND",
+        "VINE",
+        "PISTE",
+        "FOREST",
+        "CEDAR",
+        "CAVE",
+        "NATURE"
+      ]
+    },
+    {
+      "id": "nature---wilderness-vol7",
+      "theme": "Nature & Wilderness",
+      "action": "unchanged",
+      "originalContentHash": "5d087d961780711fb89736a4f963bbb38e743e548018c857f648f7d8148aa4cc",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "RAPIDS",
+        "TAIGA",
+        "RAINFOREST",
+        "MOSSES",
+        "PRAIRIE",
+        "DAWN",
+        "DUSK",
+        "RAVINE"
+      ]
+    },
+    {
+      "id": "nature---wilderness-vol8",
+      "theme": "Nature & Wilderness",
+      "action": "unchanged",
+      "originalContentHash": "a7cd2c27e47cf04a4e5361e8319ff95014d64e79621110fdd6d99506dd9fa8c3",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "CRAG",
+        "SEDIMENT",
+        "MOOR",
+        "DUNE",
+        "SAND",
+        "PLATEAU",
+        "FEN",
+        "GORGE",
+        "EROSION"
+      ]
+    },
+    {
+      "id": "nature---wilderness-vol9",
+      "theme": "Nature & Wilderness",
+      "action": "unchanged",
+      "originalContentHash": "6179f972151509d31ed204da5fcb1b83174c196a39ed7b389e37b5ea6c1d4e75",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "ACORN",
+        "COPSE",
+        "PINECONE",
+        "HILL",
+        "OASIS",
+        "HEATHER",
+        "POND",
+        "FOG",
+        "POOL"
+      ]
+    },
+    {
+      "id": "ocean---marine-life-vol1",
+      "theme": "Ocean & Marine Life",
+      "action": "replace",
+      "originalContentHash": "f764a92e92287b4ac2f8b87b8c426f1e1ab24677311c877531115335c4a0e5f1",
+      "currentEdition": "editions/ocean---marine-life-vol1-1e4a8568beec590d.json",
+      "beforeIssues": [
+        "across-2:ASEA unreviewed-dictionary-hint",
+        "across-3:BLUEFISH unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "MARINE",
+        "HERRING",
+        "TERN",
+        "BALEEN",
+        "OCEAN",
+        "ROE",
+        "TUNA"
+      ]
+    },
+    {
+      "id": "ocean---marine-life-vol10",
+      "theme": "Ocean & Marine Life",
+      "action": "replace",
+      "originalContentHash": "db5a1780d5ecfd048e7c485382944c3fa3915960526e1ce056294b9ffe3d786c",
+      "currentEdition": "editions/ocean---marine-life-vol10-1da59fe30f480ff7.json",
+      "beforeIssues": [
+        "across-5:SEAGOING unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "DUGONG",
+        "FLUKE",
+        "NARWHAL",
+        "GULL",
+        "BELUGA",
+        "PENGUIN",
+        "FOAM",
+        "FRY"
+      ]
+    },
+    {
+      "id": "ocean---marine-life-vol11",
+      "theme": "Ocean & Marine Life",
+      "action": "replace",
+      "originalContentHash": "7e75685db7ee5eb16b3b225bf6f3d57673c0b9fe673f77b922101966fa285080",
+      "currentEdition": "editions/ocean---marine-life-vol11-a10a53cd9218b163.json",
+      "beforeIssues": [
+        "across-4:SEAFOLK unreviewed-dictionary-hint",
+        "across-5:GNOMEFISH low-quality",
+        "across-5:GNOMEFISH unreviewed-dictionary-hint",
+        "across-6:MINNOW unreviewed-dictionary-hint",
+        "down-3:MOLID low-quality",
+        "down-3:MOLID missing-hint",
+        "down-3:MOLID unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "SEASIDE",
+        "SEASTAR",
+        "ABALONE",
+        "REEFS",
+        "SEAL",
+        "EEL"
+      ]
+    },
+    {
+      "id": "ocean---marine-life-vol12",
+      "theme": "Ocean & Marine Life",
+      "action": "replace",
+      "originalContentHash": "9248916ecc4ac3b0fb78dede89ce300999912bea532247b2d109150dbcef637c",
+      "currentEdition": "editions/ocean---marine-life-vol12-6668a0528fec77a7.json",
+      "beforeIssues": [
+        "across-1:COBIA low-quality",
+        "across-1:COBIA missing-hint",
+        "across-1:COBIA unreviewed-dictionary-hint",
+        "across-5:WHALEFISH unreviewed-dictionary-hint",
+        "across-6:CORALS invalid-hint-length",
+        "down-3:TUNA low-quality",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "BREACH",
+        "ALBATROSS",
+        "HEADLAND",
+        "MAST",
+        "LIMPET",
+        "OCEANIC"
+      ]
+    },
+    {
+      "id": "ocean---marine-life-vol13",
+      "theme": "Ocean & Marine Life",
+      "action": "replace",
+      "originalContentHash": "0730c8ecb5c8a99efd76357a8b1f633ccfa985fa024476f466524098bec03391",
+      "currentEdition": "editions/ocean---marine-life-vol13-e80045ff57d5a57a.json",
+      "beforeIssues": [
+        "across-3:FISHERIES low-quality",
+        "across-5:FISHHOUSE unreviewed-dictionary-hint",
+        "down-1:PIGFOOT low-quality",
+        "down-1:PIGFOOT unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "ABYSS",
+        "PORT",
+        "FLOUNDER",
+        "OCEANS",
+        "SLUG",
+        "PIER"
+      ]
+    },
+    {
+      "id": "ocean---marine-life-vol14",
+      "theme": "Ocean & Marine Life",
+      "action": "replace",
+      "originalContentHash": "76643b9546c2bc5c02876b1b199f7f35ed2b1a641160af9e8406dc1c7e19557d",
+      "currentEdition": "editions/ocean---marine-life-vol14-75db186b1f83234c.json",
+      "beforeIssues": [
+        "across-2:GUNNEL low-quality",
+        "across-2:GUNNEL unreviewed-dictionary-hint",
+        "across-4:TERAGLIN low-quality",
+        "across-4:TERAGLIN unreviewed-dictionary-hint",
+        "across-6:CAVEFISH low-quality",
+        "across-6:CAVEFISH unreviewed-dictionary-hint",
+        "down-1:GOGGLER unreviewed-dictionary-hint",
+        "down-3:ZEID low-quality",
+        "down-3:ZEID missing-hint",
+        "down-3:ZEID unreviewed-dictionary-hint",
+        "answer-accessibility",
+        "long-word-crossings"
+      ],
+      "answers": [
+        "ANCHOVY",
+        "BLOWHOLE",
+        "MARLIN",
+        "ANEMONE",
+        "BLUBBER",
+        "SCHOOL"
+      ]
+    },
+    {
+      "id": "ocean---marine-life-vol15",
+      "theme": "Ocean & Marine Life",
+      "action": "unchanged",
+      "originalContentHash": "108007760d2f675f93230914bed8ca7024ae4ad291ada3790ff6a9b148d29e40",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "ORCA",
+        "COASTAL",
+        "SAILOR",
+        "SCALES",
+        "CRAB",
+        "GILL",
+        "STRAIT",
+        "SHOAL"
+      ]
+    },
+    {
+      "id": "ocean---marine-life-vol16",
+      "theme": "Ocean & Marine Life",
+      "action": "replace",
+      "originalContentHash": "d42862ec6c70ad71493b541a29e9c92e92f0a64660da3cf8e0b739e44f0b2ef4",
+      "currentEdition": "editions/ocean---marine-life-vol16-2c9fa843d82547ca.json",
+      "beforeIssues": [
+        "across-1:FISHTAIL unreviewed-dictionary-hint",
+        "across-5:OCEANWARD unreviewed-dictionary-hint",
+        "across-6:HARPOON unreviewed-dictionary-hint",
+        "down-3:NABBY missing-hint",
+        "down-3:NABBY unreviewed-dictionary-hint",
+        "down-4:TAILFIN unreviewed-dictionary-hint",
+        "answer-accessibility",
+        "long-word-crossings"
+      ],
+      "answers": [
+        "MARITIME",
+        "SEAFLOOR",
+        "PUFFIN",
+        "WAVES",
+        "MORAY",
+        "POD"
+      ]
+    },
+    {
+      "id": "ocean---marine-life-vol17",
+      "theme": "Ocean & Marine Life",
+      "action": "unchanged",
+      "originalContentHash": "d88c49ece347c90532b5d25b448017fd347f0ead541522427a425a5e0261ceff",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "COMPASS",
+        "SHIP",
+        "BARNACLE",
+        "LOWTIDE",
+        "MUSSEL",
+        "FIN",
+        "LAGOON",
+        "BAY"
+      ]
+    },
+    {
+      "id": "ocean---marine-life-vol18",
+      "theme": "Ocean & Marine Life",
+      "action": "unchanged",
+      "originalContentHash": "0254fa6585eb48baa850c4781641a94ce00cd620e7096613cb26f9b342d9a50c",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "SCALLOP",
+        "SQUID",
+        "SEAHORSE",
+        "WALRUS",
+        "INLET",
+        "DEEP"
+      ]
+    },
+    {
+      "id": "ocean---marine-life-vol19",
+      "theme": "Ocean & Marine Life",
+      "action": "unchanged",
+      "originalContentHash": "d1e7ac399c26e9a902cfda0e02fb729ed6710269c639e141524a6e9d8fc988eb",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "COD",
+        "MANATEE",
+        "SARDINE",
+        "TIDAL",
+        "COAST",
+        "SEABED"
+      ]
+    },
+    {
+      "id": "ocean---marine-life-vol2",
+      "theme": "Ocean & Marine Life",
+      "action": "replace",
+      "originalContentHash": "0962f28f57639055924e6777ca964a85d4d9479b314e50289dd77adbbf1a0a24",
+      "currentEdition": "editions/ocean---marine-life-vol2-d431c6c4aefde9e2.json",
+      "beforeIssues": [
+        "down-1:NIUA missing-hint",
+        "down-1:NIUA unreviewed-dictionary-hint",
+        "down-2:CRATER invalid-hint-length",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "SCALED",
+        "UNDERTOW",
+        "ANCHOR",
+        "PELICAN",
+        "DELTA",
+        "URCHIN"
+      ]
+    },
+    {
+      "id": "ocean---marine-life-vol20",
+      "theme": "Ocean & Marine Life",
+      "action": "unchanged",
+      "originalContentHash": "3d10cbbea2b4985d47518ecb7cbbb054e1ad6d86632f956a78789b73b24a898c",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "FLIPPER",
+        "LOBSTER",
+        "SEAWEED",
+        "SAILING",
+        "ESTUARY",
+        "SWELL"
+      ]
+    },
+    {
+      "id": "ocean---marine-life-vol21",
+      "theme": "Ocean & Marine Life",
+      "action": "unchanged",
+      "originalContentHash": "7f4854af41c93d5c0eee78f55f1636124e7797c076e1e750039ed24a33830a89",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "BEACH",
+        "ANGLER",
+        "OCTOPUS",
+        "LUNDY",
+        "CURRENT",
+        "HADDOCK",
+        "GUPPY",
+        "FISHES"
+      ]
+    },
+    {
+      "id": "ocean---marine-life-vol22",
+      "theme": "Ocean & Marine Life",
+      "action": "unchanged",
+      "originalContentHash": "84e6060839c8c2b35e341bd0b13df0596c63b3684fbc14b398cf78eef59310a2",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "GROUND",
+        "SNORKEL",
+        "SAILBOAT",
+        "DOCK",
+        "SHRIMP",
+        "OAR"
+      ]
+    },
+    {
+      "id": "ocean---marine-life-vol3",
+      "theme": "Ocean & Marine Life",
+      "action": "replace",
+      "originalContentHash": "f799e6a0b383b7a932c5b6fa90779fafdf793327afd9b484359301e141a6d9fb",
+      "currentEdition": "editions/ocean---marine-life-vol3-3f265174091ba159.json",
+      "beforeIssues": [
+        "across-5:BATFISH low-quality",
+        "across-5:BATFISH unreviewed-dictionary-hint",
+        "down-1:LOACH low-quality",
+        "down-1:LOACH unreviewed-dictionary-hint",
+        "down-2:COMBATANT unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "HARPOON",
+        "COASTLINE",
+        "WRECK",
+        "CRAWFISH",
+        "BUOY",
+        "TIDE"
+      ]
+    },
+    {
+      "id": "ocean---marine-life-vol4",
+      "theme": "Ocean & Marine Life",
+      "action": "replace",
+      "originalContentHash": "dc202ac3742d3609910794ffa3a6db9be6798f689312afe8c46b7595f142cc5f",
+      "currentEdition": "editions/ocean---marine-life-vol4-63431fdf01bede88.json",
+      "beforeIssues": [
+        "across-5:SNOOK low-quality",
+        "across-5:SNOOK unreviewed-dictionary-hint",
+        "across-6:MARINE unreviewed-dictionary-hint",
+        "down-2:OGIN missing-hint",
+        "down-2:OGIN unreviewed-dictionary-hint",
+        "down-4:CUNNER unreviewed-dictionary-hint",
+        "down-5:SHARK low-quality",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "SPRAY",
+        "ROCKPOOL",
+        "BRINE",
+        "SURF",
+        "COVE",
+        "BERTH"
+      ]
+    },
+    {
+      "id": "ocean---marine-life-vol5",
+      "theme": "Ocean & Marine Life",
+      "action": "replace",
+      "originalContentHash": "01279d0e67f40ecd7ff3006f44878d65e77f9a8d272e4cacc9170751ad0fc8bd",
+      "currentEdition": "editions/ocean---marine-life-vol5-41fcb9070e3b487f.json",
+      "beforeIssues": [
+        "across-6:SEALIGHT unreviewed-dictionary-hint",
+        "down-1:OLIVE low-quality",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "KEEL",
+        "PLANKTON",
+        "STERN",
+        "DECK",
+        "HALIBUT",
+        "KNOT"
+      ]
+    },
+    {
+      "id": "ocean---marine-life-vol6",
+      "theme": "Ocean & Marine Life",
+      "action": "replace",
+      "originalContentHash": "dab50ba1335fb6446ebc1ba8183dcf1de2631e00a806723b59304e6f9e13c6a8",
+      "currentEdition": "editions/ocean---marine-life-vol6-ca74d71d8ba1a95b.json",
+      "beforeIssues": [
+        "across-3:SANDFISH low-quality",
+        "across-3:SANDFISH unreviewed-dictionary-hint",
+        "across-4:SEASHORES unreviewed-dictionary-hint",
+        "down-1:MOONFISH unreviewed-dictionary-hint",
+        "down-2:HENFISH unreviewed-dictionary-hint",
+        "answer-accessibility",
+        "long-word-crossings"
+      ],
+      "answers": [
+        "CREW",
+        "HAWAII",
+        "CORALS",
+        "SNAIL",
+        "CLAM",
+        "SHARK"
+      ]
+    },
+    {
+      "id": "ocean---marine-life-vol7",
+      "theme": "Ocean & Marine Life",
+      "action": "replace",
+      "originalContentHash": "45278e9ea70475638777ea8b63673779c6776bcd977de9c23c8375adcc3ea492",
+      "currentEdition": "editions/ocean---marine-life-vol7-2c4c4f9b959fc5ce.json",
+      "beforeIssues": [
+        "across-5:SCIAENOID low-quality",
+        "across-5:SCIAENOID unreviewed-dictionary-hint",
+        "across-6:SEACRAFT unreviewed-dictionary-hint",
+        "down-4:SPADEFISH low-quality",
+        "down-4:SPADEFISH unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "SCUBA",
+        "SAILFISH",
+        "BOW",
+        "SPAWN",
+        "SANDBAR",
+        "PRAWN"
+      ]
+    },
+    {
+      "id": "ocean---marine-life-vol8",
+      "theme": "Ocean & Marine Life",
+      "action": "replace",
+      "originalContentHash": "8ebbf18b584fac7c039e36c8902507a64691d83ebc4e960721ee1baec11c268c",
+      "currentEdition": "editions/ocean---marine-life-vol8-2237cf49de1114b4.json",
+      "beforeIssues": [
+        "across-5:THALASSOID low-quality",
+        "down-1:HADAL missing-hint",
+        "down-1:HADAL unreviewed-dictionary-hint",
+        "down-3:CRABEATER unreviewed-dictionary-hint",
+        "down-4:CONCH low-quality",
+        "down-4:CONCH unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "PIPEFISH",
+        "AQUARIUM",
+        "PORPOISE",
+        "SEASHORE",
+        "STARFISH",
+        "HUMPBACK"
+      ]
+    },
+    {
+      "id": "ocean---marine-life-vol9",
+      "theme": "Ocean & Marine Life",
+      "action": "replace",
+      "originalContentHash": "88b8abc028f7d4b6df5144ae5668b36ae13706eb263ae829e9a1240ba3840277",
+      "currentEdition": "editions/ocean---marine-life-vol9-4f6e8cf02de15f58.json",
+      "beforeIssues": [
+        "across-3:HAWAII unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "SEAGRASS",
+        "SWORDFISH",
+        "MACKEREL",
+        "BEACON",
+        "STINGRAY",
+        "SHELL"
+      ]
+    },
+    {
+      "id": "plants---gardens-vol1",
+      "theme": "Plants & Gardens",
+      "action": "replace",
+      "originalContentHash": "82ede870b3d612251c7067ac1aff6c7c8afc9a98f3f0d71e12741505c82721d5",
+      "currentEdition": "editions/plants---gardens-vol1-22b3b575b624626a.json",
+      "beforeIssues": [
+        "across-7:GARDENERS unreviewed-dictionary-hint",
+        "across-8:TRELLIS missing-source-pair",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "SAPLING",
+        "ANNUAL",
+        "GARDENS",
+        "PINE",
+        "LAWNS",
+        "PALM",
+        "TEND"
+      ]
+    },
+    {
+      "id": "plants---gardens-vol10",
+      "theme": "Plants & Gardens",
+      "action": "replace",
+      "originalContentHash": "5148cb31333bb040f19c70079f9d00e705ad9b122cf6b0b5205807ca6a29e6d7",
+      "currentEdition": "editions/plants---gardens-vol10-29bdc305adafedfb.json",
+      "beforeIssues": [
+        "across-6:OREGANO low-quality",
+        "across-6:OREGANO unreviewed-dictionary-hint",
+        "across-7:CYNE low-quality",
+        "across-7:CYNE unreviewed-dictionary-hint",
+        "across-8:LILIATE unreviewed-dictionary-hint",
+        "down-1:WATERER unreviewed-dictionary-hint",
+        "down-2:PEAR unreviewed-dictionary-hint",
+        "down-5:BONESET unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "JASMINE",
+        "NURSERY",
+        "BEGONIA",
+        "HEDGE",
+        "SPROUT",
+        "BED",
+        "LILY"
+      ]
+    },
+    {
+      "id": "plants---gardens-vol11",
+      "theme": "Plants & Gardens",
+      "action": "replace",
+      "originalContentHash": "b8faa5fb6face9a1a62effd7607c2794eefa5ed9dd10a9fb1a0e9a17a73dd9c4",
+      "currentEdition": "editions/plants---gardens-vol11-56d585f546b3f26d.json",
+      "beforeIssues": [
+        "across-5:FUKI low-quality",
+        "across-5:FUKI unreviewed-dictionary-hint",
+        "down-1:TOPIARY unreviewed-dictionary-hint",
+        "down-2:TIMBER unreviewed-dictionary-hint",
+        "down-3:TWIG unreviewed-dictionary-hint",
+        "down-4:JASMINE low-quality",
+        "down-4:JASMINE unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "ORCHARD",
+        "SHOVEL",
+        "LAVENDER",
+        "DAHLIA",
+        "BOTANY",
+        "HEDGES",
+        "HERB"
+      ]
+    },
+    {
+      "id": "plants---gardens-vol12",
+      "theme": "Plants & Gardens",
+      "action": "replace",
+      "originalContentHash": "0dcbcbc7bd903073b192b7997a1fca48875a49988203c1f774dfadc43220f165",
+      "currentEdition": "editions/plants---gardens-vol12-921ac848e005168e.json",
+      "beforeIssues": [
+        "across-2:ARBORET unreviewed-dictionary-hint",
+        "across-3:HEMLOCK unreviewed-dictionary-hint",
+        "across-6:LEAFLET unreviewed-dictionary-hint",
+        "down-1:BETONY low-quality",
+        "down-1:BETONY unreviewed-dictionary-hint",
+        "down-4:MAYTEN low-quality",
+        "down-4:MAYTEN unreviewed-dictionary-hint",
+        "down-5:HEATH unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "MARIGOLD",
+        "GERANIUM",
+        "CHIVES",
+        "PLANT",
+        "GARDEN",
+        "CUTTING"
+      ]
+    },
+    {
+      "id": "plants---gardens-vol13",
+      "theme": "Plants & Gardens",
+      "action": "unchanged",
+      "originalContentHash": "2a4796586f7694b420c89a99a4d37226c105fa9901e39098984033c19d33d3e7",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "PETALS",
+        "FERTILIZER",
+        "SPRIG",
+        "PETUNIA",
+        "TULIP",
+        "SEED",
+        "PEONY"
+      ]
+    },
+    {
+      "id": "plants---gardens-vol14",
+      "theme": "Plants & Gardens",
+      "action": "unchanged",
+      "originalContentHash": "836471b3fc385305bcbb5e547580c7b88bd5d404f85d77745fe3acabcdf6c7d8",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "WEEDING",
+        "DAFFODIL",
+        "VINES",
+        "YEW",
+        "AZALEA",
+        "WILLOW",
+        "LAWN",
+        "IVY"
+      ]
+    },
+    {
+      "id": "plants---gardens-vol15",
+      "theme": "Plants & Gardens",
+      "action": "unchanged",
+      "originalContentHash": "ba027eab381696de4f903a6e55059058f3f8696844e15da58f0e38e88bfaa688",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "PERENNIAL",
+        "SEPAL",
+        "GRAFT",
+        "MAPLE",
+        "POPPY",
+        "JUNIPER",
+        "DILL"
+      ]
+    },
+    {
+      "id": "plants---gardens-vol16",
+      "theme": "Plants & Gardens",
+      "action": "reclue",
+      "originalContentHash": "edddf43312ff9a95d4c13460c44f8353cc476140886af9b22d31717289700c78",
+      "currentEdition": "editions/plants---gardens-vol16-3dbb989086912df9.json",
+      "beforeIssues": [],
+      "answers": [
+        "SPADE",
+        "VEGETATION",
+        "MULCH",
+        "PRUNE",
+        "PEAT",
+        "IRIS",
+        "LEGUME"
+      ]
+    },
+    {
+      "id": "plants---gardens-vol17",
+      "theme": "Plants & Gardens",
+      "action": "unchanged",
+      "originalContentHash": "47c70c211f379f42e475a19c86b88dea0b198381e8d35658ea26d5fb1bb24b9e",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "LEAVES",
+        "REPOT",
+        "ROOT",
+        "GRASS",
+        "TROWELS",
+        "ASTER",
+        "ROOTS",
+        "ALOE",
+        "ELM"
+      ]
+    },
+    {
+      "id": "plants---gardens-vol18",
+      "theme": "Plants & Gardens",
+      "action": "reclue",
+      "originalContentHash": "7545dae9f8ea469f2e23cc8856f5d269ba30d8ca49399e852cdfc69789c292ed",
+      "currentEdition": "editions/plants---gardens-vol18-0d95637fb3fc8f48.json",
+      "beforeIssues": [],
+      "answers": [
+        "CHICORY",
+        "SOW",
+        "SPRINKLER",
+        "AGAVE",
+        "PRUNER",
+        "PARSLEY",
+        "BARK",
+        "OAK",
+        "LOAM"
+      ]
+    },
+    {
+      "id": "plants---gardens-vol2",
+      "theme": "Plants & Gardens",
+      "action": "replace",
+      "originalContentHash": "8b4499a9209894206fe95f8809826a78f4975e073857e93cb274502adfa4ba76",
+      "currentEdition": "editions/plants---gardens-vol2-6cb4ab43ad6bdfd9.json",
+      "beforeIssues": [
+        "down-1:CACTUS missing-source-pair",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "BAMBOO",
+        "WATERING",
+        "SEEDLING",
+        "POTTING",
+        "STALK",
+        "TRUNK"
+      ]
+    },
+    {
+      "id": "plants---gardens-vol3",
+      "theme": "Plants & Gardens",
+      "action": "replace",
+      "originalContentHash": "dcc17fe47bb0c9951be04ba347f95ef2e8672a67c7a72999fd7c7d1675ecb371",
+      "currentEdition": "editions/plants---gardens-vol3-13a7b48c8d10898f.json",
+      "beforeIssues": [
+        "answer-accessibility"
+      ],
+      "answers": [
+        "HUMUS",
+        "ROSEMARY",
+        "BOTANICAL",
+        "SUCCULENT",
+        "FRUIT",
+        "SHOOT"
+      ]
+    },
+    {
+      "id": "plants---gardens-vol4",
+      "theme": "Plants & Gardens",
+      "action": "replace",
+      "originalContentHash": "b1f7bb85a71997b8385c5c08dbc8b2256ad0e53f9e120aff64c6f9db363b0509",
+      "currentEdition": "editions/plants---gardens-vol4-473181e224dba022.json",
+      "beforeIssues": [
+        "across-1:BRIAR low-quality",
+        "across-1:BRIAR unreviewed-dictionary-hint",
+        "across-6:THISTLE invalid-hint-length",
+        "across-6:THISTLE unreviewed-dictionary-hint",
+        "across-8:CANE low-quality",
+        "across-8:CANE unreviewed-dictionary-hint",
+        "down-1:BONSAI low-quality",
+        "down-1:BONSAI unreviewed-dictionary-hint"
+      ],
+      "answers": [
+        "CLOVER",
+        "FLOWER",
+        "STEM",
+        "ZINNIA",
+        "PETAL",
+        "WEED",
+        "SOIL"
+      ]
+    },
+    {
+      "id": "plants---gardens-vol5",
+      "theme": "Plants & Gardens",
+      "action": "replace",
+      "originalContentHash": "092cbbb73e51034a8cabea6d59e1f1e5f5bdfd77f64e25418db4c01b641ae969",
+      "currentEdition": "editions/plants---gardens-vol5-d0996ca1de6470af.json",
+      "beforeIssues": [
+        "across-4:DELPHINIUM low-quality",
+        "across-6:HAULM unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "BRANCH",
+        "SHRUB",
+        "CAMELLIA",
+        "ROSE",
+        "BASIL",
+        "TREE",
+        "DAISY"
+      ]
+    },
+    {
+      "id": "plants---gardens-vol6",
+      "theme": "Plants & Gardens",
+      "action": "reclue",
+      "originalContentHash": "d0d3c0dc2f3a4cff7ba29d735bb5343b5b6aa1215db1bd1cc0c009510dabafa9",
+      "currentEdition": "editions/plants---gardens-vol6-09acbb25455001fd.json",
+      "beforeIssues": [
+        "across-2:BUSHES invalid-hint-length",
+        "across-2:BUSHES unreviewed-dictionary-hint"
+      ],
+      "answers": [
+        "BUSHES",
+        "SUNLIGHT",
+        "FLORAL",
+        "NECTAR",
+        "SAGE",
+        "LEAF"
+      ]
+    },
+    {
+      "id": "plants---gardens-vol7",
+      "theme": "Plants & Gardens",
+      "action": "replace",
+      "originalContentHash": "045324a849a72886f7f30bb1efd22f3c54cb8a7db10fb8aba9c3ccf6f1f93be9",
+      "currentEdition": "editions/plants---gardens-vol7-66a6b759e5d2b157.json",
+      "beforeIssues": [
+        "across-2:HOGWEED low-quality",
+        "across-2:HOGWEED unreviewed-dictionary-hint",
+        "across-5:STRINGBUSH low-quality",
+        "across-5:STRINGBUSH unreviewed-dictionary-hint",
+        "down-1:HONEWORT low-quality",
+        "down-1:HONEWORT unreviewed-dictionary-hint",
+        "down-3:BENNET unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "PLANTER",
+        "THYME",
+        "SUNFLOWER",
+        "RAKE",
+        "MINT",
+        "BLOOM",
+        "FERN"
+      ]
+    },
+    {
+      "id": "plants---gardens-vol8",
+      "theme": "Plants & Gardens",
+      "action": "replace",
+      "originalContentHash": "dc5663291def3ea6b2273e0280e4b3cb49d0353caa03fd4eb053e35e6bedfccf",
+      "currentEdition": "editions/plants---gardens-vol8-942387a502574034.json",
+      "beforeIssues": [
+        "across-3:LILIUM low-quality",
+        "across-3:LILIUM unreviewed-dictionary-hint",
+        "across-4:BANEBERRY low-quality",
+        "across-4:BANEBERRY unreviewed-dictionary-hint",
+        "across-5:ALLHEAL low-quality",
+        "across-5:ALLHEAL unreviewed-dictionary-hint",
+        "across-6:WOODS unreviewed-dictionary-hint",
+        "down-1:VINEYARDS unreviewed-dictionary-hint",
+        "down-2:RICE low-quality",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "WOODS",
+        "LEAFLET",
+        "TUBER",
+        "HOSE",
+        "PLOT",
+        "FLORA",
+        "BULB"
+      ]
+    },
+    {
+      "id": "plants---gardens-vol9",
+      "theme": "Plants & Gardens",
+      "action": "replace",
+      "originalContentHash": "57560b00979050191cdc57e0e34b918a92c5a5f58252140db7fe2d8517142870",
+      "currentEdition": "editions/plants---gardens-vol9-34b0856a0ea4aac3.json",
+      "beforeIssues": [
+        "across-6:COLICROOT low-quality",
+        "across-6:COLICROOT unreviewed-dictionary-hint",
+        "down-3:ALUMROOT low-quality",
+        "down-3:ALUMROOT unreviewed-dictionary-hint",
+        "down-5:ROCKERY unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "TWIG",
+        "POLLEN",
+        "OREGANO",
+        "TIMBER",
+        "PEAR",
+        "HEATH"
+      ]
+    },
+    {
+      "id": "science---discovery-vol1",
+      "theme": "Science & Discovery",
+      "action": "unchanged",
+      "originalContentHash": "e170b78394caf4c5023c757850569cfad07708b2df39e1542dfa8faba26e6b44",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "BACTERIA",
+        "RADICAL",
+        "GRAVITY",
+        "SPEED",
+        "STAR",
+        "SEND",
+        "ANALYZE"
+      ]
+    },
+    {
+      "id": "science---discovery-vol2",
+      "theme": "Science & Discovery",
+      "action": "unchanged",
+      "originalContentHash": "6edfebef3bfe7c298fa9204c59355eaf74c5aedc081e4ce66c40acea3703fada",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "CLIMATE",
+        "FRICTION",
+        "LENS",
+        "SAMPLE",
+        "CONTROL",
+        "DATA",
+        "ATOM",
+        "FUNGUS"
+      ]
+    },
+    {
+      "id": "science---discovery-vol3",
+      "theme": "Science & Discovery",
+      "action": "unchanged",
+      "originalContentHash": "8fc2d8ff16564fdcb856762d345dcde76375786b5392a3222fcd4a0572cc9647",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "INERTIA",
+        "HEAT",
+        "SCIENCE",
+        "RESULT",
+        "MATTER",
+        "LITER",
+        "TISSUE",
+        "CELL",
+        "TEST"
+      ]
+    },
+    {
+      "id": "science---discovery-vol4",
+      "theme": "Science & Discovery",
+      "action": "unchanged",
+      "originalContentHash": "181c773a414b52dfba39376b7844118825c7395aa0d7c664506793a393d6f04f",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "MAGNET",
+        "SPECIES",
+        "SENSOR",
+        "EVIDENCE",
+        "MOTION",
+        "SOLVENT",
+        "FORCE",
+        "SLIDE",
+        "RNA"
+      ]
+    },
+    {
+      "id": "science---discovery-vol5",
+      "theme": "Science & Discovery",
+      "action": "unchanged",
+      "originalContentHash": "39219185b41a0c7631d0ce9d9edbf1533af026954c46c07b6c268076316afd7c",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "WAVE",
+        "SCALE",
+        "GRAM",
+        "PHYSICS",
+        "MOLECULE",
+        "BASE",
+        "PRISM",
+        "ENERGY",
+        "GENUS",
+        "SEEK",
+        "SALT"
+      ]
+    },
+    {
+      "id": "science---discovery-vol6",
+      "theme": "Science & Discovery",
+      "action": "unchanged",
+      "originalContentHash": "b8ebf27d68b87474aa7951e8e7f966797d530df6ee14060e862c71b292e3ae3c",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "BIOLOGY",
+        "SOLUTION",
+        "THEORY",
+        "CHARGE",
+        "PLANET",
+        "OBSERVE",
+        "PROBE",
+        "ENZYME",
+        "LAB"
+      ]
+    },
+    {
+      "id": "space---sky-vol1",
+      "theme": "Space & Sky",
+      "action": "replace",
+      "originalContentHash": "9529f14829833ae50c43f7ea3f7d2ac5d09fc45924b159d117ffe0bd7a03dd7c",
+      "currentEdition": "editions/space---sky-vol1-b3a248f5b757df78.json",
+      "beforeIssues": [
+        "across-4:STARS missing-source-pair",
+        "across-6:AXIS invalid-hint-length",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "LIFTOFF",
+        "ASTRONAUT",
+        "CRESCENT",
+        "PANDORA",
+        "PLANET",
+        "MOONS",
+        "SPACE"
+      ]
+    },
+    {
+      "id": "space---sky-vol2",
+      "theme": "Space & Sky",
+      "action": "replace",
+      "originalContentHash": "602952f612ab3074f918222f5f36c5a0c43a0e2caeeb706e07bbb4d20b2b74df",
+      "currentEdition": "editions/space---sky-vol2-f02bf9ca90f423e0.json",
+      "beforeIssues": [
+        "across-6:URANUS unreviewed-dictionary-hint",
+        "across-7:ROHINI unreviewed-dictionary-hint",
+        "down-5:LUNATION unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "LUNAR",
+        "NEPTUNE",
+        "EARTH",
+        "SOLAR",
+        "JUPITER",
+        "CORE",
+        "DUST"
+      ]
+    },
+    {
+      "id": "space---sky-vol3",
+      "theme": "Space & Sky",
+      "action": "replace",
+      "originalContentHash": "3b33fa47c73fabfde87dfa68b2f7cccadb3df0447a66996e01dd483f30fb9afb",
+      "currentEdition": "editions/space---sky-vol3-f7cdd6cddeb863d6.json",
+      "beforeIssues": [
+        "across-1:PANDORA invalid-hint-length",
+        "across-1:PANDORA unreviewed-dictionary-hint",
+        "across-5:STARGAZING unreviewed-dictionary-hint",
+        "across-6:METEOR invalid-hint-length",
+        "down-4:STARRY unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "URANUS",
+        "FULLMOON",
+        "PHASE",
+        "VACUUM",
+        "MERCURY",
+        "RINGS"
+      ]
+    },
+    {
+      "id": "space---sky-vol4",
+      "theme": "Space & Sky",
+      "action": "replace",
+      "originalContentHash": "b25ac9a74549269b236f5d65f043d69c064c547f156c39dd4a85c56b4f95e153",
+      "currentEdition": "editions/space---sky-vol4-c488028bb856b70b.json",
+      "beforeIssues": [
+        "across-8:STARCRAFT unreviewed-dictionary-hint",
+        "down-1:PLANET low-quality"
+      ],
+      "answers": [
+        "CAPSULE",
+        "LIGHTYEAR",
+        "TWILIGHT",
+        "PLUTO",
+        "MIDNIGHT",
+        "ZENITH"
+      ]
+    },
+    {
+      "id": "space---sky-vol5",
+      "theme": "Space & Sky",
+      "action": "replace",
+      "originalContentHash": "86e05a77293073b0da04973f10644a72dbb8319c52dcc0aa2fb5adeb284cca52",
+      "currentEdition": "editions/space---sky-vol5-d911bf01b3818459.json",
+      "beforeIssues": [
+        "across-2:VALETUDO unreviewed-dictionary-hint",
+        "across-6:MOONS missing-hint",
+        "across-6:MOONS unreviewed-dictionary-hint",
+        "down-1:VENUSIAN unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "COSMOS",
+        "SATELLITE",
+        "LAUNCH",
+        "COMET",
+        "HORIZON",
+        "AIRLOCK"
+      ]
+    },
+    {
+      "id": "space---sky-vol6",
+      "theme": "Space & Sky",
+      "action": "replace",
+      "originalContentHash": "c1132ca4c42b93b469cc88b7dd7bc8775a121402b43974a31d2789db35f33ecf",
+      "currentEdition": "editions/space---sky-vol6-f1f1defb22c654bc.json",
+      "beforeIssues": [
+        "down-4:COMORAN unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "GRAVITY",
+        "SPACESUIT",
+        "REENTRY",
+        "ECLIPSE",
+        "CRATER",
+        "AURORA"
+      ]
+    },
+    {
+      "id": "sports---athletics-vol1",
+      "theme": "Sports & Athletics",
+      "action": "replace",
+      "originalContentHash": "84007169104f06a7b8063bb620cb405387e150d3d85df7f020a0df12052d6237",
+      "currentEdition": "editions/sports---athletics-vol1-77422e9881250583.json",
+      "beforeIssues": [
+        "long-word-crossings"
+      ],
+      "answers": [
+        "START",
+        "SKATING",
+        "DASH",
+        "CAPTAIN",
+        "TENNIS",
+        "ARENA",
+        "HEAT"
+      ]
+    },
+    {
+      "id": "sports---athletics-vol10",
+      "theme": "Sports & Athletics",
+      "action": "replace",
+      "originalContentHash": "0d6ea5b4689b5f3fcf5b0158873b97411d33db6bc4c4d27b1732e3453bf05b11",
+      "currentEdition": "editions/sports---athletics-vol10-e8eb2bc35f7a2631.json",
+      "beforeIssues": [
+        "across-2:GUARDER unreviewed-dictionary-hint",
+        "across-4:BLOCS unreviewed-dictionary-hint",
+        "across-5:LEAGUERS unreviewed-dictionary-hint",
+        "down-1:LINEUPS unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "SQUASH",
+        "FENCING",
+        "SOCCER",
+        "SKIING",
+        "RUGBY",
+        "FINISH"
+      ]
+    },
+    {
+      "id": "sports---athletics-vol11",
+      "theme": "Sports & Athletics",
+      "action": "replace",
+      "originalContentHash": "7ffb714c28306361ec9dfc8c48ba7bed37a6838c175c9e6de538ec54563a030d",
+      "currentEdition": "editions/sports---athletics-vol11-f7a523ee98e04aec.json",
+      "beforeIssues": [
+        "across-1:BLUDGER unreviewed-dictionary-hint",
+        "across-5:SPORTER unreviewed-dictionary-hint",
+        "down-2:RINGER unreviewed-dictionary-hint",
+        "down-3:DIGOR unreviewed-dictionary-hint",
+        "down-4:SNOOKER unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "GOLD",
+        "REFEREE",
+        "JAVELIN",
+        "CYCLING",
+        "GOLF",
+        "FIELD",
+        "ROWING"
+      ]
+    },
+    {
+      "id": "sports---athletics-vol12",
+      "theme": "Sports & Athletics",
+      "action": "replace",
+      "originalContentHash": "0dcb656361591057efc24adf4a26df6632c9a7cc72a9d24a3fa3f56365c83a63",
+      "currentEdition": "editions/sports---athletics-vol12-24ff20895ce33af8.json",
+      "beforeIssues": [
+        "across-3:SCOREBOX unreviewed-dictionary-hint",
+        "across-5:MEDALING unreviewed-dictionary-hint",
+        "across-6:SPORTSMAN unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "RELAY",
+        "SOUTHPAW",
+        "BENCH",
+        "LAP",
+        "JUMP",
+        "SURFING"
+      ]
+    },
+    {
+      "id": "sports---athletics-vol13",
+      "theme": "Sports & Athletics",
+      "action": "replace",
+      "originalContentHash": "fc2689c6ab756811201e183b632ca48c041d7a51a688bc53caabe9f059cfd53a",
+      "currentEdition": "editions/sports---athletics-vol13-b906c54be1f2c3af.json",
+      "beforeIssues": [
+        "across-2:COACHER unreviewed-dictionary-hint",
+        "across-5:CROSSBAR unreviewed-dictionary-hint",
+        "down-1:BOGIES unreviewed-dictionary-hint",
+        "down-3:VERT unreviewed-dictionary-hint",
+        "down-4:BANDY unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "CRICKET",
+        "PENTATHLON",
+        "ARCHERY",
+        "DIVING",
+        "STRIKER",
+        "PODIUM"
+      ]
+    },
+    {
+      "id": "sports---athletics-vol14",
+      "theme": "Sports & Athletics",
+      "action": "replace",
+      "originalContentHash": "df1c972c8aa1d82eaae7186975d9911cc381d374a7e55ee58bf37613417d9aae",
+      "currentEdition": "editions/sports---athletics-vol14-08462a768d0cefdb.json",
+      "beforeIssues": [
+        "across-2:KICKOUT unreviewed-dictionary-hint",
+        "across-5:SOUTHPAW unreviewed-dictionary-hint",
+        "across-6:HURLERS unreviewed-dictionary-hint",
+        "down-1:SAILORS unreviewed-dictionary-hint",
+        "down-3:REGATTA unreviewed-dictionary-hint",
+        "down-4:DOUBLE unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "SWIMMING",
+        "ACE",
+        "TIMEOUT",
+        "BRONZE",
+        "STRETCH",
+        "COURT"
+      ]
+    },
+    {
+      "id": "sports---athletics-vol15",
+      "theme": "Sports & Athletics",
+      "action": "replace",
+      "originalContentHash": "ad78efdc902586ab9d319e41bdb2820b9f512575e894b9de446be34410bb76a5",
+      "currentEdition": "editions/sports---athletics-vol15-6a81e2427a089518.json",
+      "beforeIssues": [
+        "across-3:NEWCOMB unreviewed-dictionary-hint",
+        "across-4:RELAYER unreviewed-dictionary-hint",
+        "across-6:SLALOMS unreviewed-dictionary-hint",
+        "down-1:BOWLER unreviewed-dictionary-hint",
+        "down-2:SPORTERS unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "WORKOUT",
+        "SUBSTITUTE",
+        "RACKET",
+        "DUGOUT",
+        "FOCUSED",
+        "SERVE"
+      ]
+    },
+    {
+      "id": "sports---athletics-vol16",
+      "theme": "Sports & Athletics",
+      "action": "unchanged",
+      "originalContentHash": "46415c3b9479edf42f29501c8c0bfd267cdc8811de95bf799b12c510f0fc6bac",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "SOFTBALL",
+        "CARDINALS",
+        "LINEUP",
+        "BOBSLED",
+        "SLUGFEST",
+        "VENUE"
+      ]
+    },
+    {
+      "id": "sports---athletics-vol17",
+      "theme": "Sports & Athletics",
+      "action": "unchanged",
+      "originalContentHash": "eb2ae0828050f33f51909fe7738bce39d5b0ec17227feaf4fb62f96408ca173b",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "BOXING",
+        "TRACK",
+        "ATHLETICS",
+        "BASEBALL",
+        "GOALIE",
+        "TIE",
+        "BALL",
+        "HOCKEY",
+        "DRAW"
+      ]
+    },
+    {
+      "id": "sports---athletics-vol2",
+      "theme": "Sports & Athletics",
+      "action": "replace",
+      "originalContentHash": "73b2ed46714d69aa17a3c2a2f12a85e473855d1e325372caa47fa4da352ab7bb",
+      "currentEdition": "editions/sports---athletics-vol2-52050c51328be7ac.json",
+      "beforeIssues": [
+        "across-6:AGENT invalid-hint-length",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "POINT",
+        "PLAYOFF",
+        "SHOTPUT",
+        "DEFEAT",
+        "SET",
+        "POOL"
+      ]
+    },
+    {
+      "id": "sports---athletics-vol3",
+      "theme": "Sports & Athletics",
+      "action": "replace",
+      "originalContentHash": "472feefdfadb91060f81acff04d57620f58eec0f6ce60875bb57c435cdccd72b",
+      "currentEdition": "editions/sports---athletics-vol3-5b00716cddc475cc.json",
+      "beforeIssues": [
+        "across-2:RUNNER unreviewed-dictionary-hint",
+        "across-4:TRAINER unreviewed-dictionary-hint",
+        "across-5:SAILOR unreviewed-dictionary-hint",
+        "down-1:AREA unreviewed-dictionary-hint",
+        "down-3:NINE unreviewed-dictionary-hint",
+        "down-4:TEASE unreviewed-dictionary-hint"
+      ],
+      "answers": [
+        "SPORTS",
+        "SPORTING",
+        "LEAGUE",
+        "SPORTY",
+        "VARSITY",
+        "BOWL",
+        "INNING"
+      ]
+    },
+    {
+      "id": "sports---athletics-vol4",
+      "theme": "Sports & Athletics",
+      "action": "replace",
+      "originalContentHash": "d4e241fc57a0cdacb3eafdb7c0b700fb66d391fb5c0866500b93efab19621866",
+      "currentEdition": "editions/sports---athletics-vol4-fadb5c96e5217385.json",
+      "beforeIssues": [
+        "across-8:RELAY invalid-hint-length"
+      ],
+      "answers": [
+        "UMPIRE",
+        "VOLLEYBALL",
+        "POLEVAULT",
+        "MEDALIST",
+        "PACE",
+        "WARMUP"
+      ]
+    },
+    {
+      "id": "sports---athletics-vol5",
+      "theme": "Sports & Athletics",
+      "action": "replace",
+      "originalContentHash": "fdfbc86f36273bd2c6092fb6a3b04c7c0e17a25c30af8ffb82f99a6c93292a1e",
+      "currentEdition": "editions/sports---athletics-vol5-2c4ba651e50cc05f.json",
+      "beforeIssues": [
+        "across-4:RACER unreviewed-dictionary-hint",
+        "across-7:HANDBALL unreviewed-dictionary-hint",
+        "down-3:GOALER unreviewed-dictionary-hint",
+        "down-5:RINKS unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "TOURNAMENT",
+        "RACER",
+        "GYMNASIUM",
+        "WRESTLING",
+        "LONGJUMP",
+        "BASE"
+      ]
+    },
+    {
+      "id": "sports---athletics-vol6",
+      "theme": "Sports & Athletics",
+      "action": "replace",
+      "originalContentHash": "9f006def6b48eebec823b414982614faff06066b13deeca342a743474820d40a",
+      "currentEdition": "editions/sports---athletics-vol6-f35101bd3ee8249c.json",
+      "beforeIssues": [
+        "across-2:PLAYMAKER unreviewed-dictionary-hint",
+        "across-6:CAMPAIGNS missing-source-pair",
+        "answer-accessibility",
+        "long-word-crossings"
+      ],
+      "answers": [
+        "DECATHLON",
+        "PITCHER",
+        "WHISTLE",
+        "RUNNING",
+        "NET",
+        "SILVER"
+      ]
+    },
+    {
+      "id": "sports---athletics-vol7",
+      "theme": "Sports & Athletics",
+      "action": "replace",
+      "originalContentHash": "f53305a098099715bcb119081f1ff1ee1fbb770039919b751724ef961d46a077",
+      "currentEdition": "editions/sports---athletics-vol7-2e6b8fb5ea2c61e3.json",
+      "beforeIssues": [
+        "across-5:LEAGUIST unreviewed-dictionary-hint",
+        "across-6:RACERS unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "FITNESS",
+        "OVERTIME",
+        "KARATE",
+        "VICTORY",
+        "CENTER",
+        "DEFENDER"
+      ]
+    },
+    {
+      "id": "sports---athletics-vol8",
+      "theme": "Sports & Athletics",
+      "action": "replace",
+      "originalContentHash": "eb09036bbbca8259cabf789cb0252021252cbb269007a4fa9fc5f297d4c4cf54",
+      "currentEdition": "editions/sports---athletics-vol8-8fcc8c39a54a915a.json",
+      "beforeIssues": [
+        "across-6:PEEWEE unreviewed-dictionary-hint",
+        "down-3:QUOIT unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "CATCHER",
+        "HIGHJUMP",
+        "VOLLEY",
+        "BATTER",
+        "SCORING",
+        "JUDO"
+      ]
+    },
+    {
+      "id": "sports---athletics-vol9",
+      "theme": "Sports & Athletics",
+      "action": "replace",
+      "originalContentHash": "cb3942d55244ee9107d98f78fb0ccebf3cb3d9832c42c3be5eb92f1cab07796d",
+      "currentEdition": "editions/sports---athletics-vol9-fbfef4add3fb25fb.json",
+      "beforeIssues": [
+        "answer-accessibility"
+      ],
+      "answers": [
+        "FORWARD",
+        "FOOTBALL",
+        "HOMERUN",
+        "STAMINA",
+        "TROPHY",
+        "BAT"
+      ]
+    },
+    {
+      "id": "theater---film-vol1",
+      "theme": "Theater & Film",
+      "action": "unchanged",
+      "originalContentHash": "9afdfcd7c3f9ddf473187b87cc2c3d96bca198d934fae16371f4797c84505fa1",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "TICKET",
+        "DRAMATIC",
+        "VIDEO",
+        "THEATRE",
+        "SHOT",
+        "CAMERA",
+        "CUT",
+        "MOVIE"
+      ]
+    },
+    {
+      "id": "theater---film-vol2",
+      "theme": "Theater & Film",
+      "action": "unchanged",
+      "originalContentHash": "0bcd7c3d8cf81eb5398e78f3e2e39cb52dc4140b3924ee41dbfe3cac5f16b932",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "ADAPTATION",
+        "FRAME",
+        "REEL",
+        "CLAPPER",
+        "SET",
+        "FILM",
+        "FLY"
+      ]
+    },
+    {
+      "id": "theater---film-vol3",
+      "theme": "Theater & Film",
+      "action": "unchanged",
+      "originalContentHash": "a2b8a1a6d22e3dfa1e4c210ddb7f843b1d282ac84d2f8310e30b29ee7ca216ed",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "USHER",
+        "MONOLOGUE",
+        "ACT",
+        "MUSICAL",
+        "ENDING",
+        "SHORT",
+        "CAST"
+      ]
+    },
+    {
+      "id": "theater---film-vol4",
+      "theme": "Theater & Film",
+      "action": "unchanged",
+      "originalContentHash": "82cd9708dd3bf07899eb76e2aff38acad805725ccc769399b3c5b1f18e38e9a1",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "SCENE",
+        "LENS",
+        "FILMMAKING",
+        "SEQUEL",
+        "EXTRA",
+        "DOLLY",
+        "EDIT",
+        "MASK"
+      ]
+    },
+    {
+      "id": "theater---film-vol5",
+      "theme": "Theater & Film",
+      "action": "unchanged",
+      "originalContentHash": "ce4e27dd8398e09e1a46d1017d40c7901091ceb2ae1112a246b8e5e113e67a3b",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "BALCONY",
+        "ORCHESTRA",
+        "THEATER",
+        "ENCORE",
+        "LINE",
+        "BOX",
+        "COVER"
+      ]
+    },
+    {
+      "id": "theater---film-vol6",
+      "theme": "Theater & Film",
+      "action": "unchanged",
+      "originalContentHash": "7d019f778004932fc2ecf9c68be3d24b3382a445d91df72afeab93de8cc567f0",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "CREDITS",
+        "DRAMA",
+        "DESIGNER",
+        "FOLEY",
+        "EDITOR",
+        "FINALE",
+        "ANGLE"
+      ]
+    },
+    {
+      "id": "transportation---vehicles-vol1",
+      "theme": "Transportation & Vehicles",
+      "action": "replace",
+      "originalContentHash": "9efaa5ad774c687a1e79272122a3c5bc7c5b24be957d651b6a01e347367a9c10",
+      "currentEdition": "editions/transportation---vehicles-vol1-a3e10959b7a1c6b7.json",
+      "beforeIssues": [
+        "across-4:SHIPMENT unreviewed-dictionary-hint",
+        "across-8:FREIGHT missing-source-pair",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "MIRROR",
+        "MOTORWAY",
+        "WIPER",
+        "FREEWAY",
+        "MOTOR",
+        "CURB"
+      ]
+    },
+    {
+      "id": "transportation---vehicles-vol10",
+      "theme": "Transportation & Vehicles",
+      "action": "replace",
+      "originalContentHash": "19f6e51e52626a44df698eb9dc10058a13412f5a3723020c1ba2970741e803b1",
+      "currentEdition": "editions/transportation---vehicles-vol10-a9e71e3a9e8dc5a7.json",
+      "beforeIssues": [
+        "across-2:ROADING unreviewed-dictionary-hint",
+        "across-4:BERTHING unreviewed-dictionary-hint",
+        "across-6:NAVIES unreviewed-dictionary-hint",
+        "down-1:VOYAGE unreviewed-dictionary-hint",
+        "down-3:METAL invalid-hint-length",
+        "down-3:METAL unreviewed-dictionary-hint",
+        "down-5:GOODS unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "CLUTCH",
+        "PAVEMENT",
+        "TRANSIT",
+        "COUPE",
+        "TRAIN",
+        "PILOT"
+      ]
+    },
+    {
+      "id": "transportation---vehicles-vol11",
+      "theme": "Transportation & Vehicles",
+      "action": "reclue",
+      "originalContentHash": "ec3e5795d5a24e1c86731e87ff2b0ab53ceaa9c161d71db50e69a354effdedc0",
+      "currentEdition": "editions/transportation---vehicles-vol11-9be7fad96f680519.json",
+      "beforeIssues": [
+        "across-1:HAULAGE unreviewed-dictionary-hint",
+        "across-6:ROADIE unreviewed-dictionary-hint",
+        "down-3:SAILOR unreviewed-dictionary-hint",
+        "down-5:AUTOS unreviewed-dictionary-hint"
+      ],
+      "answers": [
+        "HAULAGE",
+        "PARKING",
+        "ROADIE",
+        "ANCHOR",
+        "SAILOR",
+        "AUTOS"
+      ]
+    },
+    {
+      "id": "transportation---vehicles-vol12",
+      "theme": "Transportation & Vehicles",
+      "action": "replace",
+      "originalContentHash": "0206b5edeadf868c31c9f637f9f32a5c9d1e72d336673f84113c36d6dd04e9ae",
+      "currentEdition": "editions/transportation---vehicles-vol12-b653722a761f92a5.json",
+      "beforeIssues": [
+        "across-3:FUSTEE unreviewed-dictionary-hint",
+        "across-5:ROADWAYS unreviewed-dictionary-hint",
+        "across-6:RAILCAR unreviewed-dictionary-hint",
+        "down-1:JEEPS invalid-hint-length",
+        "down-1:JEEPS unreviewed-dictionary-hint",
+        "down-2:CARLOAD unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "DETOUR",
+        "TERMINAL",
+        "BAGGAGE",
+        "CAPTAIN",
+        "MOPED",
+        "DIESEL"
+      ]
+    },
+    {
+      "id": "transportation---vehicles-vol13",
+      "theme": "Transportation & Vehicles",
+      "action": "unchanged",
+      "originalContentHash": "fb41fcb7c0676a6fd6f0b37f72ae441b58a00a168aa4c871e201f6dd9759203f",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "TAILLIGHT",
+        "TURNPIKE",
+        "SPUR",
+        "MERCHANT",
+        "TUNNEL",
+        "LANES"
+      ]
+    },
+    {
+      "id": "transportation---vehicles-vol14",
+      "theme": "Transportation & Vehicles",
+      "action": "unchanged",
+      "originalContentHash": "a7d1c086cf7d760e0e5e40968d1a3434f6a8c2f1b849d122c9e3976e4123316d",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "CRATE",
+        "TRAFFIC",
+        "RAILS",
+        "CONVOY",
+        "TRAIL",
+        "EXIT",
+        "TRACTOR"
+      ]
+    },
+    {
+      "id": "transportation---vehicles-vol15",
+      "theme": "Transportation & Vehicles",
+      "action": "unchanged",
+      "originalContentHash": "417c33c09884b83df2678b0f16e783aa6a187c5caced330f2987096f0536808d",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "CROSSING",
+        "TRAMLINE",
+        "BYWAYS",
+        "TRACTORS",
+        "WAGON",
+        "TONNAGE"
+      ]
+    },
+    {
+      "id": "transportation---vehicles-vol16",
+      "theme": "Transportation & Vehicles",
+      "action": "unchanged",
+      "originalContentHash": "9593b0057d03fae6f02153d087ff2697a257c316377af4206bdf31ab46b0267b",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "TRAILER",
+        "PETROL",
+        "SLEEPER",
+        "FARE",
+        "BRAKE",
+        "TROLLEY",
+        "TOLL",
+        "TIRES",
+        "GEAR"
+      ]
+    },
+    {
+      "id": "transportation---vehicles-vol17",
+      "theme": "Transportation & Vehicles",
+      "action": "unchanged",
+      "originalContentHash": "0505ca2a0d5c14af738e22608d3b80ba6f822d309044fcd83a8948cf775eb316",
+      "currentEdition": null,
+      "beforeIssues": [],
+      "answers": [
+        "CAB",
+        "KAYAK",
+        "PROPELLER",
+        "CONVOYS",
+        "PICKUP",
+        "SCOOTER",
+        "CARPOOL"
+      ]
+    },
+    {
+      "id": "transportation---vehicles-vol18",
+      "theme": "Transportation & Vehicles",
+      "action": "reclue",
+      "originalContentHash": "5073014c9e5ea9fbe8fdad7bb43c464029996102f42c157bbe8254df78666d07",
+      "currentEdition": "editions/transportation---vehicles-vol18-55f0264f9a872514.json",
+      "beforeIssues": [],
+      "answers": [
+        "YACHT",
+        "WINDSHIELD",
+        "DEPOT",
+        "WAGONS",
+        "TICKET",
+        "LIMO"
+      ]
+    },
+    {
+      "id": "transportation---vehicles-vol2",
+      "theme": "Transportation & Vehicles",
+      "action": "replace",
+      "originalContentHash": "f1e403a58261fb0f250341e9e16a8c20a72458864f870ef80ff0a70dc28dfdf6",
+      "currentEdition": "editions/transportation---vehicles-vol2-c4cc0f1db6891db1.json",
+      "beforeIssues": [],
+      "answers": [
+        "DEPARTURE",
+        "TRACK",
+        "BOXCAR",
+        "TRUCK",
+        "JEEPS",
+        "ROADWAY"
+      ]
+    },
+    {
+      "id": "transportation---vehicles-vol3",
+      "theme": "Transportation & Vehicles",
+      "action": "replace",
+      "originalContentHash": "177da43ad181083dcae456d0be6205e9f52880b1bfd3685da56237a2b707bbf4",
+      "currentEdition": "editions/transportation---vehicles-vol3-84d0352e57478164.json",
+      "beforeIssues": [
+        "across-4:CONVEYANCE unreviewed-dictionary-hint",
+        "down-5:CARTAGE unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "HELICOPTER",
+        "BUMPER",
+        "LUGGAGE",
+        "FERRY",
+        "JET",
+        "AIRBAG"
+      ]
+    },
+    {
+      "id": "transportation---vehicles-vol4",
+      "theme": "Transportation & Vehicles",
+      "action": "replace",
+      "originalContentHash": "77b4d62579cdabf49aabcb403cef0c8a2db0476dd9104c9766035c8469f30a52",
+      "currentEdition": "editions/transportation---vehicles-vol4-e30926f2b4ac2319.json",
+      "beforeIssues": [
+        "across-7:RIDING unreviewed-dictionary-hint",
+        "down-1:TRUNK invalid-hint-length",
+        "down-1:TRUNK unreviewed-dictionary-hint",
+        "down-4:AUTO unreviewed-dictionary-hint",
+        "down-6:GUTTER unreviewed-dictionary-hint"
+      ],
+      "answers": [
+        "ODOMETER",
+        "SIDEWALK",
+        "AUTO",
+        "VEHICLE",
+        "BUS",
+        "CAR"
+      ]
+    },
+    {
+      "id": "transportation---vehicles-vol5",
+      "theme": "Transportation & Vehicles",
+      "action": "replace",
+      "originalContentHash": "131aee00468897d4c389edb2268b800e2243080bef41aedeef558dddf2536a7e",
+      "currentEdition": "editions/transportation---vehicles-vol5-ee8347c43082adfe.json",
+      "beforeIssues": [
+        "across-3:DEALING unreviewed-dictionary-hint",
+        "across-7:DEALINGS unreviewed-dictionary-hint"
+      ],
+      "answers": [
+        "MINIVAN",
+        "VAN",
+        "SHUTTLE",
+        "PEDAL",
+        "ARRIVAL",
+        "FUEL",
+        "TRAM"
+      ]
+    },
+    {
+      "id": "transportation---vehicles-vol6",
+      "theme": "Transportation & Vehicles",
+      "action": "replace",
+      "originalContentHash": "9fae4e322399dfac33eab4bb074d14589731873834405531b3e708f9c2d45f7c",
+      "currentEdition": "editions/transportation---vehicles-vol6-b3ad9120872c7290.json",
+      "beforeIssues": [
+        "across-3:SORTIES unreviewed-dictionary-hint",
+        "across-5:PATRONAGE unreviewed-dictionary-hint",
+        "down-1:CARRIAGE unreviewed-dictionary-hint"
+      ],
+      "answers": [
+        "RAILWAY",
+        "CONVEYANCE",
+        "ROADWAYS",
+        "CABOOSE",
+        "UNDERPASS",
+        "HYBRID"
+      ]
+    },
+    {
+      "id": "transportation---vehicles-vol7",
+      "theme": "Transportation & Vehicles",
+      "action": "replace",
+      "originalContentHash": "d6b1686742463faa51850b47f9d945be8c4ca108de278c44ecf511f03b50dbf2",
+      "currentEdition": "editions/transportation---vehicles-vol7-306a1384c7b791bd.json",
+      "beforeIssues": [
+        "across-6:RAILROADER unreviewed-dictionary-hint",
+        "down-4:CARAVANS unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "SEATBELT",
+        "LOCOMOTIVE",
+        "TRANSFER",
+        "PLATFORM",
+        "STEERING",
+        "HEADLIGHT"
+      ]
+    },
+    {
+      "id": "transportation---vehicles-vol8",
+      "theme": "Transportation & Vehicles",
+      "action": "replace",
+      "originalContentHash": "d2df2e6a93a7f2d42ecc13dd0dbb0bf94ba233bb85f05c7ff0d36d114b5ad1e7",
+      "currentEdition": "editions/transportation---vehicles-vol8-cafd95eae1ebbb63.json",
+      "beforeIssues": [
+        "across-7:TANKER unreviewed-dictionary-hint",
+        "down-1:TRUCKAGE unreviewed-dictionary-hint",
+        "down-2:RAFTAGE unreviewed-dictionary-hint",
+        "down-4:CART unreviewed-dictionary-hint",
+        "down-5:SEDAN unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "MOTORBIKE",
+        "SEDAN",
+        "WHEEL",
+        "OVERPASS",
+        "CROSSOVER",
+        "FLEET"
+      ]
+    },
+    {
+      "id": "transportation---vehicles-vol9",
+      "theme": "Transportation & Vehicles",
+      "action": "replace",
+      "originalContentHash": "ca7b10a8a5a0a32e691dbd960f9d8a19fef84fd73d1bc990db0cf11b9b6e7d4c",
+      "currentEdition": "editions/transportation---vehicles-vol9-a7bc2b9b51071395.json",
+      "beforeIssues": [
+        "across-1:MARINA unreviewed-dictionary-hint",
+        "across-3:CROSSOVER unreviewed-dictionary-hint",
+        "across-6:CRAFT invalid-hint-length",
+        "across-6:CRAFT unreviewed-dictionary-hint",
+        "across-7:SKYWAY unreviewed-dictionary-hint",
+        "down-2:NAVY unreviewed-dictionary-hint",
+        "down-3:COACHING unreviewed-dictionary-hint",
+        "down-4:SOUTH invalid-hint-length",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "HOOD",
+        "MAP",
+        "JUNCTION",
+        "SPEED",
+        "TREAD",
+        "TRAINS",
+        "HORN",
+        "MILE"
+      ]
+    },
+    {
+      "id": "weather---climate-vol1",
+      "theme": "Weather & Climate",
+      "action": "replace",
+      "originalContentHash": "adaa5fb3a5d44a724ce1f91e732591f00ec92f33d76bfdc1aec038a359c80c45",
+      "currentEdition": "editions/weather---climate-vol1-8f5ed442624fe5ed.json",
+      "beforeIssues": [
+        "across-5:SUNWARD unreviewed-dictionary-hint",
+        "across-7:STORMY unreviewed-dictionary-hint",
+        "down-1:AIRSPACE unreviewed-dictionary-hint",
+        "down-3:FROSTY unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "CLOUDY",
+        "SQUALL",
+        "SPRING",
+        "DOWNWIND",
+        "CLOUDS",
+        "RAINY",
+        "FOG"
+      ]
+    },
+    {
+      "id": "weather---climate-vol10",
+      "theme": "Weather & Climate",
+      "action": "replace",
+      "originalContentHash": "1d972b65e0a663f4b77a736ddd306f97a2ab16b1b67c29fba81f1916a7093082",
+      "currentEdition": "editions/weather---climate-vol10-1e59b7696be6c9c5.json",
+      "beforeIssues": [
+        "across-6:SUNBURNT unreviewed-dictionary-hint",
+        "down-2:STORMER unreviewed-dictionary-hint",
+        "down-3:TEMPESTS unreviewed-dictionary-hint",
+        "down-4:CLEG low-quality",
+        "down-4:CLEG unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "LEE",
+        "SLUSH",
+        "DAYLIGHT",
+        "CLOUD",
+        "UPWIND",
+        "SNOWY",
+        "AIR"
+      ]
+    },
+    {
+      "id": "weather---climate-vol11",
+      "theme": "Weather & Climate",
+      "action": "replace",
+      "originalContentHash": "6f8bee3a18098f805a4ae94defea32ff5c922f614c8ceb6894b05774b8a20686",
+      "currentEdition": "editions/weather---climate-vol11-07bf12237d57c16a.json",
+      "beforeIssues": [
+        "across-3:RAINBOW unreviewed-dictionary-hint",
+        "across-5:GALES unreviewed-dictionary-hint",
+        "across-7:WINTRY unreviewed-dictionary-hint",
+        "down-1:VIBE unreviewed-dictionary-hint",
+        "down-2:NIVAL unreviewed-dictionary-hint",
+        "down-4:WINDFUL unreviewed-dictionary-hint",
+        "down-6:SKYEY unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "SQUALLS",
+        "SEASON",
+        "SUNLIT",
+        "CLIMATE",
+        "STRATUS",
+        "CLEAR"
+      ]
+    },
+    {
+      "id": "weather---climate-vol12",
+      "theme": "Weather & Climate",
+      "action": "replace",
+      "originalContentHash": "c09db4b39f1529cc4fca40bef7f487eb4e73e7d260e28edea78fabf6ce1c2269",
+      "currentEdition": "editions/weather---climate-vol12-85ed6112e9c35fbf.json",
+      "beforeIssues": [
+        "across-1:SQUALLS unreviewed-dictionary-hint",
+        "across-4:BLOWY unreviewed-dictionary-hint",
+        "across-5:THUNDERING unreviewed-dictionary-hint",
+        "down-1:SUNLIGHT unreviewed-dictionary-hint",
+        "down-2:GLAZING unreviewed-dictionary-hint",
+        "down-3:CLOWD missing-hint",
+        "down-3:CLOWD unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "THAWING",
+        "CONDENSE",
+        "RAY",
+        "WETTER",
+        "WINDIER",
+        "ICY"
+      ]
+    },
+    {
+      "id": "weather---climate-vol13",
+      "theme": "Weather & Climate",
+      "action": "replace",
+      "originalContentHash": "10debfd840b705ed37a603d6477363da938e2cb2c1262696e50c49303587e517",
+      "currentEdition": "editions/weather---climate-vol13-f4a8d5429e0dd455.json",
+      "beforeIssues": [
+        "across-2:WINDY unreviewed-dictionary-hint",
+        "across-4:SNOWOUT unreviewed-dictionary-hint",
+        "across-5:SPATE unreviewed-dictionary-hint",
+        "down-1:WINDING unreviewed-dictionary-hint",
+        "down-2:WASHOUT unreviewed-dictionary-hint",
+        "down-3:WINDS missing-hint",
+        "down-3:WINDS unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "FLURRY",
+        "CROSSWIND",
+        "SUNBEAM",
+        "FLOODS",
+        "DRY",
+        "ICE"
+      ]
+    },
+    {
+      "id": "weather---climate-vol14",
+      "theme": "Weather & Climate",
+      "action": "replace",
+      "originalContentHash": "90f3c57c83a622a2f596c80b1f99ecd9075dd14eaeb6d2ca2e335b5d3081f505",
+      "currentEdition": "editions/weather---climate-vol14-48edb2fb53687cca.json",
+      "beforeIssues": [
+        "across-1:FORECASTS unreviewed-dictionary-hint",
+        "across-5:WINDSCREEN unreviewed-dictionary-hint",
+        "across-6:MELTOFF unreviewed-dictionary-hint",
+        "down-3:HELIACAL invalid-hint-length",
+        "down-3:HELIACAL unreviewed-dictionary-hint",
+        "down-4:DELUGE unreviewed-dictionary-hint",
+        "answer-accessibility",
+        "long-word-crossings"
+      ],
+      "answers": [
+        "WEATHER",
+        "PRESSURE",
+        "MONSOON",
+        "SUNSHINE",
+        "AUTUMN",
+        "WET"
+      ]
+    },
+    {
+      "id": "weather---climate-vol15",
+      "theme": "Weather & Climate",
+      "action": "replace",
+      "originalContentHash": "e6aba6f0306299ef83c70643d3ba90de26fd60882c6f695e574964cc9363f341",
+      "currentEdition": "editions/weather---climate-vol15-a64ce6cc4f4c9ef3.json",
+      "beforeIssues": [
+        "across-1:DIURNAL unreviewed-dictionary-hint",
+        "across-3:SKYLIGHT unreviewed-dictionary-hint",
+        "across-5:CLOCHE unreviewed-dictionary-hint",
+        "down-2:GLADE unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "PARCHED",
+        "GALES",
+        "RAINBOW",
+        "SQUALLY",
+        "SHADE",
+        "CIRRUS",
+        "SUNNY"
+      ]
+    },
+    {
+      "id": "weather---climate-vol17",
+      "theme": "Weather & Climate",
+      "action": "replace",
+      "originalContentHash": "bfac42da6f063443102fb5e7b342e1cdc3b239919fa820042808b442396d6f84",
+      "currentEdition": "editions/weather---climate-vol17-8e22f478a0312408.json",
+      "beforeIssues": [
+        "across-2:SNOWBELT unreviewed-dictionary-hint",
+        "across-5:WINDFALL unreviewed-dictionary-hint",
+        "down-1:SNOWNADO unreviewed-dictionary-hint",
+        "down-3:WINDER unreviewed-dictionary-hint",
+        "down-4:CLOUDISH unreviewed-dictionary-hint",
+        "down-6:FRORY unreviewed-dictionary-hint",
+        "answer-accessibility",
+        "long-word-crossings"
+      ],
+      "answers": [
+        "SEASONAL",
+        "STILL",
+        "FREEZE",
+        "DAY",
+        "HAIL",
+        "SODDEN"
+      ]
+    },
+    {
+      "id": "weather---climate-vol2",
+      "theme": "Weather & Climate",
+      "action": "replace",
+      "originalContentHash": "017b59bd4a434b290ba18e6a883856f1f579e865e6b107c35c04b1013ce2017c",
+      "currentEdition": "editions/weather---climate-vol2-876e934438160ba6.json",
+      "beforeIssues": [
+        "across-3:TEMPEST unreviewed-dictionary-hint",
+        "across-5:AMBIANCE unreviewed-dictionary-hint",
+        "down-2:SLEET unreviewed-dictionary-hint",
+        "down-4:SEASON unreviewed-dictionary-hint"
+      ],
+      "answers": [
+        "CHILLY",
+        "BAROMETER",
+        "BLIZZARD",
+        "POLAR",
+        "SLEET",
+        "HOT"
+      ]
+    },
+    {
+      "id": "weather---climate-vol3",
+      "theme": "Weather & Climate",
+      "action": "replace",
+      "originalContentHash": "5e726412013333a47964ff7fa59b6fd6fb62f4b92e6cda8b629d7ebd33fbf0a9",
+      "currentEdition": "editions/weather---climate-vol3-9e8dc95bb82b4ce7.json",
+      "beforeIssues": [
+        "across-5:WEATHERING unreviewed-dictionary-hint",
+        "down-1:BLAST unreviewed-dictionary-hint",
+        "down-3:UPWIND unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "FLOOD",
+        "TEMPERATE",
+        "SLICK",
+        "SHOWERS",
+        "GUSTY",
+        "FREEZING"
+      ]
+    },
+    {
+      "id": "weather---climate-vol4",
+      "theme": "Weather & Climate",
+      "action": "replace",
+      "originalContentHash": "fa1cbb603c4198c05ed546fc0ccbdfcd4dcfd2772d73e39daa7af57498ba5495",
+      "currentEdition": "editions/weather---climate-vol4-eae36f6053ce9485.json",
+      "beforeIssues": [
+        "across-3:LUNISOLAR unreviewed-dictionary-hint",
+        "across-6:CLOUD missing-source-pair",
+        "down-2:DAY unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "RAINIER",
+        "SLEETY",
+        "CUMULUS",
+        "DRIZZLY",
+        "DRIER",
+        "DRIZZLE"
+      ]
+    },
+    {
+      "id": "weather---climate-vol5",
+      "theme": "Weather & Climate",
+      "action": "replace",
+      "originalContentHash": "0aef840b4b275ee934759692db59084c1f868a60195e95ed38cb42186a38177e",
+      "currentEdition": "editions/weather---climate-vol5-b59621df637bb058.json",
+      "beforeIssues": [
+        "across-3:WINDWARD unreviewed-dictionary-hint",
+        "across-7:METEOR invalid-hint-length",
+        "down-1:SUNNIST unreviewed-dictionary-hint",
+        "down-4:CLIME unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "HAZY",
+        "ATMOSPHERE",
+        "WARMER",
+        "NIGHT",
+        "DAMP",
+        "COOLER"
+      ]
+    },
+    {
+      "id": "weather---climate-vol6",
+      "theme": "Weather & Climate",
+      "action": "replace",
+      "originalContentHash": "67b8fa5b073d9283dd8a807746593a6b70bae208451f9733f14c947b78b24bdf",
+      "currentEdition": "editions/weather---climate-vol6-aafa14c54b095f3c.json",
+      "beforeIssues": [
+        "across-5:ASTEROID invalid-hint-length",
+        "across-5:ASTEROID unreviewed-dictionary-hint",
+        "across-6:SUNLIKE unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "STORM",
+        "LEEWARD",
+        "MELT",
+        "SUMMER",
+        "SHOWER",
+        "FALL"
+      ]
+    },
+    {
+      "id": "weather---climate-vol7",
+      "theme": "Weather & Climate",
+      "action": "replace",
+      "originalContentHash": "6d802409f9a538eba0bd072cfeec5dc66bfb7b3a86bf87d5614e7478347b0c9a",
+      "currentEdition": "editions/weather---climate-vol7-717b948c07d57dc2.json",
+      "beforeIssues": [
+        "across-6:TANNED unreviewed-dictionary-hint",
+        "down-3:WINTER unreviewed-dictionary-hint"
+      ],
+      "answers": [
+        "DOWNPOUR",
+        "SUBZERO",
+        "THAW",
+        "VAPOR",
+        "WARM",
+        "BALMY"
+      ]
+    },
+    {
+      "id": "weather---climate-vol8",
+      "theme": "Weather & Climate",
+      "action": "replace",
+      "originalContentHash": "b8959cbb1277b054be74668d8e17af75e9ae08eccd07f920b18605c854d139bc",
+      "currentEdition": "editions/weather---climate-vol8-346856350a65d210.json",
+      "beforeIssues": [
+        "across-4:THUNDERY unreviewed-dictionary-hint",
+        "across-5:DUSTOUT unreviewed-dictionary-hint",
+        "down-1:AMBIENT unreviewed-dictionary-hint",
+        "down-2:BLUSTERY unreviewed-dictionary-hint",
+        "down-3:SKYISH unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "RAINBAND",
+        "MOISTURE",
+        "MIST",
+        "HAZE",
+        "DEW",
+        "ICICLE"
+      ]
+    },
+    {
+      "id": "weather---climate-vol9",
+      "theme": "Weather & Climate",
+      "action": "replace",
+      "originalContentHash": "8839fdd6bd2821e8cdb42a4c0bbccf3fa88f22770a776f14167f0d175f6a5ff3",
+      "currentEdition": "editions/weather---climate-vol9-d54b2189e6ac98e5.json",
+      "beforeIssues": [
+        "across-1:SUNNY unreviewed-dictionary-hint",
+        "across-5:WEATHERMAN unreviewed-dictionary-hint",
+        "down-1:SOLARIAN unreviewed-dictionary-hint",
+        "down-2:NIGHT unreviewed-dictionary-hint",
+        "down-3:UDAND missing-hint",
+        "down-3:UDAND unreviewed-dictionary-hint",
+        "answer-accessibility"
+      ],
+      "answers": [
+        "STORMIER",
+        "SNOWFLAKE",
+        "TAILWIND",
+        "SNOWFALL",
+        "GUSTS",
+        "SNOWBALL"
+      ]
+    }
+  ]
+}

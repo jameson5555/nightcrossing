@@ -1,11 +1,15 @@
 const REVISION_KEY = 'puzzle_layout_revisions';
-const PUZZLE_KEYS = [
-  'puzzle_progress_', 'unlocked_hints_', 'revealed_indices_',
-  'reward_claimed_', 'free_hint_claimed_'
-];
 
-// Replacing a grid invalidates its cell positions and clue numbers. Keep the
-// wallet, journey rank, and all progress for other puzzles intact.
+export async function recordDatasetVersion(store, version) {
+  const next = String(version || '').trim();
+  if (!next) return false;
+  const { value } = await store.get({ key: 'puzzle_dataset_version' });
+  if (value === next) return false;
+  await store.set({ key: 'puzzle_dataset_version', value: next });
+  return true;
+}
+// Track catalog revisions without deleting player data. The edition-aware
+// loader keeps saved cells, hint state and completion attached to their grid.
 export async function reconcilePuzzleRevisions(store, revisions = {}) {
   const { value } = await store.get({ key: REVISION_KEY });
   const previous = value ? JSON.parse(value) : {};
@@ -14,8 +18,6 @@ export async function reconcilePuzzleRevisions(store, revisions = {}) {
   for (const [id, entry] of Object.entries(revisions)) {
     if (!entry?.revision) continue;
     if (previous[id] !== entry.revision) {
-      await Promise.all(PUZZLE_KEYS.map(prefix => store.remove({ key: `${prefix}${id}` })));
-      if (entry.theme) await store.remove({ key: `theme_progress_${entry.theme}` });
       changed.push(id);
       next[id] = entry.revision;
     }

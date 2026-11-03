@@ -27,7 +27,7 @@ import {
   saveBonusHintToastPending,
   loadBonusHintsAwardedSinceEmpty,
   saveBonusHintsAwardedSinceEmpty,
-  resetPuzzleDataIfDatasetChanged,
+  recordPuzzleDatasetVersion,
   resetReplacedPuzzleProgress,
   loadJourneyRankHighWatermark,
   saveJourneyRankHighWatermark
@@ -37,7 +37,7 @@ import { getJourneyRankLevel, getBadgeName, getBadgeAsset } from './utils/badges
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { Capacitor } from '@capacitor/core';
 import HintModal from './components/HintModal';
-import { fetchPuzzleData } from './utils/puzzleData';
+import { fetchPuzzleData, loadPuzzleForPlayer } from './utils/puzzleData';
 import { getThemeCompletionOutcome } from './utils/themeAvailability';
 
 import { createRewardedHints } from './ads/rewardedHints';
@@ -288,7 +288,7 @@ function App() {
           if (!datasetChanged) return;
 
           const data = await fetchPuzzleData('puzzles.json');
-          await resetPuzzleDataIfDatasetChanged(meta?.resetVersion || nextVersion);
+          await recordPuzzleDatasetVersion(meta?.resetVersion || nextVersion);
           await resetReplacedPuzzleProgress(meta?.puzzleRevisions);
           setPuzzleMeta(meta || {});
           setPuzzlesIndex(data);
@@ -350,8 +350,8 @@ function App() {
       if (puzzleSessionActiveRef.current) return;
       puzzleSessionActiveRef.current = true;
       // Show loading or transition
-      const data = await fetchPuzzleData(`puzzles/${encodeURIComponent(id)}.json`, {
-        version: puzzleVersionRef.current
+      const data = await loadPuzzleForPlayer(id, {
+        version: puzzleVersionRef.current, pin: true
       });
       setPuzzleData(data);
 

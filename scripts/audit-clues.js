@@ -1,18 +1,16 @@
 #!/usr/bin/env node
 import fs from 'fs';
+import process from 'node:process';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { isWordEntryAcceptable, containsProfanity } from './clueQuality.js';
+import catalog from './puzzleCatalog.cjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const DATA_DIR = path.join(__dirname, '../public/data');
 const PUZZLES_DIR = path.join(DATA_DIR, 'puzzles');
-
-function loadJSON(filePath) {
-  return JSON.parse(fs.readFileSync(filePath, 'utf8'));
-}
 
 function stripCluePrefix(entry) {
   if (typeof entry !== 'string') return '';
@@ -259,7 +257,7 @@ function main() {
 
   for (const file of puzzleFiles) {
     const puzzlePath = path.join(PUZZLES_DIR, file);
-    const puzzle = loadJSON(puzzlePath);
+    const puzzle = catalog.readCurrentPuzzle(puzzlePath);
     const puzzleId = String(puzzle?.id || file.replace(/\.json$/, ''));
     const violations = auditPuzzle(puzzleId, puzzle);
     allViolations.push(...violations);

@@ -22,9 +22,11 @@
     "audit:difficulty": "node scripts/audit-difficulty.js",
     "audit:clues": "node scripts/audit-clues.js",
     "audit:quality": "node scripts/audit-quality.js",
+    "audit:catalog": "node scripts/audit-quality.js --all && node scripts/audit-theme-relevance.js",
+    "repair:historical": "node scripts/repair-historical.js",
     "regenerate:selected": "node scripts/regenerate-selected.js",
     "audit:relevance": "node scripts/audit-theme-relevance.js --changed-only",
-    "audit:ci": "npm run audit:difficulty && npm run audit:clues && npm run audit:relevance && npm run audit:quality"
+    "audit:ci": "npm run audit:difficulty && npm run audit:clues && npm run audit:catalog"
   },
   "dependencies": {
     "@capacitor-community/admob": "^8.0.0",

@@ -2,6 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const { readCurrentPuzzle } = require('./puzzleCatalog.cjs');
 const { classifyDifficulty, summarizeDifficultySpread } = require('./difficultyRubric.cjs');
 
 const DATA_DIR = path.join(__dirname, '../public/data');
@@ -549,11 +550,15 @@ async function syncIndex() {
     hasher.update(raw);
     hasher.update('\n');
 
-    const puzzle = loadJSON(full);
+    const original = loadJSON(full);
+    const puzzle = readCurrentPuzzle(full);
+    if (original.currentEdition) {
+      hasher.update(fs.readFileSync(path.join(PUZZLES_DIR, original.currentEdition)));
+    }
     if (!puzzle) continue;
     const id = puzzle.id || path.basename(file, '.json');
-    if (puzzle.layoutRevision) puzzleRevisions[id] = {
-      revision: puzzle.layoutRevision, theme: puzzle.theme
+    if (original.layoutRevision) puzzleRevisions[id] = {
+      revision: original.layoutRevision, theme: puzzle.theme
     };
     const volume = parseVolumeFromId(id);
     const waveLabel = formatWaveLabel(volume);

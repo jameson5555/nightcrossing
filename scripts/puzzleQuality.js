@@ -39,6 +39,7 @@ export function auditPuzzleQuality(puzzle, theme) {
     const source = sourceWords.get(`${entry.answer.toUpperCase()}\0${entry.clue}`);
     if (!source) issues.push(`${label} missing-source-pair`);
     else if (!hasReliableHint(source)) issues.push(`${label} unreviewed-dictionary-hint`);
+    else if (entry.hint !== source.hint) issues.push(`${label} source-hint-mismatch`);
     placedWords.push(source || {});
 
     const start = puzzle.gridnums?.indexOf(entry.number) ?? -1;

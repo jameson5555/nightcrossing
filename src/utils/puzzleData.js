@@ -1,3 +1,6 @@
+import { Preferences } from '@capacitor/preferences';
+import { createPuzzleLoader } from './puzzleEditions.js';
+
 const normalizeBaseUrl = (url) => `${String(url || '').replace(/\/+$/, '')}/`;
 
 const env = import.meta.env || {};
@@ -38,3 +41,5 @@ export async function fetchPuzzleData(path, { fresh = true, version } = {}) {
 
   throw lastError || new Error(`Unable to load puzzle data: ${path}`);
 }
+
+export const loadPuzzleForPlayer = createPuzzleLoader({ store: Preferences, fetchData: fetchPuzzleData });

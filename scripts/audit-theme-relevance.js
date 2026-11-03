@@ -5,15 +5,12 @@ import { execFileSync } from 'child_process';
 import process from 'process';
 import { fileURLToPath } from 'url';
 import { THEMES, RELAXED_THEME_MIN_RELEVANCE, scoreWordForTheme } from './proceduralEngine.js';
+import catalog from './puzzleCatalog.cjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.join(__dirname, '..');
 const PUZZLES_DIR = path.join(ROOT_DIR, 'public/data/puzzles');
-
-function loadJSON(filePath) {
-  return JSON.parse(fs.readFileSync(filePath, 'utf8'));
-}
 
 function normalizeClue(value) {
   return String(value || '')
@@ -92,7 +89,7 @@ function main() {
     const puzzlePath = path.join(PUZZLES_DIR, file);
     if (!fs.existsSync(puzzlePath)) continue;
     checkedFileCount++;
-    const puzzle = loadJSON(puzzlePath);
+    const puzzle = catalog.readCurrentPuzzle(puzzlePath);
     const theme = themes.get(puzzle.theme);
     if (!theme) {
       violations.push({ file, reason: `unknown theme "${puzzle.theme || ''}"` });

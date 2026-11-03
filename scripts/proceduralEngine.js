@@ -803,6 +803,8 @@ function generateBestLayout(
     if (score > bestScore) {
       bestScore = score;
       best = layout;
+      if (options.stopWhenValid &&
+        layoutPassesLexicalGuardrails(layout, { themeName: options.themeName })) break;
     }
   }
 
@@ -954,7 +956,7 @@ export function generateThemedPuzzle(id, themeName, availableWords, options = {}
 
   let layout = null;
   let bestScore = -Infinity;
-  let maxWordsTry = Math.min(14, themedWords.length);
+  let maxWordsTry = Math.min(options.stopWhenValid ? 8 : 14, themedWords.length);
 
   while (maxWordsTry >= MIN_WORD_TARGET) {
     const attempts = attemptBudget(
@@ -970,7 +972,8 @@ export function generateThemedPuzzle(id, themeName, availableWords, options = {}
       attempts,
       maxWordsTry,
       requiredPlaced,
-      { enforceLongIntersections: true, allowLongMisses: 0, themeName }
+      { enforceLongIntersections: true, allowLongMisses: 0, themeName,
+        stopWhenValid: options.stopWhenValid }
     );
     if (
       candidate &&
@@ -981,6 +984,7 @@ export function generateThemedPuzzle(id, themeName, availableWords, options = {}
       if (candidateScore > bestScore) {
         bestScore = candidateScore;
         layout = candidate;
+        if (options.stopWhenValid) break;
       }
     }
 

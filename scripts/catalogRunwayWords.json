@@ -1,0 +1,1545 @@
+{
+  "Plants & Gardens": [
+    {
+      "answer": "APPLE",
+      "clue": "Fruit often baked into a pie",
+      "hint": "It grows on a tree and has a core.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "PEACH",
+      "clue": "Soft summer fruit with a fuzzy skin",
+      "hint": "A large stone sits in the middle.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "PLUM",
+      "clue": "Small stone fruit with smooth skin",
+      "hint": "Dried varieties are sold as prunes.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "CHERRY",
+      "clue": "Small stone fruit often used in pies",
+      "hint": "Remove its pit before cooking.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "LEMON",
+      "clue": "Sour yellow fruit used to season seafood",
+      "hint": "Its juice also goes into lemonade.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "LIME",
+      "clue": "Green citrus fruit squeezed over tacos",
+      "hint": "It is smaller than a typical lemon.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "ORANGE",
+      "clue": "Citrus fruit squeezed for breakfast juice",
+      "hint": "Peel its skin to separate the segments.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "GRAPE",
+      "clue": "Small fruit eaten fresh or made into wine",
+      "hint": "It grows in bunches on a vine.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "MELON",
+      "clue": "Large fruit with juicy flesh and many seeds",
+      "hint": "A chilled slice makes a refreshing snack.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "BERRY",
+      "clue": "Small juicy fruit added to desserts",
+      "hint": "Strawberries and blueberries are examples.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "BANANA",
+      "clue": "Curved fruit mashed into quick bread",
+      "hint": "Its yellow peel is removed before eating.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "MANGO",
+      "clue": "Tropical fruit with orange flesh and a large flat pit",
+      "hint": "It adds sweetness to chutney.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "PAPAYA",
+      "clue": "Tropical fruit with orange flesh and black seeds",
+      "hint": "Cut it open and scoop out the seed-filled center.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "COCONUT",
+      "clue": "Tropical fruit with a hard shell and white flesh",
+      "hint": "Its grated interior is used in cakes and curries.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "ALMOND",
+      "clue": "Edible nut often ground for baking",
+      "hint": "Its flour is used in many macarons.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "WALNUT",
+      "clue": "Ridged nut often added to brownies",
+      "hint": "Its shell holds two irregular halves.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "PECAN",
+      "clue": "Nut used in a rich Southern pie",
+      "hint": "It has a smooth brown shell.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "PEANUT",
+      "clue": "Legume commonly roasted and eaten as a snack",
+      "hint": "It can be ground into a sandwich spread.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "CASHEW",
+      "clue": "Curved nut often used in stir-fries",
+      "hint": "It is also blended into creamy plant-based sauces.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "OAT",
+      "clue": "Grain commonly rolled for breakfast porridge",
+      "hint": "It also appears in granola and cookies.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "OATS",
+      "clue": "Grain cooked into porridge",
+      "hint": "Rolled flakes are also used in cookies.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "RICE",
+      "clue": "Grain served with curries and stir-fries",
+      "hint": "Absorbs water as it cooks in a covered pot.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "BARLEY",
+      "clue": "Grain often added to soups and stews",
+      "hint": "Pearled kernels become pleasantly chewy when cooked.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "WHEAT",
+      "clue": "Grain commonly milled into bread flour",
+      "hint": "Its proteins help dough stretch and hold air.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "RYE",
+      "clue": "Grain used in dark bread",
+      "hint": "Its flour gives some loaves a distinctive earthy flavor.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "CORN",
+      "clue": "Grain eaten as kernels or ground into meal",
+      "hint": "Sweet varieties can be cooked on the cob.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "LENTIL",
+      "clue": "Small flat seed cooked in soups and curries",
+      "hint": "A protein-rich ingredient that needs no overnight soaking.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "CHICKPEA",
+      "clue": "Round legume blended into hummus",
+      "hint": "Also called a garbanzo bean.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "BEAN",
+      "clue": "Edible seed often simmered in soups or chili",
+      "hint": "Dried varieties usually need soaking before cooking.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "PEA",
+      "clue": "Small round green seed eaten as a vegetable",
+      "hint": "Several grow inside a single pod.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "CARROT",
+      "clue": "Orange root vegetable used in cooking",
+      "hint": "It can be grated into a cake.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "POTATO",
+      "clue": "Starchy vegetable mashed or baked",
+      "hint": "It also becomes fries and chips.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "ONION",
+      "clue": "Layered vegetable chopped for soups and stews",
+      "hint": "Cutting it may bring tears to your eyes.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "GARLIC",
+      "clue": "Pungent bulb used to flavor savory dishes",
+      "hint": "Break the bulb into individual cloves.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "CELERY",
+      "clue": "Crunchy stalk vegetable used in soup",
+      "hint": "It is one of the ingredients in a classic stock base.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "LEEK",
+      "clue": "Mild onion relative with a long white stalk",
+      "hint": "Wash between its layers before cooking.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "TURNIP",
+      "clue": "Round root vegetable with peppery flesh",
+      "hint": "It can be roasted or added to stew.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "RADISH",
+      "clue": "Small crisp root with a peppery taste",
+      "hint": "Thin slices add crunch to salads.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "BEET",
+      "clue": "Root vegetable often deep red inside",
+      "hint": "Its juice can stain a cutting board.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "SPINACH",
+      "clue": "Leafy green vegetable wilted in a pan",
+      "hint": "The leaves shrink dramatically when heated.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "KALE",
+      "clue": "Leafy cabbage often used in salads or soups",
+      "hint": "Its tough central stems are usually removed.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "CABBAGE",
+      "clue": "Leafy vegetable that forms a tight head",
+      "hint": "Shredded leaves are used in coleslaw.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "LETTUCE",
+      "clue": "Leafy vegetable used as a salad base",
+      "hint": "Its crisp leaves also go in sandwiches.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "TOMATO",
+      "clue": "Red fruit used to make pasta sauce",
+      "hint": "A common ingredient in salads and ketchup.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "PEPPER",
+      "clue": "Spicy seasoning ground from small dried berries",
+      "hint": "Freshly grind it over soup or eggs.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "CUCUMBER",
+      "clue": "Cool crunchy vegetable sliced into salads",
+      "hint": "Small varieties can be pickled.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "SQUASH",
+      "clue": "Vegetable group including zucchini and pumpkin",
+      "hint": "Winter varieties have hard skins and dense flesh.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "PUMPKIN",
+      "clue": "Large orange winter squash",
+      "hint": "Its cooked flesh can fill a spiced pie.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "BROCCOLI",
+      "clue": "Green vegetable with branching florets",
+      "hint": "Its edible top looks like a tiny tree.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "ASPARAGUS",
+      "clue": "Vegetable harvested as tender young spears",
+      "hint": "Trim the woody ends before cooking.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "EGGPLANT",
+      "clue": "Glossy vegetable often sliced and roasted",
+      "hint": "Its soft cooked flesh absorbs sauces well.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "MUSHROOM",
+      "clue": "Edible fungus added to sauces and omelets",
+      "hint": "It has a cap and a stem.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "OLIVE",
+      "clue": "Small fruit often cured in brine",
+      "hint": "Its oil is widely used in cooking.",
+      "source": "seed",
+      "editorialReviewed": true
+    }
+  ],
+  "Nature & Wilderness": [
+    {
+      "answer": "TIGER",
+      "clue": "Large wild cat with dark stripes",
+      "hint": "Its orange coat helps it blend into tall grass.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "LION",
+      "clue": "Large wild cat whose males often have manes",
+      "hint": "Lives in social groups called prides.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "WOLF",
+      "clue": "Wild canine that often lives in a pack",
+      "hint": "Its howling can be heard over long distances.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "RABBIT",
+      "clue": "Long-eared mammal that grazes on plants",
+      "hint": "Its strong hind legs help it hop.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "OWL",
+      "clue": "Bird of prey often active at night",
+      "hint": "Its large eyes help it hunt in low light.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "HAWK",
+      "clue": "Bird of prey with sharp talons",
+      "hint": "It scans the ground for small animals.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "BEAVER",
+      "clue": "Rodent that builds dams in streams",
+      "hint": "Its broad flat tail helps it swim.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "BADGER",
+      "clue": "Burrowing mammal with a striped face",
+      "hint": "Its underground home is called a sett.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "RACCOON",
+      "clue": "Mammal with dark markings around its eyes",
+      "hint": "Often seen searching for food after dusk.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "SQUIRREL",
+      "clue": "Rodent that gathers nuts and climbs trees",
+      "hint": "Its bushy tail helps with balance.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "ELK",
+      "clue": "Large deer with branching antlers",
+      "hint": "Males shed and regrow their antlers each year.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "BISON",
+      "clue": "Large grazing mammal of North American grasslands",
+      "hint": "Has a shaggy head and a shoulder hump.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "ZEBRA",
+      "clue": "African grazing animal with black-and-white stripes",
+      "hint": "Every individual's pattern is different.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "GIRAFFE",
+      "clue": "Tall African mammal with a very long neck",
+      "hint": "It feeds on leaves high in trees.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "ELEPHANT",
+      "clue": "Large mammal with a trunk and tusks",
+      "hint": "Its long flexible nose can pick up food.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "SEED",
+      "clue": "Tiny plant starter sown in soil",
+      "hint": "Water and warmth help it germinate.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "SEEDLING",
+      "clue": "Young plant just beginning to grow",
+      "hint": "It can be moved into a larger pot later.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "SAPLING",
+      "clue": "Young tree with a slender trunk",
+      "hint": "It is bigger than a seedling but still immature.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "ROOT",
+      "clue": "Part of a plant that absorbs water from soil",
+      "hint": "It also holds the plant in place.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "ROOTS",
+      "clue": "Plant parts anchoring growth in the ground",
+      "hint": "They take up water and minerals.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "STALK",
+      "clue": "Main upright support of a plant",
+      "hint": "Leaves or flowers grow from it.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "TRUNK",
+      "clue": "Main woody stem of a tree",
+      "hint": "Bark covers its outside.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "BARK",
+      "clue": "Protective outer layer of a tree",
+      "hint": "Its texture can help identify the species.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "LEAVES",
+      "clue": "Flat green parts of many plants",
+      "hint": "They use sunlight to make food.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "PETALS",
+      "clue": "Colored parts surrounding a flower's center",
+      "hint": "They often help attract pollinators.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "SEPAL",
+      "clue": "Leaflike part protecting a flower bud",
+      "hint": "It usually sits below the petals after opening.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "SPRIG",
+      "clue": "Small stem with leaves or flowers",
+      "hint": "A little cutting used in a bouquet or as a garnish.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "SPROUT",
+      "clue": "New shoot emerging from a seed",
+      "hint": "An early sign that planting has succeeded.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "SHOOT",
+      "clue": "New stem growth on a plant",
+      "hint": "Fresh green growth appears in spring.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "VINES",
+      "clue": "Plants with long climbing or trailing stems",
+      "hint": "They may need a frame or fence for support.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "IVY",
+      "clue": "Climbing plant that can cover garden walls",
+      "hint": "Its leaves remain green through much of the year.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "GRASS",
+      "clue": "Plant forming the green surface of a lawn",
+      "hint": "Its narrow blades grow from the base.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "CLOVER",
+      "clue": "Low-growing plant with three-part leaves",
+      "hint": "Finding a four-leaf one is considered lucky.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "OAK",
+      "clue": "Tree that grows acorns",
+      "hint": "Its strong wood is used in furniture.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "MAPLE",
+      "clue": "Tree with lobed leaves and winged seeds",
+      "hint": "Some varieties provide sap for syrup.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "ELM",
+      "clue": "Shade tree with serrated leaves",
+      "hint": "Often planted along streets and in parks.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "PINE",
+      "clue": "Evergreen tree with needles and cones",
+      "hint": "Many species stay green through winter.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "PALM",
+      "clue": "Tree with a crown of large fronds",
+      "hint": "Common in warm gardens and tropical landscapes.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "BAMBOO",
+      "clue": "Tall grass with jointed woody stems",
+      "hint": "Used for garden screens and plant supports.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "HUMUS",
+      "clue": "Dark organic material in fertile soil",
+      "hint": "Forms as plant matter decays.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "PEAT",
+      "clue": "Decayed plant material used in garden mixes",
+      "hint": "It comes from wet bogs.",
+      "source": "seed",
+      "editorialReviewed": true
+    }
+  ],
+  "Home & Tools": [
+    {
+      "answer": "LADLE",
+      "clue": "Deep spoon used to serve soup",
+      "hint": "Its bowl carries liquid from pot to dish.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "COLANDER",
+      "clue": "Kitchen bowl with holes for draining pasta",
+      "hint": "Water passes through while the food stays behind.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "SIEVE",
+      "clue": "Fine mesh kitchen tool for sifting flour",
+      "hint": "Also separates small solids from a liquid.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "KETTLE",
+      "clue": "Kitchen vessel used to boil water",
+      "hint": "Pour from its spout to make tea.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "APRON",
+      "clue": "Protective garment worn while cooking",
+      "hint": "It keeps spills off your clothes.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "WHISK",
+      "clue": "Beat a cooking mixture with a wire utensil",
+      "hint": "Used to blend eggs or whip cream.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "GRATE",
+      "clue": "Shred food against a rough kitchen tool",
+      "hint": "Produces fine pieces of cheese or carrots.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "BEDS",
+      "clue": "Furniture pieces used for sleeping",
+      "hint": "Each supports a mattress and bedding.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "SHEETS",
+      "clue": "Large pieces of cloth covering a bed",
+      "hint": "They are usually washed with the pillowcases.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "POTS",
+      "clue": "Deep containers used for cooking",
+      "hint": "They can hold soup or boiling water.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "PANS",
+      "clue": "Shallow containers used for cooking",
+      "hint": "A handle helps lift one from the stove.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "MUG",
+      "clue": "Drinking cup with a handle",
+      "hint": "It is often used for tea or coffee.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "MUGS",
+      "clue": "Drinking cups with handles",
+      "hint": "They may hang from hooks in a kitchen.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "CUPS",
+      "clue": "Small vessels used for drinking",
+      "hint": "A tea service may include matching saucers.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "CUP",
+      "clue": "Small vessel used for drinking",
+      "hint": "A handle helps hold it when the contents are hot.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "PANE",
+      "clue": "Single sheet of glass in a window",
+      "hint": "It lets daylight into a room.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "PANES",
+      "clue": "Sheets of glass set into windows",
+      "hint": "Frames hold them in place.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "SASH",
+      "clue": "Frame holding the glass in a window",
+      "hint": "It may slide upward to let in air.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "JAMB",
+      "clue": "Vertical side of a doorway frame",
+      "hint": "Hinges are usually fixed to one side.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "BEAM",
+      "clue": "Horizontal structural support in a building",
+      "hint": "It carries weight across an opening.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "BEAMS",
+      "clue": "Horizontal structural supports in a building",
+      "hint": "They can be exposed beneath a ceiling.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "JOIST",
+      "clue": "Horizontal support beneath a floor",
+      "hint": "Several run parallel under the floorboards.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "JOISTS",
+      "clue": "Parallel supports beneath a floor",
+      "hint": "Boards are laid across them.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "RAFTER",
+      "clue": "Sloping structural support for a roof",
+      "hint": "It runs from the ridge toward an outside wall.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "STUD",
+      "clue": "Vertical framing member inside a wall",
+      "hint": "Finding one helps secure a heavy shelf.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "STUDS",
+      "clue": "Vertical framing members inside a wall",
+      "hint": "Wall coverings are fastened to them.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "WIRES",
+      "clue": "Metal strands carrying electrical current",
+      "hint": "Insulation helps keep them safely separated.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "CABLE",
+      "clue": "Bundle of insulated wires",
+      "hint": "It can carry electricity or signals through a house.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "CABLES",
+      "clue": "Bundles of insulated wires",
+      "hint": "They connect electrical devices or run through walls.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "PLUG",
+      "clue": "Connector inserted into an electrical socket",
+      "hint": "It supplies power to an appliance.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "PLUGS",
+      "clue": "Connectors inserted into electrical sockets",
+      "hint": "Their pins make contact with the power supply.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "FUSE",
+      "clue": "Electrical safety device that melts when current is too high",
+      "hint": "Breaking the circuit can prevent overheating.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "FUSES",
+      "clue": "Electrical safety devices that break overloaded circuits",
+      "hint": "A blown one must be replaced with the correct rating.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "HEAT",
+      "clue": "Warmth supplied to a house",
+      "hint": "A furnace or radiator can provide it.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "PUMP",
+      "clue": "Device moving water through a pipe",
+      "hint": "It can empty a flooded basement.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "CHAIN",
+      "clue": "Series of connected metal links",
+      "hint": "It can secure a gate or suspend a fixture.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "HOOK",
+      "clue": "Curved fitting used to hang an item",
+      "hint": "A coat can be placed on one near a doorway.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "HOOKS",
+      "clue": "Curved fittings used for hanging items",
+      "hint": "They can hold coats or kitchen utensils.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "PEG",
+      "clue": "Short projecting pin used to hang or fasten something",
+      "hint": "A wall rack may have several for coats.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "PEGS",
+      "clue": "Short projecting pins used for hanging or fastening",
+      "hint": "They may hold tools on a storage board.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "ROD",
+      "clue": "Long straight bar used to support a curtain",
+      "hint": "Rings can slide along it above a window.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "RODS",
+      "clue": "Long straight bars used to support curtains",
+      "hint": "Brackets attach them above windows.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "NUT",
+      "clue": "Threaded fitting screwed onto a bolt",
+      "hint": "A wrench can tighten it.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "NUTS",
+      "clue": "Threaded fittings screwed onto bolts",
+      "hint": "They hold joined parts firmly together.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "BIT",
+      "clue": "Replaceable cutting attachment fitted into a drill",
+      "hint": "Different sizes make different holes.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "BITS",
+      "clue": "Replaceable attachments fitted into drills",
+      "hint": "A set provides different cutting sizes.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "GRIT",
+      "clue": "Rough particles on an abrasive surface",
+      "hint": "A higher number usually means finer sandpaper.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "FILES",
+      "clue": "Hand tools with rough surfaces for shaping material",
+      "hint": "They remove small amounts of wood or metal.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "AWL",
+      "clue": "Pointed hand tool for making small holes",
+      "hint": "It can mark wood before drilling.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "MAT",
+      "clue": "Small protective covering placed on a floor",
+      "hint": "One by a door catches dirt from shoes.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "MATS",
+      "clue": "Small protective floor coverings",
+      "hint": "They can absorb water near a doorway.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "PAD",
+      "clue": "Soft layer used to cushion or protect a surface",
+      "hint": "It may go beneath a rug.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "PADS",
+      "clue": "Soft layers used for cushioning or protection",
+      "hint": "Small ones under furniture can prevent scratches.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "RIM",
+      "clue": "Raised edge around a bowl or sink",
+      "hint": "Water can spill over it if the container is too full.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "BASE",
+      "clue": "Lowest supporting part of a household object",
+      "hint": "It helps a lamp stand securely.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "TRAY",
+      "clue": "Flat portable surface used to carry dishes",
+      "hint": "Raised edges help keep items from sliding off.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "TRAYS",
+      "clue": "Flat portable surfaces used to carry dishes",
+      "hint": "They make it easier to serve several drinks.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "LID",
+      "clue": "Removable cover for a pot or container",
+      "hint": "It helps hold heat and steam inside.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "LIDS",
+      "clue": "Removable covers for pots or containers",
+      "hint": "Matching sizes keep their contents enclosed.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "CAN",
+      "clue": "Metal container used for storage",
+      "hint": "Paint is often sold in one.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "CANS",
+      "clue": "Metal containers used for storage",
+      "hint": "Empty paint containers should be handled according to local guidance.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "TIN",
+      "clue": "Small metal container with a fitted lid",
+      "hint": "It can hold biscuits or sewing supplies.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "TINS",
+      "clue": "Small metal containers with fitted lids",
+      "hint": "They keep dry goods organized.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "BAG",
+      "clue": "Flexible container used to hold household items",
+      "hint": "It may collect rubbish or carry shopping.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "BAGS",
+      "clue": "Flexible containers used to hold household items",
+      "hint": "They can organize supplies or collect waste.",
+      "source": "seed",
+      "editorialReviewed": true
+    }
+  ],
+  "Science & Discovery": [
+    {
+      "answer": "COMET",
+      "clue": "Icy object that can grow a tail near the sun",
+      "hint": "Its glowing trail points away from our star.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "EARTH",
+      "clue": "Planet on which we live",
+      "hint": "The third world outward from the sun.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "JUPITER",
+      "clue": "Largest planet in our solar system",
+      "hint": "Its Great Red Spot is a giant storm.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "MERCURY",
+      "clue": "Planet closest to the sun",
+      "hint": "It travels around our star in about 88 days.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "ECLIPSE",
+      "clue": "Event in which one celestial body obscures another",
+      "hint": "The moon can briefly block our view of the sun.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "SOLAR",
+      "clue": "Relating to the sun",
+      "hint": "Describes energy collected from sunlight.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "COSMOS",
+      "clue": "The universe considered as a whole",
+      "hint": "It includes all the galaxies and the space between them.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "AURORA",
+      "clue": "Colorful natural lights seen near the poles",
+      "hint": "They can form glowing curtains in the night sky.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "LUNAR",
+      "clue": "Relating to the moon",
+      "hint": "Describes the surface visited by Apollo astronauts.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "CRATER",
+      "clue": "Bowl-shaped depression left by an impact",
+      "hint": "Many cover the surface of the moon.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "VACUUM",
+      "clue": "Space containing almost no matter",
+      "hint": "There is no air to breathe between the planets.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "SATELLITE",
+      "clue": "Object orbiting a planet",
+      "hint": "It can be natural like the moon or built by people.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "METEORITE",
+      "clue": "Space rock that reaches the ground",
+      "hint": "It survives the journey through the atmosphere.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "NEPTUNE",
+      "clue": "Planet farthest from the sun among the eight",
+      "hint": "This blue world lies beyond Uranus.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "PLUTO",
+      "clue": "Dwarf planet once listed as the ninth planet",
+      "hint": "It orbits in the region beyond Neptune.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "STARDUST",
+      "clue": "Tiny particles formed by stars",
+      "hint": "Material drifting between worlds can contain it.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "SUNSPOT",
+      "clue": "Dark cooler patch on the sun's visible surface",
+      "hint": "It appears dimmer than the surrounding hot gas.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "LIGHTYEAR",
+      "clue": "Distance light travels in a year",
+      "hint": "Astronomers use it to describe the distances to stars.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "PHASE",
+      "clue": "Shape of the illuminated moon seen from Earth",
+      "hint": "It changes from a thin crescent to a full circle.",
+      "source": "seed",
+      "editorialReviewed": true
+    }
+  ],
+  "Ocean & Marine Life": [
+    {
+      "answer": "SEA",
+      "clue": "Large body of salt water",
+      "hint": "It may be partly enclosed by land.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "SEAS",
+      "clue": "Large bodies of salt water",
+      "hint": "Ships travel across them between ports.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "SALT",
+      "clue": "Mineral that gives seawater its familiar taste",
+      "hint": "Evaporation leaves it behind.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "SAND",
+      "clue": "Loose grains covering many beaches",
+      "hint": "Waves can move it along the shore.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "SANDY",
+      "clue": "Covered with loose grains found on a beach",
+      "hint": "Describes a shore suitable for building small castles.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "WAVE",
+      "clue": "Moving ridge on the sea surface",
+      "hint": "It can break into foam near the shore.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "WAKE",
+      "clue": "Disturbed water trailing behind a moving boat",
+      "hint": "It spreads outward as the vessel passes.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "RIG",
+      "clue": "Arrangement of sails and supporting equipment on a boat",
+      "hint": "Different vessels carry different configurations.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "RIGGING",
+      "clue": "Ropes and cables supporting a sailing vessel's masts",
+      "hint": "Some lines also control the sails.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "ROPE",
+      "clue": "Thick cord used aboard a boat",
+      "hint": "It can secure the vessel to a dock.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "ROPES",
+      "clue": "Thick cords used aboard a boat",
+      "hint": "Knots help fasten them to fittings.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "LINE",
+      "clue": "Rope used for a specific task aboard a boat",
+      "hint": "One may secure the vessel to a mooring.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "LINES",
+      "clue": "Ropes used for specific tasks aboard a boat",
+      "hint": "They may secure sails or keep the vessel at a dock.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "OARS",
+      "clue": "Long blades used to row a boat",
+      "hint": "A rower pulls them through the water.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "BOAT",
+      "clue": "Small vessel used to travel on water",
+      "hint": "It may be powered by wind or an engine.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "BOATS",
+      "clue": "Small vessels used to travel on water",
+      "hint": "They may gather in a sheltered harbor.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "SHIPS",
+      "clue": "Large vessels used for travel or transport at sea",
+      "hint": "They can carry passengers or cargo across oceans.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "FINS",
+      "clue": "Flat body parts helping a fish swim",
+      "hint": "They provide balance and steering.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "TAIL",
+      "clue": "Rear body part helping propel a fish",
+      "hint": "Side-to-side movement pushes the animal through water.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "TAILS",
+      "clue": "Rear body parts helping propel fish",
+      "hint": "They move to drive the animals forward.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "GILLS",
+      "clue": "Organs that allow fish to breathe underwater",
+      "hint": "Water flows over them to deliver oxygen.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "CLAW",
+      "clue": "Pincerlike limb of a crab or lobster",
+      "hint": "It can grip food or defend the animal.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "CLAWS",
+      "clue": "Pincerlike limbs of crabs and lobsters",
+      "hint": "They help hold food and deter predators.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "EGGS",
+      "clue": "Reproductive cells released by many fish",
+      "hint": "They may develop in sheltered water before hatching.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "NET",
+      "clue": "Mesh equipment used to catch fish",
+      "hint": "Openings let water pass through while trapping the catch.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "NETS",
+      "clue": "Mesh devices used to catch fish",
+      "hint": "Fishing boats may lower or tow them through the water.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "CRABS",
+      "clue": "Marine animals often walking sideways",
+      "hint": "Their hard shells protect bodies with grasping pincers.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "FISH",
+      "clue": "Aquatic animal breathing mainly through gills",
+      "hint": "Fins help it move through the water.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "SHORES",
+      "clue": "Strips of land bordering the sea",
+      "hint": "Waves wash along them.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "TIDES",
+      "clue": "Regular rises and falls in sea level",
+      "hint": "The moon's gravity plays a major part in producing them.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "SKIFF",
+      "clue": "Small light boat used near shore",
+      "hint": "It may be rowed or powered by a small motor.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "TUG",
+      "clue": "Small powerful boat that moves larger vessels",
+      "hint": "It helps guide ships within a harbor.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "EBB",
+      "clue": "Movement of the tide away from shore",
+      "hint": "More beach becomes exposed as the water retreats.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "MOOR",
+      "clue": "Secure a boat in a fixed place",
+      "hint": "Ropes or an anchor keep it from drifting.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "MOORING",
+      "clue": "Place or equipment used to secure a boat",
+      "hint": "A buoy can mark it in a harbor.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "DORY",
+      "clue": "Small boat with a flat bottom and high sides",
+      "hint": "It has traditionally been used for fishing.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "SEAWARD",
+      "clue": "Toward the open sea",
+      "hint": "It is the direction away from the coast.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "ASHORE",
+      "clue": "Onto or on the land from the water",
+      "hint": "Passengers go here after leaving a boat.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "AFT",
+      "clue": "Toward the rear of a vessel",
+      "hint": "Sailors use it as a direction aboard ship.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "FORE",
+      "clue": "Toward the front of a vessel",
+      "hint": "It is the opposite direction from aft.",
+      "source": "seed",
+      "editorialReviewed": true
+    },
+    {
+      "answer": "HELM",
+      "clue": "Steering position or equipment of a vessel",
+      "hint": "The person controlling the course stands here.",
+      "source": "seed",
+      "editorialReviewed": true
+    }
+  ]
+}

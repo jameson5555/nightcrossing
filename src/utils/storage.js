@@ -1,45 +1,12 @@
 import { createHintWallet } from './hintWallet.js';
 import { Preferences } from '@capacitor/preferences';
-import { reconcilePuzzleRevisions } from './puzzleRevisions.js';
+import { reconcilePuzzleRevisions, recordDatasetVersion } from './puzzleRevisions.js';
 import { getPuzzleStatus } from './puzzleProgress.js';
 
 export const resetReplacedPuzzleProgress = (revisions) => reconcilePuzzleRevisions(Preferences, revisions);
 
-const PUZZLE_DATASET_VERSION_KEY = 'puzzle_dataset_version';
 const JOURNEY_RANK_HIGH_WATERMARK_KEY = 'journey_rank_high_watermark';
-const RESETTABLE_KEY_PREFIXES = [
-  'puzzle_progress_',
-  'unlocked_hints_',
-  'reward_claimed_',
-  'revealed_indices_',
-  'theme_progress_',
-  'free_hint_claimed_'
-];
-const RESETTABLE_EXACT_KEYS = [
-  'global_hints_remaining',
-  'hint_wallet_v1',
-  'hints_empty_timestamp',
-  'bonus_hint_toast_pending',
-  'bonus_hints_awarded_since_empty'
-];
-
-export const resetPuzzleDataIfDatasetChanged = async (datasetVersion) => {
-  const normalizedVersion = String(datasetVersion || '').trim();
-  if (!normalizedVersion) return false;
-
-  const { value: storedVersion } = await Preferences.get({ key: PUZZLE_DATASET_VERSION_KEY });
-  if (storedVersion === normalizedVersion) return false;
-
-  const { keys } = await Preferences.keys();
-  const keysToRemove = keys.filter((key) => {
-    if (RESETTABLE_EXACT_KEYS.includes(key)) return true;
-    return RESETTABLE_KEY_PREFIXES.some(prefix => key.startsWith(prefix));
-  });
-
-  await Promise.all(keysToRemove.map(key => Preferences.remove({ key })));
-  await Preferences.set({ key: PUZZLE_DATASET_VERSION_KEY, value: normalizedVersion });
-  return true;
-};
+export const recordPuzzleDatasetVersion = version => recordDatasetVersion(Preferences, version);
 
 export const savePuzzleProgress = async (puzzleId, answers) => {
   await Preferences.set({

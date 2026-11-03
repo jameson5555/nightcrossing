@@ -5,6 +5,7 @@ import { createRequire } from 'module';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { THEMES, createThemePools, scoreWordForTheme } from './proceduralEngine.js';
 import { isWordEntryAcceptable } from './clueQuality.js';
+import catalog from './puzzleCatalog.cjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -80,7 +81,7 @@ function buildConsumedByTheme(puzzlesDir) {
   for (const file of files) {
     const fullPath = path.join(puzzlesDir, file);
     try {
-      const puzzle = JSON.parse(fs.readFileSync(fullPath, 'utf8'));
+      const puzzle = catalog.readCurrentPuzzle(fullPath);
       const theme = puzzle?.theme;
       if (!theme) continue;
 

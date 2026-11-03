@@ -1,3 +1,10 @@
+import fs from 'node:fs';
+import { catalogEditorialWords } from './catalogEditorialWords.js';
+import { catalogEditorialReserve } from './catalogEditorialReserve.js';
+
+const historicalWords = JSON.parse(fs.readFileSync(new URL('./historicalWords.json', import.meta.url), 'utf8'));
+const runwayWords = JSON.parse(fs.readFileSync(new URL('./catalogRunwayWords.json', import.meta.url), 'utf8'));
+
 // Reviewed overrides and replenishment. Each clue stands alone; each hint stays
 // in the same sense. Compounds absent from the frequency corpus are reviewed here.
 const entries = {
@@ -705,9 +712,12 @@ BOARDING|Getting onto a passenger vehicle|Usually announced before a flight depa
 
 export function applyEditorialWords(themes) {
   for (const theme of themes) {
-    const packed = [entries[theme.name], supplemental[theme.name]].filter(Boolean).join('\n');
-    if (!packed) continue;
+    const packed = [catalogEditorialReserve[theme.name], catalogEditorialWords[theme.name], entries[theme.name], supplemental[theme.name]]
+      .filter(Boolean).join('\n');
+    if (!packed && !historicalWords[theme.name]?.length) continue;
     const words = new Map(theme.words.map(word => [word.answer.toUpperCase(), word]));
+    for (const word of historicalWords[theme.name] || []) words.set(word.answer, word);
+    for (const word of runwayWords[theme.name] || []) words.set(word.answer, word);
     for (const line of packed.trim().split('\n').filter(line => line.trim())) {
       const [rawAnswer, clue, hint] = line.split('|');
       const answer = rawAnswer.replace(/\s/g, '');

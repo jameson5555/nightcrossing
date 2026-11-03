@@ -16,6 +16,7 @@ import { computePuzzleMetrics } from './puzzleMetrics.js';
 import { auditPuzzleQuality } from './puzzleQuality.js';
 import { computeLexicalStatsForAnswers } from './lexicalDifficulty.js';
 import difficultyRubricPkg from './difficultyRubric.cjs';
+import { readCurrentPuzzle } from './puzzleCatalog.cjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -329,7 +330,7 @@ function buildThemeConsumedWords(themeName, historicalConsumedByTheme, excludedI
     const fileId = fileName.replace(/\.json$/, '');
     if (excludedIds.has(fileId)) continue;
     try {
-      const puzzle = JSON.parse(fs.readFileSync(path.join(PUZZLES_DIR, fileName), 'utf8'));
+      const puzzle = readCurrentPuzzle(path.join(PUZZLES_DIR, fileName));
       addPuzzleAnswersToSet(puzzle, consumedWords);
     } catch {
       // Ignore malformed puzzle files while rebuilding the consumed-word set.
@@ -384,7 +385,7 @@ async function analyzeGeneratedBatchDifficulty(index, generatedIdsThisRun) {
     const filePath = path.join(PUZZLES_DIR, `${entry.id}.json`);
     if (!fs.existsSync(filePath)) continue;
 
-    const puzzle = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    const puzzle = readCurrentPuzzle(filePath);
     const profile = await buildDifficultyProfile(puzzle);
     const label = classifyDifficulty(profile);
     const easy = meetsEasyRubric(profile);
@@ -815,7 +816,7 @@ async function generateStarters() {
       const existingFiles = fs.readdirSync(PUZZLES_DIR).filter(f => f.endsWith('.json'));
       for (const file of existingFiles) {
         try {
-          const puzzle = JSON.parse(fs.readFileSync(path.join(PUZZLES_DIR, file), 'utf8'));
+          const puzzle = readCurrentPuzzle(path.join(PUZZLES_DIR, file));
           const themeName = puzzle?.theme;
           if (!themeName) continue;
 
@@ -889,7 +890,7 @@ async function generateStarters() {
       
       // Load the actual JSON to see what words were used, to add to consumedWords
       try {
-        const fileData = JSON.parse(fs.readFileSync(path.join(PUZZLES_DIR, `${p.id}.json`), 'utf8'));
+        const fileData = readCurrentPuzzle(path.join(PUZZLES_DIR, `${p.id}.json`));
         if (fileData.answers) {
             fileData.answers.across.forEach(ans => consumedWords.add(ans.toUpperCase()));
             fileData.answers.down.forEach(ans => consumedWords.add(ans.toUpperCase()));
@@ -902,7 +903,7 @@ async function generateStarters() {
     // Also load consumed words from any disk-only puzzle files
     for (const f of diskFiles) {
       try {
-        const fileData = JSON.parse(fs.readFileSync(path.join(PUZZLES_DIR, f), 'utf8'));
+        const fileData = readCurrentPuzzle(path.join(PUZZLES_DIR, f));
         if (fileData.answers) {
           fileData.answers.across.forEach(ans => consumedWords.add(ans.toUpperCase()));
           fileData.answers.down.forEach(ans => consumedWords.add(ans.toUpperCase()));
@@ -925,7 +926,7 @@ async function generateStarters() {
             if ((fs.existsSync(existingFile) || fs.existsSync(legacyFile)) && !index.find(p => p.id === id || p.id === legacyId)) {
               const existingPath = fs.existsSync(existingFile) ? existingFile : legacyFile;
               try {
-                const existing = JSON.parse(fs.readFileSync(existingPath, 'utf8'));
+                const existing = readCurrentPuzzle(existingPath);
                 if (existing.answers) {
                   existing.answers.across.forEach(a => consumedWords.add(a.toUpperCase()));
                   existing.answers.down.forEach(a => consumedWords.add(a.toUpperCase()));
@@ -1140,7 +1141,7 @@ async function generateStarters() {
     const fId = f.replace('.json', '');
     if (!indexedIds.has(fId)) {
       try {
-        const p = JSON.parse(fs.readFileSync(path.join(PUZZLES_DIR, f), 'utf8'));
+        const p = readCurrentPuzzle(path.join(PUZZLES_DIR, f));
         index.push({ id: p.id, title: p.title, author: p.author, date: p.date, cols: p.size.cols, rows: p.size.rows, theme: p.theme });
         generatedIdsThisRun.add(p.id);
         console.log(`  📎 Reconciled ${fId} into index.`);

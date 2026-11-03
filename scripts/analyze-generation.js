@@ -3,6 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { computePuzzleMetrics, summarizeMetrics } from './puzzleMetrics.js';
 import difficultyRubric from './difficultyRubric.cjs';
+import { readCurrentPuzzle } from './puzzleCatalog.cjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -63,7 +64,7 @@ function run() {
   for (const file of files) {
     const fullPath = path.join(args.input, file);
     try {
-      const puzzle = JSON.parse(fs.readFileSync(fullPath, 'utf8'));
+      const puzzle = readCurrentPuzzle(fullPath);
       const m = computePuzzleMetrics(puzzle);
       metrics.push({ file, ...m });
       const key = `${m.cols}x${m.rows}`;

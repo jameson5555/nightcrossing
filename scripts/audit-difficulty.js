@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 import fs from 'fs';
+import process from 'node:process';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { computePuzzleMetrics } from './puzzleMetrics.js';
 import difficultyRubric from './difficultyRubric.cjs';
 import { computeLexicalStatsForAnswers, getDefaultLexicalStats } from './lexicalDifficulty.js';
+import catalog from './puzzleCatalog.cjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -177,7 +179,7 @@ async function main() {
       continue;
     }
 
-    const puzzle = loadJSON(filePath);
+    const puzzle = catalog.readCurrentPuzzle(filePath);
     const result = await auditDifficultyLabel(item, puzzle);
     if (result.actualDifficulty !== result.expectedDifficulty) {
       violations.push(result);

@@ -19,8 +19,10 @@ bundled dataset remains available as an offline fallback.
 Catalog refreshes wait until the player returns to the menu so an open puzzle
 keeps its grid and saved cells together. Cached puzzle files include the catalog
 version in their URLs, keeping the list and play screen on the same data.
-The list honors saved completion records as well as solved cells; an explicit
-layout revision clears that puzzle's incompatible saved state.
+The list honors saved completion records as well as solved cells. Editorial
+updates use immutable puzzle editions: untouched puzzles receive the latest
+edition, while started and completed puzzles retain their original grid and
+saved hint state. Catalog and layout changes never clear player data.
 
 The menu shows at most five active themes, including themes waiting for their
 next batch. When a finished, exhausted theme unlocks a successor, that successor
@@ -61,9 +63,17 @@ To replace particular grids, use `npm run regenerate:selected --
 ocean---marine-life-vol15` (or pass several puzzle IDs). This uses reviewed
 vocabulary, excludes answers in other volumes of the same theme, validates every
 replacement before writing any, and preserves IDs, titles, wave labels, and
-catalog size. Replacement layout revisions in metadata let updated clients
-clear saved cells and hints for those puzzles without resetting the wallet or
-progress on other puzzles. Clue-only edits do not require a layout revision.
+catalog size. Replacements are published under `public/data/puzzles/editions/`
+with a pointer in the original puzzle file. Keep the original file and every
+published edition: saved games may still reference them. The edition-aware
+loader preserves completion credit, letters, hints, theme unlocks, and ranks.
+
+Run `npm run repair:historical -- --staging-dir /tmp/nightcrossing-repair` to
+audit and stage a complete catalog cleanup. Add `--write` to publish validated
+editions locally and refresh the index. Generation excludes answers already
+used by another current puzzle in the same theme. Staging is resumable.
+`npm run audit:catalog` checks the complete current catalog; CI now runs the
+complete quality and relevance audits rather than checking only changed files.
 
 ## Development
 

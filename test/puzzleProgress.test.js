@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { getPuzzleStatus } from '../src/utils/puzzleProgress.js';
 import { getSolvedClueIds } from '../src/utils/crossword.js';
+import { readCurrentPuzzle } from '../scripts/puzzleCatalog.cjs';
+import { fileURLToPath } from 'node:url';
 
 test('Food 12 stays completed when its completion record exists and saved cells differ', () => {
   const puzzle = JSON.parse(fs.readFileSync(
@@ -28,9 +30,11 @@ test('new, incomplete, incorrect and solved grids have distinct statuses', () =>
 test('completion status agrees with solved clues throughout the current catalog', () => {
   const directory = new URL('../public/data/puzzles/', import.meta.url);
   for (const file of fs.readdirSync(directory).filter(file => file.endsWith('.json'))) {
-    const puzzle = JSON.parse(fs.readFileSync(new URL(file, directory)));
-    assert.equal(getPuzzleStatus(puzzle.grid, puzzle.grid), 'Completed', file);
-    assert.equal(getSolvedClueIds(puzzle, puzzle.grid).size,
-      puzzle.answers.across.length + puzzle.answers.down.length, file);
+    for (const puzzle of [JSON.parse(fs.readFileSync(new URL(file, directory))),
+      readCurrentPuzzle(fileURLToPath(new URL(file, directory)))]) {
+      assert.equal(getPuzzleStatus(puzzle.grid, puzzle.grid), 'Completed', file);
+      assert.equal(getSolvedClueIds(puzzle, puzzle.grid).size,
+        puzzle.answers.across.length + puzzle.answers.down.length, file);
+    }
   }
 });

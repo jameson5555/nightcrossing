@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { readCurrentPuzzle } from './puzzleCatalog.cjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -153,7 +154,7 @@ function main() {
     const puzzlePath = path.join(PUZZLES_DIR, `${item.id}.json`);
     if (!fs.existsSync(puzzlePath)) continue;
 
-    const puzzle = JSON.parse(fs.readFileSync(puzzlePath, 'utf8'));
+    const puzzle = readCurrentPuzzle(puzzlePath);
     const signals = collectLexicalSignals(puzzle);
     allSignals.push(signals);
 
