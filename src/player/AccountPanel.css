@@ -1,0 +1,28 @@
+.account-panel { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 14px 8px 18px; color: var(--text-secondary, #b9b9c5); }
+.account-panel > div { min-width: 0; }
+.account-status, .account-name { display: block; font-size: .8rem; line-height: 1.5; }
+.account-name { color: var(--text-primary, #eeeef6); }
+.account-panel button, .account-loading button { font: inherit; cursor: pointer; border-radius: 8px; padding: 9px 13px; color: #e9eaf2; border: 1px solid #40445c; background: #20243a; }
+.account-panel button:hover:not(:disabled) { background: #303650; }
+.account-panel button:focus-visible, .account-dialog a:focus-visible, .account-import input:focus-visible { outline: 2px solid #b7c5ff; outline-offset: 3px; }
+.account-panel button:disabled { cursor: default; opacity: .55; }
+.account-panel .account-trigger { flex-shrink: 0; font-size: .8rem; }
+.account-dialog { position: fixed; inset: 0; margin: auto; color-scheme: dark; width: min(480px, calc(100vw - 32px)); max-height: calc(100dvh - 48px); overflow-y: auto; box-sizing: border-box; padding: 24px; color: #e9eaf2; background: #111626; border: 1px solid #3d4664; border-radius: 16px; box-shadow: 0 20px 80px #0009; line-height: 1.6; }
+.account-dialog::backdrop { background: #030611c9; }
+.account-dialog-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.account-dialog h2 { font-size: 1.2rem; margin: 0; }
+.account-dialog p { margin: 16px 0; }
+.account-dialog a { color: #bdcaff; }
+.account-dialog .account-small { color: #b9c1d7; font-size: .8rem; }
+.account-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.account-import { display: flex; align-items: flex-start; gap: 10px; }
+.account-import input { margin-top: 7px; accent-color: #b7c5ff; }
+.account-google { margin-top: 10px; width: 100%; }
+.account-panel .account-error { flex-basis: 100%; color: #ffcfb9; font-size: .85rem; }
+.account-panel .account-delete { color: #f1b3b3; background: transparent; margin-top: 16px; }
+.account-delete-confirm { border-top: 1px solid #40445c; margin-top: 20px; padding-top: 4px; }
+.account-delete-confirm button { margin: 4px; }
+.account-versions { margin-top: 18px; }
+.account-versions > div { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 12px 0; border-bottom: 1px solid #30364d; font-size: .85rem; }
+.account-loading { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100dvh; padding: 24px; box-sizing: border-box; color: #e9eaf2; background: #0a0a0f; text-align: center; }
+@media (max-width: 400px) { .account-dialog { padding: 18px; } .account-panel { gap: 8px; } }

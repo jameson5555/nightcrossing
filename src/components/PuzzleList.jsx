@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './PuzzleList.css';
-import { loadRewardClaimed, loadJourneyRankHighWatermark, loadPuzzleProgress } from '../utils/storage';
+import { usePlayer } from '../player/PlayerContext.js';
 import { getPuzzleStatus } from '../utils/puzzleProgress';
 import { getJourneyProgress } from '../utils/badges';
 import { getSolvedClueIds } from '../utils/crossword';
@@ -9,7 +9,7 @@ import {
   formatNextReleaseDate,
   selectVisibleThemeEntries
 } from '../utils/themeAvailability';
-import { loadPuzzleForPlayer } from '../utils/puzzleData';
+
 
 const THEME_DISPLAY_ORDER = [
   'Space & Sky',
@@ -57,6 +57,8 @@ const PuzzleList = ({
   onListStateChange,
   refreshToken
 }) => {
+  const { game, loadPuzzleForPlayer } = usePlayer();
+  const { loadRewardClaimed, loadJourneyRankHighWatermark, loadPuzzleProgress } = game;
   const [statuses, setStatuses] = useState(() => listState?.statuses || {});
   const [wordsLeftByPuzzle, setWordsLeftByPuzzle] = useState(() => listState?.wordsLeftByPuzzle || {});
   const [loading, setLoading] = useState(() => !listState?.statuses);

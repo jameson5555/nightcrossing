@@ -100,3 +100,11 @@ See [launch setup and validation](docs/monetization-launch.md),
 The game is positioned for adult crossword players, with no age screen or optional
 minor-access restriction. Publisher approval, privacy setup, signing credentials,
 and physical-device testing are required before monetized Play distribution.
+
+## Optional accounts and cloud saves
+
+The web app can offer Google sign-in and private Firebase cloud saves while
+retaining guest play and existing browser progress. Accounts remain disabled
+until a Firebase project, authorized domain, and owner-only database rules are
+configured. See [setup, migration, and verification](docs/cloud-saves.md).
+Native Android accounts remain disabled pending native Google sign-in integration.

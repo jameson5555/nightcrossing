@@ -23,6 +23,11 @@ jobs:
 
       - name: Build Web App
         env:
+          VITE_CLOUD_SAVE_ENABLED: ${{ vars.NC_CLOUD_SAVE_ENABLED || 'false' }}
+          VITE_FIREBASE_API_KEY: ${{ vars.NC_FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN: ${{ vars.NC_FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_PROJECT_ID: ${{ vars.NC_FIREBASE_PROJECT_ID }}
+          VITE_FIREBASE_APP_ID: ${{ vars.NC_FIREBASE_APP_ID }}
           VITE_ANDROID_REWARDED_ADS_ENABLED: 'false'
           VITE_WEB_REWARDED_ADS_ENABLED: ${{ vars.NC_WEB_REWARDED_ADS_ENABLED || 'false' }}
           VITE_ADS_TEST_MODE: ${{ vars.NC_ADS_TEST_MODE || 'true' }}

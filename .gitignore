@@ -29,3 +29,9 @@ dist-ssr
 .env
 .env.*
 !.env.example
+
+# Firebase CLI local state and native account configuration
+.firebase/
+firebase-debug.log*
+firestore-debug.log*
+android/app/google-services.json

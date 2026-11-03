@@ -14,10 +14,15 @@
 <body><main>
 <a href="./">← Back to Nightcrossing</a>
 <h1>Privacy</h1>
-<p>Last updated: September 10, 2026</p>
-<p>Nightcrossing is a crossword game by Jameson MacArthur. You do not need an account to play.</p>
+<p>Last updated: November 3, 2026</p>
+<p>Nightcrossing is a crossword game by Jameson MacArthur. You do not need an account to play. Where enabled, optional Google sign-in lets you save progress to an account.</p>
 <h2>Your puzzle progress</h2>
-<p>The game stores puzzle answers, completion history, hint balances, and game preferences on your device. It does not upload these to a player account. Your browser or operating system may back up local data according to your device settings. Clearing the site's data or the Android app's storage removes your saved progress.</p>
+<p>The game stores puzzle answers, completion history, hint balances, and game preferences on your device. Guest progress stays on that device. Your browser or operating system may back up local data according to your device settings. Clearing site or app storage removes local saves.</p>
+<h2>Optional accounts and cloud saves</h2>
+<p>When account features are enabled, Google and Firebase Authentication handle sign-in. They process your Google account identity, email address, profile name, and authentication information. Nightcrossing uses your Firebase user ID to associate cloud saves with your account and displays your profile name or email while you are signed in. The game never receives your Google password and does not request access to your contacts, email messages, or calendar.</p>
+<p>Signed-in progress is also stored in Cloud Firestore, a Google Firebase service. It includes saved letters, puzzle editions, completed puzzles, hint balances and reward history, unlocked hints, revealed cells, achievements, and relevant game preferences. Different saved puzzle editions may be retained so that merging devices does not discard an older grid. Account saves are restricted to the signed-in account by database access rules.</p>
+<p>You can choose to add existing guest progress when signing in. That guest copy remains on the device. Signing out returns to separate guest progress. Changes made while offline remain local until a successful sync; another device can restore only changes that have reached the cloud. The account controls show save status and let you sync, download a backup, or delete your account and cloud save after confirming with Google. Successful deletion also removes that account's cached save from the device where you delete it. Copies or downloaded backups on other devices are not remotely erased.</p>
+<p>Google processes connection and device information to provide these services. See <a href="https://firebase.google.com/support/privacy">Firebase privacy information</a> and <a href="https://policies.google.com/privacy">Google's privacy policy</a>. Account features can be unavailable in some builds, including Android builds awaiting native sign-in integration.</p>
 <h2>Website and puzzle downloads</h2>
 <p>Your device requests game files and puzzle updates from jamesonmacarthur.com. As with other websites, the hosting service receives connection information, including your IP address and browser request information. This is separate from the puzzle progress saved on your device.</p>
 <h2>Fonts</h2>
@@ -27,7 +32,7 @@
 <p>When advertising is enabled and an ad is requested, Google may process connection and device information and information about ad interactions to deliver ads, prevent fraud, and report performance. See <a href="https://policies.google.com/technologies/partner-sites">how Google uses information from sites and apps that use its services</a>. Ad availability can vary by version and location.</p>
 <h2>Audience and notifications</h2>
 <p>Nightcrossing is designed and marketed for adult crossword players. It does not require you to enter your age or prove your identity to play.</p>
-<p>The game does not ask for names, dates of birth, email addresses, or player accounts. It does not include chat or a separate player analytics service. On Android, you can choose whether to allow local bonus-hint notifications and can turn them off in system settings.</p>
+<p>The game does not ask for a date of birth and does not include chat or a separate player analytics service. Optional account information is described above. On Android, you can choose whether to allow local bonus-hint notifications and can turn them off in system settings.</p>
 <h2>Contact</h2>
 <p>For support or privacy questions, email <a href="mailto:nightcrossing@jamesonmacarthur.com">nightcrossing@jamesonmacarthur.com</a>.</p>
 </main></body></html>

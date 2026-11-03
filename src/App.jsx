@@ -5,39 +5,14 @@ import ClueList from './components/ClueList';
 import PuzzleList from './components/PuzzleList';
 import { getWordAt, getSolvedClueIds } from './utils/crossword';
 import { getClueText } from './utils/clues';
-import { 
-  loadPuzzleProgress, 
-  loadHintsRemaining, 
-  changeHintsRemaining,
-  awardHints,
-  loadUnlockedHints, 
-  saveUnlockedHints,
-  loadRevealedIndices,
-  saveRevealedIndices,
-  loadRewardClaimed,
-  saveRewardClaimed,
-  loadHintsEmptyTimestamp,
-  saveHintsEmptyTimestamp,
-  clearHintsEmptyTimestamp,
-  loadFreeHintToastSeen,
-  saveFreeHintToastSeen,
-  loadFreeHintClaimed,
-  saveFreeHintClaimed,
-  loadBonusHintToastPending,
-  saveBonusHintToastPending,
-  loadBonusHintsAwardedSinceEmpty,
-  saveBonusHintsAwardedSinceEmpty,
-  recordPuzzleDatasetVersion,
-  resetReplacedPuzzleProgress,
-  loadJourneyRankHighWatermark,
-  saveJourneyRankHighWatermark
-} from './utils/storage';
-import { saveThemeProgress } from './utils/storage';
+
+import { usePlayer } from './player/PlayerContext.js';
+import AccountPanel from './player/AccountPanel.jsx';
 import { getJourneyRankLevel, getBadgeName, getBadgeAsset } from './utils/badges';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { Capacitor } from '@capacitor/core';
 import HintModal from './components/HintModal';
-import { fetchPuzzleData, loadPuzzleForPlayer } from './utils/puzzleData';
+import { fetchPuzzleData } from './utils/puzzleData';
 import { getThemeCompletionOutcome } from './utils/themeAvailability';
 
 import { createRewardedHints } from './ads/rewardedHints';
@@ -114,6 +89,35 @@ const getEligibleBonusHintsSinceEmpty = (elapsedMs, firstCooldownMs, incrementMs
 };
 
 function App() {
+  const { game, loadPuzzleForPlayer, controller } = usePlayer();
+  const {
+    loadPuzzleProgress,
+    loadHintsRemaining,
+    changeHintsRemaining,
+    awardHints,
+    loadUnlockedHints,
+    saveUnlockedHints,
+    loadRevealedIndices,
+    saveRevealedIndices,
+    loadRewardClaimed,
+    saveRewardClaimed,
+    loadHintsEmptyTimestamp,
+    saveHintsEmptyTimestamp,
+    clearHintsEmptyTimestamp,
+    loadFreeHintToastSeen,
+    saveFreeHintToastSeen,
+    loadFreeHintClaimed,
+    saveFreeHintClaimed,
+    loadBonusHintToastPending,
+    saveBonusHintToastPending,
+    loadBonusHintsAwardedSinceEmpty,
+    saveBonusHintsAwardedSinceEmpty,
+    recordPuzzleDatasetVersion,
+    resetReplacedPuzzleProgress,
+    loadJourneyRankHighWatermark,
+    saveJourneyRankHighWatermark,
+    saveThemeProgress
+  } = game;
   const [currentView, setCurrentView] = useState('menu'); // 'menu' | 'play'
   const [puzzleData, setPuzzleData] = useState(null);
   const [direction, setDirection] = useState('across');
@@ -349,6 +353,7 @@ function App() {
       await refreshPuzzlesRef.current?.();
       if (puzzleSessionActiveRef.current) return;
       puzzleSessionActiveRef.current = true;
+      void controller.setPlaying(true);
       // Show loading or transition
       const data = await loadPuzzleForPlayer(id, {
         version: puzzleVersionRef.current, pin: true
@@ -382,6 +387,7 @@ function App() {
       setCurrentView('play');
     } catch (e) {
       puzzleSessionActiveRef.current = false;
+      void controller.setPlaying(false);
       console.error('Failed to load puzzle', e);
       alert('Error loading puzzle data.');
     }
@@ -389,6 +395,7 @@ function App() {
 
   const handleBackToMenu = () => {
     puzzleSessionActiveRef.current = false;
+    void controller.setPlaying(false);
     triggerHeaderTitleMorph('Nightcrossing');
     setCurrentView('menu');
     setPuzzleData(null);
@@ -860,6 +867,7 @@ function App() {
         </>
       ) : (
         <div className="menu-container">
+          <AccountPanel />
           <PuzzleList
             onSelectPuzzle={handleSelectPuzzle}
             puzzles={puzzlesIndex}

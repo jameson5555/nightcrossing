@@ -29,6 +29,8 @@ jobs:
       NC_ANDROID_VERSION_NAME: ${{ inputs.version_name || github.event.release.tag_name || '1.0' }}
       VITE_ANDROID_REWARDED_ADS_ENABLED: ${{ vars.NC_ANDROID_REWARDED_ADS_ENABLED || 'false' }}
       VITE_WEB_REWARDED_ADS_ENABLED: 'false'
+      # Native Google sign-in must be integrated and tested before enabling accounts.
+      VITE_CLOUD_SAVE_ENABLED: 'false'
       VITE_ADS_TEST_MODE: ${{ vars.NC_ADS_TEST_MODE || 'true' }}
       VITE_ANDROID_ADS_REVIEWED: ${{ vars.NC_ANDROID_ADS_REVIEWED || 'false' }}
       VITE_ADMOB_REWARDED_UNIT_ID: ${{ vars.NC_ADMOB_REWARDED_UNIT_ID }}

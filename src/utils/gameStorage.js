@@ -1,0 +1,215 @@
+import { createHintWallet } from './hintWallet.js';
+import { reconcilePuzzleRevisions, recordDatasetVersion } from './puzzleRevisions.js';
+import { getPuzzleStatus } from './puzzleProgress.js';
+
+export function createGameStorage(Preferences) {
+  const resetReplacedPuzzleProgress = (revisions) => reconcilePuzzleRevisions(Preferences, revisions);
+
+  const JOURNEY_RANK_HIGH_WATERMARK_KEY = 'journey_rank_high_watermark';
+  const recordPuzzleDatasetVersion = version => recordDatasetVersion(Preferences, version);
+
+  const savePuzzleProgress = async (puzzleId, answers) => {
+    await Preferences.set({
+      key: `puzzle_progress_${puzzleId}`,
+      value: JSON.stringify(answers)
+    });
+  };
+
+  const loadPuzzleProgress = async (puzzleId) => {
+    const { value } = await Preferences.get({ key: `puzzle_progress_${puzzleId}` });
+    return value ? JSON.parse(value) : null;
+  };
+
+  // Helpful for checking list status using the puzzle's expected grid.
+  const checkPuzzleStatus = async (puzzleId, expectedGrid) => {
+    const [progress, claimed] = await Promise.all([
+      loadPuzzleProgress(puzzleId), loadRewardClaimed(puzzleId)
+    ]);
+    return getPuzzleStatus(progress, expectedGrid, claimed);
+  };
+
+  // --- HINT SYSTEM ---
+
+  const hintWallet = createHintWallet({
+    read: async () => {
+      const { value } = await Preferences.get({ key: 'hint_wallet_v1' });
+      return value ? JSON.parse(value) : null;
+    },
+    write: async (wallet) => Preferences.set({ key: 'hint_wallet_v1', value: JSON.stringify(wallet) }),
+    readLegacy: async () => {
+      const { value } = await Preferences.get({ key: 'global_hints_remaining' });
+      return value === null ? 5 : Number(value);
+    },
+  });
+
+  const loadHintsRemaining = () => hintWallet.balance();
+  const changeHintsRemaining = (delta, receipt) => hintWallet.change(delta, receipt);
+  const awardHints = (amount, receipt) => hintWallet.award(amount, receipt);
+
+  const saveUnlockedHints = async (puzzleId, hintIdsSet) => {
+    await Preferences.set({
+      key: `unlocked_hints_${puzzleId}`,
+      value: JSON.stringify(Array.from(hintIdsSet))
+    });
+  };
+
+  const loadUnlockedHints = async (puzzleId) => {
+    const { value } = await Preferences.get({ key: `unlocked_hints_${puzzleId}` });
+    return value ? new Set(JSON.parse(value)) : new Set();
+  };
+
+  const saveRewardClaimed = async (puzzleId) => {
+    await Preferences.set({
+      key: `reward_claimed_${puzzleId}`,
+      value: 'true'
+    });
+  };
+
+  const loadRewardClaimed = async (puzzleId) => {
+    const { value } = await Preferences.get({ key: `reward_claimed_${puzzleId}` });
+    return value === 'true';
+  };
+
+  const saveRevealedIndices = async (puzzleId, indicesSet) => {
+    await Preferences.set({
+      key: `revealed_indices_${puzzleId}`,
+      value: JSON.stringify(Array.from(indicesSet))
+    });
+  };
+
+  const loadRevealedIndices = async (puzzleId) => {
+    const { value } = await Preferences.get({ key: `revealed_indices_${puzzleId}` });
+    return value ? new Set(JSON.parse(value)) : new Set();
+  };
+
+  const saveHintsEmptyTimestamp = async (timestamp) => {
+    await Preferences.set({
+      key: 'hints_empty_timestamp',
+      value: timestamp.toString()
+    });
+  };
+
+  const loadHintsEmptyTimestamp = async () => {
+    const { value } = await Preferences.get({ key: 'hints_empty_timestamp' });
+    return value ? parseInt(value, 10) : null;
+  };
+
+  const clearHintsEmptyTimestamp = async () => {
+    await Promise.all([
+      Preferences.remove({ key: 'hints_empty_timestamp' }),
+      Preferences.remove({ key: 'bonus_hints_awarded_since_empty' })
+    ]);
+  };
+
+  const saveBonusHintsAwardedSinceEmpty = async (count) => {
+    await Preferences.set({
+      key: 'bonus_hints_awarded_since_empty',
+      value: String(count)
+    });
+  };
+
+  const loadBonusHintsAwardedSinceEmpty = async () => {
+    const { value } = await Preferences.get({ key: 'bonus_hints_awarded_since_empty' });
+    return value !== null ? parseInt(value, 10) : 0;
+  };
+
+  const saveFreeHintToastSeen = async (seen) => {
+    await Preferences.set({
+      key: 'free_hint_toast_seen',
+      value: seen ? 'true' : 'false'
+    });
+  };
+
+  const loadFreeHintToastSeen = async () => {
+    const { value } = await Preferences.get({ key: 'free_hint_toast_seen' });
+    return value === 'true';
+  };
+
+  const saveFreeHintClaimed = async (puzzleId, claimed) => {
+    await Preferences.set({
+      key: `free_hint_claimed_${puzzleId}`,
+      value: claimed ? 'true' : 'false'
+    });
+  };
+
+  const loadFreeHintClaimed = async (puzzleId) => {
+    const { value } = await Preferences.get({ key: `free_hint_claimed_${puzzleId}` });
+    return value === 'true';
+  };
+
+  const saveBonusHintToastPending = async (pending) => {
+    await Preferences.set({
+      key: 'bonus_hint_toast_pending',
+      value: pending ? 'true' : 'false'
+    });
+  };
+
+  const loadBonusHintToastPending = async () => {
+    const { value } = await Preferences.get({ key: 'bonus_hint_toast_pending' });
+    return value === 'true';
+  };
+
+  // --- THEME BADGE PROGRESS HELPERS ---
+  const saveThemeProgress = async (themeId, progress) => {
+    if (!themeId) return;
+    await Preferences.set({
+      key: `theme_progress_${themeId}`,
+      value: JSON.stringify(progress)
+    });
+  };
+
+  const loadThemeProgress = async (themeId) => {
+    if (!themeId) return { themeId: String(themeId), puzzlesCompleted: 0, completed: false };
+    const { value } = await Preferences.get({ key: `theme_progress_${themeId}` });
+    return value ? JSON.parse(value) : { themeId: String(themeId), puzzlesCompleted: 0, completed: false };
+  };
+
+  // --- JOURNEY RANK HELPERS ---
+  const loadJourneyRankHighWatermark = async () => {
+    const { value } = await Preferences.get({ key: JOURNEY_RANK_HIGH_WATERMARK_KEY });
+    const parsed = Number(value);
+    return Number.isFinite(parsed) && parsed > 0 ? parsed : 1;
+  };
+
+  const saveJourneyRankHighWatermark = async (level) => {
+    const safeLevel = Math.max(1, Number(level) || 1);
+    const current = await loadJourneyRankHighWatermark();
+    const next = Math.max(current, safeLevel);
+    await Preferences.set({
+      key: JOURNEY_RANK_HIGH_WATERMARK_KEY,
+      value: String(next)
+    });
+    return next;
+  };
+  return {
+    resetReplacedPuzzleProgress,
+    recordPuzzleDatasetVersion,
+    savePuzzleProgress,
+    loadPuzzleProgress,
+    checkPuzzleStatus,
+    loadHintsRemaining,
+    changeHintsRemaining,
+    awardHints,
+    saveUnlockedHints,
+    loadUnlockedHints,
+    saveRewardClaimed,
+    loadRewardClaimed,
+    saveRevealedIndices,
+    loadRevealedIndices,
+    saveHintsEmptyTimestamp,
+    loadHintsEmptyTimestamp,
+    clearHintsEmptyTimestamp,
+    saveBonusHintsAwardedSinceEmpty,
+    loadBonusHintsAwardedSinceEmpty,
+    saveFreeHintToastSeen,
+    loadFreeHintToastSeen,
+    saveFreeHintClaimed,
+    loadFreeHintClaimed,
+    saveBonusHintToastPending,
+    loadBonusHintToastPending,
+    saveThemeProgress,
+    loadThemeProgress,
+    loadJourneyRankHighWatermark,
+    saveJourneyRankHighWatermark
+  };
+}

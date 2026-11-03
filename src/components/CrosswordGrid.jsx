@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import './CrosswordGrid.css';
 import { getCorrectCells, getWordAt } from '../utils/crossword';
-import { savePuzzleProgress } from '../utils/storage';
+import { usePlayer } from '../player/PlayerContext.js';
 import { MAX_HINT_BALANCE } from '../utils/hintWallet';
 
 const CrosswordGrid = ({ 
@@ -18,6 +18,7 @@ const CrosswordGrid = ({
   completionRewardInfo,
   isAlreadyCompleted
 }) => {
+  const { game: { savePuzzleProgress } } = usePlayer();
   const { id, size, grid, gridnums } = puzzleData;
   const cols = size.cols;
   const rows = size.rows;

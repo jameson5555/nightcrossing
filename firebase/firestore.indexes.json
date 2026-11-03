@@ -1,0 +1,6 @@
+{
+  "indexes": [],
+  "fieldOverrides": [
+    { "collectionGroup": "players", "fieldPath": "payload", "indexes": [] }
+  ]
+}
