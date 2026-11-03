@@ -1,5 +1,6 @@
 import React from 'react';
 import './HintModal.css';
+import { MAX_HINT_BALANCE } from '../utils/hintWallet';
 
 const HintModal = ({ 
   isOpen, 
@@ -35,6 +36,11 @@ const HintModal = ({
         </div>
 
         <div className="modal-body">
+          <p className="hint-description">
+            {hintsRemaining >= MAX_HINT_BALANCE
+              ? `Hint bank full. Spend hints to earn more; the bank limit is ${MAX_HINT_BALANCE}.`
+              : `You can bank up to ${MAX_HINT_BALANCE} hints.`}
+          </p>
           {isUnlocked ? (
             <div className="hint-reveal">
               <p className="hint-label">Hint:</p>

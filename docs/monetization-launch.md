@@ -4,6 +4,13 @@
 
 One optional ad earns one banked hint, offered only when the balance is zero and the current puzzle's free hint is used. No ads interrupt play automatically. Existing completion and timed rewards remain available. Spending an ad-funded hint preserves an already running bonus timer.
 
+The hint bank is capped at 20. Rewards add only enough hints to reach the cap;
+existing balances above 20 are reduced to 20 and saved when loaded, including
+legacy balances. Rewards claimed while full are not deferred for later collection. The free
+hint included with each puzzle is separate from the bank. Completion messages
+show the number actually added, and timed rewards show no arrival toast when
+the bank is full.
+
 Android uses Capacitor AdMob; web uses AdSense H5 Games Ads. Both are disabled by default. Unavailable ads do not block play. Reward confirmations are deduplicated in a serialized local wallet; no account or server-side reward verification is introduced. Balance changes are serialized within one running app; separate browser tabs are not transactionally coordinated and devices do not share a wallet, and local data remains user-editable. A failed local reward save can be retried in the hint window without watching again; do not reload before retrying.
 
 ## Audience and access

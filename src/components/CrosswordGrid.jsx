@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState, useCallback } from 'react';
 import './CrosswordGrid.css';
 import { getCorrectCells, getWordAt } from '../utils/crossword';
 import { savePuzzleProgress } from '../utils/storage';
+import { MAX_HINT_BALANCE } from '../utils/hintWallet';
 
 const CrosswordGrid = ({ 
   puzzleData, 
@@ -574,10 +575,16 @@ const CrosswordGrid = ({
             <div className="puzzle-complete-content">
               <h2 className="puzzle-complete-title">Puzzle Complete!</h2>
               
-              <div className="puzzle-complete-reward">
+              {completionRewardInfo && <div className="puzzle-complete-reward">
                 <span className="reward-icon">💡</span>
-                <span className="reward-text">You&rsquo;ve earned 5 hints!</span>
-              </div>
+                <span className="reward-text">
+                  {completionRewardInfo.hintsAwarded > 0
+                    ? `You've earned ${completionRewardInfo.hintsAwarded} ${completionRewardInfo.hintsAwarded === 1 ? 'hint' : 'hints'}!`
+                    : completionRewardInfo.hintBalance >= MAX_HINT_BALANCE
+                      ? 'Hint bank full. Spend hints to earn more.'
+                      : 'Hint reward already collected.'}
+                </span>
+              </div>}
 
               {completionRewardInfo?.rankUnlock && (
                 <div className="badge-unlock-section">

@@ -77,6 +77,7 @@ const hintWallet = createHintWallet({
 
 export const loadHintsRemaining = () => hintWallet.balance();
 export const changeHintsRemaining = (delta, receipt) => hintWallet.change(delta, receipt);
+export const awardHints = (amount, receipt) => hintWallet.award(amount, receipt);
 
 export const saveUnlockedHints = async (puzzleId, hintIdsSet) => {
   await Preferences.set({

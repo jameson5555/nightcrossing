@@ -9,6 +9,7 @@ import {
   loadPuzzleProgress, 
   loadHintsRemaining, 
   changeHintsRemaining,
+  awardHints,
   loadUnlockedHints, 
   saveUnlockedHints,
   loadRevealedIndices,
@@ -206,15 +207,18 @@ function App() {
         return;
       }
 
-      const newlyEarnedHints = eligibleHints - alreadyAwardedHints;
+      let newlyEarnedHints = 0;
       let newCount;
       for (let index = alreadyAwardedHints; index < eligibleHints; index++) {
-        newCount = await changeHintsRemaining(1, `timer:${emptyTs}:${index}`);
+        const reward = await awardHints(1, `timer:${emptyTs}:${index}`);
+        newCount = reward.balance;
+        newlyEarnedHints += reward.added;
       }
       await saveBonusHintsAwardedSinceEmpty(eligibleHints);
+      setHintsRemaining(newCount);
+      if (newlyEarnedHints === 0) return;
       await saveBonusHintToastPending(true);
 
-      setHintsRemaining(newCount);
       setToastInfo({
         message: newlyEarnedHints === 1
           ? 'Your bonus hint has arrived!'
@@ -428,8 +432,9 @@ function App() {
         const alreadyClaimed = await loadRewardClaimed(puzzleData.id);
         if (alreadyClaimed) return;
 
-        const newCount = await changeHintsRemaining(5, `puzzle:${puzzleData.id}`);
-        setHintsRemaining(newCount);
+        const reward = await awardHints(5, `puzzle:${puzzleData.id}`);
+        setHintsRemaining(reward.balance);
+        setCompletionRewardInfo({ hintsAwarded: reward.added, hintBalance: reward.balance });
         
         await clearHintsEmptyTimestamp();
         if (Capacitor.isNativePlatform()) {
@@ -506,6 +511,8 @@ function App() {
           });
 
           setCompletionRewardInfo({
+            hintsAwarded: reward.added,
+            hintBalance: reward.balance,
             rankUnlock: rankUnlockInfo,
             totalCompleted: newTotalCompleted,
             themeComplete: completedTheme ? themeId : null,
