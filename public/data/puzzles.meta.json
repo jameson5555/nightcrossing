@@ -1,7 +1,7 @@
 {
-  "version": "6dc8a1576514b0f1",
+  "version": "1c25cfe0bb11c1e3",
   "resetVersion": "bb837de6de25538c",
-  "puzzleCount": 198,
+  "puzzleCount": 228,
   "puzzleRevisions": {
     "animals---wildlife-vol13": {
       "revision": "f7fbe3d835e34107",
@@ -193,6 +193,6 @@
       "receivesNextBatch": false
     }
   },
-  "nextReleaseAt": "2026-11-01T00:00:00.000Z",
-  "generatedAt": "2026-10-01T22:09:14.779Z"
+  "nextReleaseAt": "2026-12-01T00:00:00.000Z",
+  "generatedAt": "2026-11-01T01:25:04.824Z"
 }
