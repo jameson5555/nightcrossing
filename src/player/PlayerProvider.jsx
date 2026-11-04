@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useSyncExternalStore } from 'react';
+import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { Preferences } from '@capacitor/preferences';
 import { Capacitor } from '@capacitor/core';
 import { PlayerContext } from './PlayerContext.js';
@@ -17,10 +17,15 @@ const controller = createCloudController({ backing: Preferences,
 
 export default function PlayerProvider({ children }) {
   const state = useSyncExternalStore(controller.subscribe, controller.getState);
+  // Keep the current game on screen until its replacement is fully restored.
+  const [screen, setScreen] = useState({ scope: state.scope, epoch: state.epoch });
+  if (state.phase === 'ready' && (screen.scope !== state.scope || screen.epoch !== state.epoch)) {
+    setScreen({ scope: state.scope, epoch: state.epoch });
+  }
   const value = useMemo(() => ({ controller,
-    game: createGameStorage(state.scope),
-    loadPuzzleForPlayer: createPuzzleLoader({ store: state.scope, fetchData: fetchPuzzleData })
-  }), [state.scope]);
+    game: createGameStorage(screen.scope),
+    loadPuzzleForPlayer: createPuzzleLoader({ store: screen.scope, fetchData: fetchPuzzleData })
+  }), [screen.scope]);
   useEffect(() => {
     void controller.start();
     const sync = () => { if (!document.hidden) void controller.sync(); };
@@ -35,10 +40,11 @@ export default function PlayerProvider({ children }) {
       clearInterval(interval);
     };
   }, []);
-  if (state.phase === 'loading') return <main className="account-loading" role="status">Opening your saved progress…</main>;
   if (state.phase === 'error') return <main className="account-loading">
     <p role="alert">{state.message}</p>
     <button type="button" onClick={() => { void controller.useGuest(); }}>Continue without signing in</button>
   </main>;
-  return <PlayerContext.Provider key={state.epoch} value={value}>{children}</PlayerContext.Provider>;
+  return <div className="player-surface" inert={state.phase === 'loading'} aria-busy={state.phase === 'loading'}>
+    <PlayerContext.Provider key={screen.epoch} value={value}>{children}</PlayerContext.Provider>
+  </div>;
 }

@@ -1,5 +1,5 @@
 import { createProfileStore, readGuestProgress } from './profileStore.js';
-import { createSessionScope } from './sessionScope.js';
+import { createPendingSessionScope, createSessionScope } from './sessionScope.js';
 import { cloudSnapshot, emptySnapshot, mergeSnapshots, serializeSnapshot } from './progressMerge.js';
 import { hasSavedProgress } from './savedProgress.js';
 
@@ -20,10 +20,15 @@ const timed = (promise, milliseconds = 12000) => new Promise((resolve, reject) =
 
 export function createCloudController({ backing, config, backendFactory,
   device = globalThis.crypto.randomUUID(), now = Date.now, debounceMs = 2000, maxWaitMs = 15000 }) {
+  const initial = config.enabled ? createPendingSessionScope() : null;
   let state = { enabled: config.enabled, available: false, phase: config.enabled ? 'loading' : 'ready', user: null,
-    cloud: 'off', message: '', epoch: 0, scope: createSessionScope(backing), archives: {}, lastSavedAt: null };
+    cloud: 'off', message: '', epoch: 0, scope: initial?.scope || createSessionScope(backing), archives: {}, lastSavedAt: null };
   const listeners = new Set();
-  const emit = patch => { state = { ...state, ...patch }; for (const listener of listeners) listener(); };
+  const emit = patch => {
+    state = { ...state, ...patch };
+    if (state.phase === 'ready') initial?.restore(state.scope);
+    for (const listener of listeners) listener();
+  };
   let backend, startPromise, profile, generation = 0, playing = false;
   let importRequested = null, deleting = false, recovering = false, pendingRemote;
   let dirty = 0, inFlight, debounce, deadline;

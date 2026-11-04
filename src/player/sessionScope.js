@@ -1,5 +1,20 @@
 // Revoke an old screen's writes before switching profiles or installing remote
 // progress. Late React effects can never write into a different player's save.
+export function createPendingSessionScope() {
+  let restore;
+  const ready = new Promise(resolve => { restore = resolve; });
+  return {
+    restore,
+    scope: createSessionScope({
+      get: async args => (await ready).get(args),
+      keys: async () => (await ready).keys(),
+      // Startup effects belong to the placeholder screen. Only the mounted
+      // screen for the resolved player may change progress.
+      set: async () => {}, remove: async () => {}
+    })
+  };
+}
+
 export function createSessionScope(store) {
   let active = true;
   const pending = new Set();

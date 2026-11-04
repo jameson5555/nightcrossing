@@ -8,7 +8,8 @@ export default function AccountPanel() {
   const state = useSyncExternalStore(controller.subscribe, controller.getState);
   const [open, setOpen] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
-  const [busy, setBusy] = useState(false);
+  const [working, setBusy] = useState(false);
+  const busy = working || state.phase !== 'ready';
   const [signingIn, setSigningIn] = useState(false);
   const [error, setError] = useState('');
   const [guestHasProgress, setGuestHasProgress] = useState(false);

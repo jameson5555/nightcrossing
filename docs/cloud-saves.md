@@ -207,6 +207,10 @@ one save status and Sign out; its **More options** section contains optional syn
 backups, saved puzzle versions and account deletion. A pending Google login has a
 Cancel control, and save errors expose Retry save.
 
+Account restoration keeps the game visible without a separate loading screen.
+Controls pause while the correct save is installed. On startup, progress reads
+wait for the restored player, and placeholder screens cannot change either save.
+
 On sign-in or session restoration, the game combines the browser save with the
 account save if the browser save is unassigned or belongs to that account. This
 also repairs a previously skipped import, even when an old completion marker was

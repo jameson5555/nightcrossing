@@ -48,6 +48,29 @@ test('optional PHP configuration leaves guests available, rejects foreign URLs, 
   assert.equal(getCloudConfig({ VITE_CLOUD_SAVE_ENABLED: 'true', VITE_ACCOUNTS_API_PATH: 'https://other.test/api.php' }).configured, false);
 });
 
+test('startup reads wait for the restored player and placeholder effects cannot change either save', async () => {
+  const h = harness({ restoredUser: { uid: 'alice', email: 'alice@example.test' }, initial: {
+    nc_guest_progress_owner: 'bob', puzzle_progress_test: '["G"]'
+  } });
+  const remote = emptySnapshot();
+  remote.records.puzzle_progress_test = { value: '["A"]', stamp: { time: 1, device: 'other' } };
+  h.saves.set('alice', remote);
+  const placeholder = h.controller.getState().scope;
+  let readFinished = false;
+  const read = placeholder.get({ key: 'puzzle_progress_test' }).then(result => { readFinished = true; return result; });
+  const keys = placeholder.keys();
+  await placeholder.set({ key: 'puzzle_progress_test', value: '["X"]' });
+  assert.equal(readFinished, false);
+  assert.equal(h.values.get('puzzle_progress_test'), '["G"]');
+  await h.controller.start(); await h.settled();
+  assert.equal((await read).value, '["A"]');
+  assert.ok((await keys).keys.includes('puzzle_progress_test'));
+  await placeholder.set({ key: 'puzzle_progress_test', value: '["X"]' });
+  assert.equal((await h.controller.getState().scope.get({ key: 'puzzle_progress_test' })).value, '["A"]');
+  assert.equal(h.values.get('puzzle_progress_test'), '["G"]');
+  await h.controller.signOut(); await h.settled();
+});
+
 test('first sign-in imports guest progress once; a second account receives none of it', async () => {
   const h = harness();
   h.values.set('puzzle_progress_test', '["G"]');
