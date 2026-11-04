@@ -24,7 +24,7 @@ export function createCloudController({ backing, config, backendFactory,
   const listeners = new Set();
   const emit = patch => { state = { ...state, ...patch }; for (const listener of listeners) listener(); };
   let backend, startPromise, profile, generation = 0, playing = false;
-  let importRequested = false, deleting = false, pendingRemote;
+  let importRequested = null, deleting = false, pendingRemote;
   let dirty = 0, inFlight, debounce, deadline;
   const clearTimers = () => { clearTimeout(debounce); clearTimeout(deadline); debounce = deadline = null; };
   const schedule = () => {
@@ -72,6 +72,8 @@ export function createCloudController({ backing, config, backendFactory,
   }
   const transition = async user => {
     const token = ++generation;
+    const requestedImport = importRequested;
+    importRequested = null;
     clearTimers();
     inFlight = null;
     pendingRemote = null;
@@ -94,16 +96,24 @@ export function createCloudController({ backing, config, backendFactory,
           schedule();
         } });
       await store.snapshot();
-      if (importRequested) {
-        const { value: owner } = await backing.get({ key: 'nc_guest_progress_owner' });
-        const { value: imported } = await backing.get({ key: `nc_guest_imported_${user.uid}` });
-        if ((!owner || owner === user.uid) && !imported) {
-          await backing.set({ key: 'nc_guest_progress_owner', value: user.uid });
-          await store.merge(await readGuestProgress(backing));
-          await backing.set({ key: `nc_guest_imported_${user.uid}`, value: 'true' });
-        }
+      const { value: owner } = await backing.get({ key: 'nc_guest_progress_owner' });
+      const { value: imported } = await backing.get({ key: `nc_guest_imported_${user.uid}` });
+      const declinedKey = `nc_guest_import_declined_${user.uid}`;
+      const { value: declined } = await backing.get({ key: declinedKey });
+      // An owner marker without a completed marker means a prior import was
+      // interrupted. Resume it on auth restoration for that same owner only.
+      // A deliberate unchecked import choice still takes precedence.
+      if (requestedImport === false && owner === user.uid && !imported) {
+        await backing.set({ key: declinedKey, value: 'true' });
       }
-      importRequested = false;
+      const shouldImport = requestedImport === true ||
+        (requestedImport === null && owner === user.uid && !declined);
+      if (shouldImport && (!owner || owner === user.uid) && !imported) {
+        await backing.set({ key: 'nc_guest_progress_owner', value: user.uid });
+        await store.merge(await readGuestProgress(backing));
+        await backing.set({ key: `nc_guest_imported_${user.uid}`, value: 'true' });
+        await backing.remove({ key: declinedKey });
+      }
       if (token !== generation) return;
       profile = store;
       const saved = await store.snapshot();
@@ -136,7 +146,7 @@ export function createCloudController({ backing, config, backendFactory,
       if (!backend || playing) return;
       importRequested = importGuest;
       try { await backend.signIn(); }
-      catch (error) { importRequested = false; emit({ message: messageFor(error) }); }
+      catch (error) { importRequested = null; emit({ message: messageFor(error) }); }
     },
     cancelSignIn: () => backend?.cancelSignIn?.(),
     signOut: async () => {
@@ -181,6 +191,7 @@ export function createCloudController({ backing, config, backendFactory,
         const { value: owner } = await backing.get({ key: 'nc_guest_progress_owner' });
         if (owner === uid) await backing.remove({ key: 'nc_guest_progress_owner' });
         await backing.remove({ key: `nc_guest_imported_${uid}` });
+        await backing.remove({ key: `nc_guest_import_declined_${uid}` });
         await transition(null);
       } catch (error) {
         emit({ phase: 'ready', scope: createSessionScope(store), epoch: state.epoch + 1,

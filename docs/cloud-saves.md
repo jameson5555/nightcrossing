@@ -187,6 +187,16 @@ used a live Firebase account, export its save using the old deployment before
 switching: this release does not automatically import Firestore or Firebase UID
 caches. The two current players' original guest saves remain available.
 
+Older theme summaries from the original badge system used
+`{ themeId, puzzlesCompleted, badgeLevel }` without a `completed` flag. The
+decoder supplies only missing fields and retains counts, badge metadata and
+completion credit. It accepts these legacy records in guest imports, cached
+account saves and server saves; original guest records stay untouched. An import
+interrupted before its completion marker is written resumes after auth restoration
+only for the already reserved owner. An explicit choice not to import is retained
+across reloads, and a later explicit opt-in can retry it. No browser-data clearing
+or account deletion is needed for this migration.
+
 ## Behavior and limits
 
 - Cell timestamps merge independent edits and deliberate erasures. Completion,

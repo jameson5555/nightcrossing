@@ -79,9 +79,12 @@ export function mergeRecord(key, a, b) {
   }
   if (key.startsWith('theme_progress_')) {
     const left = parseValue(a), right = parseValue(b);
-    return { ...selected, value: JSON.stringify({ ...parseValue(selected),
+    const badgeLevels = [left.badgeLevel, right.badgeLevel]
+      .filter(level => Number.isSafeInteger(level) && level > 0);
+    return { ...selected, value: JSON.stringify({ ...left, ...right, ...parseValue(selected),
       puzzlesCompleted: Math.max(left.puzzlesCompleted || 0, right.puzzlesCompleted || 0),
-      completed: left.completed === true || right.completed === true }) };
+      completed: left.completed === true || right.completed === true,
+      ...(badgeLevels.length ? { badgeLevel: Math.max(...badgeLevels) } : {}) }) };
   }
   return structuredClone(selected);
 }
@@ -162,7 +165,9 @@ export function serializeSnapshot(snapshot) {
 }
 
 export function decodeSnapshot(raw) {
-  const snapshot = typeof raw === 'string' ? JSON.parse(raw) : raw;
+  // Normalize a detached copy: guest saves and caller-owned cloud snapshots
+  // must stay intact even if validation later rejects another record.
+  const snapshot = typeof raw === 'string' ? JSON.parse(raw) : structuredClone(raw);
   if (!snapshot || snapshot.schemaVersion !== 1 || !Number.isSafeInteger(snapshot.clock) || snapshot.clock < 0 ||
     !snapshot.records || !snapshot.archives || !snapshot.choices) throw new Error('Unsupported cloud save format.');
   const stampValid = stamp => stamp && Number.isSafeInteger(stamp.time) && stamp.time >= 0 &&
@@ -190,9 +195,24 @@ export function decodeSnapshot(raw) {
         typeof item !== 'string' || !/^(across|down)-\d{1,3}$/.test(item))) throw new Error('Invalid saved hints.');
       if (key.startsWith('revealed_indices_') && value.some(item =>
         !Number.isInteger(item) || item < 0 || item >= 100)) throw new Error('Invalid revealed cells.');
-      if (key.startsWith('theme_progress_') && (!value || typeof value !== 'object' ||
-        !Number.isSafeInteger(value.puzzlesCompleted) || value.puzzlesCompleted < 0 ||
-        typeof value.completed !== 'boolean')) throw new Error('Invalid saved theme progress.');
+      if (key.startsWith('theme_progress_')) {
+        // Before theme completion was tracked, the game wrote
+        // { themeId, puzzlesCompleted, badgeLevel } with no completed flag.
+        // Some older completion summaries have only completed. Keep the known
+        // fields/metadata and default only absent fields, never malformed ones.
+        if (!value || typeof value !== 'object' || Array.isArray(value) ||
+            (!Object.hasOwn(value, 'puzzlesCompleted') && !Object.hasOwn(value, 'completed'))) {
+          throw new Error('Invalid saved theme progress.');
+        }
+        const count = Object.hasOwn(value, 'puzzlesCompleted') ? value.puzzlesCompleted : 0;
+        const completed = Object.hasOwn(value, 'completed') ? value.completed : false;
+        if (!Number.isSafeInteger(count) || count < 0 || typeof completed !== 'boolean') {
+          throw new Error('Invalid saved theme progress.');
+        }
+        if (!Object.hasOwn(value, 'puzzlesCompleted') || !Object.hasOwn(value, 'completed')) {
+          record.value = JSON.stringify({ ...value, puzzlesCompleted: count, completed });
+        }
+      }
       if (['journey_rank_high_watermark', 'hints_empty_timestamp', 'bonus_hints_awarded_since_empty', 'global_hints_remaining'].includes(key) &&
         (!Number.isSafeInteger(value) || value < 0)) throw new Error('Invalid saved game counter.');
       if (key === 'hint_wallet_v1') {
@@ -219,7 +239,7 @@ export function decodeSnapshot(raw) {
     if (!/^[a-z0-9-]{1,150}$/.test(id) || !stampValid(choice.stamp) ||
       typeof parseValue(choice) !== 'string') throw new Error('Invalid saved edition choice.');
   }
-  const result = structuredClone(snapshot);
+  const result = snapshot;
   const collectClock = value => {
     if (!value || typeof value !== 'object') return;
     if (Number.isSafeInteger(value.time) && typeof value.device === 'string') result.clock = Math.max(result.clock, value.time);

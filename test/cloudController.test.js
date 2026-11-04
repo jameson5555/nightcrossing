@@ -5,8 +5,8 @@ import { createCloudController } from '../src/player/cloudController.js';
 import { emptySnapshot, mergeSnapshots } from '../src/player/progressMerge.js';
 import { getCloudConfig } from '../src/player/config.js';
 
-function harness() {
-  const values = new Map();
+function harness({ initial = {}, restoredUser = null } = {}) {
+  const values = new Map(Object.entries(initial));
   const backing = {
     get: async ({ key }) => ({ value: values.get(key) ?? null }),
     set: async ({ key, value }) => values.set(key, value),
@@ -17,7 +17,7 @@ function harness() {
   let signInUser = { uid: 'alice', email: 'alice@example.test' };
   let offline = false;
   const backend = {
-    onAuth: callback => { authChanged = callback; callback(null); },
+    onAuth: callback => { authChanged = callback; callback(restoredUser); },
     signIn: async () => authChanged(signInUser), signOut: async () => authChanged(null),
     merge: async (uid, local) => {
       if (offline) throw Object.assign(new Error('offline'), { code: 'unavailable' });
@@ -60,6 +60,55 @@ test('first sign-in imports guest progress once; a second account receives none 
   await h.controller.signIn(); await h.settled();
   assert.equal(h.saves.get('bob').records.puzzle_progress_test, undefined);
   await h.controller.signOut(); await h.settled();
+});
+
+test('auth restoration resumes an interrupted import of legacy theme progress for the reserved owner', async () => {
+  const legacy = '{"themeId":"Food","puzzlesCompleted":7,"badgeLevel":3}';
+  const h = harness({ restoredUser: { uid: 'alice', email: 'alice@example.test' }, initial: {
+    nc_guest_progress_owner: 'alice', theme_progress_Food: legacy,
+    puzzle_progress_test: '["G"]', reward_claimed_done: 'true',
+    hint_wallet_v1: '{"balance":9,"receipts":[]}'
+  } });
+  await h.controller.start(); await h.settled();
+  assert.equal(h.controller.getState().phase, 'ready');
+  assert.deepEqual(JSON.parse(h.saves.get('alice').records.theme_progress_Food.value), {
+    themeId: 'Food', puzzlesCompleted: 7, badgeLevel: 3, completed: false
+  });
+  assert.equal(h.saves.get('alice').records.puzzle_progress_test.value, '["G"]');
+  assert.equal(h.saves.get('alice').records.reward_claimed_done.value, 'true');
+  assert.equal(JSON.parse(h.saves.get('alice').records.hint_wallet_v1.value).balance, 9);
+  assert.equal(h.values.get('nc_guest_imported_alice'), 'true');
+  assert.equal(h.values.get('theme_progress_Food'), legacy);
+  await h.controller.signOut(); await h.settled();
+});
+
+test('interrupted import recovery never copies another owner’s save or an already imported guest save', async () => {
+  for (const markers of [{ nc_guest_progress_owner: 'bob' },
+    { nc_guest_progress_owner: 'alice', nc_guest_imported_alice: 'true' }]) {
+    const h = harness({ restoredUser: { uid: 'alice', email: 'alice@example.test' }, initial: {
+      ...markers, puzzle_progress_test: '["G"]'
+    } });
+    await h.controller.start(); await h.settled();
+    assert.equal(h.saves.get('alice').records.puzzle_progress_test, undefined);
+    await h.controller.signOut(); await h.settled();
+  }
+});
+
+test('declining a pending import survives reload and a later explicit opt-in can still complete it', async () => {
+  const first = harness({ initial: { nc_guest_progress_owner: 'alice', puzzle_progress_test: '["G"]' } });
+  await first.controller.start(); await first.settled();
+  await first.controller.signIn({ importGuest: false }); await first.settled();
+  assert.equal(first.saves.get('alice').records.puzzle_progress_test, undefined);
+  assert.equal(first.values.get('nc_guest_import_declined_alice'), 'true');
+  const restored = harness({ initial: Object.fromEntries(first.values), restoredUser: { uid: 'alice', email: 'alice@example.test' } });
+  await first.controller.signOut(); await first.settled();
+  await restored.controller.start(); await restored.settled();
+  assert.equal(restored.saves.get('alice').records.puzzle_progress_test, undefined);
+  await restored.controller.signOut(); await restored.settled();
+  await restored.controller.signIn({ importGuest: true }); await restored.settled();
+  assert.equal(restored.saves.get('alice').records.puzzle_progress_test.value, '["G"]');
+  assert.equal(restored.values.has('nc_guest_import_declined_alice'), false);
+  await restored.controller.signOut(); await restored.settled();
 });
 
 test('offline changes remain local and sync successfully after reconnection', async () => {

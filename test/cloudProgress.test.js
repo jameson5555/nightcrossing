@@ -33,6 +33,66 @@ test('guest migration retains original cells, editions, hints, completions and r
   for (const [key, value] of before) assert.equal(backing.values.get(key), value, key);
 });
 
+test('the original badge-system theme format imports without losing counts, metadata or guest data', async () => {
+  // Shape written by App.jsx in the original badge-system release (76daf9b).
+  const legacy = JSON.stringify({ themeId: 'Food & Cooking', puzzlesCompleted: 7, badgeLevel: 3 });
+  const backing = memoryStore({ 'theme_progress_Food & Cooking': legacy,
+    'reward_claimed_food-vol1': 'true', 'puzzle_progress_food-vol2': '["C","A",""]',
+    hint_wallet_v1: '{"balance":9,"receipts":["old-reward"]}', journey_rank_high_watermark: '6' });
+  const before = new Map(backing.values);
+  const guest = await readGuestProgress(backing);
+  const account = profile('a', 100, backing);
+  await account.merge(guest);
+  const restored = decodeSnapshot(serializeSnapshot(await account.snapshot()));
+  assert.deepEqual(JSON.parse(restored.records['theme_progress_Food & Cooking'].value), {
+    themeId: 'Food & Cooking', puzzlesCompleted: 7, badgeLevel: 3, completed: false
+  });
+  assert.equal(restored.records['reward_claimed_food-vol1'].value, 'true');
+  assert.equal(restored.records['puzzle_progress_food-vol2'].value, '["C","A",""]');
+  assert.equal(JSON.parse(restored.records.hint_wallet_v1.value).balance, 9);
+  assert.equal(restored.records.journey_rank_high_watermark.value, '6');
+  for (const [key, value] of before) assert.equal(backing.values.get(key), value, key);
+});
+
+test('cached accounts normalize old theme records, preserve local-only preferences, and merge higher counts', async () => {
+  const old = emptySnapshot();
+  old.records.theme_progress_Test = { value: '{"puzzlesCompleted":4,"badgeLevel":2}', stamp: { time: 10, device: 'old' } };
+  old.records.local_only = { value: 'keep this device preference', stamp: { time: 10, device: 'old' } };
+  const backing = memoryStore({ nc_account_player: JSON.stringify(old) });
+  const p = profile('a', 100, backing);
+  assert.deepEqual(JSON.parse((await p.get({ key: 'theme_progress_Test' })).value), {
+    puzzlesCompleted: 4, badgeLevel: 2, completed: false
+  });
+  // New writes using the legacy summary format are canonicalized as well.
+  await p.set({ key: 'theme_progress_Test', value: '{"puzzlesCompleted":5,"badgeLevel":2}' });
+  const other = emptySnapshot();
+  other.records.theme_progress_Test = { value: '{"completed":true}', stamp: { time: 200, device: 'other' } };
+  await p.merge(other);
+  const theme = JSON.parse((await p.get({ key: 'theme_progress_Test' })).value);
+  assert.equal(theme.puzzlesCompleted, 5);
+  assert.equal(theme.completed, true);
+  assert.equal(theme.badgeLevel, 2);
+  assert.equal((await p.get({ key: 'local_only' })).value, 'keep this device preference');
+  other.records.theme_progress_Test = { value: '{"puzzlesCompleted":2,"badgeLevel":1}', stamp: { time: 300, device: 'stale' } };
+  await p.merge(other);
+  assert.deepEqual(JSON.parse((await p.get({ key: 'theme_progress_Test' })).value), theme);
+});
+
+test('theme migration rejects malformed values and never mutates input snapshots on failure', () => {
+  for (const value of [null, [], {}, { puzzlesCompleted: null }, { puzzlesCompleted: '4' },
+    { puzzlesCompleted: -1 }, { puzzlesCompleted: 1.5 }, { puzzlesCompleted: 4, completed: 'true' }]) {
+    const snapshot = emptySnapshot();
+    snapshot.records.theme_progress_Test = { value: JSON.stringify(value), stamp: { time: 10, device: 'a' } };
+    assert.throws(() => decodeSnapshot(snapshot), /Invalid saved theme progress/);
+  }
+  const snapshot = emptySnapshot();
+  snapshot.records.theme_progress_Test = { value: '{"puzzlesCompleted":4,"badgeLevel":2}', stamp: { time: 10, device: 'a' } };
+  snapshot.records.puzzle_progress_test = { value: '["INVALID"]', stamp: { time: 10, device: 'a' } };
+  const before = structuredClone(snapshot);
+  assert.throws(() => decodeSnapshot(snapshot), /Invalid saved grid/);
+  assert.deepEqual(snapshot, before);
+});
+
 test('independent cell edits merge and a deliberate later erasure stays erased', async () => {
   const a = profile('a', 100), b = profile('b', 200);
   await a.set({ key: 'puzzle_progress_test', value: '["C","",""]' });

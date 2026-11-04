@@ -53,7 +53,11 @@ export function createProfileStore({ backing, uid, device, now = Date.now, onCha
       record.value = JSON.stringify(walletValue(wallet));
     }
     next.records[key] = record;
-    if (isSyncedKey(key)) decodeSnapshot(cloudSnapshot(next));
+    if (isSyncedKey(key)) {
+      const validated = decodeSnapshot(cloudSnapshot(next));
+      next.records = { ...next.records, ...validated.records };
+      next.clock = validated.clock;
+    }
     await persist(next);
     if (isSyncedKey(key)) onChange();
   });
