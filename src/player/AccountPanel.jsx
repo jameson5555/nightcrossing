@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { usePlayer } from './PlayerContext.js';
+import { hasSavedProgress } from './savedProgress.js';
 import './AccountPanel.css';
 
 export default function AccountPanel() {
@@ -10,8 +11,17 @@ export default function AccountPanel() {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  const [guestHasProgress, setGuestHasProgress] = useState(false);
   const dialogRef = useRef(null);
   const triggerRef = useRef(null);
+  useEffect(() => {
+    if (!state.enabled || state.user) return;
+    let active = true;
+    void hasSavedProgress(state.scope).then(hasProgress => {
+      if (active) setGuestHasProgress(hasProgress);
+    }).catch(() => { /* Keep the basic sign-in link if local storage cannot be read. */ });
+    return () => { active = false; };
+  }, [state.enabled, state.scope, state.user]);
   useEffect(() => {
     if (!open) return;
     const dialog = dialogRef.current;
@@ -29,6 +39,8 @@ export default function AccountPanel() {
   const cloudCopy = { off: 'Progress saved on this device', saving: 'Saving to your account…',
     saved: 'Progress saved to your account', pending: 'Saved on this device · cloud save pending',
     error: 'Saved on this device · cloud save needs attention' }[state.cloud];
+  const label = state.user ? 'Account' : guestHasProgress ? 'Save progress' : 'Sign in';
+  const needsAttention = state.user && (state.cloud === 'pending' || state.cloud === 'error');
   const download = async () => {
     const raw = await controller.exportSave();
     const url = URL.createObjectURL(new Blob([raw], { type: 'application/json' }));
@@ -41,13 +53,19 @@ export default function AccountPanel() {
   const archived = Object.entries(state.archives).flatMap(([id, versions]) =>
     Object.entries(versions).map(([edition, records]) => ({ id, edition,
       letters: JSON.parse(records[`puzzle_progress_${id}`]?.value || '[]').filter(Boolean).length })));
-  return <section className="account-panel" aria-label="Account and cloud saves">
-    <div>
-      <span className="account-status" role="status">{cloudCopy}</span>
-      {state.user && <span className="account-name">{state.user.displayName || state.user.email}</span>}
-    </div>
-    <button ref={triggerRef} type="button" className="account-trigger" onClick={() => setOpen(true)}>
-      {state.user ? 'Account' : 'Save across devices'}
+  return <div className="account-panel">
+    <button ref={triggerRef} type="button"
+      className={`account-trigger${!state.user && guestHasProgress ? ' account-trigger-save' : ''}`}
+      aria-haspopup="dialog" aria-expanded={open}
+      aria-label={needsAttention ? `${label} · ${cloudCopy}` : label}
+      title={state.user ? cloudCopy : guestHasProgress ? 'Sign in to keep your progress across devices' : 'Restore your account on this device'}
+      onClick={() => setOpen(true)}>
+      {!state.user && guestHasProgress && <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M7 18H6a4 4 0 0 1-.8-7.9A7 7 0 0 1 19 9a4.5 4.5 0 0 1 0 9h-2" />
+        <path d="M12 20V11m-3 3 3-3 3 3" />
+      </svg>}
+      {label}
+      {needsAttention && <span className="account-attention-dot" aria-hidden="true" />}
     </button>
     {open && <dialog ref={dialogRef} className="account-dialog" onCancel={event => {
       if (busy) event.preventDefault(); else setOpen(false);
@@ -94,6 +112,6 @@ export default function AccountPanel() {
       </>}
       {(error || state.message) && <p className="account-error" role="alert">{error || state.message}</p>}
     </dialog>}
-    {state.message && !open && <p className="account-error" role="alert">{state.message}</p>}
-  </section>;
+    {state.message && !open && <span className="account-sr-only" role="status">{state.message}</span>}
+  </div>;
 }

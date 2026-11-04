@@ -164,9 +164,10 @@ needed. Allow the sign-in popup when prompted.
 ## 5. Verify with the two current players
 
 1. Before signing in, use the original browser/device with their saved progress.
+   In the menu footer, click **Save progress** (or **Sign in** on a new device).
    Sign in with **Add this device's guest progress to my account** checked.
 2. Check that old completions, an in-progress puzzle and hints are retained.
-   Return to the menu and confirm “Progress saved to your account.” Download a
+   Return to the menu, open **Account** in the footer, and confirm “Progress saved to your account.” Download a
    backup from Account before any further migration experiments.
 3. Sign in on a second browser/device. Confirm the same progress appears.
 4. Make different edits on the same edition on the two devices. Sync each from

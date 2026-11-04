@@ -867,7 +867,6 @@ function App() {
         </>
       ) : (
         <div className="menu-container">
-          <AccountPanel />
           <PuzzleList
             onSelectPuzzle={handleSelectPuzzle}
             puzzles={puzzlesIndex}
@@ -876,7 +875,10 @@ function App() {
             onListStateChange={setPuzzleListState}
             refreshToken={puzzleListRefreshToken}
           />
-          <a className="privacy-link" href={`${import.meta.env.BASE_URL}privacy.html`}>Privacy</a>
+          <footer className="menu-footer" aria-label="Game links">
+            <AccountPanel />
+            <a className="privacy-link" href={`${import.meta.env.BASE_URL}privacy.html`}>Privacy</a>
+          </footer>
         </div>
       )}
 
