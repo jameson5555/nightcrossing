@@ -165,13 +165,13 @@ needed. Allow the sign-in popup when prompted.
 
 1. Before signing in, use the original browser/device with their saved progress.
    In the menu footer, click **Save progress** (or **Sign in** on a new device).
-   Sign in with **Add this device's guest progress to my account** checked.
+   Choose **Continue with Google**. Existing browser progress is merged automatically.
 2. Check that old completions, an in-progress puzzle and hints are retained.
-   Return to the menu, open **Account** in the footer, and confirm “Progress saved to your account.” Download a
-   backup from Account before any further migration experiments.
+   Return to the menu, open **Account** in the footer, and confirm “Progress saved to your account.”
+   Optional sync and backup tools are under **More options**.
 3. Sign in on a second browser/device. Confirm the same progress appears.
 4. Make different edits on the same edition on the two devices. Sync each from
-   the menu and confirm compatible edits merge. An older/newer grid edition is
+   the menu (or use Account → More options → Sync now) and confirm compatible edits merge. An older/newer grid edition is
    retained separately rather than mixing its cells.
 5. Sign out and confirm the original guest save still exists. Sign in as the
    other player and confirm they do not receive the first player's guest copy.
@@ -181,7 +181,9 @@ needed. Allow the sign-in popup when prompted.
    Google account must fail; the intended user's account/save alone is removed.
 
 Existing browser progress is not reset or deleted by this switch. Guest progress
-is copied only once into the first linked owner, and completion credit survives
+merges automatically when signing in and when restoring that account on this
+browser. An old import marker does not prevent missing progress from being added.
+A guest save linked to a different account is never copied automatically. Completion credit survives
 puzzle revisions. Each account has a separate local cache. If someone previously
 used a live Firebase account, export its save using the old deployment before
 switching: this release does not automatically import Firestore or Firebase UID
@@ -191,11 +193,37 @@ Older theme summaries from the original badge system used
 `{ themeId, puzzlesCompleted, badgeLevel }` without a `completed` flag. The
 decoder supplies only missing fields and retains counts, badge metadata and
 completion credit. It accepts these legacy records in guest imports, cached
-account saves and server saves; original guest records stay untouched. An import
-interrupted before its completion marker is written resumes after auth restoration
-only for the already reserved owner. An explicit choice not to import is retained
-across reloads, and a later explicit opt-in can retry it. No browser-data clearing
-or account deletion is needed for this migration.
+account saves and server saves; original guest records stay untouched. Restoring
+a session also rechecks the browser save for missing progress and combines it
+with the account automatically. An old explicit opt-out is respected on session
+restoration; a new Google sign-in carries the current browser progress with it.
+No browser-data clearing or account deletion is needed for this migration.
+
+### Automatic browser progress and optional tools
+
+The normal flow is **Continue with Google**, then play. No import checkbox,
+backup download or recovery action is required. The account menu shows identity,
+one save status and Sign out; its **More options** section contains optional sync,
+backups, saved puzzle versions and account deletion. A pending Google login has a
+Cancel control, and save errors expose Retry save.
+
+On sign-in or session restoration, the game combines the browser save with the
+account save if the browser save is unassigned or belongs to that account. This
+also repairs a previously skipped import, even when an old completion marker was
+set. The original browser records stay unchanged. Before a merge that changes the
+account, an immutable `nc_browser_recovery_backup_UID` is saved automatically on
+this device. If that safety copy cannot be saved, the merge stops before changing
+account progress. The backup is removed when the account is deleted here.
+
+For unusual cases, **Account → More options** still provides an explicit browser
+save recovery action when there is additional progress. Copying a guest save
+linked to a different account requires a separate confirmation and retains its
+original owner marker. These are support tools, not part of normal sign-in.
+
+Guest data is local to the original browser and origin: www/non-www, HTTP/HTTPS,
+normal/private windows and different browser profiles can have different saves.
+Keep using the address/profile that shows the original guest progress. Automatic
+merging does not access other origins or require clearing browser data.
 
 ## Behavior and limits
 
@@ -304,3 +332,13 @@ receipts, cancellation and timeout cleanup. A mobile-emulated Chrome fixture use
 a real COOP navigation that detached window.opener, then verified completion and
 guest-save import without any popup message or automatic window closure. Real
 Google sign-in on Android still needs the owner's final verification.
+
+Browser-save recovery follow-up: 126 application tests, production build and
+changed-file lint passed. Tests cover retrying old import markers, offline
+recovery, backup-write failure, idempotence and cross-account confirmation. An
+isolated mobile-emulated Chrome test reproduced an account without its intact
+guest save, downloaded the browser backup, used the recovery control, and verified
+both account and guest completions, saved letters, hints, rank and badge metadata.
+The original guest storage values were unchanged, account progress survived reload,
+and signing out still restored the original guest save. The separate-owner copy
+required explicit confirmation. These checks used fictional saves only.

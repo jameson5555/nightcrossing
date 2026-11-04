@@ -7,14 +7,25 @@ export default function AccountPanel() {
   const { controller } = usePlayer();
   const state = useSyncExternalStore(controller.subscribe, controller.getState);
   const [open, setOpen] = useState(false);
-  const [importGuest, setImportGuest] = useState(true);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [busy, setBusy] = useState(false);
   const [signingIn, setSigningIn] = useState(false);
   const [error, setError] = useState('');
   const [guestHasProgress, setGuestHasProgress] = useState(false);
+  const [browserRecovery, setBrowserRecovery] = useState(null);
+  const [confirmRecovery, setConfirmRecovery] = useState(false);
   const dialogRef = useRef(null);
   const triggerRef = useRef(null);
+  useEffect(() => {
+    if (!open || !state.user) return;
+    let active = true;
+    void controller.getBrowserSaveRecovery().then(recovery => {
+      if (active) setBrowserRecovery(recovery);
+    }).catch(() => {
+      if (active) setError('The separate browser save could not be read. Its data has been left unchanged.');
+    });
+    return () => { active = false; };
+  }, [controller, open, state.user]);
   useEffect(() => {
     if (!state.enabled || state.user) return;
     let active = true;
@@ -42,12 +53,12 @@ export default function AccountPanel() {
     error: 'Saved on this device · cloud save needs attention' }[state.cloud];
   const label = state.user ? 'Account' : guestHasProgress ? 'Save progress' : 'Sign in';
   const needsAttention = state.user && (state.cloud === 'pending' || state.cloud === 'error');
-  const download = async () => {
-    const raw = await controller.exportSave();
+  const download = async (browserSave = false) => {
+    const raw = await (browserSave ? controller.exportBrowserSave() : controller.exportSave());
     const url = URL.createObjectURL(new Blob([raw], { type: 'application/json' }));
     const link = document.createElement('a');
     link.href = url;
-    link.download = `nightcrossing-save-${new Date().toISOString().slice(0, 10)}.json`;
+    link.download = `nightcrossing-${browserSave ? 'browser-' : ''}save-${new Date().toISOString().slice(0, 10)}.json`;
     link.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
@@ -76,46 +87,58 @@ export default function AccountPanel() {
         <button type="button" aria-label="Close account window" disabled={busy} onClick={() => setOpen(false)}>×</button>
       </div>
       {state.user ? <>
-        <p>Signed in as <strong>{state.user.email || state.user.displayName}</strong>.</p>
-        <p>Your puzzles, hints, and achievements are saved to this account. You can keep playing offline and sync when you reconnect.</p>
+        <p><strong>{state.user.email || state.user.displayName}</strong></p>
         <p role="status">{cloudCopy}</p>
-        {(state.cloud === 'pending' || state.cloud === 'error') && <p className="account-small">Some changes are only on this device. If you sign out now, sign back in here later to finish syncing them.</p>}
         <div className="account-actions">
-          <button type="button" disabled={busy || state.cloud === 'saving'} onClick={() => { void run(controller.sync); }}>Sync now</button>
-          <button type="button" disabled={busy} onClick={() => { void run(download); }}>Download a backup</button>
+          {state.cloud === 'error' && <button type="button" disabled={busy} onClick={() => { void run(controller.sync); }}>Retry save</button>}
           <button type="button" disabled={busy} onClick={() => { void run(controller.signOut); }}>Sign out</button>
         </div>
-        <p className="account-small">Signing out returns to this device’s separate guest progress. Your account save stays private to your Google sign-in.</p>
-        {archived.length > 0 && <details className="account-versions">
+      </> : <>
+        <p>Sign in to keep your progress across devices.</p>
+        <button type="button" className="account-google" disabled={busy || !state.available} onClick={() => {
+          setSigningIn(true);
+          void run(() => controller.signIn()).finally(() => setSigningIn(false));
+        }}>Continue with Google</button>
+        {signingIn && <div className="account-signing-in">
+          <span className="account-small" role="status">Waiting for Google…</span>
+          <button type="button" onClick={controller.cancelSignIn}>Cancel</button>
+        </div>}
+        {!state.available && <p>Google sign-in is not available yet.</p>}
+        <p className="account-small"><a href={`${import.meta.env.BASE_URL}privacy.html`}>Privacy</a></p>
+      </>}
+      {(state.user || guestHasProgress) && <details className="account-options">
+        <summary>More options</summary>
+        <div className="account-actions">
+          {state.user && <>
+            <button type="button" disabled={busy || state.cloud === 'saving'} onClick={() => { void run(controller.sync); }}>Sync now</button>
+            <button type="button" disabled={busy} onClick={() => { void run(() => download()); }}>Download a backup</button>
+          </>}
+          {(!state.user || browserRecovery?.available) && <button type="button" disabled={busy} onClick={() => { void run(() => download(true)); }}>Download browser backup</button>}
+        </div>
+        {state.user && browserRecovery?.available && <section className="account-browser-recovery" aria-label="Recover browser progress">
+          <p>Another browser save is available. Add it to this account?</p>
+          {browserRecovery.differentOwner ? <>
+            {confirmRecovery ? <>
+              <p>This save was linked to another account. Confirm it belongs to you before adding it to <strong>{state.user.email || state.user.displayName}</strong>.</p>
+              <button type="button" disabled={busy} onClick={() => { void run(() => controller.recoverBrowserSave({ allowDifferentOwner: true })); }}>Confirm and add browser progress</button>
+              <button type="button" disabled={busy} onClick={() => setConfirmRecovery(false)}>Cancel</button>
+            </> : <button type="button" disabled={busy} onClick={() => setConfirmRecovery(true)}>Add browser progress to account</button>}
+          </> : <button type="button" disabled={busy} onClick={() => { void run(controller.recoverBrowserSave); }}>Add browser progress to account</button>}
+        </section>}
+        {state.user && archived.length > 0 && <details className="account-versions">
           <summary>Other saved puzzle versions ({archived.length})</summary>
-          <p>These puzzles were started on different editions. Both saves were kept. Choose a version to continue from its saved letters.</p>
+          <p>Choose a version to continue from its saved letters.</p>
           {archived.map(({ id, edition, letters }) => <div key={`${id}:${edition}`}>
             <span>{id.replace(/---/g, ' · ').replace(/-vol/, ' · Puzzle ').replace(/-/g, ' ')} — {letters} filled cells</span>
             <button type="button" disabled={busy} onClick={() => { void run(() => controller.chooseEdition(id, edition)); }}>Use this saved version</button>
           </div>)}
         </details>}
-        {confirmDelete ? <div className="account-delete-confirm">
-          <p>Delete your account and its cloud save? This removes the account’s cached save from this device too. Guest progress is kept. Download a backup first if you want a copy.</p>
+        {state.user && (confirmDelete ? <div className="account-delete-confirm">
+          <p>Delete your account and cloud save? Guest progress stays on this device.</p>
           <button type="button" disabled={busy} onClick={() => { void run(controller.deleteAccount); }}>Confirm deletion with Google</button>
           <button type="button" disabled={busy} onClick={() => setConfirmDelete(false)}>Keep my account</button>
-        </div> : <button type="button" className="account-delete" disabled={busy} onClick={() => setConfirmDelete(true)}>Delete account and cloud save</button>}
-      </> : <>
-        <p>Sign in with Google to keep your puzzles, hints, and achievements across browsers and devices. Playing without an account is still available.</p>
-        <label className="account-import"><input type="checkbox" checked={importGuest} onChange={event => setImportGuest(event.target.checked)} />
-          Add this device’s guest progress to my account
-        </label>
-        <p className="account-small">Existing completions are combined. A guest save is only added once and is never automatically copied into another person’s account.</p>
-        <button type="button" className="account-google" disabled={busy || !state.available} onClick={() => {
-          setSigningIn(true);
-          void run(() => controller.signIn({ importGuest })).finally(() => setSigningIn(false));
-        }}>Continue with Google</button>
-        {signingIn && <div>
-          <p className="account-small" role="status">Finish signing in in the Google tab, then return here. We’ll check your account when you return.</p>
-          <button type="button" onClick={controller.cancelSignIn}>Cancel sign-in</button>
-        </div>}
-        {!state.available && <p>Google sign-in is not available on this site yet.</p>}
-        <p className="account-small">Sign in with Google to save progress with Nightcrossing. See our <a href={`${import.meta.env.BASE_URL}privacy.html`}>privacy notice</a>.</p>
-      </>}
+        </div> : <button type="button" className="account-delete" disabled={busy} onClick={() => setConfirmDelete(true)}>Delete account and cloud save</button>)}
+      </details>}
       {(error || state.message) && <p className="account-error" role="alert">{error || state.message}</p>}
     </dialog>}
     {state.message && !open && <span className="account-sr-only" role="status">{state.message}</span>}

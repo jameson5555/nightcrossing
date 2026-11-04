@@ -1,6 +1,7 @@
 import { createProfileStore, readGuestProgress } from './profileStore.js';
 import { createSessionScope } from './sessionScope.js';
 import { cloudSnapshot, emptySnapshot, mergeSnapshots, serializeSnapshot } from './progressMerge.js';
+import { hasSavedProgress } from './savedProgress.js';
 
 const messageFor = error => {
   const code = error?.code || '';
@@ -24,9 +25,14 @@ export function createCloudController({ backing, config, backendFactory,
   const listeners = new Set();
   const emit = patch => { state = { ...state, ...patch }; for (const listener of listeners) listener(); };
   let backend, startPromise, profile, generation = 0, playing = false;
-  let importRequested = null, deleting = false, pendingRemote;
+  let importRequested = null, deleting = false, recovering = false, pendingRemote;
   let dirty = 0, inFlight, debounce, deadline;
   const clearTimers = () => { clearTimeout(debounce); clearTimeout(deadline); debounce = deadline = null; };
+  const backupBrowserMerge = async (uid, account, guest) => {
+    const key = `nc_browser_recovery_backup_${uid}`;
+    const { value } = await backing.get({ key });
+    if (!value) await backing.set({ key, value: JSON.stringify({ schemaVersion: 1, createdAt: now(), account, guest }) });
+  };
   const schedule = () => {
     clearTimeout(debounce);
     debounce = setTimeout(() => { void sync(); }, debounceMs);
@@ -47,7 +53,7 @@ export function createCloudController({ backing, config, backendFactory,
     }
   };
   async function sync() {
-    if (!profile || !state.user || deleting || !backend) return;
+    if (!profile || !state.user || deleting || recovering || !backend) return;
     if (inFlight) return inFlight;
     clearTimers();
     const token = generation, uid = state.user.uid, store = profile, capturedDirty = dirty;
@@ -97,20 +103,24 @@ export function createCloudController({ backing, config, backendFactory,
         } });
       await store.snapshot();
       const { value: owner } = await backing.get({ key: 'nc_guest_progress_owner' });
-      const { value: imported } = await backing.get({ key: `nc_guest_imported_${user.uid}` });
       const declinedKey = `nc_guest_import_declined_${user.uid}`;
       const { value: declined } = await backing.get({ key: declinedKey });
-      // An owner marker without a completed marker means a prior import was
-      // interrupted. Resume it on auth restoration for that same owner only.
-      // A deliberate unchecked import choice still takes precedence.
-      if (requestedImport === false && owner === user.uid && !imported) {
+      // Sign-in carries the browser save with it. Restoring an existing session
+      // does the same for this owner, even if an old import marker was set.
+      // Never attach a guest save reserved by another account automatically.
+      if (requestedImport === false && (!owner || owner === user.uid)) {
         await backing.set({ key: declinedKey, value: 'true' });
       }
       const shouldImport = requestedImport === true ||
-        (requestedImport === null && owner === user.uid && !declined);
-      if (shouldImport && (!owner || owner === user.uid) && !imported) {
+        (requestedImport === null && !declined);
+      if (shouldImport && (!owner || owner === user.uid)) {
+        const guest = await readGuestProgress(backing);
+        const before = await store.snapshot();
+        if (serializeSnapshot(mergeSnapshots(before, guest)) !== serializeSnapshot(before)) {
+          await backupBrowserMerge(user.uid, before, guest);
+        }
         await backing.set({ key: 'nc_guest_progress_owner', value: user.uid });
-        await store.merge(await readGuestProgress(backing));
+        await store.merge(guest);
         await backing.set({ key: `nc_guest_imported_${user.uid}`, value: 'true' });
         await backing.remove({ key: declinedKey });
       }
@@ -143,19 +153,73 @@ export function createCloudController({ backing, config, backendFactory,
       return startPromise;
     },
     signIn: async ({ importGuest = true } = {}) => {
-      if (!backend || playing) return;
+      if (!backend || playing || recovering) return;
       importRequested = importGuest;
       try { await backend.signIn(); }
       catch (error) { importRequested = null; emit({ message: messageFor(error) }); }
     },
     cancelSignIn: () => backend?.cancelSignIn?.(),
     signOut: async () => {
-      if (!backend || playing || deleting) return;
+      if (!backend || playing || deleting || recovering) return;
       await sync();
       try { await backend.signOut(); }
       catch (error) { emit({ message: messageFor(error) }); }
     },
     sync,
+    getBrowserSaveRecovery: async () => {
+      if (!profile || !state.user) return { available: false };
+      const token = generation, uid = state.user.uid, store = profile;
+      if (!await hasSavedProgress(backing)) return { available: false };
+      const guest = await readGuestProgress(backing);
+      const local = await store.snapshot();
+      const { value: owner } = await backing.get({ key: 'nc_guest_progress_owner' });
+      return { available: token === generation && serializeSnapshot(mergeSnapshots(local, guest)) !== serializeSnapshot(local),
+        differentOwner: Boolean(owner && owner !== uid) };
+    },
+    exportBrowserSave: async () => serializeSnapshot(await readGuestProgress(backing)),
+    recoverBrowserSave: async ({ allowDifferentOwner = false } = {}) => {
+      if (!profile || !state.user || playing || deleting || recovering) throw new Error('Open Account from the menu to recover this browser save.');
+      const token = generation, uid = state.user.uid, store = profile;
+      recovering = true;
+      clearTimers();
+      emit({ phase: 'loading', message: '' });
+      let stopped = false;
+      try {
+        await inFlight;
+        if (token !== generation) throw new Error('The account changed. Open Account and try again.');
+        const { value: owner } = await backing.get({ key: 'nc_guest_progress_owner' });
+        if (owner && owner !== uid && !allowDifferentOwner) throw new Error('Confirm that this browser save is yours before adding it to another account.');
+        if (!await hasSavedProgress(backing)) throw new Error('No saved browser progress was found.');
+        const guest = await readGuestProgress(backing);
+        await state.scope.stop();
+        stopped = true;
+        const before = await store.snapshot();
+        // Keep an immutable pre-recovery copy on this device. Failure to save
+        // that backup aborts recovery before the account is changed.
+        await backupBrowserMerge(uid, before, guest);
+        if (token !== generation) throw new Error('The account changed. Open Account and try again.');
+        await store.merge(guest);
+        dirty++;
+        // An explicit recovery can retry even when the old once-only import
+        // marker was set. It never deletes or changes the guest puzzle data.
+        if (!owner) await backing.set({ key: 'nc_guest_progress_owner', value: uid });
+        await backing.set({ key: `nc_guest_imported_${uid}`, value: 'true' });
+        await backing.remove({ key: `nc_guest_import_declined_${uid}` });
+        emit({ cloud: 'pending', message: '' });
+      } catch (error) {
+        if (token === generation) emit({ cloud: 'error', message: error.message });
+        throw error;
+      } finally {
+        recovering = false;
+        if (stopped && token === generation) {
+          const saved = await store.snapshot();
+          emit({ phase: 'ready', scope: createSessionScope(store), epoch: state.epoch + 1, archives: saved.archives });
+        } else if (token === generation) {
+          emit({ phase: 'ready' });
+        }
+      }
+      await sync();
+    },
     setPlaying: async value => {
       playing = value;
       if (!value && pendingRemote) {
@@ -177,7 +241,7 @@ export function createCloudController({ backing, config, backendFactory,
       await sync();
     },
     deleteAccount: async () => {
-      if (!profile || !state.user || playing || deleting) return;
+      if (!profile || !state.user || playing || deleting || recovering) return;
       const store = profile, uid = state.user.uid;
       deleting = true;
       clearTimers();
@@ -188,6 +252,7 @@ export function createCloudController({ backing, config, backendFactory,
         await inFlight;
         await backend.deleteAccount(uid);
         await store.clear();
+        await backing.remove({ key: `nc_browser_recovery_backup_${uid}` });
         const { value: owner } = await backing.get({ key: 'nc_guest_progress_owner' });
         if (owner === uid) await backing.remove({ key: 'nc_guest_progress_owner' });
         await backing.remove({ key: `nc_guest_imported_${uid}` });

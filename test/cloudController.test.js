@@ -82,15 +82,35 @@ test('auth restoration resumes an interrupted import of legacy theme progress fo
   await h.controller.signOut(); await h.settled();
 });
 
-test('interrupted import recovery never copies another owner’s save or an already imported guest save', async () => {
+test('automatic import never copies another owner’s save or a previously declined guest save', async () => {
   for (const markers of [{ nc_guest_progress_owner: 'bob' },
-    { nc_guest_progress_owner: 'alice', nc_guest_imported_alice: 'true' }]) {
+    { nc_guest_progress_owner: 'alice', nc_guest_import_declined_alice: 'true' }]) {
     const h = harness({ restoredUser: { uid: 'alice', email: 'alice@example.test' }, initial: {
       ...markers, puzzle_progress_test: '["G"]'
     } });
     await h.controller.start(); await h.settled();
     assert.equal(h.saves.get('alice').records.puzzle_progress_test, undefined);
     await h.controller.signOut(); await h.settled();
+  }
+});
+
+test('restoring a session automatically combines browser progress despite an old import marker', async () => {
+  for (const markers of [{}, { nc_guest_progress_owner: 'alice', nc_guest_imported_alice: 'true' }]) {
+    const initial = { ...markers, puzzle_progress_test: '["G"]', reward_claimed_done: 'true',
+      hint_wallet_v1: '{"balance":9,"receipts":[]}' };
+    const first = harness({ restoredUser: { uid: 'alice', email: 'alice@example.test' }, initial });
+    await first.controller.start(); await first.settled();
+    assert.equal(first.saves.get('alice').records.puzzle_progress_test.value, '["G"]');
+    assert.equal(first.saves.get('alice').records.reward_claimed_done.value, 'true');
+    const backup = first.values.get('nc_browser_recovery_backup_alice');
+    assert.ok(backup);
+    const restored = harness({ restoredUser: { uid: 'alice', email: 'alice@example.test' }, initial: Object.fromEntries(first.values) });
+    await first.controller.signOut(); await first.settled();
+    await restored.controller.start(); await restored.settled();
+    assert.equal(JSON.parse(restored.saves.get('alice').records.hint_wallet_v1.value).balance, 9);
+    assert.equal(restored.values.get('nc_browser_recovery_backup_alice'), backup);
+    assert.equal(restored.values.get('puzzle_progress_test'), '["G"]');
+    await restored.controller.signOut(); await restored.settled();
   }
 });
 
@@ -109,6 +129,104 @@ test('declining a pending import survives reload and a later explicit opt-in can
   assert.equal(restored.saves.get('alice').records.puzzle_progress_test.value, '["G"]');
   assert.equal(restored.values.has('nc_guest_import_declined_alice'), false);
   await restored.controller.signOut(); await restored.settled();
+});
+
+test('optional browser recovery can copy a previously declined save and retains both original saves', async () => {
+  const guest = { puzzle_progress_test: '["G"]', reward_claimed_done: 'true',
+    theme_progress_Food: '{"puzzlesCompleted":7,"badgeLevel":3}',
+    hint_wallet_v1: '{"balance":9,"receipts":[]}', journey_rank_high_watermark: '6' };
+  const h = harness({ restoredUser: { uid: 'alice', email: 'alice@example.test' }, initial: {
+    ...guest, nc_guest_progress_owner: 'alice', nc_guest_imported_alice: 'true', nc_guest_import_declined_alice: 'true'
+  } });
+  await h.controller.start(); await h.settled();
+  assert.equal((await h.controller.getState().scope.get({ key: 'puzzle_progress_test' })).value, null);
+  assert.equal((await h.controller.getBrowserSaveRecovery()).available, true);
+  assert.equal(JSON.parse(await h.controller.exportBrowserSave()).records.puzzle_progress_test.value, '["G"]');
+  await h.controller.getState().scope.set({ key: 'reward_claimed_account', value: 'true' });
+  await h.controller.sync();
+  const before = JSON.parse(await h.controller.exportSave());
+  await h.controller.recoverBrowserSave();
+  assert.equal(h.saves.get('alice').records.puzzle_progress_test.value, '["G"]');
+  assert.equal(h.saves.get('alice').records.reward_claimed_done.value, 'true');
+  assert.equal(h.saves.get('alice').records.reward_claimed_account.value, 'true');
+  assert.equal(JSON.parse(h.saves.get('alice').records.hint_wallet_v1.value).balance, 9);
+  assert.equal(h.saves.get('alice').records.journey_rank_high_watermark.value, '6');
+  const backup = h.values.get('nc_browser_recovery_backup_alice');
+  assert.deepEqual(JSON.parse(backup).account, before);
+  assert.equal(JSON.parse(backup).guest.records.puzzle_progress_test.value, '["G"]');
+  assert.equal((await h.controller.getBrowserSaveRecovery()).available, false);
+  await h.controller.recoverBrowserSave();
+  assert.equal(h.values.get('nc_browser_recovery_backup_alice'), backup);
+  assert.equal(JSON.parse(h.saves.get('alice').records.hint_wallet_v1.value).balance, 9);
+  for (const [key, value] of Object.entries(guest)) assert.equal(h.values.get(key), value);
+  await h.controller.signOut(); await h.settled();
+  assert.equal((await h.controller.getState().scope.get({ key: 'puzzle_progress_test' })).value, '["G"]');
+});
+
+test('explicit checked sign-in can retry an already-marked import without duplicating hints', async () => {
+  const h = harness({ initial: { nc_guest_progress_owner: 'alice', nc_guest_imported_alice: 'true',
+    puzzle_progress_test: '["G"]', hint_wallet_v1: '{"balance":9,"receipts":[]}' } });
+  await h.controller.start(); await h.settled();
+  await h.controller.signIn({ importGuest: true }); await h.settled();
+  assert.equal(h.saves.get('alice').records.puzzle_progress_test.value, '["G"]');
+  await h.controller.signOut(); await h.settled();
+  await h.controller.signIn({ importGuest: true }); await h.settled();
+  assert.equal(JSON.parse(h.saves.get('alice').records.hint_wallet_v1.value).balance, 9);
+  await h.controller.signOut(); await h.settled();
+});
+
+test('copying a guest save linked to another account requires explicit recovery confirmation', async () => {
+  const h = harness({ restoredUser: { uid: 'alice', email: 'alice@example.test' }, initial: {
+    nc_guest_progress_owner: 'bob', puzzle_progress_test: '["B"]'
+  } });
+  await h.controller.start(); await h.settled();
+  assert.deepEqual(await h.controller.getBrowserSaveRecovery(), { available: true, differentOwner: true });
+  await assert.rejects(h.controller.recoverBrowserSave(), /Confirm that this browser save is yours/);
+  assert.equal(h.saves.get('alice').records.puzzle_progress_test, undefined);
+  assert.equal(h.values.has('nc_browser_recovery_backup_alice'), false);
+  await h.controller.recoverBrowserSave({ allowDifferentOwner: true });
+  assert.equal(h.saves.get('alice').records.puzzle_progress_test.value, '["B"]');
+  assert.equal(h.values.get('nc_guest_progress_owner'), 'bob');
+  assert.equal(h.values.get('puzzle_progress_test'), '["B"]');
+  await h.controller.signOut(); await h.settled();
+});
+
+test('a failed recovery backup leaves account progress unchanged and restores a writable screen', async () => {
+  const h = harness({ restoredUser: { uid: 'alice', email: 'alice@example.test' }, initial: {
+    nc_guest_progress_owner: 'alice', nc_guest_imported_alice: 'true', nc_guest_import_declined_alice: 'true', puzzle_progress_guest: '["G"]'
+  } });
+  await h.controller.start(); await h.settled();
+  await h.controller.getState().scope.set({ key: 'puzzle_progress_account', value: '["A"]' });
+  await h.controller.sync();
+  const before = await h.controller.exportSave();
+  const write = h.backing.set;
+  h.backing.set = async args => {
+    if (args.key === 'nc_browser_recovery_backup_alice') throw new Error('Device storage is full.');
+    return write(args);
+  };
+  await assert.rejects(h.controller.recoverBrowserSave(), /Device storage is full/);
+  assert.equal(h.controller.getState().phase, 'ready');
+  assert.equal(await h.controller.exportSave(), before);
+  h.backing.set = write;
+  await h.controller.getState().scope.set({ key: 'puzzle_progress_account', value: '["B"]' });
+  assert.equal((await h.controller.getState().scope.get({ key: 'puzzle_progress_account' })).value, '["B"]');
+  assert.equal(h.values.get('puzzle_progress_guest'), '["G"]');
+  await h.controller.signOut(); await h.settled();
+});
+
+test('offline recovery retains progress locally until the account can sync again', async () => {
+  const h = harness({ restoredUser: { uid: 'alice', email: 'alice@example.test' }, initial: {
+    nc_guest_progress_owner: 'alice', nc_guest_imported_alice: 'true', nc_guest_import_declined_alice: 'true', reward_claimed_guest: 'true'
+  } });
+  await h.controller.start(); await h.settled();
+  h.setOffline(true);
+  await h.controller.recoverBrowserSave();
+  assert.equal(h.controller.getState().cloud, 'error');
+  assert.equal((await h.controller.getState().scope.get({ key: 'reward_claimed_guest' })).value, 'true');
+  h.setOffline(false);
+  await h.controller.sync();
+  assert.equal(h.saves.get('alice').records.reward_claimed_guest.value, 'true');
+  await h.controller.signOut(); await h.settled();
 });
 
 test('offline changes remain local and sync successfully after reconnection', async () => {
@@ -161,9 +279,11 @@ test('sign-out restores separate guest progress and deletion removes account cac
   assert.equal((await h.controller.getState().scope.get({ key: 'puzzle_progress_other' })).value, null);
   assert.equal((await h.controller.getState().scope.get({ key: 'puzzle_progress_test' })).value, '["G"]');
   await h.controller.signIn(); await h.settled();
+  h.values.set('nc_browser_recovery_backup_alice', 'local backup');
   await h.controller.deleteAccount(); await h.settled();
   assert.equal(h.saves.has('alice'), false);
   assert.equal(h.values.has('nc_account_alice'), false);
+  assert.equal(h.values.has('nc_browser_recovery_backup_alice'), false);
   assert.equal(h.values.get('puzzle_progress_test'), '["G"]');
 });
 
