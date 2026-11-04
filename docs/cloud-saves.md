@@ -127,6 +127,13 @@ enabling/deploying dependent frontend changes. Keep config.php and runtime/
 intact. FTP deployment updates only the public web files; it cannot install the
 private directory above public_html. Schedule database backups through your host.
 
+For the same-tab login/session fix, upload the repository's `server/src/Api.php`
+to `nightcrossing-private/src/Api.php` in cPanel, replacing that file, **before**
+deploying the updated frontend. This is the only private source file changed by
+this fix; config.php, vendor/ and runtime/ stay in place. The updated API still
+accepts the old popup client during deployment. Google client settings and the
+registered callback URI stay the same.
+
 ## 4. Deploy and enable
 
 The normal web build includes the public `api/index.php` entrypoint. Deploy the
@@ -159,7 +166,8 @@ VITE_ACCOUNTS_API_PATH=/nightcrossing/api/index.php
 
 The API path must stay on the same origin. Use the canonical domain
 `jamesonmacarthur.com`; redirect alternate www/HTTP URLs to it in your hosting if
-needed. Allow the sign-in popup when prompted.
+needed. Normal sign-in visits Google in the current tab and returns directly to
+the game. Account deletion's fresh identity confirmation still uses a popup.
 
 ## 5. Verify with the two current players
 
@@ -173,8 +181,9 @@ needed. Allow the sign-in popup when prompted.
 4. Make different edits on the same edition on the two devices. Sync each from
    the menu (or use Account → More options → Sync now) and confirm compatible edits merge. An older/newer grid edition is
    retained separately rather than mixing its cells.
-5. Sign out and confirm the original guest save still exists. Sign in as the
-   other player and confirm they do not receive the first player's guest copy.
+5. Sign out and confirm the original guest save still exists. Sign back in twice
+   and confirm Google returns to the same game tab each time. Sign in as the other
+   player and confirm they do not receive the first player's guest copy.
 6. Try offline play and reconnect; pending edits should save once the server is
    available. A device can restore only edits that have reached the server.
 7. Test account deletion with a disposable account. Confirming with a different
@@ -238,11 +247,19 @@ merging does not access other origins or require clearing browser data.
   not its changeable email address. Every API request checks the session owner.
 - Sessions use HttpOnly, Secure, SameSite=Lax cookies, a private session directory
   and a 30-day idle lifetime. Writes require an exact Origin and CSRF token.
-- Google sign-in completion is checked against the server's receipt for the exact
+  Rotation and logout leave anonymous old session stubs for delayed requests,
+  with no account identity or OAuth flow. This prevents late polls from replacing
+  a successful login cookie with a new guest cookie. PHP session GC removes them.
+- Normal Google sign-in uses a same-tab redirect with state, nonce and PKCE
+  validation. The successful callback commits the session before redirecting to
+  the configured game URL, without exposing codes in the game URL. A short-lived
+  local import intent resumes explicit sign-in behavior only when it matches the
+  authenticated server receipt; it grants no authentication or server access.
+- Account deletion's popup completion is checked against the server's receipt for the exact
   authorization attempt. Popup messages, periodic checks and returning to the game
   trigger that check. The app does not assume that window.closed means a mobile
   login was cancelled: Chrome can detach the opener while its tab remains open.
-  The sign-in dialog offers Cancel sign-in and has a three-minute deadline with
+  The popup has a three-minute deadline with
   recovery instructions. Returning to the original game tab resumes a suspended
   completion check. A Google page that never finishes its own navigation still
   requires a real-device/network check; this mechanism cannot force Google to return.
@@ -309,6 +326,8 @@ router or development config.
 
 Primary references: [Google OpenID Connect](https://developers.google.com/identity/openid-connect/openid-connect),
 [Google ID token verification](https://developers.google.com/identity/gsi/web/guides/verify-google-id-token),
+[Google's web server redirect flow](https://developers.google.com/identity/protocols/oauth2/web-server),
+[PHP session rotation and delayed requests](https://www.php.net/manual/en/function.session-regenerate-id.php),
 [official PHP client](https://github.com/googleapis/google-api-php-client),
 [cPanel Database Wizard](https://docs.cpanel.net/cpanel/databases/database-wizard/).
 
@@ -346,3 +365,12 @@ both account and guest completions, saved letters, hints, rank and badge metadat
 The original guest storage values were unchanged, account progress survived reload,
 and signing out still restored the original guest save. The separate-owner copy
 required explicit confirmation. These checks used fictional saves only.
+
+Same-tab login follow-up: 133 application tests and seven PHP/MySQL integration
+tests passed, including a delayed-session regression that failed before the fix.
+The production build, private package verification, changed-file lint and PHP
+syntax checks passed. An isolated mobile-emulated Chrome session used the real
+local PHP API and fictional Google identities for three consecutive sign-in/
+sign-out cycles. Each returned to the original game tab with completions and
+hints intact. Provider cancellation returned to intact guest progress. Real
+Google sign-in on the owner's Android device still needs deployment and retesting.

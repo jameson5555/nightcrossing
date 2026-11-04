@@ -11,11 +11,11 @@ let server, origin, directory, endpoint;
 const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
 function client() {
   let cookie = '', csrf;
-  return { request: async (action, body, query = '') => {
+  return { cookie: () => cookie, request: async (action, body, query = '') => {
     const response = await fetch(`${endpoint}?action=${action}${query}`, {
       method: body ? 'POST' : 'GET', headers: { Cookie: cookie,
         ...(body ? { Origin: origin, 'Content-Type': 'application/json', 'X-NC-CSRF': csrf } : {}) },
-      ...(body ? { body: JSON.stringify(body) } : {})
+      ...(body ? { body: JSON.stringify(body) } : {}), redirect: 'manual'
     });
     for (const value of response.headers.getSetCookie()) if (value.startsWith('nc_session=')) cookie = value.split(';')[0];
     const text = await response.text();
@@ -88,11 +88,57 @@ test('OAuth state is one-use; sign-in rotates the session and reuses the immutab
   assert.notEqual(aliceUid, bobUid);
 });
 
+test('a late pre-login session check cannot replace the authenticated cookie after repeated sign-ins', async () => {
+  const player = client();
+  const staleCookies = [];
+  for (let attempt = 0; attempt < 3; attempt++) {
+    await player.request('session');
+    const authorization = await player.request('authorize', {});
+    const previousCookie = player.cookie();
+    staleCookies.push(previousCookie);
+    const callback = await player.request('callback', undefined, `&state=${authorization.data.attempt}&code=alice`);
+    assert.match(callback.text, /"ok":true/);
+    assert.notEqual(player.cookie(), previousCookie, 'login rotates the session ID');
+    // A poll may have been sent with the old cookie before the callback rotated
+    // it, then arrive late over a mobile connection. Its response must not send
+    // another cookie that overwrites the successful login in the browser.
+    for (const cookie of staleCookies) {
+      const late = await fetch(`${endpoint}?action=session`, { headers: { Cookie: cookie } });
+      assert.equal(late.headers.get('set-cookie'), null, 'a delayed poll must not replace the new cookie');
+      assert.equal((await late.json()).user, null, 'the old session never gains account access');
+    }
+    assert.equal((await player.request('session')).data.user.uid, aliceUid);
+    staleCookies.push(player.cookie());
+    assert.equal((await player.request('logout', {})).status, 200);
+  }
+});
+
 test('a player cannot read, write or delete another player’s save', async () => {
   assert.equal((await alice.request('save', undefined, `&uid=${bobUid}`)).status, 403);
   assert.equal((await alice.request('write', { uid: bobUid, revision: 0, payload })).status, 403);
   assert.equal((await alice.request('delete', { uid: bobUid })).status, 403);
   assert.equal((await bob.request('save', undefined, `&uid=${bobUid}`)).data.payload, null);
+});
+
+test('same-tab sign-in returns only to the game after a verified callback and cancellation has a return link', async () => {
+  const player = client();
+  await player.request('session');
+  const authorization = await player.request('authorize', { redirect: true, returnUrl: 'https://other.test/' });
+  assert.equal(authorization.data.mode, 'redirect');
+  const callback = await player.request('callback', undefined, `&state=${authorization.data.attempt}&code=alice`);
+  assert.equal(callback.status, 303);
+  assert.equal(callback.headers.get('location'), `${origin}/nightcrossing/`);
+  const restored = await player.request('session');
+  assert.equal(restored.data.user.uid, aliceUid);
+  assert.equal(restored.data.loginAttempt, authorization.data.attempt);
+  await player.request('logout', {});
+  await player.request('session');
+  const cancelled = await player.request('authorize', { redirect: true });
+  const error = await player.request('callback', undefined, `&state=${cancelled.data.attempt}&error=access_denied`);
+  assert.match(error.text, /Google sign-in was cancelled/);
+  assert.match(error.text, new RegExp(`href="${origin}/nightcrossing/"`));
+  assert.doesNotMatch(error.text, /window.close/);
+  assert.equal((await player.request('session')).data.user, null);
 });
 
 test('compare-and-swap prevents stale overwrites and rejects malformed or oversized saves', async () => {

@@ -5,7 +5,7 @@ import { createCloudController } from '../src/player/cloudController.js';
 import { emptySnapshot, mergeSnapshots } from '../src/player/progressMerge.js';
 import { getCloudConfig } from '../src/player/config.js';
 
-function harness({ initial = {}, restoredUser = null } = {}) {
+function harness({ initial = {}, restoredUser = null, restoredOptions } = {}) {
   const values = new Map(Object.entries(initial));
   const backing = {
     get: async ({ key }) => ({ value: values.get(key) ?? null }),
@@ -17,7 +17,7 @@ function harness({ initial = {}, restoredUser = null } = {}) {
   let signInUser = { uid: 'alice', email: 'alice@example.test' };
   let offline = false;
   const backend = {
-    onAuth: callback => { authChanged = callback; callback(restoredUser); },
+    onAuth: callback => { authChanged = callback; callback(restoredUser, restoredOptions); },
     signIn: async () => authChanged(signInUser), signOut: async () => authChanged(null),
     merge: async (uid, local) => {
       if (offline) throw Object.assign(new Error('offline'), { code: 'unavailable' });
@@ -102,6 +102,16 @@ test('auth restoration resumes an interrupted import of legacy theme progress fo
   assert.equal(JSON.parse(h.saves.get('alice').records.hint_wallet_v1.value).balance, 9);
   assert.equal(h.values.get('nc_guest_imported_alice'), 'true');
   assert.equal(h.values.get('theme_progress_Food'), legacy);
+  await h.controller.signOut(); await h.settled();
+});
+
+test('a verified redirect sign-in resumes explicit browser import after navigation', async () => {
+  const h = harness({ restoredUser: { uid: 'alice', email: 'alice@example.test' }, restoredOptions: { importGuest: true },
+    initial: { nc_guest_progress_owner: 'alice', nc_guest_import_declined_alice: 'true', puzzle_progress_test: '["G"]' } });
+  await h.controller.start(); await h.settled();
+  assert.equal(h.saves.get('alice').records.puzzle_progress_test.value, '["G"]');
+  assert.equal(h.values.get('puzzle_progress_test'), '["G"]');
+  assert.equal(h.values.has('nc_guest_import_declined_alice'), false);
   await h.controller.signOut(); await h.settled();
 });
 

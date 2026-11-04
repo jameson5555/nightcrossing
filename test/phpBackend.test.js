@@ -62,6 +62,69 @@ test('offline reload restores only a cached profile hint; offline sign-out stays
   assert.equal(await start(third), null);
 });
 
+test('normal sign-in leaves and returns in the same tab, clears signed-out preference and resumes the matching import', async () => {
+  const cache = memory(), navigations = [];
+  const config = { endpoint: '/api/index.php' };
+  cache.setItem('nc_php_user_v1:/api/index.php:guest', 'true');
+  const browser = { location: { assign: url => navigations.push(url) }, open: () => assert.fail('normal sign-in must not open a popup') };
+  const backend = createPhpBackend(config, { browser, cache, fetcher: async (url, options) => {
+    if (url.includes('action=session')) return response({ user: null, csrf: 'csrf', loginAttempt: null });
+    assert.deepEqual(JSON.parse(options.body), { reauthenticate: false, redirect: true });
+    return response({ url: 'https://accounts.google.com/authorize', attempt: 'attempt-redirect', mode: 'redirect' });
+  } });
+  assert.equal(await start(backend), null);
+  await backend.signIn();
+  assert.deepEqual(navigations, ['https://accounts.google.com/authorize']);
+  assert.equal(cache.getItem('nc_php_user_v1:/api/index.php:guest'), null);
+  const restored = createPhpBackend(config, { cache, fetcher: async () => response({ user: alice, csrf: 'csrf', loginAttempt: 'attempt-redirect' }) });
+  const result = await new Promise((resolve, reject) => restored.onAuth((user, options) => resolve({ user, options }), reject));
+  assert.deepEqual(result, { user: alice, options: { importGuest: true } });
+  assert.equal(cache.getItem('nc_php_user_v1:/api/index.php:redirect'), null);
+});
+
+test('a stale redirect import intent cannot opt another login into a previously declined import', async () => {
+  const cache = memory();
+  cache.setItem('nc_php_user_v1:/api/index.php:redirect', JSON.stringify({ attempt: 'old-attempt', created: Date.now() }));
+  const backend = createPhpBackend({ endpoint: '/api/index.php' }, { cache,
+    fetcher: async () => response({ user: alice, csrf: 'csrf', loginAttempt: 'different-attempt' }) });
+  const result = await new Promise((resolve, reject) => backend.onAuth((user, options) => resolve({ user, options }), reject));
+  assert.deepEqual(result, { user: alice, options: { importGuest: false } });
+});
+
+test('cancelling redirect preparation keeps the game open even when the network response arrives later', async () => {
+  const cache = memory();
+  cache.setItem('nc_php_user_v1:/api/index.php:guest', 'true');
+  let finishSession;
+  const backend = createPhpBackend({ endpoint: '/api/index.php' }, { cache,
+    browser: { location: { assign: () => assert.fail('cancelled sign-in must not navigate') } },
+    fetcher: () => new Promise(resolve => { finishSession = resolve; }) });
+  await start(backend);
+  const operation = backend.signIn();
+  backend.cancelSignIn();
+  await assert.rejects(operation, { code: 'popup-closed' });
+  finishSession(response({ user: null, csrf: 'csrf' }));
+  await Promise.resolve();
+  assert.equal(cache.getItem('nc_php_user_v1:/api/index.php:guest'), 'true');
+  assert.equal(cache.getItem('nc_php_user_v1:/api/index.php:redirect'), null);
+});
+
+test('unsupported servers and foreign authorization URLs leave the game and browser save intact', async () => {
+  for (const authorization of [
+    { url: 'https://accounts.google.com/authorize', attempt: 'attempt' },
+    { url: 'https://other.test/', attempt: 'attempt', mode: 'redirect' }
+  ]) {
+    const cache = memory();
+    cache.setItem('nc_php_user_v1:/api/index.php:guest', 'true');
+    const backend = createPhpBackend({ endpoint: '/api/index.php' }, { cache,
+      browser: { location: { assign: () => assert.fail('invalid authorization must not navigate') } },
+      fetcher: async url => response(url.includes('action=session') ? { user: null, csrf: 'csrf' } : authorization) });
+    await start(backend);
+    await assert.rejects(backend.signIn(), /could not be started/);
+    assert.equal(cache.getItem('nc_php_user_v1:/api/index.php:guest'), 'true');
+    assert.equal(cache.getItem('nc_php_user_v1:/api/index.php:redirect'), null);
+  }
+});
+
 test('popup results require the correct window, origin and a completed matching authorization attempt', async () => {
   let listener, remoteUser = null, completedAttempt = null, opened = 0;
   const popupWindow = { closed: false, close() { this.closed = true; }, location: {} };
@@ -74,7 +137,7 @@ test('popup results require the correct window, origin and a completed matching 
     return response({ url: 'https://accounts.google.com/authorize', attempt: 'attempt-1' });
   } });
   await start(backend);
-  const operation = backend.signIn();
+  const operation = backend.signIn({ mode: 'popup' });
   assert.equal(opened, 1, 'popup opens before asynchronous work');
   for (let i = 0; i < 5; i++) await Promise.resolve();
   listener({ origin: 'https://wrong.test', source: popupWindow, data: { type: 'nightcrossing-auth', ok: true } });
@@ -96,7 +159,7 @@ test('a popup message cannot import a stale existing session and cancellation st
     response(url.includes('action=session') ? { user: alice, csrf: 'csrf', loginAttempt: 'old-attempt' } :
       { url: 'https://accounts.google.com/authorize', attempt: 'new-attempt' }) });
   await start(backend);
-  const operation = backend.signIn();
+  const operation = backend.signIn({ mode: 'popup' });
   for (let i = 0; i < 5; i++) await Promise.resolve();
   listener({ origin: browser.location.origin, source: popupWindow, data: { type: 'nightcrossing-auth', ok: true } });
   for (let i = 0; i < 5; i++) await Promise.resolve();
@@ -128,7 +191,7 @@ function detachedPopupHarness({ timeout = 1000, poll = 5 } = {}) {
 test('a detached mobile popup completes through the verified server session without a message or closing', async () => {
   const h = detachedPopupHarness();
   await start(h.backend);
-  const operation = h.backend.signIn();
+  const operation = h.backend.signIn({ mode: 'popup' });
   for (let i = 0; i < 10; i++) await Promise.resolve();
   assert.equal(h.popupWindow.location.href, 'https://accounts.google.com/authorize');
   assert.equal(h.closes(), 0, 'do not close the Google tab before its callback completes');
@@ -143,7 +206,7 @@ test('a detached mobile popup completes through the verified server session with
 test('returning to a mobile tab immediately checks completion even when background timers are suspended', async () => {
   const h = detachedPopupHarness({ poll: 60000 });
   await start(h.backend);
-  const operation = h.backend.signIn();
+  const operation = h.backend.signIn({ mode: 'popup' });
   for (let i = 0; i < 10; i++) await Promise.resolve();
   h.complete();
   await h.documentEvents.get('visibilitychange')();
@@ -154,7 +217,7 @@ test('returning to a mobile tab immediately checks completion even when backgrou
 test('an unfinished mobile sign-in times out with a recovery message and releases its timers/listeners', async () => {
   const h = detachedPopupHarness({ timeout: 30 });
   await start(h.backend);
-  await assert.rejects(h.backend.signIn(), { code: 'popup-timeout' });
+  await assert.rejects(h.backend.signIn({ mode: 'popup' }), { code: 'popup-timeout' });
   assert.equal(h.events.size, 0);
   assert.equal(h.documentEvents.size, 0);
   const reads = h.reads();

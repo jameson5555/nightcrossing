@@ -13,6 +13,7 @@ export function createPhpBackend({ endpoint }, {
   const pending = new Set();
   const cacheKey = `nc_php_user_v1:${endpoint}`;
   const guestKey = `${cacheKey}:guest`;
+  const redirectKey = `${cacheKey}:redirect`;
   const guestPreference = value => { try { if (value) cache.setItem(guestKey, 'true'); else cache.removeItem(guestKey); } catch { /* optional */ } };
   const remember = next => {
     user = next;
@@ -50,6 +51,31 @@ export function createPhpBackend({ endpoint }, {
   };
   const assertUser = uid => {
     if (user?.uid !== uid) throw errorWith('Sign in again before syncing this account.', 'http-401');
+  };
+  const redirectSignIn = async () => {
+    cancelPopup?.();
+    let cancel;
+    const cancelled = new Promise((resolve, reject) => {
+      cancel = () => reject(errorWith('Google sign-in was cancelled.', 'popup-closed'));
+    });
+    cancelPopup = cancel;
+    try {
+      await Promise.race([session(), cancelled]);
+      const authorization = await Promise.race([
+        request('authorize', { body: { reauthenticate: false, redirect: true } }), cancelled
+      ]);
+      if (typeof authorization.url !== 'string' || !authorization.url.startsWith('https://accounts.google.com/') ||
+          typeof authorization.attempt !== 'string' || !authorization.attempt || authorization.mode !== 'redirect') {
+        throw new Error('Google sign-in could not be started. Please try again later.');
+      }
+      // This is a local import intent, never an authentication credential. The
+      // returning server session must confirm this exact authorization attempt.
+      cache.setItem(redirectKey, JSON.stringify({ attempt: authorization.attempt, created: Date.now() }));
+      guestPreference(false);
+      browser.location.assign(authorization.url);
+    } finally {
+      if (cancelPopup === cancel) cancelPopup = null;
+    }
   };
   const popup = reauthenticate => {
     cancelPopup?.();
@@ -150,7 +176,13 @@ export function createPhpBackend({ endpoint }, {
     onAuth: (callback, failed) => {
       changed = callback;
       try { if (cache.getItem(guestKey) === 'true') { changed(null); return () => { changed = null; }; } } catch { /* optional */ }
-      void session().then(next => { remember(next); changed?.(next); }, error => {
+      void session().then(next => {
+        let intent;
+        try { intent = JSON.parse(cache.getItem(redirectKey)); cache.removeItem(redirectKey); } catch { /* no pending redirect */ }
+        const importGuest = Boolean(next && intent?.attempt === loginAttempt && Number.isFinite(intent?.created) &&
+          Date.now() >= intent.created && Date.now() - intent.created <= 300000);
+        remember(next); changed?.(next, { importGuest });
+      }, error => {
         if (error.code === 'unavailable') {
           let cached;
           try { cached = JSON.parse(cache.getItem(cacheKey)); } catch { /* no usable cache */ }
@@ -160,7 +192,7 @@ export function createPhpBackend({ endpoint }, {
       });
       return () => { changed = null; };
     },
-    signIn: () => popup(false),
+    signIn: ({ mode = 'redirect' } = {}) => mode === 'popup' ? popup(false) : redirectSignIn(),
     cancelSignIn: () => cancelPopup?.(),
     signOut: async () => {
       try { await session(); await request('logout', { body: {} }); }

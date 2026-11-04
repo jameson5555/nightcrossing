@@ -101,7 +101,7 @@ export default function AccountPanel() {
           void run(() => controller.signIn()).finally(() => setSigningIn(false));
         }}>Continue with Google</button>
         {signingIn && <div className="account-signing-in">
-          <span className="account-small" role="status">Waiting for Google…</span>
+          <span className="account-small" role="status">Opening Google…</span>
           <button type="button" onClick={controller.cancelSignIn}>Cancel</button>
         </div>}
         {!state.available && <p>Google sign-in is not available yet.</p>}

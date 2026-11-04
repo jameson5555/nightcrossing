@@ -152,7 +152,10 @@ export function createCloudController({ backing, config, backendFactory,
           if (!config.configured) throw new Error('Account saves are enabled but the API path is invalid.');
           backend = await backendFactory(config.backend);
           emit({ available: true });
-          backend.onAuth(user => { void transition(user); }, error => emit({ phase: 'error', message: messageFor(error) }));
+          backend.onAuth((user, options) => {
+            if (options?.importGuest === true) importRequested = true;
+            void transition(user);
+          }, error => emit({ phase: 'error', message: messageFor(error) }));
         } catch (error) { emit({ phase: 'error', message: messageFor(error) }); }
       })();
       return startPromise;
