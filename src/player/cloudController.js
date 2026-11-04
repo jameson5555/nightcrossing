@@ -138,6 +138,7 @@ export function createCloudController({ backing, config, backendFactory,
       try { await backend.signIn(); }
       catch (error) { importRequested = false; emit({ message: messageFor(error) }); }
     },
+    cancelSignIn: () => backend?.cancelSignIn?.(),
     signOut: async () => {
       if (!backend || playing || deleting) return;
       await sync();

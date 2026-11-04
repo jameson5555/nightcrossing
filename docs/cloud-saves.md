@@ -196,6 +196,14 @@ caches. The two current players' original guest saves remain available.
   not its changeable email address. Every API request checks the session owner.
 - Sessions use HttpOnly, Secure, SameSite=Lax cookies, a private session directory
   and a 30-day idle lifetime. Writes require an exact Origin and CSRF token.
+- Google sign-in completion is checked against the server's receipt for the exact
+  authorization attempt. Popup messages, periodic checks and returning to the game
+  trigger that check. The app does not assume that window.closed means a mobile
+  login was cancelled: Chrome can detach the opener while its tab remains open.
+  The sign-in dialog offers Cancel sign-in and has a three-minute deadline with
+  recovery instructions. Returning to the original game tab resumes a suspended
+  completion check. A Google page that never finishes its own navigation still
+  requires a real-device/network check; this mechanism cannot force Google to return.
 - Offline reload can use a locally cached profile hint. It grants no server
   access. An expired session requires signing in again. Offline sign-out returns
   to guest and suppresses automatic account restoration; the server cookie cannot
@@ -279,3 +287,10 @@ Primary references: [Google OpenID Connect](https://developers.google.com/identi
   passed. Local PHP was 8.5.6; Composer resolved dependencies for 8.4.0, and the
   added GitHub test workflow runs PHP 8.4. The live cPanel runtime and real Google
   consent flow still need the owner's setup and final verification.
+
+Mobile login follow-up: 115 application tests and the production build passed.
+Tests cover detached popups, focus/visibility recovery, matching authorization
+receipts, cancellation and timeout cleanup. A mobile-emulated Chrome fixture used
+a real COOP navigation that detached window.opener, then verified completion and
+guest-save import without any popup message or automatic window closure. Real
+Google sign-in on Android still needs the owner's final verification.

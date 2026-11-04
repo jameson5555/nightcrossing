@@ -10,6 +10,7 @@ export default function AccountPanel() {
   const [importGuest, setImportGuest] = useState(true);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [signingIn, setSigningIn] = useState(false);
   const [error, setError] = useState('');
   const [guestHasProgress, setGuestHasProgress] = useState(false);
   const dialogRef = useRef(null);
@@ -105,8 +106,13 @@ export default function AccountPanel() {
         </label>
         <p className="account-small">Existing completions are combined. A guest save is only added once and is never automatically copied into another person’s account.</p>
         <button type="button" className="account-google" disabled={busy || !state.available} onClick={() => {
-          void run(() => controller.signIn({ importGuest }));
+          setSigningIn(true);
+          void run(() => controller.signIn({ importGuest })).finally(() => setSigningIn(false));
         }}>Continue with Google</button>
+        {signingIn && <div>
+          <p className="account-small" role="status">Finish signing in in the Google tab, then return here. We’ll check your account when you return.</p>
+          <button type="button" onClick={controller.cancelSignIn}>Cancel sign-in</button>
+        </div>}
         {!state.available && <p>Google sign-in is not available on this site yet.</p>}
         <p className="account-small">Sign in with Google to save progress with Nightcrossing. See our <a href={`${import.meta.env.BASE_URL}privacy.html`}>privacy notice</a>.</p>
       </>}

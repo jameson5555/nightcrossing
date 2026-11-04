@@ -67,7 +67,8 @@ test('popup results require the correct window, origin and a completed matching 
   const popupWindow = { closed: false, close() { this.closed = true; }, location: {} };
   const browser = { location: { origin: 'https://game.test' },
     open: () => { opened++; popupWindow.closed = false; return popupWindow; },
-    addEventListener: (name, callback) => { listener = callback; }, removeEventListener: () => { listener = null; } };
+    addEventListener: (name, callback) => { if (name === 'message') listener = callback; },
+    removeEventListener: name => { if (name === 'message') listener = null; } };
   const backend = createPhpBackend({ endpoint: '/api/index.php' }, { browser, cache: memory(), fetcher: async url => {
     if (url.includes('action=session')) return response({ user: remoteUser, csrf: 'csrf', loginAttempt: completedAttempt });
     return response({ url: 'https://accounts.google.com/authorize', attempt: 'attempt-1' });
@@ -86,11 +87,11 @@ test('popup results require the correct window, origin and a completed matching 
   assert.equal(listener, null);
 });
 
-test('closing a cancelled popup cannot import into an already existing server session', async () => {
+test('a popup message cannot import a stale existing session and cancellation stays available', async () => {
   let listener;
   const popupWindow = { closed: false, close() { this.closed = true; }, location: {} };
   const browser = { location: { origin: 'https://game.test' }, open: () => popupWindow,
-    addEventListener: (name, callback) => { listener = callback; }, removeEventListener: () => {} };
+    addEventListener: (name, callback) => { if (name === 'message') listener = callback; }, removeEventListener: () => {} };
   const backend = createPhpBackend({ endpoint: '/api/index.php' }, { browser, cache: memory(), fetcher: async url =>
     response(url.includes('action=session') ? { user: alice, csrf: 'csrf', loginAttempt: 'old-attempt' } :
       { url: 'https://accounts.google.com/authorize', attempt: 'new-attempt' }) });
@@ -98,5 +99,65 @@ test('closing a cancelled popup cannot import into an already existing server se
   const operation = backend.signIn();
   for (let i = 0; i < 5; i++) await Promise.resolve();
   listener({ origin: browser.location.origin, source: popupWindow, data: { type: 'nightcrossing-auth', ok: true } });
+  for (let i = 0; i < 5; i++) await Promise.resolve();
+  backend.cancelSignIn();
   await assert.rejects(operation, { code: 'popup-closed' });
+});
+
+function detachedPopupHarness({ timeout = 1000, poll = 5 } = {}) {
+  const events = new Map(), documentEvents = new Map();
+  let currentUser = null, attempt = null, reads = 0, closes = 0;
+  const popupWindow = { location: {}, close: () => { closes++; },
+    get closed() { throw new Error('Cross-Origin-Opener-Policy prevents reading window.closed'); } };
+  const browser = { location: { origin: 'https://game.test' }, open: () => popupWindow,
+    addEventListener: (name, callback) => events.set(name, callback), removeEventListener: name => events.delete(name),
+    document: { addEventListener: (name, callback) => documentEvents.set(name, callback),
+      removeEventListener: name => documentEvents.delete(name) } };
+  const backend = createPhpBackend({ endpoint: '/api/index.php' }, { browser, cache: memory(),
+    completionPollMs: poll, signInTimeoutMs: timeout, fetcher: async url => {
+      if (url.includes('action=session')) {
+        reads++;
+        return response({ user: currentUser, csrf: 'csrf', loginAttempt: attempt });
+      }
+      return response({ url: 'https://accounts.google.com/authorize', attempt: 'new-attempt' });
+    } });
+  return { backend, popupWindow, events, documentEvents, reads: () => reads, closes: () => closes,
+    complete: () => { currentUser = alice; attempt = 'new-attempt'; } };
+}
+
+test('a detached mobile popup completes through the verified server session without a message or closing', async () => {
+  const h = detachedPopupHarness();
+  await start(h.backend);
+  const operation = h.backend.signIn();
+  for (let i = 0; i < 10; i++) await Promise.resolve();
+  assert.equal(h.popupWindow.location.href, 'https://accounts.google.com/authorize');
+  assert.equal(h.closes(), 0, 'do not close the Google tab before its callback completes');
+  h.complete();
+  await operation;
+  assert.equal(h.closes(), 1);
+  assert.equal(h.events.size, 0);
+  assert.equal(h.documentEvents.size, 0);
+  assert.equal(h.backend.cancelSignIn(), undefined);
+});
+
+test('returning to a mobile tab immediately checks completion even when background timers are suspended', async () => {
+  const h = detachedPopupHarness({ poll: 60000 });
+  await start(h.backend);
+  const operation = h.backend.signIn();
+  for (let i = 0; i < 10; i++) await Promise.resolve();
+  h.complete();
+  await h.documentEvents.get('visibilitychange')();
+  await operation;
+  assert.equal(h.events.size, 0);
+});
+
+test('an unfinished mobile sign-in times out with a recovery message and releases its timers/listeners', async () => {
+  const h = detachedPopupHarness({ timeout: 30 });
+  await start(h.backend);
+  await assert.rejects(h.backend.signIn(), { code: 'popup-timeout' });
+  assert.equal(h.events.size, 0);
+  assert.equal(h.documentEvents.size, 0);
+  const reads = h.reads();
+  await new Promise(resolve => setTimeout(resolve, 15));
+  assert.equal(h.reads(), reads);
 });

@@ -5,10 +5,11 @@ const validUser = user => user && /^g_[a-f0-9]{32}$/.test(user.uid) &&
   typeof user.email === 'string' && typeof user.displayName === 'string';
 
 export function createPhpBackend({ endpoint }, {
-  fetcher = globalThis.fetch, browser = globalThis.window, cache = globalThis.localStorage
+  fetcher = globalThis.fetch, browser = globalThis.window, cache = globalThis.localStorage,
+  completionPollMs = 1500, signInTimeoutMs = 180000
 } = {}) {
   let user = null, csrf = '', changed, loginAttempt = null;
-  let deleting = false;
+  let deleting = false, cancelPopup;
   const pending = new Set();
   const cacheKey = `nc_php_user_v1:${endpoint}`;
   const guestKey = `${cacheKey}:guest`;
@@ -51,47 +52,72 @@ export function createPhpBackend({ endpoint }, {
     if (user?.uid !== uid) throw errorWith('Sign in again before syncing this account.', 'http-401');
   };
   const popup = reauthenticate => {
+    cancelPopup?.();
     // Open synchronously from the click to avoid popup blocking while loading.
     const popupWindow = browser.open('about:blank', 'nightcrossing-google', 'popup,width=520,height=680');
     if (!popupWindow) return Promise.reject(errorWith('Allow popups, then try Google sign-in again.', 'popup-blocked'));
     return new Promise((resolve, reject) => {
-      let finished = false, poll, timeout, attempt;
-      const finish = async error => {
+      let finished = false, poll, timeout, attempt, checking = false;
+      const cancel = () => finish(errorWith('Google sign-in was cancelled.', 'popup-closed'));
+      const finish = (error, next) => {
         if (finished) return;
         finished = true;
         clearInterval(poll); clearTimeout(timeout);
         browser.removeEventListener('message', onMessage);
-        popupWindow.close();
+        browser.removeEventListener('focus', check);
+        browser.document?.removeEventListener('visibilitychange', check);
+        if (cancelPopup === cancel) cancelPopup = null;
+        try { popupWindow.close(); } catch { /* Mobile browsers may detach the popup. */ }
         if (error) { reject(error); return; }
+        if (!reauthenticate) { guestPreference(false); remember(next); changed?.(next); }
+        resolve();
+      };
+      const check = async () => {
+        if (finished || !attempt || checking) return;
+        checking = true;
         try {
           const next = await session();
-          if (!next || !attempt || loginAttempt !== attempt || (reauthenticate && next.uid !== user?.uid)) {
-            throw errorWith('Google sign-in was cancelled.', 'popup-closed');
+          if (finished || !next || loginAttempt !== attempt) return;
+          if (reauthenticate && next.uid !== user?.uid) {
+            finish(new Error('Choose the same Google account to confirm deletion.'));
+            return;
           }
-          if (!reauthenticate) { guestPreference(false); remember(next); changed?.(next); }
-          resolve();
-        } catch (failure) { reject(failure); }
+          finish(null, next);
+        } catch { /* A dropped check retries; it cannot authenticate or erase progress. */ }
+        finally { checking = false; }
       };
       const onMessage = event => {
         if (event.origin !== browser.location.origin || event.source !== popupWindow ||
             event.data?.type !== 'nightcrossing-auth') return;
-        void finish(event.data.ok ? null : new Error(event.data.error || 'Google sign-in could not be completed.'));
+        if (event.data.ok) void check();
+        else finish(new Error(event.data.error || 'Google sign-in could not be completed.'));
       };
+      cancelPopup = cancel;
       browser.addEventListener('message', onMessage);
-      // Some OAuth pages sever window.opener; a closed popup can still leave
-      // a verified server session. Session checks never trust the popup payload.
-      poll = setInterval(() => { if (popupWindow.closed) void finish(); }, 300);
-      timeout = setTimeout(() => { void finish(errorWith('Sign-in timed out. Try again.', 'popup-closed')); }, 180000);
+      browser.addEventListener('focus', check);
+      browser.document?.addEventListener('visibilitychange', check);
+      // Chrome can sever the opener and report window.closed while the login
+      // tab is still open. Complete only when our server confirms this attempt.
+      // Recheck immediately when a backgrounded mobile game becomes active.
+      poll = setInterval(() => { void check(); }, completionPollMs);
+      timeout = setTimeout(() => finish(errorWith(
+        'Google sign-in did not finish. Close the Google tab, return to Nightcrossing, and try again.',
+        'popup-timeout')), signInTimeoutMs);
       void (async () => {
         try {
           const current = await session();
           if (reauthenticate && current?.uid !== user?.uid) throw new Error('Sign in again before deleting this account.');
           const authorization = await request('authorize', { body: { reauthenticate, uid: user?.uid } });
           const { url } = authorization;
-          attempt = authorization.attempt;
-          if (!url.startsWith('https://accounts.google.com/')) throw new Error('Google sign-in returned an invalid address.');
-          if (!finished) popupWindow.location.href = url;
-        } catch (error) { void finish(error); }
+          if (typeof url !== 'string' || !url.startsWith('https://accounts.google.com/') ||
+              typeof authorization.attempt !== 'string' || !authorization.attempt) {
+            throw new Error('Google sign-in returned an invalid response.');
+          }
+          if (!finished) {
+            attempt = authorization.attempt;
+            popupWindow.location.href = url;
+          }
+        } catch (error) { finish(error); }
       })();
     });
   };
@@ -135,6 +161,7 @@ export function createPhpBackend({ endpoint }, {
       return () => { changed = null; };
     },
     signIn: () => popup(false),
+    cancelSignIn: () => cancelPopup?.(),
     signOut: async () => {
       try { await session(); await request('logout', { body: {} }); }
       catch { /* Offline sign-out still returns to guest; server cookie expires separately. */ }
