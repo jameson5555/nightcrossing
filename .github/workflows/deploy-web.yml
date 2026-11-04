@@ -24,10 +24,7 @@ jobs:
       - name: Build Web App
         env:
           VITE_CLOUD_SAVE_ENABLED: ${{ vars.NC_CLOUD_SAVE_ENABLED || 'false' }}
-          VITE_FIREBASE_API_KEY: ${{ vars.NC_FIREBASE_API_KEY }}
-          VITE_FIREBASE_AUTH_DOMAIN: ${{ vars.NC_FIREBASE_AUTH_DOMAIN }}
-          VITE_FIREBASE_PROJECT_ID: ${{ vars.NC_FIREBASE_PROJECT_ID }}
-          VITE_FIREBASE_APP_ID: ${{ vars.NC_FIREBASE_APP_ID }}
+          VITE_ACCOUNTS_API_PATH: /nightcrossing/api/index.php
           VITE_ANDROID_REWARDED_ADS_ENABLED: 'false'
           VITE_WEB_REWARDED_ADS_ENABLED: ${{ vars.NC_WEB_REWARDED_ADS_ENABLED || 'false' }}
           VITE_ADS_TEST_MODE: ${{ vars.NC_ADS_TEST_MODE || 'true' }}
@@ -35,6 +32,25 @@ jobs:
           VITE_WEB_ADS_REVIEWED: ${{ vars.NC_WEB_ADS_REVIEWED || 'false' }}
           VITE_WEB_US_AD_SERVING_VERIFIED: ${{ vars.NC_WEB_US_AD_SERVING_VERIFIED || 'false' }}
         run: npm run build
+
+      - name: Setup PHP for account backend
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: curl, mbstring, openssl, pdo_mysql
+          tools: composer:v2
+
+      - name: Package private account backend
+        run: |
+          composer install --working-dir=server --no-dev --prefer-dist --no-interaction --no-progress
+          npm run build:accounts
+
+      - name: Save private backend for cPanel installation
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightcrossing-private
+          path: artifacts/nightcrossing-private.zip
+          retention-days: 14
 
       - name: Deploy to cPanel via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4

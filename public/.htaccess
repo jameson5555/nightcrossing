@@ -1,0 +1,4 @@
+# Preserve the opener relationship needed to complete Google sign-in popups.
+<IfModule mod_headers.c>
+    Header always set Cross-Origin-Opener-Policy "same-origin-allow-popups"
+</IfModule>

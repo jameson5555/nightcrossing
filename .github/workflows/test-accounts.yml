@@ -1,0 +1,39 @@
+name: Test account saves
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  accounts:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:5.7.44
+        env:
+          MYSQL_ROOT_PASSWORD: nightcrossing-test-only
+          MYSQL_DATABASE: nightcrossing_test
+        ports:
+          - 33316:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: curl, mbstring, openssl, pdo_mysql
+          tools: composer:v2
+      - run: npm ci
+      - run: composer install --working-dir=server --no-dev --prefer-dist --no-interaction --no-progress
+      - run: npm test
+      - run: npm run test:google-login
+      - run: npm run test:accounts-api
+      - run: npm run build

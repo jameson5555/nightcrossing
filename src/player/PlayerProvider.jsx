@@ -11,8 +11,8 @@ import { fetchPuzzleData } from '../utils/puzzleData.js';
 const controller = createCloudController({ backing: Preferences,
   config: getCloudConfig(import.meta.env, Capacitor.isNativePlatform()),
   backendFactory: async config => {
-    const { createFirebaseBackend } = await import('./firebaseBackend.js');
-    return createFirebaseBackend(config);
+    const { createPhpBackend } = await import('./phpBackend.js');
+    return createPhpBackend(config);
   } });
 
 export default function PlayerProvider({ children }) {

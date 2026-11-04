@@ -7,7 +7,7 @@ const messageFor = error => {
   if (code.includes('popup-closed') || code.includes('cancelled-popup')) return 'Sign-in was cancelled. Your progress is still on this device.';
   if (code.includes('popup-blocked')) return 'Allow popups for this site, then try Google sign-in again.';
   if (code.includes('unauthorized-domain')) return 'Google sign-in is not enabled for this website yet.';
-  if (code.includes('permission-denied')) return 'Cloud access was denied. Your progress is safe on this device; the Firebase access rules need checking.';
+  if (code.includes('http-401')) return 'Your login session has expired. Your progress is safe here. Sign out and sign in again to resume saving.';
   if (code.includes('network') || code.includes('unavailable') || code === 'sync-timeout') return 'Cloud saves are unavailable right now. Your progress is saved on this device and will retry when you reconnect.';
   return error?.message || 'Cloud saves could not be reached. Your progress is still saved on this device.';
 };
@@ -124,8 +124,8 @@ export function createCloudController({ backing, config, backendFactory,
       startPromise = (async () => {
         emit({ phase: 'loading' });
         try {
-          if (!config.configured) throw new Error('Cloud saves are enabled but Firebase has not been configured.');
-          backend = await backendFactory(config.firebase);
+          if (!config.configured) throw new Error('Account saves are enabled but the API path is invalid.');
+          backend = await backendFactory(config.backend);
           emit({ available: true });
           backend.onAuth(user => { void transition(user); }, error => emit({ phase: 'error', message: messageFor(error) }));
         } catch (error) { emit({ phase: 'error', message: messageFor(error) }); }

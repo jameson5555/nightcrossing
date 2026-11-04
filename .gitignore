@@ -30,8 +30,8 @@ dist-ssr
 .env.*
 !.env.example
 
-# Firebase CLI local state and native account configuration
-.firebase/
-firebase-debug.log*
-firestore-debug.log*
-android/app/google-services.json
+# Private PHP credentials, dependencies, sessions, and release packages
+server/config.php
+server/vendor/
+server/runtime/
+artifacts/

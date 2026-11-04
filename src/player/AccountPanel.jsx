@@ -90,7 +90,7 @@ export default function AccountPanel() {
           void run(() => controller.signIn({ importGuest }));
         }}>Continue with Google</button>
         {!state.available && <p>Google sign-in is not available on this site yet.</p>}
-        <p className="account-small">Google and Firebase handle sign-in. See our <a href={`${import.meta.env.BASE_URL}privacy.html`}>privacy notice</a>.</p>
+        <p className="account-small">Sign in with Google to save progress with Nightcrossing. See our <a href={`${import.meta.env.BASE_URL}privacy.html`}>privacy notice</a>.</p>
       </>}
       {(error || state.message) && <p className="account-error" role="alert">{error || state.message}</p>}
     </dialog>}

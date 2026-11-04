@@ -103,8 +103,9 @@ and physical-device testing are required before monetized Play distribution.
 
 ## Optional accounts and cloud saves
 
-The web app can offer Google sign-in and private Firebase cloud saves while
-retaining guest play and existing browser progress. Accounts remain disabled
-until a Firebase project, authorized domain, and owner-only database rules are
-configured. See [setup, migration, and verification](docs/cloud-saves.md).
+The web app can offer Google sign-in and account saves using PHP 8.4 and the
+existing cPanel MySQL database. Guest play and existing browser progress remain
+available. Accounts stay disabled until the private PHP backend, database, and
+Google OAuth client are configured. Firebase is no longer used.
+See [setup, deployment, and verification](docs/cloud-saves.md).
 Native Android accounts remain disabled pending native Google sign-in integration.

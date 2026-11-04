@@ -1,173 +1,280 @@
-# Google sign-in and cloud saves
+# Google sign-in and account saves on cPanel
 
-The web app supports optional Google sign-in through Firebase Authentication and
-private progress documents in Cloud Firestore. Guest play remains available.
-The feature is disabled until a Firebase project and its access rules are ready.
-No live Firebase project has been created or connected by this change.
+Nightcrossing now uses Google OpenID Connect for identity, PHP 8.4 for sessions,
+and MySQL for account saves. Firebase Authentication and Firestore are no longer
+used. Guest play and the existing puzzle edition/merge logic remain intact.
 
-## Connect a Firebase project
+The implementation is ready for setup, but no live database or Google credentials
+have been connected and nothing has been deployed by this change. Keep
+`NC_CLOUD_SAVE_ENABLED=false` until the following steps are complete.
 
-1. Create a project in the [Firebase console](https://console.firebase.google.com/).
-   Choose the **Spark** plan. Analytics, Cloud Functions, Storage, phone sign-in,
-   and a billing account are not needed for this implementation. Keep billing
-   upgrades off unless you deliberately choose them later. Usage is subject to
-   the [Spark quotas](https://firebase.google.com/pricing); reaching a quota can
-   interrupt sync, while local saves remain available.
-2. Under **Build → Authentication → Sign-in method**, enable Google. Select a
-   public project name and support email. Under Authentication's authorized
-   domains, add `jamesonmacarthur.com`. Add `localhost` and `127.0.0.1` only if you
-   need local testing against the live project. Keep Google's default basic
-   profile scopes; the app requests no email-message, contacts, or calendar access.
-3. Create a **Cloud Firestore Standard edition** database in production mode.
-   Choose the location appropriate for your players before creating it. Publish
-   the contents of [firestore.rules](../firebase/firestore.rules) using the
-   database's Rules tab. Do not use public read/write or temporary test-mode rules.
-4. Register a **Web app** in Project settings. Copy its public `apiKey`,
-   `authDomain`, `projectId`, and `appId` into the environment settings below.
-   Keep Firebase's generated `authDomain` for the popup sign-in flow. These are
-   public web configuration values; never add a service-account private key or
-   Google OAuth client secret to a `VITE_` variable.
-5. Check the Google OAuth consent-screen configuration if Google keeps the app
-   in testing mode: add the intended test users or complete the appropriate
-   publishing setup. Test with both existing players before enabling the feature
-   on the public build.
+## 1. Create a dedicated database
 
-Local `.env.local` values:
+In cPanel open **Databases → Database Wizard** (older layouts call it **MySQL
+Database Wizard**). Create a database such as `nightcrossing`, then a dedicated
+user and a generated password. cPanel usually adds an account prefix; retain the
+full resulting database and username. Assign the user to that database.
+
+Use phpMyAdmin to select the new database, open **Import**, and import
+[server/schema.sql](../server/schema.sql). It creates `nc_players` and `nc_saves`
+without dropping tables. Do not import it into an unrelated application's DB.
+The runtime user needs SELECT, INSERT, UPDATE and DELETE; importing the schema
+also requires CREATE and REFERENCES privileges. The wizard's ALL PRIVILEGES
+choice works for initial setup on this dedicated database; privileges can be
+narrowed afterward.
+
+Keep the password private. Enter it directly into the private server config in
+step 3, never in a Vite variable, GitHub repository variable, or chat message.
+
+PHP needs curl, mbstring, openssl, PDO and pdo_mysql. Your domain is set to PHP 8.4;
+if the backend reports unavailable, have the host confirm those extensions and
+outbound HTTPS access to accounts.google.com, oauth2.googleapis.com and
+www.googleapis.com. The schema supports MySQL 5.7 and MariaDB. Ask the host about
+ongoing patches or a newer database version, since standard MySQL 5.7 support has
+ended; the screenshot alone does not establish the host's patch arrangements.
+
+## 2. Create Google's login client
+
+You may use the same Google Cloud project you started for Firebase; Firebase
+services do not need to be enabled. Open the [Google Cloud console](https://console.cloud.google.com/),
+select the intended project, and open **Google Auth Platform** (the older layout
+uses APIs & Services → OAuth consent screen / Credentials).
+
+- **Branding:** use Nightcrossing, a support email you control, the homepage
+  `https://jamesonmacarthur.com/nightcrossing/`, and privacy URL
+  `https://jamesonmacarthur.com/nightcrossing/privacy.html`. Add
+  `jamesonmacarthur.com` as an authorized domain where requested.
+- **Audience:** choose External for personal Google accounts. While the app is
+  in Testing, add both current players as test users. Publish the OAuth app to
+  Production when ready for other players and complete any console requirements.
+- **Data Access:** only basic OpenID identity, email and profile are requested:
+  `openid`, `email`, `profile`. Do not add Gmail, contacts, calendar or Drive scopes.
+- **Clients → Create client → Web application:** create a client for Nightcrossing.
+  Register this **exact Authorized redirect URI**, including its query string:
+
+  ```text
+  https://jamesonmacarthur.com/nightcrossing/api/index.php?action=callback
+  ```
+
+This server-based flow does not require Authorized JavaScript origins. Copy the
+client ID and client secret into the private PHP config. Neither value needs to
+be entered into the frontend build. Do not share the secret or downloaded client
+credentials. Google's code exchange and signed ID token verification use the
+official Google PHP library, plus state, nonce and PKCE checks. Access and refresh
+tokens are not kept after sign-in.
+
+## 3. Install the private backend outside the website
+
+A release package has been prepared at `artifacts/nightcrossing-private.zip`.
+Future web deployment workflows also attach a `nightcrossing-private` artifact
+to the GitHub Actions run. Downloading a GitHub artifact may add an outer ZIP;
+the inner `nightcrossing-private.zip` is the backend package.
+
+In cPanel **File Manager**, go to your account home, one level above
+`public_html`. Create `nightcrossing-private`, upload the package into it, and
+extract it there. Files should look like:
+
+```text
+/home/CPANEL_USER/
+  nightcrossing-private/
+    config.example.php
+    config.php              ← you create this; contains the secrets
+    composer.json
+    composer.lock
+    schema.sql
+    src/
+    vendor/
+    runtime/sessions/       ← PHP creates this
+  public_html/
+    nightcrossing/
+      index.html
+      api/index.php         ← public entrypoint; contains no secrets
+```
+
+The ZIP's contents go directly inside `nightcrossing-private`; avoid an extra
+nested folder. Delete the uploaded ZIP after extraction. Copy
+`config.example.php` to **config.php**, then edit the copy:
+
+- Keep `origin` as `https://jamesonmacarthur.com` and `api_path` as
+  `/nightcrossing/api/index.php`.
+- Keep `development` **false** on your real site.
+- Enter the Google client ID and secret from step 2.
+- In the database DSN, replace only `REPLACE` after `dbname=` with the full
+  prefixed DB name. Keep `charset=utf8mb4`.
+- Enter the dedicated DB username and password. This is the DB user's password,
+  not your Google or cPanel password.
+
+These files must stay outside public_html and any other public document root.
+Use permissions appropriate to your host's PHP user, typically 0700 for the
+private directory and 0600 for config.php. PHP must be able to read its files and
+create/write runtime/sessions. Do not commit config.php or upload it with FTP to
+the game directory. For a nonstandard document root, set server environment
+variable `NC_PRIVATE_DIR` to the private directory's absolute path; the default
+entrypoint locates it three levels above its api directory.
+
+The private package includes Composer dependencies so Composer/SSH is not needed
+on your hosting. It omits unused Google API service wrappers (such as Gmail and
+Drive), keeping the package about 1 MB. The package builder tests signed token
+verification using the actual extracted package. To rebuild it locally or in CI:
+
+```sh
+composer install --working-dir=server --no-dev --prefer-dist --no-interaction
+npm run build:accounts
+```
+
+For later updates, install matching src/ and vendor/ from the new package before
+enabling/deploying dependent frontend changes. Keep config.php and runtime/
+intact. FTP deployment updates only the public web files; it cannot install the
+private directory above public_html. Schedule database backups through your host.
+
+## 4. Deploy and enable
+
+The normal web build includes the public `api/index.php` entrypoint. Deploy the
+web build using the existing workflow. With the private config/schema ready,
+visit:
+
+```text
+https://jamesonmacarthur.com/nightcrossing/api/index.php?action=session
+```
+
+A successful unsigned-in response is JSON containing `user: null`, a random
+`csrf` value, and `loginAttempt: null`. It must not display PHP source, SQL errors
+or credentials. The CSRF value is not a Google or DB password.
+
+Once that works, set GitHub **Settings → Secrets and variables → Actions →
+Variables**:
+
+```text
+NC_CLOUD_SAVE_ENABLED=true
+```
+
+Run **Deploy Web to cPanel** again. Do not add Google/DB secrets to the frontend
+build; remove unused `NC_FIREBASE_*` variables if you created them previously.
+For a local frontend build, use `.env.local`:
 
 ```dotenv
 VITE_CLOUD_SAVE_ENABLED=true
-VITE_FIREBASE_API_KEY=your-public-web-api-key
-VITE_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
-VITE_FIREBASE_PROJECT_ID=your-project
-VITE_FIREBASE_APP_ID=your-web-app-id
+VITE_ACCOUNTS_API_PATH=/nightcrossing/api/index.php
 ```
 
-For deployed builds, set these GitHub repository **variables**:
+The API path must stay on the same origin. Use the canonical domain
+`jamesonmacarthur.com`; redirect alternate www/HTTP URLs to it in your hosting if
+needed. Allow the sign-in popup when prompted.
 
-| Repository variable | Build setting |
-| --- | --- |
-| `NC_CLOUD_SAVE_ENABLED` | `VITE_CLOUD_SAVE_ENABLED` |
-| `NC_FIREBASE_API_KEY` | `VITE_FIREBASE_API_KEY` |
-| `NC_FIREBASE_AUTH_DOMAIN` | `VITE_FIREBASE_AUTH_DOMAIN` |
-| `NC_FIREBASE_PROJECT_ID` | `VITE_FIREBASE_PROJECT_ID` |
-| `NC_FIREBASE_APP_ID` | `VITE_FIREBASE_APP_ID` |
+## 5. Verify with the two current players
 
-Both normal web deployment and monthly puzzle deployment use the same settings.
-Leave `NC_CLOUD_SAVE_ENABLED=false` until the rules and real Google sign-in have
-been tested. Rebuild after changing variables. Existing cPanel hosting stays in
-place; Firebase hosts authentication and saves, not the game files.
+1. Before signing in, use the original browser/device with their saved progress.
+   Sign in with **Add this device's guest progress to my account** checked.
+2. Check that old completions, an in-progress puzzle and hints are retained.
+   Return to the menu and confirm “Progress saved to your account.” Download a
+   backup from Account before any further migration experiments.
+3. Sign in on a second browser/device. Confirm the same progress appears.
+4. Make different edits on the same edition on the two devices. Sync each from
+   the menu and confirm compatible edits merge. An older/newer grid edition is
+   retained separately rather than mixing its cells.
+5. Sign out and confirm the original guest save still exists. Sign in as the
+   other player and confirm they do not receive the first player's guest copy.
+6. Try offline play and reconnect; pending edits should save once the server is
+   available. A device can restore only edits that have reached the server.
+7. Test account deletion with a disposable account. Confirming with a different
+   Google account must fail; the intended user's account/save alone is removed.
 
-If using the Firebase CLI, review the target project before deploying rules and
-indexes:
+Existing browser progress is not reset or deleted by this switch. Guest progress
+is copied only once into the first linked owner, and completion credit survives
+puzzle revisions. Each account has a separate local cache. If someone previously
+used a live Firebase account, export its save using the old deployment before
+switching: this release does not automatically import Firestore or Firebase UID
+caches. The two current players' original guest saves remain available.
+
+## Behavior and limits
+
+- Cell timestamps merge independent edits and deliberate erasures. Completion,
+  achievements, hints and reward receipts keep their existing merge policies.
+- Different editions are archived; Account lets a player choose which to resume.
+- Account IDs are opaque random IDs associated with Google's immutable `sub`,
+  not its changeable email address. Every API request checks the session owner.
+- Sessions use HttpOnly, Secure, SameSite=Lax cookies, a private session directory
+  and a 30-day idle lifetime. Writes require an exact Origin and CSRF token.
+- Offline reload can use a locally cached profile hint. It grants no server
+  access. An expired session requires signing in again. Offline sign-out returns
+  to guest and suppresses automatic account restoration; the server cookie cannot
+  be revoked while unreachable and expires separately.
+- Each save has a revision. Writes compare it atomically; conflicts trigger a
+  fresh read/merge/retry up to five times. Payloads are limited to 750,000 bytes.
+  A rejected/corrupt/oversized save never replaces local progress.
+- Deletion requires a new Google authorization of the same account within five
+  minutes, waits for pending local syncs, and deletes the DB account/save together.
+  Other sessions lose access. The deleting device's account cache is removed;
+  guest saves and backups or offline copies elsewhere are retained. Hosting
+  backups follow the host's retention schedule.
+- Hint balances are client-managed game state. This is not purchase verification
+  or a server-authoritative economy. No paid purchase flow is added.
+- The privacy notice describes Google identity, hosting storage and session cookies.
+- Native Android accounts remain disabled. A future Android release needs a native
+  Google identity flow and an explicit API authentication design; browser popup
+  login must not be enabled inside a WebView.
+
+## Development checks
 
 ```sh
-npx firebase-tools@14.27.0 login
-npx firebase-tools@14.27.0 deploy --only firestore:rules,firestore:indexes --project YOUR_PROJECT_ID
+npm test
+npm run test:google-login
+npm run build
+npm run build:accounts
 ```
 
-The index configuration excludes the serialized progress payload from indexes.
-All app reads use the exact `/players/{uid}` document; browsing the collection
-and accessing another account's document are denied.
-
-## What players experience
-
-- **Save across devices** opens Google sign-in from the menu. An account is never
-  required to solve puzzles.
-- The import checkbox adds this device's guest progress once to its first linked
-  account. Guest data stays intact. Later accounts on that browser do not
-  automatically receive someone else's guest save.
-- Signed-in accounts have separate local caches. Signing out returns to the
-  separate guest save. Cached account data can be recovered after an interrupted
-  connection by signing back into that same account.
-- Sync attempts start shortly after a pause in local changes, or after 15 seconds
-  of continuous changes, and on returning to the menu. Focus, reconnection, and a
-  visible-page check every minute also trigger sync. **Sync now** requests one
-  immediately. The UI distinguishes local-only changes from a successful cloud
-  save. Closing a browser before upload can leave the latest changes only on that
-  device; sign back in there to finish syncing.
-- Independent cell edits combine. Each cell has its own edit stamp, including
-  deliberate erasures. Completed grids and completion credit are preserved.
-- Hint changes carry unique events and reward receipts. Reconnecting devices
-  combines spends and earnings and deduplicates the same reward. This remains a
-  client-managed game wallet, not a purchase-verified currency system.
-- Progress for different puzzle editions never mixes. The more advanced saved
-  edition is initially retained, with completion credit preserved. Other versions
-  stay in the account and can be selected under **Other saved puzzle versions**.
-- Remote changes wait until the player leaves an active puzzle. Revoked screen
-  scopes prevent late callbacks from overwriting restored data or another account.
-- Players can download a JSON backup. Account deletion reauthenticates with Google,
-  deletes the cloud document and Firebase account, and clears that account's local
-  cache on this device. An error is reported if deletion does not finish; the
-  original guest save is retained.
-
-The [privacy notice](../public/privacy.html) describes optional account data and
-cloud storage. Review the deployed Firebase project settings and notice together
-before enabling accounts.
-
-## Local emulator verification
-
-These commands use a demo project and no real accounts or billable backend:
+The Google library test verifies genuinely signed fictional JWTs and rejects wrong
+signatures, audience, issuer, expiration and nonce without contacting Google.
+For MySQL integration, run an **isolated test database**, never your real DB:
 
 ```sh
-npx firebase-tools@14.27.0 emulators:start --only auth,firestore --project demo-nightcrossing
-npm run test:firebase-rules
+docker run --detach --rm --name nightcrossing-mysql-test --platform linux/amd64 \
+  --publish 127.0.0.1:33316:3306 \
+  --env MYSQL_ROOT_PASSWORD=nightcrossing-test-only \
+  --env MYSQL_DATABASE=nightcrossing_test mysql:5.7.44
+# Wait until MySQL reports ready, then:
+npm run test:accounts-api
+docker stop nightcrossing-mysql-test
 ```
 
-The emulators listen on `127.0.0.1:9198` for Authentication and
-`127.0.0.1:8188` for Firestore. For the local Vite app, set:
+The API suite drops/recreates only the loopback `nightcrossing_test` tables and
+refuses other DB names/remote hosts. Its fictional Google provider lives in
+`test/php/router.php`; it is never in public/ or the private package. Production
+has no test-login bypass.
 
-```dotenv
-VITE_CLOUD_SAVE_ENABLED=true
-VITE_FIREBASE_API_KEY=demo-key
-VITE_FIREBASE_AUTH_DOMAIN=localhost
-VITE_FIREBASE_PROJECT_ID=demo-nightcrossing
-VITE_FIREBASE_APP_ID=demo-app
-VITE_FIREBASE_EMULATORS=true
+For manual local testing against your own Google test client, run a PHP server:
+
+```sh
+NC_PRIVATE_DIR="$PWD/server" php -S 127.0.0.1:8099 -t public
+npm run dev
 ```
 
-Then run `npm run dev`. Emulator connections are development-only and ignored
-by production builds. Use fictional Google accounts in the emulator popup.
+Use an ignored server/config.php with a local test DB, `development=true`, origin
+matching Vite's printed URL (use 127.0.0.1 consistently), and the corresponding
+localhost Google callback. Vite proxies /nightcrossing/api/ to the PHP server;
+set the local private config's api_path to /nightcrossing/api/index.php. Vite
+rewrites the prefix to the PHP server's public/api/index.php. Never deploy a test
+router or development config.
 
-The ordinary `npm test` suite verifies migration, cell conflicts, erasures,
-completion preservation, edition archives, wallet merging, offline retries,
-account isolation, stale callbacks, and deletion. The separate rules test uses
-the actual Firestore emulator to check owner access, cross-account denial,
-signed-out denial, payload limits, timestamps, and revision preconditions.
+Primary references: [Google OpenID Connect](https://developers.google.com/identity/openid-connect/openid-connect),
+[Google ID token verification](https://developers.google.com/identity/gsi/web/guides/verify-google-id-token),
+[official PHP client](https://github.com/googleapis/google-api-php-client),
+[cPanel Database Wizard](https://docs.cpanel.net/cpanel/databases/database-wizard/).
 
-## Android
+## Verification performed November 4, 2026
 
-This change enables accounts for browsers, including mobile browsers. The native
-Android build keeps accounts disabled. Before enabling them in a Play release,
-integrate native Google sign-in with a Capacitor bridge and pass its credential
-to Firebase Authentication. Register the Android app and signing fingerprints in
-the same Firebase project, supply its native configuration, and test on devices.
-Google's browser popup flow must not be used inside an Android WebView. The
-backend save format and merge logic can be reused for that integration.
-
-## Implementation notes
-
-Firebase is loaded only when account features are enabled. Progress uses one
-private document with an optimistic transaction; retries merge against the latest
-server copy instead of replacing it blindly. The client refuses to upload more
-than 750,000 bytes and retains the local copy if syncing fails. No save history is
-silently truncated to meet the size limit. Firebase 12 and its shared app packages
-are pinned to compatible versions for the project's Node 22 workflows; the gRPC
-dependency is constrained to a patched version.
-
-Primary references: [Google sign-in](https://firebase.google.com/docs/auth/web/google-signin),
-[Firestore transactions](https://firebase.google.com/docs/firestore/manage-data/transactions),
-[access rules](https://firebase.google.com/docs/firestore/security/rules-conditions),
-[rules emulator](https://firebase.google.com/docs/firestore/security/test-rules-emulator).
-
-## Verification completed locally
-
-- All 107 ordinary automated tests pass; the production build and lint checks for
-  changed application code pass.
-- All five access-rule tests pass against the Firestore emulator.
-- An isolated Chrome session at a 390-pixel viewport completed the Google emulator
-  sign-in, imported legacy guest progress, saved a newly typed letter, signed out
-  without changing the guest copy, restored the save in a fresh browser, retained
-  sign-in after reload, and deleted the fictional account. No browser page errors
-  occurred. The account dialog was visually checked at the same size.
-- Real Google OAuth and production Firestore remain unverified until the owner's
-  Firebase project is connected. Nothing has been deployed.
+- 112 application tests passed, including historical-save preservation and the PHP
+  adapter's conflict, offline, identity and popup checks.
+- Five integration tests passed against an isolated MySQL 5.7.44 container: cookie/
+  CSRF protections, OAuth state handling, owner isolation, revision conflicts,
+  malformed saves, reauthentication and deletion/session invalidation.
+- Signed JWT tests passed for the official Google verifier, including wrong
+  signature, audience, issuer, expiry and nonce; the extracted release package
+  passed these checks too. Composer reported no dependency advisories.
+- An isolated headless Chrome session exercised the UI with a fictional Google
+  provider and local PHP/MySQL: legacy import, actual letter entry, cross-browser
+  restore, reload, sign-out and deletion passed without page errors.
+- Production build, changed JavaScript lint, PHP syntax and whitespace checks
+  passed. Local PHP was 8.5.6; Composer resolved dependencies for 8.4.0, and the
+  added GitHub test workflow runs PHP 8.4. The live cPanel runtime and real Google
+  consent flow still need the owner's setup and final verification.

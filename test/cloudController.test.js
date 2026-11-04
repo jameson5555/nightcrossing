@@ -41,10 +41,11 @@ function harness() {
     setUser: user => { signInUser = user; } };
 }
 
-test('optional Firebase configuration leaves guests available and native builds disabled', () => {
+test('optional PHP configuration leaves guests available, rejects foreign URLs, and disables native accounts', () => {
   assert.equal(getCloudConfig({}).enabled, false);
   assert.equal(getCloudConfig({ VITE_CLOUD_SAVE_ENABLED: 'true' }, true).enabled, false);
-  assert.equal(getCloudConfig({ VITE_CLOUD_SAVE_ENABLED: 'true' }).configured, false);
+  assert.equal(getCloudConfig({ VITE_CLOUD_SAVE_ENABLED: 'true' }).configured, true);
+  assert.equal(getCloudConfig({ VITE_CLOUD_SAVE_ENABLED: 'true', VITE_ACCOUNTS_API_PATH: 'https://other.test/api.php' }).configured, false);
 });
 
 test('first sign-in imports guest progress once; a second account receives none of it', async () => {

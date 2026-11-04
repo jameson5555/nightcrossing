@@ -1,0 +1,21 @@
+{
+  "name": "nightcrossing/accounts",
+  "description": "Private PHP backend for Nightcrossing accounts and saves",
+  "type": "project",
+  "require": {
+    "php": "^8.4",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "ext-openssl": "*",
+    "ext-pdo": "*",
+    "ext-pdo_mysql": "*",
+    "google/apiclient": "^2.19"
+  },
+  "autoload": { "psr-4": { "Nightcrossing\\": "src/" } },
+  "config": {
+    "platform": { "php": "8.4.0" },
+    "sort-packages": true,
+    "allow-plugins": false
+  }
+}
