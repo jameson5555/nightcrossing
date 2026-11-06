@@ -16,6 +16,33 @@ const snapshot = (letters, device) => ({ ...emptySnapshot(), clock: 10, records:
 } });
 const start = backend => new Promise((resolve, reject) => backend.onAuth(resolve, reject));
 
+test('only a verified redirect reports its server-confirmed signup or login; restoring a session does not', async () => {
+  for (const authEvent of ['sign_up', 'login', undefined]) {
+    const cache = memory(), events = [];
+    const options = { cache, onSignIn: (event, attempt) => events.push({ event, attempt }),
+      fetcher: async () => response({ user: alice, csrf: 'csrf', loginAttempt: 'attempt', authEvent }) };
+    await start(createPhpBackend({ endpoint: '/api/index.php' }, options));
+    assert.deepEqual(events, [], 'ordinary session restoration is not a login');
+    cache.setItem('nc_php_user_v1:/api/index.php:redirect', JSON.stringify({ attempt: 'wrong', created: Date.now() }));
+    await start(createPhpBackend({ endpoint: '/api/index.php' }, options));
+    assert.deepEqual(events, [], 'a mismatched receipt is not a login');
+    cache.setItem('nc_php_user_v1:/api/index.php:redirect', JSON.stringify({ attempt: 'attempt', created: Date.now() }));
+    await start(createPhpBackend({ endpoint: '/api/index.php' }, options));
+    assert.deepEqual(events, [{ event: authEvent || null, attempt: 'attempt' }]);
+    await start(createPhpBackend({ endpoint: '/api/index.php' }, options));
+    assert.equal(events.length, 1, 'a consumed redirect is not reported on reload');
+  }
+});
+
+test('analytics errors cannot prevent a confirmed account from being restored', async () => {
+  const cache = memory();
+  cache.setItem('nc_php_user_v1:/api/index.php:redirect', JSON.stringify({ attempt: 'attempt', created: Date.now() }));
+  const backend = createPhpBackend({ endpoint: '/api/index.php' }, { cache,
+    onSignIn: () => { throw new Error('blocked analytics'); },
+    fetcher: async () => response({ user: alice, csrf: 'csrf', loginAttempt: 'attempt', authEvent: 'sign_up' }) });
+  assert.deepEqual(await start(backend), alice);
+});
+
 test('PHP adapter retries a stale revision and preserves both devices’ letters', async () => {
   let reads = 0, writes = 0;
   const backend = createPhpBackend({ endpoint: '/api/index.php' }, { cache: memory(), fetcher: async (url, options) => {

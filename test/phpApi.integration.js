@@ -80,12 +80,17 @@ test('OAuth state is one-use; sign-in rotates the session and reuses the immutab
   const signedIn = await alice.login('alice');
   assert.match(signedIn.text, /"ok":true/);
   assert.match(signedIn.headers.get('content-security-policy'), /script-src 'nonce-/);
-  aliceUid = (await alice.request('session')).data.user.uid;
+  const firstAliceSession = (await alice.request('session')).data;
+  aliceUid = firstAliceSession.user.uid;
+  assert.equal(firstAliceSession.authEvent, 'sign_up');
   await otherAlice.login('alice');
-  assert.equal((await otherAlice.request('session')).data.user.uid, aliceUid);
+  const returningAliceSession = (await otherAlice.request('session')).data;
+  assert.equal(returningAliceSession.user.uid, aliceUid);
+  assert.equal(returningAliceSession.authEvent, 'login');
   await bob.login('bob');
   bobUid = (await bob.request('session')).data.user.uid;
   assert.notEqual(aliceUid, bobUid);
+  assert.equal((await bob.request('session')).data.authEvent, 'sign_up');
 });
 
 test('a late pre-login session check cannot replace the authenticated cookie after repeated sign-ins', async () => {

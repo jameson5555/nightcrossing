@@ -6,6 +6,7 @@ const isAndroidBuild = process.env.NC_BUILD_TARGET === 'android'
 
 // https://vite.dev/config/
 export default defineConfig({
+  define: { 'import.meta.env.NC_WEB_ANALYTICS': JSON.stringify(!isAndroidBuild) },
   plugins: [react(), {
     name: 'nightcrossing-web-analytics',
     apply: 'build',

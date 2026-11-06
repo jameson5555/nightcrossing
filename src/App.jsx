@@ -14,6 +14,7 @@ import { Capacitor } from '@capacitor/core';
 import HintModal from './components/HintModal';
 import { fetchPuzzleData } from './utils/puzzleData';
 import { getThemeCompletionOutcome } from './utils/themeAvailability';
+import { analytics } from './analytics.js';
 
 import { createRewardedHints } from './ads/rewardedHints';
 import { getAdConfig } from './ads/config';
@@ -161,6 +162,7 @@ function App() {
   const puzzleRefreshPromiseRef = useRef(null);
   const refreshPuzzlesRef = useRef(null);
   const puzzleSessionActiveRef = useRef(false);
+  const puzzleAnalyticsRef = useRef(null);
   const puzzleVersionRef = useRef(null);
 
   const triggerHeaderTitleMorph = (nextTitle) => {
@@ -358,14 +360,7 @@ function App() {
       const data = await loadPuzzleForPlayer(id, {
         version: puzzleVersionRef.current, pin: true
       });
-      setPuzzleData(data);
-
       const cachedAnswers = await loadPuzzleProgress(id);
-      if (cachedAnswers) {
-        setAnswers(cachedAnswers);
-      } else {
-        setAnswers(Array(data.grid.length).fill(''));
-      }
       
       setSelectedCell(null);
       setDirection('across');
@@ -382,6 +377,15 @@ function App() {
       const claimed = await loadRewardClaimed(id);
       setIsPuzzleAlreadyCompleted(claimed);
 
+      const restoredComplete = cachedAnswers && getSolvedClueIds(data, cachedAnswers).size ===
+        data.answers.across.length + data.answers.down.length;
+      puzzleAnalyticsRef.current = analytics.openPuzzle(data, {
+        answers: cachedAnswers, completed: claimed || restoredComplete,
+        profile: controller.getState().user?.uid || 'guest',
+      });
+      setPuzzleData(data);
+      setAnswers(cachedAnswers || Array(data.grid.length).fill(''));
+
       triggerHeaderTitleMorph(data.title || 'Nightcrossing');
       
       setCurrentView('play');
@@ -394,6 +398,8 @@ function App() {
   };
 
   const handleBackToMenu = () => {
+    puzzleAnalyticsRef.current?.close();
+    puzzleAnalyticsRef.current = null;
     puzzleSessionActiveRef.current = false;
     void controller.setPlaying(false);
     triggerHeaderTitleMorph('Nightcrossing');
@@ -425,6 +431,12 @@ function App() {
     
   const solvedClueIds = puzzleData ? getSolvedClueIds(puzzleData, answers) : new Set();
   const isPuzzleComplete = puzzleData && solvedClueIds.size === (puzzleData.answers.across.length + puzzleData.answers.down.length);
+
+  useEffect(() => {
+    if (currentView === 'play' && puzzleData) {
+      puzzleAnalyticsRef.current?.update(answers, isPuzzleComplete);
+    }
+  }, [currentView, puzzleData, answers, isPuzzleComplete]);
 
   const eligibleForAd = isHintModalOpen && hintsRemaining === 0 && hasUsedFreeHint && !activeWord?.isCorrect;
   useEffect(() => {

@@ -6,9 +6,9 @@ const validUser = user => user && /^g_[a-f0-9]{32}$/.test(user.uid) &&
 
 export function createPhpBackend({ endpoint }, {
   fetcher = globalThis.fetch, browser = globalThis.window, cache = globalThis.localStorage,
-  completionPollMs = 1500, signInTimeoutMs = 180000
+  completionPollMs = 1500, signInTimeoutMs = 180000, onSignIn = () => {}
 } = {}) {
-  let user = null, csrf = '', changed, loginAttempt = null;
+  let user = null, csrf = '', changed, loginAttempt = null, authEvent = null;
   let deleting = false, cancelPopup, resumingRedirect = false, outboundIntent = null;
   const pending = new Set();
   const cacheKey = `nc_php_user_v1:${endpoint}`;
@@ -23,8 +23,12 @@ export function createPhpBackend({ endpoint }, {
   };
   const forgetRedirect = () => { outboundIntent = null; try { cache.removeItem(redirectKey); } catch { /* optional cache */ } };
   const prefersGuest = () => { try { return cache.getItem(guestKey) === 'true'; } catch { return false; } };
+  const reportSignIn = () => {
+    try { onSignIn(authEvent, loginAttempt); } catch { /* Analytics cannot block sign-in. */ }
+  };
   const confirmRedirect = (next, intent = redirectIntent()) => {
     if (!next || !intent || intent.attempt !== loginAttempt) return false;
+    reportSignIn();
     forgetRedirect();
     return true;
   };
@@ -61,6 +65,7 @@ export function createPhpBackend({ endpoint }, {
     }
     csrf = data.csrf;
     loginAttempt = data.loginAttempt;
+    authEvent = ['sign_up', 'login'].includes(data.authEvent) ? data.authEvent : null;
     return data.user;
   };
   const assertUser = uid => {
@@ -111,7 +116,7 @@ export function createPhpBackend({ endpoint }, {
         if (cancelPopup === cancel) cancelPopup = null;
         try { popupWindow.close(); } catch { /* Mobile browsers may detach the popup. */ }
         if (error) { reject(error); return; }
-        if (!reauthenticate) { guestPreference(false); remember(next); changed?.(next); }
+        if (!reauthenticate) { reportSignIn(); guestPreference(false); remember(next); changed?.(next); }
         resolve();
       };
       const check = async () => {

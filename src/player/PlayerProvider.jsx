@@ -7,12 +7,13 @@ import { createCloudController } from './cloudController.js';
 import { createGameStorage } from '../utils/gameStorage.js';
 import { createPuzzleLoader } from '../utils/puzzleEditions.js';
 import { fetchPuzzleData } from '../utils/puzzleData.js';
+import { analytics } from '../analytics.js';
 
 const controller = createCloudController({ backing: Preferences,
   config: getCloudConfig(import.meta.env, Capacitor.isNativePlatform()),
   backendFactory: async config => {
     const { createPhpBackend } = await import('./phpBackend.js');
-    return createPhpBackend(config);
+    return createPhpBackend(config, { onSignIn: analytics.accountAuth });
   } });
 
 export default function PlayerProvider({ children }) {

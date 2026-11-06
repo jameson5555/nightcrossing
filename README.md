@@ -88,8 +88,13 @@ configuration sends to the Nightcrossing web stream, then check Analytics
 Realtime for the visit. If no Analytics destination is configured, add the web
 stream's Measurement ID in Tag Manager and publish that configuration. Avoid
 adding a second standalone Analytics snippet for the same stream, which could
-duplicate page views. Puzzle starts, completions, and account creation still need
-explicit event instrumentation and are not measured by this installation alone.
+duplicate page views.
+
+The app now emits puzzle starts, resumes, completions, and server-confirmed
+account creation/sign-in events into the data layer. A GA4 Event tag in the
+container must forward them to Analytics. Follow the exact configuration and
+verification steps in [Web analytics setup](docs/analytics.md). Your own visits
+remain included; no internal-traffic filter is configured by the app.
 
 ## Development
 

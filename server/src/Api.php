@@ -48,7 +48,8 @@ final class Api
             if (!$user) unset($_SESSION['uid'], $_SESSION['reauthenticated_at']);
             switch ($action) {
                 case 'session':
-                    self::json(['user' => $user, 'csrf' => $_SESSION['csrf'], 'loginAttempt' => $_SESSION['login_attempt'] ?? null]);
+                    self::json(['user' => $user, 'csrf' => $_SESSION['csrf'], 'loginAttempt' => $_SESSION['login_attempt'] ?? null,
+                        'authEvent' => $_SESSION['auth_event'] ?? null]);
                     break;
                 case 'authorize':
                     $reauth = ($body['reauthenticate'] ?? false) === true;
@@ -159,6 +160,7 @@ final class Api
         if (isset($_GET['error'])) throw new HttpError(401, 'Google sign-in was cancelled.');
         if (!is_string($_GET['code'] ?? null) || strlen($_GET['code']) > 4096) throw new HttpError(400, 'Invalid sign-in response.');
         $claims = $login->verify($_GET['code'], $flow);
+        $authEvent = null;
         if ($flow['reauth_uid']) {
             // Do not accidentally switch accounts while confirming a deletion.
             $queryUser = $database->bySubject($claims['sub']);
@@ -169,6 +171,7 @@ final class Api
         } else {
             $user = $database->login($claims);
             $uid = $user['uid'];
+            $authEvent = $user['isNewAccount'] ? 'sign_up' : 'login';
         }
         // A mobile poll can arrive with the old cookie after this callback.
         // Retain an anonymous old session so strict mode does not issue a new
@@ -177,7 +180,7 @@ final class Api
         $_SESSION = ['last_seen' => time()];
         if (!session_regenerate_id(false)) throw new \RuntimeException('Cannot rotate session');
         $_SESSION = ['uid' => $uid, 'last_seen' => time(), 'csrf' => bin2hex(random_bytes(32)),
-            'login_attempt' => $flow['state']];
+            'login_attempt' => $flow['state'], 'auth_event' => $authEvent];
         if ($flow['reauth_uid']) $_SESSION['reauthenticated_at'] = time();
     }
 

@@ -35,10 +35,14 @@ final class Database
             mb_substr($claims['name'] ?? '', 0, 255)]);
         $query = $this->db->prepare('SELECT uid FROM nc_players WHERE google_sub = ?');
         $query->execute([$claims['sub']]);
-        $uid = $query->fetchColumn();
+        $playerUid = $query->fetchColumn();
+        // Only the request whose generated UID was inserted created the player,
+        // including when two first sign-ins race for the same Google subject.
+        $isNewAccount = $playerUid === $uid;
+        $uid = $playerUid;
         $query = $this->db->prepare('INSERT IGNORE INTO nc_saves (uid) VALUES (?)');
         $query->execute([$uid]);
-        return $this->player($uid);
+        return $this->player($uid) + ['isNewAccount' => $isNewAccount];
     }
 
     public function bySubject(string $subject): ?array
