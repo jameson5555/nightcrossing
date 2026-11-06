@@ -75,6 +75,22 @@ used by another current puzzle in the same theme. Staging is resumable.
 `npm run audit:catalog` checks the complete current catalog; CI now runs the
 complete quality and relevance audits rather than checking only changed files.
 
+## Web analytics
+
+Web builds include Google Tag Manager container `GTM-K2RBF57H` in the HTML head.
+The Vite build plugin excludes it from the development server and Android builds
+(`NC_BUILD_TARGET=android`). The container configuration in Google controls the
+Analytics destination; installing the container alone does not verify collection.
+
+After deploying a web build, use **Test installation** in Google and visit
+`https://jamesonmacarthur.com/nightcrossing/`. Confirm the container's published
+configuration sends to the Nightcrossing web stream, then check Analytics
+Realtime for the visit. If no Analytics destination is configured, add the web
+stream's Measurement ID in Tag Manager and publish that configuration. Avoid
+adding a second standalone Analytics snippet for the same stream, which could
+duplicate page views. Puzzle starts, completions, and account creation still need
+explicit event instrumentation and are not measured by this installation alone.
+
 ## Development
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

@@ -9,11 +9,25 @@ export function createPhpBackend({ endpoint }, {
   completionPollMs = 1500, signInTimeoutMs = 180000
 } = {}) {
   let user = null, csrf = '', changed, loginAttempt = null;
-  let deleting = false, cancelPopup;
+  let deleting = false, cancelPopup, resumingRedirect = false, outboundIntent = null;
   const pending = new Set();
   const cacheKey = `nc_php_user_v1:${endpoint}`;
   const guestKey = `${cacheKey}:guest`;
   const redirectKey = `${cacheKey}:redirect`;
+  const redirectIntent = () => {
+    try {
+      const intent = JSON.parse(cache.getItem(redirectKey)) || outboundIntent;
+      return typeof intent?.attempt === 'string' && intent.attempt && Number.isFinite(intent.created) &&
+        Date.now() >= intent.created && Date.now() - intent.created <= 300000 ? intent : null;
+    } catch { return null; }
+  };
+  const forgetRedirect = () => { outboundIntent = null; try { cache.removeItem(redirectKey); } catch { /* optional cache */ } };
+  const prefersGuest = () => { try { return cache.getItem(guestKey) === 'true'; } catch { return false; } };
+  const confirmRedirect = (next, intent = redirectIntent()) => {
+    if (!next || !intent || intent.attempt !== loginAttempt) return false;
+    forgetRedirect();
+    return true;
+  };
   const guestPreference = value => { try { if (value) cache.setItem(guestKey, 'true'); else cache.removeItem(guestKey); } catch { /* optional */ } };
   const remember = next => {
     user = next;
@@ -70,7 +84,9 @@ export function createPhpBackend({ endpoint }, {
       }
       // This is a local import intent, never an authentication credential. The
       // returning server session must confirm this exact authorization attempt.
-      cache.setItem(redirectKey, JSON.stringify({ attempt: authorization.attempt, created: Date.now() }));
+      const intent = { attempt: authorization.attempt, created: Date.now() };
+      cache.setItem(redirectKey, JSON.stringify(intent));
+      outboundIntent = intent;
       guestPreference(false);
       browser.location.assign(authorization.url);
     } finally {
@@ -177,10 +193,7 @@ export function createPhpBackend({ endpoint }, {
       changed = callback;
       try { if (cache.getItem(guestKey) === 'true') { changed(null); return () => { changed = null; }; } } catch { /* optional */ }
       void session().then(next => {
-        let intent;
-        try { intent = JSON.parse(cache.getItem(redirectKey)); cache.removeItem(redirectKey); } catch { /* no pending redirect */ }
-        const importGuest = Boolean(next && intent?.attempt === loginAttempt && Number.isFinite(intent?.created) &&
-          Date.now() >= intent.created && Date.now() - intent.created <= 300000);
+        const importGuest = confirmRedirect(next);
         remember(next); changed?.(next, { importGuest });
       }, error => {
         if (error.code === 'unavailable') {
@@ -192,9 +205,26 @@ export function createPhpBackend({ endpoint }, {
       });
       return () => { changed = null; };
     },
+    resumeSignIn: async () => {
+      const intent = redirectIntent();
+      if (!intent || resumingRedirect || deleting || !changed || prefersGuest()) return false;
+      resumingRedirect = true;
+      try {
+        const next = await session();
+        // A page restored from browser history still has its old guest state.
+        // Confirm the exact attempt again, including after an offline return.
+        // Sign-out or a newer attempt invalidates this in-flight check.
+        if (prefersGuest() || redirectIntent()?.attempt !== intent.attempt || !confirmRedirect(next, intent)) return false;
+        guestPreference(false);
+        remember(next); changed?.(next, { importGuest: true });
+        return true;
+      } catch { return false; }
+      finally { resumingRedirect = false; }
+    },
     signIn: ({ mode = 'redirect' } = {}) => mode === 'popup' ? popup(false) : redirectSignIn(),
     cancelSignIn: () => cancelPopup?.(),
     signOut: async () => {
+      forgetRedirect();
       try { await session(); await request('logout', { body: {} }); }
       catch { /* Offline sign-out still returns to guest; server cookie expires separately. */ }
       guestPreference(true);
@@ -215,6 +245,7 @@ export function createPhpBackend({ endpoint }, {
         assertUser(uid);
         await request('delete', { body: { uid } });
         guestPreference(true);
+        forgetRedirect();
         remember(null);
         // Controller clears the account's device cache before installing guest.
       } finally { deleting = false; }

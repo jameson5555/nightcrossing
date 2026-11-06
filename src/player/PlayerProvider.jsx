@@ -30,11 +30,13 @@ export default function PlayerProvider({ children }) {
     void controller.start();
     const sync = () => { if (!document.hidden) void controller.sync(); };
     window.addEventListener('focus', sync);
+    window.addEventListener('pageshow', sync);
     window.addEventListener('online', sync);
     document.addEventListener('visibilitychange', sync);
     const interval = setInterval(sync, 60000);
     return () => {
       window.removeEventListener('focus', sync);
+      window.removeEventListener('pageshow', sync);
       window.removeEventListener('online', sync);
       document.removeEventListener('visibilitychange', sync);
       clearInterval(interval);

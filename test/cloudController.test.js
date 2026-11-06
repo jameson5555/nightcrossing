@@ -15,10 +15,16 @@ function harness({ initial = {}, restoredUser = null, restoredOptions } = {}) {
   const saves = new Map();
   let authChanged;
   let signInUser = { uid: 'alice', email: 'alice@example.test' };
-  let offline = false;
+  let offline = false, resumedUser;
   const backend = {
     onAuth: callback => { authChanged = callback; callback(restoredUser, restoredOptions); },
     signIn: async () => authChanged(signInUser), signOut: async () => authChanged(null),
+    resumeSignIn: async () => {
+      if (!resumedUser) return false;
+      const user = resumedUser; resumedUser = null;
+      authChanged(user, { importGuest: true });
+      return true;
+    },
     merge: async (uid, local) => {
       if (offline) throw Object.assign(new Error('offline'), { code: 'unavailable' });
       const merged = mergeSnapshots(saves.get(uid) || emptySnapshot(), local);
@@ -37,6 +43,7 @@ function harness({ initial = {}, restoredUser = null, restoredOptions } = {}) {
     throw new Error('Account transition did not settle');
   };
   return { controller, backing, values, saves, settled,
+    completeRedirect: user => { resumedUser = user; },
     setOffline: value => { offline = value; },
     setUser: user => { signInUser = user; } };
 }
@@ -112,6 +119,21 @@ test('a verified redirect sign-in resumes explicit browser import after navigati
   assert.equal(h.saves.get('alice').records.puzzle_progress_test.value, '["G"]');
   assert.equal(h.values.get('puzzle_progress_test'), '["G"]');
   assert.equal(h.values.has('nc_guest_import_declined_alice'), false);
+  await h.controller.signOut(); await h.settled();
+});
+
+test('a visibility sync can install a completed login from an existing guest screen and preserve its save', async () => {
+  const h = harness({ initial: { puzzle_progress_test: '["G"]', reward_claimed_done: 'true' } });
+  await h.controller.start(); await h.settled();
+  const guestScope = h.controller.getState().scope;
+  h.completeRedirect({ uid: 'alice', email: 'alice@example.test' });
+  await h.controller.sync(); await h.settled();
+  assert.equal(h.controller.getState().user.uid, 'alice');
+  assert.equal(h.controller.getState().cloud, 'saved');
+  assert.equal(h.saves.get('alice').records.puzzle_progress_test.value, '["G"]');
+  assert.equal(h.saves.get('alice').records.reward_claimed_done.value, 'true');
+  await guestScope.set({ key: 'puzzle_progress_test', value: '["X"]' });
+  assert.equal(h.values.get('puzzle_progress_test'), '["G"]');
   await h.controller.signOut(); await h.settled();
 });
 

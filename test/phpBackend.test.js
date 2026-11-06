@@ -91,6 +91,84 @@ test('a stale redirect import intent cannot opt another login into a previously 
   assert.deepEqual(result, { user: alice, options: { importGuest: false } });
 });
 
+test('returning to the existing guest page recognizes a completed redirect without reloading or opening Google again', async () => {
+  const cache = memory(), navigations = [], updates = [];
+  let remoteUser = null, attempt = null;
+  const backend = createPhpBackend({ endpoint: '/api/index.php' }, { cache,
+    browser: { location: { assign: url => navigations.push(url) } }, fetcher: async url => {
+      if (url.includes('action=session')) return response({ user: remoteUser, csrf: 'csrf', loginAttempt: attempt });
+      return response({ url: 'https://accounts.google.com/authorize', attempt: 'returned-attempt', mode: 'redirect' });
+    } });
+  await new Promise((resolve, reject) => backend.onAuth((user, options) => { updates.push({ user, options }); resolve(); }, reject));
+  await backend.signIn();
+  assert.equal(updates.at(-1).user, null);
+  remoteUser = alice; attempt = 'returned-attempt';
+  // Another document can already have consumed the shared import ticket while
+  // this original page was frozen in browser history.
+  cache.removeItem('nc_php_user_v1:/api/index.php:redirect');
+  assert.equal(await backend.resumeSignIn(), true);
+  assert.deepEqual(updates.at(-1), { user: alice, options: { importGuest: true } });
+  assert.equal(updates.length, 2);
+  assert.equal(await backend.resumeSignIn(), false);
+  assert.equal(updates.length, 2, 'repeated visibility events do not reimport or remount');
+  assert.deepEqual(navigations, ['https://accounts.google.com/authorize']);
+});
+
+test('an unfinished redirect survives a guest restore and offline return until its exact server receipt arrives', async () => {
+  const cache = memory(), key = 'nc_php_user_v1:/api/index.php:redirect';
+  cache.setItem(key, JSON.stringify({ attempt: 'pending-attempt', created: Date.now() }));
+  let offline = false, remoteUser = null, attempt = null;
+  const backend = createPhpBackend({ endpoint: '/api/index.php' }, { cache, fetcher: async () => {
+    if (offline) throw new TypeError('offline');
+    return response({ user: remoteUser, csrf: 'csrf', loginAttempt: attempt });
+  } });
+  assert.equal(await start(backend), null);
+  assert.ok(cache.getItem(key));
+  offline = true;
+  assert.equal(await backend.resumeSignIn(), false);
+  assert.ok(cache.getItem(key));
+  offline = false; remoteUser = alice; attempt = 'another-attempt';
+  assert.equal(await backend.resumeSignIn(), false);
+  assert.ok(cache.getItem(key));
+  attempt = 'pending-attempt';
+  assert.equal(await backend.resumeSignIn(), true);
+  assert.equal(cache.getItem(key), null);
+});
+
+test('sign-out invalidates a pending return check before its delayed session response arrives', async () => {
+  const cache = memory(), updates = [];
+  let holdNext = false, finishCheck;
+  const backend = createPhpBackend({ endpoint: '/api/index.php' }, { cache, fetcher: async url => {
+    if (url.includes('action=session')) {
+      if (holdNext) { holdNext = false; return new Promise(resolve => { finishCheck = resolve; }); }
+      return response({ user: null, csrf: 'csrf' });
+    }
+    return response({ ok: true });
+  } });
+  await new Promise((resolve, reject) => backend.onAuth(user => { updates.push(user); resolve(); }, reject));
+  cache.setItem('nc_php_user_v1:/api/index.php:redirect', JSON.stringify({ attempt: 'pending-attempt', created: Date.now() }));
+  holdNext = true;
+  const returning = backend.resumeSignIn();
+  assert.equal(await backend.resumeSignIn(), false, 'overlapping return events share one check');
+  await backend.signOut();
+  finishCheck(response({ user: alice, csrf: 'csrf', loginAttempt: 'pending-attempt' }));
+  assert.equal(await returning, false);
+  assert.deepEqual(updates, [null, null]);
+});
+
+test('a guest preference set in another tab prevents an old page from resuming its remembered login', async () => {
+  const cache = memory(), updates = [];
+  const backend = createPhpBackend({ endpoint: '/api/index.php' }, { cache,
+    browser: { location: { assign: () => {} } }, fetcher: async url => response(url.includes('action=session') ?
+      { user: null, csrf: 'csrf' } : { url: 'https://accounts.google.com/authorize', attempt: 'attempt', mode: 'redirect' }) });
+  await new Promise((resolve, reject) => backend.onAuth(user => { updates.push(user); resolve(); }, reject));
+  await backend.signIn();
+  cache.removeItem('nc_php_user_v1:/api/index.php:redirect');
+  cache.setItem('nc_php_user_v1:/api/index.php:guest', 'true');
+  assert.equal(await backend.resumeSignIn(), false);
+  assert.deepEqual(updates, [null]);
+});
+
 test('cancelling redirect preparation keeps the game open even when the network response arrives later', async () => {
   const cache = memory();
   cache.setItem('nc_php_user_v1:/api/index.php:guest', 'true');

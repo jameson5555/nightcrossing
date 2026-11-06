@@ -58,6 +58,9 @@ export function createCloudController({ backing, config, backendFactory,
     }
   };
   async function sync() {
+    // A completed same-tab login may return to an existing guest screen through
+    // browser history. Its auth transition performs the first account sync.
+    if (await backend?.resumeSignIn?.()) return;
     if (!profile || !state.user || deleting || recovering || !backend) return;
     if (inFlight) return inFlight;
     clearTimers();

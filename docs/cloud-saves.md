@@ -255,6 +255,10 @@ merging does not access other origins or require clearing browser data.
   the configured game URL, without exposing codes in the game URL. A short-lived
   local import intent resumes explicit sign-in behavior only when it matches the
   authenticated server receipt; it grants no authentication or server access.
+  Returning to an existing game page through browser history, focus, visibility
+  or reconnect events rechecks a pending login's receipt. A completed login
+  switches to its account without a reload or another Google authorization.
+  An unfinished/offline check keeps the intent for retry; sign-out invalidates it.
 - Account deletion's popup completion is checked against the server's receipt for the exact
   authorization attempt. Popup messages, periodic checks and returning to the game
   trigger that check. The app does not assume that window.closed means a mobile
@@ -328,6 +332,7 @@ Primary references: [Google OpenID Connect](https://developers.google.com/identi
 [Google ID token verification](https://developers.google.com/identity/gsi/web/guides/verify-google-id-token),
 [Google's web server redirect flow](https://developers.google.com/identity/protocols/oauth2/web-server),
 [PHP session rotation and delayed requests](https://www.php.net/manual/en/function.session-regenerate-id.php),
+[restoring user state after browser history navigation](https://web.dev/articles/bfcache),
 [official PHP client](https://github.com/googleapis/google-api-php-client),
 [cPanel Database Wizard](https://docs.cpanel.net/cpanel/databases/database-wizard/).
 
@@ -374,3 +379,13 @@ local PHP API and fictional Google identities for three consecutive sign-in/
 sign-out cycles. Each returned to the original game tab with completions and
 hints intact. Provider cancellation returned to intact guest progress. Real
 Google sign-in on the owner's Android device still needs deployment and retesting.
+
+History-return follow-up: 138 application tests, the enabled account web build,
+changed-file lint and whitespace checks passed. Isolated mobile-emulated Chrome
+restored the exact original document from the real back/forward cache after a
+fictional provider completed login. The existing guest page recognized the
+verified session, imported progress, and showed Account without a reload or a
+second Google authorization. An unfinished return remained guest and a later
+focus event recognized completion. This frontend-only change does not require
+a private PHP update and does not establish why the real Google page stays open
+on the owner's device.
