@@ -381,7 +381,6 @@ html, body {
   }
 }
 
-.menu-intro { flex-shrink: 0; padding: 0 12px 12px; color: var(--text-secondary); text-align: center; font-size: .85rem; line-height: 1.5; }
 .menu-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 12px; flex-shrink: 0; padding: 16px 8px 20px; }
 .menu-footer .privacy-link { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 10px; color: var(--text-secondary, #bbc3d8); font-size: .8rem; text-decoration: none; border-radius: 8px; }
 .menu-footer .privacy-link:hover { color: var(--text-primary, #fff); background: #ffffff08; }

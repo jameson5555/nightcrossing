@@ -879,7 +879,6 @@ function App() {
         </>
       ) : (
         <div className="menu-container">
-          <p className="menu-intro">Themed crosswords to solve at your own pace.</p>
           <PuzzleList
             onSelectPuzzle={handleSelectPuzzle}
             puzzles={puzzlesIndex}

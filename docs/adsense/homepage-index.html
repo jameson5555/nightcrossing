@@ -14,79 +14,39 @@
         <link href="css/style.css" rel="stylesheet" media="all" />
 
         <style>
-            #contact_me .publisher-intro {
-                max-width: 36rem;
-                margin: 0 auto;
-                padding: 1rem 1.25rem;
-                color: #dedee6;
-                text-align: center;
+            /* Use the existing space below the social row without changing
+               its position in the scroll animation. */
+            #contact_me .container {
+                position: relative;
             }
-            #contact_me .publisher-intro p + p {
-                margin-top: 0.75rem;
-            }
-            #contact_me .publisher-intro nav {
+            #contact_me .project-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
                 display: flex;
-                flex-wrap: wrap;
                 justify-content: center;
-                gap: 0.25rem 1.25rem;
-                margin-top: 0.75rem;
+                align-items: center;
+                gap: 1rem;
+                padding: 0.75rem 0.5rem 0;
+                background: black;
             }
-            #contact_me .publisher-intro nav a {
+            #contact_me .project-links a {
                 display: inline-flex;
                 align-items: center;
                 min-height: 44px;
-                color: lightgreen;
-                line-height: 1.5;
-                text-underline-offset: 0.2em;
-            }
-            #contact_me .publisher-intro nav a:focus-visible {
-                outline: 2px solid lightgreen;
-                outline-offset: 4px;
-            }
-            #contact_me .nightcrossing-promo {
-                display: flex;
-                justify-content: center;
-                padding: 1rem;
-            }
-            #contact_me .nightcrossing-link {
-                display: inline-flex;
-                align-items: center;
-                gap: 0.8rem;
-                max-width: 100%;
-                box-sizing: border-box;
-                padding: 0.8rem 1rem;
-                border: 1px solid #343442;
-                border-radius: 0.8rem;
-                background: #0a0a0f;
-                color: white;
-                text-align: left;
-                text-decoration: none;
-                line-height: 1.4;
-                transition: border-color 0.2s, color 0.2s;
-            }
-            #contact_me .nightcrossing-link:hover {
-                border-color: lightgreen;
-                color: lightgreen;
-            }
-            #contact_me .nightcrossing-link:focus-visible {
-                outline: 2px solid lightgreen;
-                outline-offset: 4px;
-            }
-            #contact_me .nightcrossing-link img {
-                width: 48px;
-                height: 48px;
-                flex-shrink: 0;
-                border-radius: 0.6rem;
-            }
-            #contact_me .nightcrossing-link strong {
-                display: block;
-                font-size: 1rem;
-            }
-            #contact_me .nightcrossing-link small {
-                display: block;
-                margin-top: 0.2rem;
+                color: #aaa;
                 font-size: 0.8rem;
-                color: #b9b9c5;
+                line-height: 1.5;
+                text-decoration: none;
+                white-space: nowrap;
+            }
+            #contact_me .project-links a:hover {
+                color: lightgreen;
+            }
+            #contact_me .project-links a:focus-visible {
+                outline: 2px solid lightgreen;
+                outline-offset: 4px;
             }
         </style>
         <script type="text/javascript" src="js/jquery.js"></script>
@@ -144,29 +104,6 @@
         <section id="favorite_things">
             <div id="contact_me" class="section">
                 <div class="container">
-                    <div class="publisher-intro">
-                        <p>I'm Jameson MacArthur. This is my personal website, where I keep the games and other projects I build.</p>
-                        <p>Nightcrossing is my themed crossword game. Follow the clues, use crossing letters to solve unfamiliar words, and earn hints and journey badges as you work through the collections. Play in your browser at your own pace, with no account required.</p>
-                        <nav aria-label="Nightcrossing information">
-                            <a href="/nightcrossing/how-to-play.html">How to play</a>
-                            <a href="/nightcrossing/about.html">About Nightcrossing</a>
-                            <a href="/nightcrossing/privacy.html">Game privacy</a>
-                        </nav>
-                    </div>
-                    <div class="nightcrossing-promo">
-                        <a class="nightcrossing-link" href="/nightcrossing/">
-                            <img
-                                src="/nightcrossing/icons/icon-192.png"
-                                width="48"
-                                height="48"
-                                alt=""
-                            />
-                            <span>
-                                <strong>Play Nightcrossing</strong>
-                                <small>Crossword puzzles for night owls.</small>
-                            </span>
-                        </a>
-                    </div>
                     <ul class="social_icons">
                         <li>
                             <a
@@ -208,6 +145,11 @@
                             ></a>
                         </li>
                     </ul>
+                    <nav class="project-links" aria-label="Nightcrossing links">
+                        <a href="/nightcrossing/">Nightcrossing</a>
+                        <a href="/nightcrossing/how-to-play.html">How to play</a>
+                        <a href="/nightcrossing/about.html">About</a>
+                    </nav>
                 </div>
             </div>
         </section>

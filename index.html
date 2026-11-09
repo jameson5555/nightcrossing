@@ -14,16 +14,17 @@
   </head>
   <body>
     <div id="root">
-      <main style="max-width: 42rem; margin: 0 auto; padding: 2rem 1.25rem; overflow-y: auto; font: 1rem/1.65 system-ui, sans-serif; color: #e9eaf2; background: #0a0a0f;">
-        <h1>Nightcrossing</h1>
-        <p>A themed crossword game by Jameson MacArthur. Follow the clues, fill the intersecting words, and earn hints and journey badges as you solve. Play at your own pace and return to your saved puzzles.</p>
-        <p>The interactive game loads here with JavaScript enabled. No account is needed to play.</p>
-        <nav aria-label="Game information">
-          <a style="color: #b9caff;" href="%BASE_URL%how-to-play.html">How to play</a> ·
-          <a style="color: #b9caff;" href="%BASE_URL%about.html">About Nightcrossing</a> ·
-          <a style="color: #b9caff;" href="%BASE_URL%privacy.html">Privacy</a>
-        </nav>
-      </main>
+      <noscript>
+        <main style="max-width: 42rem; margin: 0 auto; padding: 2rem 1.25rem; overflow-y: auto; font: 1rem/1.65 system-ui, sans-serif; color: #e9eaf2; background: #0a0a0f;">
+          <h1>Nightcrossing</h1>
+          <p>Enable JavaScript to play Nightcrossing. You can read about the game using these links.</p>
+          <nav aria-label="Game information">
+            <a style="color: #b9caff;" href="%BASE_URL%how-to-play.html">How to play</a> ·
+            <a style="color: #b9caff;" href="%BASE_URL%about.html">About Nightcrossing</a> ·
+            <a style="color: #b9caff;" href="%BASE_URL%privacy.html">Privacy</a>
+          </nav>
+        </main>
+      </noscript>
     </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

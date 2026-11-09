@@ -1,5 +1,16 @@
 # AdSense review preparation — November 9, 2026
 
+## Current decision
+
+Keep the separate About and How to Play pages and the game footer links.
+Remove the game-menu tagline and the introductory block that flashed during
+normal loading. Retain a small JavaScript-disabled fallback only. The production
+build and fallback-link checks pass for this cleanup.
+
+The user will request another AdSense review after deploying the remaining
+cleanup. Pre-rendering the actual game menu is explicitly deferred until after
+the review outcome; no pre-rendering or hydration changes are included here.
+
 ## Findings
 
 The supplied AdSense screenshot reports two findings: **Google-served ads on
@@ -39,17 +50,26 @@ Public checks on November 9:
   progression, saved progress, and clue-reporting instructions.
 - `public/about.html`: publisher identification and an explanation of the game,
   its puzzle collections, and its automated assembly and quality checks.
-- Game menu: a brief introduction and direct links to both pages and Privacy.
-- `index.html`: descriptive content and information links available before the
-  JavaScript application mounts. React replaces this initial content normally;
-  it is not crawler-specific content.
+- Game menu: direct links to both pages and Privacy. The introductory tagline
+  was subsequently removed at the user's request to keep the game minimal.
+- `index.html`: the initial descriptive block was removed after it caused a
+  visible flash during normal loading. A `noscript` message and information
+  links are shown only when JavaScript is disabled. Normal loading adds no
+  introductory screen. The explanatory content remains on the separate About
+  and How to Play pages, linked from the game footer and homepage. The
+  `noscript` fallback is for visitors without JavaScript, not a substitute for
+  rendered game content or a guarantee about AdSense review.
 - `public/sitemap.xml`: discoverable game and information-page URLs. It does not
   claim the private JSON puzzle payloads are separate web pages.
 - `docs/adsense/homepage-index.html`: a proposed root homepage based on the live
-  version. Retains the animation, social links, existing card, analytics, and
-  AdSense verification. Adds a compact introduction and direct game-information
-  links. This file is outside Vite's public directory and is not deployed with
-  the game build. Check it against the live version again before uploading.
+  version. Revised after the user's November 9 screenshot: removes the added
+  paragraphs and promotional card, restores the social icons as the first
+  content in the contact section, and adds three small text links underneath.
+  The links sit in the existing bottom space without adding normal-flow height
+  that would change the social row's final position. Retains the animation
+  markup and scripts, analytics, and AdSense verification. This file is outside
+  Vite's public directory and is not deployed with the game build. Check it
+  against the live version again before uploading.
 
 These are usability and discovery improvements. Google does not promise approval
 for adding an About page, a privacy notice, instructions, a sitemap, or any
@@ -62,12 +82,33 @@ The production web build passes. Built-page checks confirm that the game,
 playing guide, About, and Privacy pages have one main heading, their local links
 resolve, and the sitemap lists existing build outputs. The two new information
 pages contain no scripts or ad placements. The homepage proposal retains the
-live publisher verification ID, analytics ID, and game promotion. `git diff
+live publisher verification ID, analytics ID, animation markup, and social
+links. The revised homepage has not been visually verified. `git diff
 --check` passes. Browser automation is unavailable in this session; rendered
 desktop/mobile layout and a game play-through remain to be checked.
 
-All changes are local. The domain root file has not been overwritten, no changes
-have been pushed or deployed, and no AdSense review request has been submitted.
+The initial proposal was subsequently published to the live homepage outside
+this session, as confirmed by the user's screenshot and a public HTML fetch.
+The revision removing that proposal's text and card remains local. This session
+has not overwritten the domain root file, pushed or deployed changes, or
+submitted an AdSense review request.
+
+## Minimal homepage and disclosure options
+
+Extra homepage paragraphs are not a stated AdSense requirement. Keep the useful
+game information on the actual game pages, with clear links to reach it. The
+homepage can remain an ad-free personal landing page. This is a design
+recommendation consistent with Google's content and navigation guidance, not
+an assurance that AdSense will approve this particular site.
+
+The revised proposal uses three plain links below the social icons. An
+alternative is a native `details` element labeled Projects with the links in
+its initial HTML. Google Search explicitly allows ordinary accordions used for
+user experience in its [hidden-text guidance](https://developers.google.com/search/docs/essentials/spam-policies#hidden-text-and-link-abuse).
+That Search guidance does not establish AdSense approval. Do not rely on a
+crawler clicking a control to fetch content: Google Search documents that it
+does not interact with pages in its [lazy-loading guidance](https://developers.google.com/search/docs/crawling-indexing/javascript/lazy-loading).
+Keep direct URLs and the game pages independently reachable in either design.
 
 ## Before another review
 
