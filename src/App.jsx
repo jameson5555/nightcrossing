@@ -879,6 +879,7 @@ function App() {
         </>
       ) : (
         <div className="menu-container">
+          <p className="menu-intro">Themed crosswords to solve at your own pace.</p>
           <PuzzleList
             onSelectPuzzle={handleSelectPuzzle}
             puzzles={puzzlesIndex}
@@ -889,6 +890,8 @@ function App() {
           />
           <footer className="menu-footer" aria-label="Game links">
             <AccountPanel />
+            <a className="privacy-link" href={`${import.meta.env.BASE_URL}how-to-play.html`}>How to play</a>
+            <a className="privacy-link" href={`${import.meta.env.BASE_URL}about.html`}>About</a>
             <a className="privacy-link" href={`${import.meta.env.BASE_URL}privacy.html`}>Privacy</a>
           </footer>
         </div>

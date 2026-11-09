@@ -116,6 +116,8 @@ If you are developing a production application, we recommend using TypeScript wi
 ## Monetization and Android release
 
 Optional rewarded hints are implemented for Android and web, disabled by default.
+For the separate AdSense site-content review, see the
+[review findings and prepared changes](docs/adsense-review.md).
 See [launch setup and validation](docs/monetization-launch.md),
 [store listing draft](docs/store-listing.md), and `.env.example`.
 The game is positioned for adult crossword players, with no age screen or optional
